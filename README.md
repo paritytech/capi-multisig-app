@@ -74,3 +74,11 @@ Some of the funcionality of the Multisig tool requires off-chain data storage. D
 ## Transaction state
 
 # Other considerations / NFRs
+
+# References and Links
+
+[UI3 Components Figma](https://www.figma.com/file/w7tmesabD9ylgQ0RgmB6tK/UI3-components?node-id=722%3A6917&t=H52yPh9xTNJcnb0C-0)
+[GH Discussion ](https://github.com/paritytech/capi_multisig_app_planning)
+[UI3 GH Repo](https://github.com/paritytech/ui3)
+
+
