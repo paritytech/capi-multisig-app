@@ -75,10 +75,37 @@ Some of the funcionality of the Multisig tool requires off-chain data storage. D
 
 # Other considerations / NFRs
 
+# Project scope
+
+## Phase 1: Core Multisig - 31 March 2023
+The first itteration of the tool will provide the following functionality to the user:
+
+1. Create a multisig (with Proxies)
+2. Edit an existing multisig
+3. Create/propose a transaction
+4. Approve a proposed transaction
+
+## Phase 2: Advenced Multisig - XX XXX 2023
+The below list includes features planned for the next release of the tool.
+
+* View pending transactions
+* View transaction history
+* Messaging service (allows messages to be sent between signatories during the signing process)
+
+
+## Phase 3: Additional improvements and nice to haves - TBC
+The below list includes all other features of the multisig tool not currently planned for any release. This is a good area to add desired features for future release planning.
+
+* Multiple threshold levels (2/5 signatories required for transactions of under X, 3 for transactions between X and Y, and 4 for transactions of Y or more).
+* Signatory groups
+* Reject a proposed transaction (requires a messaging service to send a message to the transaction proposer)
+
+
+
 # References and Links
 
-[UI3 Components Figma](https://www.figma.com/file/w7tmesabD9ylgQ0RgmB6tK/UI3-components?node-id=722%3A6917&t=H52yPh9xTNJcnb0C-0)
-[GH Discussion ](https://github.com/paritytech/capi_multisig_app_planning)
-[UI3 GH Repo](https://github.com/paritytech/ui3)
+* [UI3 Components Figma](https://www.figma.com/file/w7tmesabD9ylgQ0RgmB6tK/UI3-components?node-id=722%3A6917&t=H52yPh9xTNJcnb0C-0)
+* [GH Discussion ](https://github.com/paritytech/capi_multisig_app_planning)
+* [UI3 GH Repo](https://github.com/paritytech/ui3)
 
 
