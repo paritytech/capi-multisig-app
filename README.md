@@ -80,17 +80,19 @@ Some functionality of the Multisig tool requires off-chain data storage. Details
 ## Phase 1: Core Multisig - 31 March 2023
 The first iteration of the tool will provide the following functionality to the user:
 
-1. Create a multisig (with Proxies)
+1. Create a multisig (with Stash Proxy, not Signatory Proxies) 
 2. Edit an existing multisig
-3. Create/propose a transaction
+3. Create/propose a native asset transaction
 4. Approve a proposed transaction
+5. View pending transactions
 
 ## Phase 2: Advanced Multisig - XX XXX 2023
 The below list includes features planned for the next release of the tool.
 
-* View pending transactions
 * View transaction history
-* Messaging service (allows messages to be sent between signatories during the signing process)
+* Messaging service (allows messages to be sent between signatories during the signing process) - AWS simple messages
+  * "New Multisig created" notification
+  * "New transaction proposed" message
 
 
 ## Phase 3: Additional improvements and nice to haves - TBC
