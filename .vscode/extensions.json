@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "EditorConfig.EditorConfig",
+    "denoland.vscode-deno",
+    "sastan.twind-intellisense",
+    "dprint.dprint",
+    "esbenp.prettier-vscode",
+    "ms-azuretools.vscode-docker",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
