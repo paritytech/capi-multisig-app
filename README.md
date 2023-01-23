@@ -4,7 +4,7 @@ For now: discussion. Soon: a multisig admin app using CAPI under the hood.
 **Please note:** (11/Jan/2023) This document is a rough draft and may change drastically over the next couple of weeks. Some content below is intended as a reminder/placeholder and will be reworded or edited in the coming days. 
 
 # Multisig
-Multisig (multiple signatories) is a concept of having various entities sign off a transaction made from a particular account/wallet. This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations, decentralization.
+Multisig (Multi-Signature Accounts) is a concept of having various entities sign off a transaction made from a particular account/wallet. This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations, decentralization.
 
 
 # Functionality
