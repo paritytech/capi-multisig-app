@@ -3,21 +3,28 @@ import { Layout } from "../components/layout/Layout.tsx"
 import { Navbar } from "../components/layout/Navbar.tsx"
 import { TestBlock } from "../components/TestBlock.tsx"
 
-export default function Landing() {
+export default function Create() {
   return (
     <Layout>
       <div className="py-4">
         <Header
           title={
             <TestBlock>
-              Overview
+              <a href="/" className="hover:text-indigo-500">&lt; Back</a>
             </TestBlock>
           }
         />
         <Navbar />
         <TestBlock className="h-80">
-          None of the accounts connected is a part of a multisig. You can create a new multisig from
-          the top toolbar.
+          <TestBlock className="">
+            Multisig Name
+          </TestBlock>
+          <TestBlock className="">
+            Signatories List
+          </TestBlock>
+          <TestBlock className="">
+            Start new transaction
+          </TestBlock>
         </TestBlock>
       </div>
     </Layout>
