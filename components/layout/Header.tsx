@@ -7,9 +7,11 @@ export const Header = ({
   return (
     <header>
       <TestBlock className="flex flex-row flex-nowrap justify-between">
-        <div className="flex">
-          {title && title}
-        </div>
+        {title && (
+          <div className="flex">
+            {title}
+          </div>
+        )}
         <div className="flex">
           <TestBlock>
             Wallet connect

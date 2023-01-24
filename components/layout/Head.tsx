@@ -1,17 +1,17 @@
 import { Head as _Head } from "$fresh/runtime.ts"
 
-export function Head() {
+export function Head({ title = "Capi Multisig Util" }: { title?: string }) {
   return (
     <_Head>
-      <title>Capi Multisig Util</title>
+      <title>{title}</title>
       <meta
         name="description"
         content="Easily manage your tokens and assets with multiple levels of security and approvals."
       />
-      <meta property="og:title" content="Capi Multisig Util" />
+      <meta property="og:title" content={title} />
       <meta
         property="og:description"
-        content="A secure and user-friendly multisig app for the Polkadot network."
+        content="A secure and user-friendly multisig app."
       />
       <meta property="og:site_name" content="Capi Multisig Util" />
       <meta name="viewport" content="width=device-width, initial-scale=1"></meta>

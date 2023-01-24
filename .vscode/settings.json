@@ -3,15 +3,6 @@
   "deno.lint": true,
   "editor.defaultFormatter": "dprint.dprint",
   "editor.formatOnSave": true,
-  "[json]": {
-    "editor.defaultFormatter": "dprint.dprint"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "dprint.dprint"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "dprint.dprint"
-  },
   "deno.codeLens.testArgs": ["--no-check=remote", "-A", "-L=info"],
   "deno.config": "./deno.json",
   "deno.importMap": "./import_map.json",
