@@ -62,7 +62,7 @@ All associations are severed, funds transferred to an alternate wallet or redist
 
 ### Initiate transaction
 
-Any authorised user can initiate a transaction by selecting a destination address and an amount to send. The user will then sign the transaction and submit it for other signatories to sign.
+Any authorized user can initiate a transaction by selecting a destination address and an amount to send. The user will then sign the transaction and submit it for other signatories to sign.
 
 #### Call hash comm
 
@@ -154,15 +154,15 @@ System - in this context system refers to the multisig tool itself. This is used
 
 ## Create a multisig with signatory proxies
 
-1. As Alice, I want to create a new multisig and enforce signatory proxies, so that each individual signatory can be replaced in the future (should the need arrise) without encurring extra costs for re-creating the whole multisig.
+1. As Alice, I want to create a new multisig and enforce signatory proxies, so that each individual signatory can be replaced in the future (should the need arise) without extra costs for re-creating the whole multisig.
 2. As System, I want to store all of the multisig configuration data (signed by Alice) on a central server, so that I may update and read it later in the multisig creation process.
 3. As Alice, I want to create a pure proxy and add it to the multisig configuration, so that my signatory is set-up correctly.
 4. As System, I want to replace Alice's wallet address with the newly created pure proxy address (signed by Alice).
 5. As Alice, I want to see a summary of the multisig configuration so that I can verify all of the information I provided and track the progress of any outstanding steps (eg. Bob and Charlie creating pure proxies)
 6. As Bob or Charlie, I want to create a pure proxy and add it to the multisig configuration, so that I can participate in the multisig Alice is setting up.
-7. As System, I want to replace Bob's or Charlie's wallet address with the newly created pure proxy address in the temporary central data store (signed by Bob or Charlie resspectively).
-8. As Alice, I want to see that all required steps (proxy creation) are completed by all signatories and the multisig configuration is ready to be finalised, so that I can confirm the creation of the multisig and pay the applicable fees.
-9. As System, I want to read the multisig configuration data stored on the central server, so that I can complete miultisig creation.
+7. As System, I want to replace Bob's or Charlie's wallet address with the newly created pure proxy address in the temporary central data store (signed by Bob or Charlie respectively).
+8. As Alice, I want to see that all required steps (proxy creation) are completed by all signatories and the multisig configuration is ready to be finalized, so that I can confirm the creation of the multisig and pay the applicable fees.
+9. As System, I want to read the multisig configuration data stored on the central server, so that I can complete multisig creation.
 10. As Alice, Bob or Charlie, I want to view the newly created multisig, so that I can transact from it.
 
 # References and Links
