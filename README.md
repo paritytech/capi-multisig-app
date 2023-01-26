@@ -18,7 +18,7 @@ Managing a multisig implies creating a new multisig set-up, editing the settings
 Due to the nature of the blockchain, it is impossible to make changes to a multisig set-up once it is finalized. Therefore, if a change is required, then a new multisig set-up is created with the updated configuration, and the old multisig is deprecated. Through the use of proxy wallets, it is possible to keep the wallet containing the funds the same and change the association of the proxy wallet from the old multisig set-up to the new one. This allows the multisig tool to provide seamless multisig editing functionality to the user.
 
 ### Signatory invitation
-**TBC**
+Future releases may support an invitation method, but for now creating a multisig will require the user to know addresses of all participating signatories.
 
 ### Simple multisig
 At its core, a multisig set-up is a single wallet with multiple signatories and a threshold determining how many signatories are required to sign off on any transaction. 
