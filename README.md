@@ -81,7 +81,7 @@ Some functionality of the Multisig tool requires off-chain data storage. Details
 ## Phase 1: Core Multisig - 31 March 2023
 The first iteration of the tool will provide the following functionality to the user:
 
-1. Create a multisig (with Stash Proxy, not(?) Signatory Proxies) 
+1. Create a multisig (with Stash Proxy and Signatory Proxies) 
 2. Edit an existing multisig
 3. Create/propose a native asset transaction
 4. Approve a proposed transaction
@@ -109,6 +109,30 @@ The below list includes all other features of the multisig tool not currently pl
 * Multisig configuration - the combined set of rules governing a particular multisig. This would include signatories, thresholds, and any other rules.
 * Stash - a wallet containing the funds/assets which the multisig is set-up to control. This is usually a pure proxy that is controlled by a wallet with a multisig set-up attached.
 
+# User stories
+
+## Actors
+Alice - in user stories below Alice represents the user who initiates the multisig creation or editing process. As such Alice is also the first signatory in the multisig.
+Bob, Charlie - Bob represents signatory 2 and Charlie represent signatory 3. "Bob or Charlie" means any of the other signatories, "Bob and Charlie" means all of the other signatories.
+System - in this context system refers to the multisig tool itself. This is used where the system needs to store data temporarily or access stored data.
+
+## Create a simple multisig
+1. As Alice, I want to initiate the process of creating a multisig, so that I can learn more about the prerequisites and collect any necessary inputs.
+2. As Alice, I want to configure our future multisig by adding Bob and Charlie as signatories and setting a signatory threshold, so that the multisig has valid governance rules.
+3. As Alice, I want to see a summary of my multisig configuration, so that I can confirm all the details before committing the configuration and paying the associated fees.
+4. As Alice, Bob or Charlie, I want to view the newly created multisig, so that I can transact from it.
+
+## Create a multisig with signatory proxies
+1. As Alice, I want to create a new multisig and enforce signatory proxies, so that each individual signatory can be replaced in the future (should the need arrise) without encurring extra costs for re-creating the whole multisig.
+2. As System, I want to store all of the multisig configuration data (signed by Alice) on a central server, so that I may update and read it later in the multisig creation process.
+3. As Alice, I want to create a pure proxy and add it to the multisig configuration, so that my signatory is set-up correctly.
+4. As System, I want to replace Alice's wallet address with the newly created pure proxy address (signed by Alice).
+5. As Alice, I want to see a summary of the multisig configuration so that I can verify all of the information I provided and track the progress of any outstanding steps (eg. Bob and Charlie creating pure proxies)
+6. As Bob or Charlie, I want to create a pure proxy and add it to the multisig configuration, so that I can participate in the multisig Alice is setting up.
+7. As System, I want to replace Bob's or Charlie's wallet address with the newly created pure proxy address in the temporary central data store (signed by Bob or Charlie resspectively).
+8. As Alice, I want to see that all required steps (proxy creation) are completed by all signatories and the multisig configuration is ready to be finalised, so that I can confirm the creation of the multisig and pay the applicable fees.
+9. As System, I want to read the multisig configuration data stored on the central server, so that I can complete miultisig creation.
+10. As Alice, Bob or Charlie, I want to view the newly created multisig, so that I can transact from it.
 
 # References and Links
 
