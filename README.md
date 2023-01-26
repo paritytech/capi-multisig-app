@@ -1,10 +1,11 @@
 # capi_multisig_app_planning
 For now: discussion. Soon: a multisig admin app using CAPI under the hood.
 
-**Please note:** (11/Jan/2023) This document is a rough draft and may change drastically over the next couple of weeks. Some content below is intended as a reminder/placeholder and will be reworded or edited in the coming days. 
+
+
 
 # Multisig
-Multisig (multiple signatories) is a concept of having various entities sign off a transaction made from a particular account/wallet. This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations, decentralization.
+Multisig (multiple signatories) is a concept of having several entities sign off a transaction made from the account (wallet). This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations, decentralization.
 
 
 # Functionality
@@ -17,22 +18,22 @@ Managing a multisig implies creating a new multisig set-up, editing the settings
 Due to the nature of the blockchain, it is impossible to make changes to a multisig set-up once it is finalized. Therefore, if a change is required, then a new multisig set-up is created with the updated configuration, and the old multisig is deprecated. Through the use of proxy wallets, it is possible to keep the wallet containing the funds the same and change the association of the proxy wallet from the old multisig set-up to the new one. This allows the multisig tool to provide seamless multisig editing functionality to the user.
 
 ### Signatory invitation
-What if the user does not have the exact addresses of the other signatories (or a signatory may want to select a wallet to use for this particular multisig, is there a way to "invite" signatories to a multisig instead of just adding them?)
+**TBC**
 
-#### Simple multisig
+### Simple multisig
 At its core, a multisig set-up is a single wallet with multiple signatories and a threshold determining how many signatories are required to sign off on any transaction. 
 
-#### Complex multisig
+### Complex multisig
 At its most complex, a multisig set-up is a **proxy** wallet with multiple **groups of proxy** signatories, and **multiple** threshold**s** which determine how many signatories **from each signatory group** are required to sign off on a transaction **of a specific value range, and may include other settings.**
-##### Proxy wallet
+#### Proxy wallet
 Using a proxy wallet allows the multisig to be set up as the controlling wallet of the proxy which actually holds funds and transacts, therefore allowing for a new multisig to be created and assigned as the controller of the proxy wallet by the old multisig as its final action.
 
-#### The Multisig tool...
-... provides the functionality needed for a user to seamlessly create a multisig that is as simple or as complex as they require.
+### The Multisig tool...
+... provides the functionality needed for a user to seamlessly create a multisig that is as simple or as complex as they require and to edit the multisig as needed in the future.
 
 ### Create a Multisig
 #### Simple
-To create a multisig the user would first select whether they want the multisig to be editable in the future. This will determine whether a Proxy is required for the multisig wallet. A basic setup will have the user add several signatories and select a threshold for the number of signatories (out of the ones added) required to sign any transaction. 
+A basic setup will have the user add several signatories and select a threshold for the number of signatories required to sign any transaction. In order to make the multisig editable in the future, a pure proxy is created with the rest of the multisig structure attached to it. In the future this will allow the user to create a new multisig structure and assign it to the proxy (following required signatures) thus editing the multisig structure.
 #### Complex
 In a more complex setup, the user can create multiple groups of signatories and set several thresholds, each requiring a certain number of signatories from each group to sign off on transactions of a certain value range. 
 
@@ -80,7 +81,7 @@ Some functionality of the Multisig tool requires off-chain data storage. Details
 ## Phase 1: Core Multisig - 31 March 2023
 The first iteration of the tool will provide the following functionality to the user:
 
-1. Create a multisig (with Stash Proxy, not Signatory Proxies) 
+1. Create a multisig (with Stash Proxy, not(?) Signatory Proxies) 
 2. Edit an existing multisig
 3. Create/propose a native asset transaction
 4. Approve a proposed transaction
@@ -102,6 +103,11 @@ The below list includes all other features of the multisig tool not currently pl
 * Signatory groups
 * Reject a proposed transaction (requires a messaging service to send a message to the transaction proposer)
 
+# Glossary
+
+* Multisig - a wallet controlled by multiple signatories
+* Multisig configuration - the combined set of rules governing a particular multisig. This would include signatories, thresholds, and any other rules.
+* Stash - a wallet containing the funds/assets which the multisig is set-up to control. This is usually a pure proxy that is controlled by a wallet with a multisig set-up attached.
 
 
 # References and Links
