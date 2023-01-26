@@ -8,10 +8,7 @@ reminder/placeholder and will be reworded or edited in the coming days.
 
 # Multisig
 
-Multisig (multiple signatories) is a concept of having various entities sign off
-a transaction made from a particular account/wallet. This may be required for
-several reasons, such as corporate governance, security, spend
-tracking/management, contractual obligations, decentralization.
+Multisig (Multi-Signature Accounts) allows multiple parties to jointly control a specific account or asset on the network, by requiring a certain number of signatures from designated signers before a transaction can be executed. This can be used to provide added security and to facilitate collaboration among different groups or organizations including corporate governance, security, spend tracking/management, contractual obligations, decentralization.
 
 # Functionality
 

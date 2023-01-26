@@ -2,11 +2,12 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import config from "./deno.json" assert { type: "json" }
-import * as $0 from "./routes/create-multisig.tsx"
-import * as $1 from "./routes/create-transaction.tsx"
-import * as $2 from "./routes/index.tsx"
-import * as $3 from "./routes/transactions.tsx"
+import config from "./deno.json" assert { type: "json" };
+import * as $0 from "./routes/create-multisig.tsx";
+import * as $1 from "./routes/create-transaction.tsx";
+import * as $2 from "./routes/index.tsx";
+import * as $3 from "./routes/transactions.tsx";
+import * as $$0 from "./islands/CreateMultisig.tsx";
 
 const manifest = {
   routes: {
@@ -15,9 +16,11 @@ const manifest = {
     "./routes/index.tsx": $2,
     "./routes/transactions.tsx": $3,
   },
-  islands: {},
+  islands: {
+    "./islands/CreateMultisig.tsx": $$0,
+  },
   baseUrl: import.meta.url,
   config,
-}
+};
 
-export default manifest
+export default manifest;
