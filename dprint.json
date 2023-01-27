@@ -8,7 +8,7 @@
     "semiColons": "asi"
   },
   "includes": [
-    "**.{dockerfile,json,md,toml,ts,tsx}"
+    "**.{json,md,ts,tsx}"
   ],
   "excludes": [],
   "plugins": [

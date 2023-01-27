@@ -1,8 +1,8 @@
-import { Head as _Head } from "$fresh/runtime.ts"
+import { Head as Head_ } from "$fresh/runtime.ts"
 
 export function Head({ title = "Capi Multisig Util" }: { title?: string }) {
   return (
-    <_Head>
+    <Head_>
       <title>{title}</title>
       <meta
         name="description"
@@ -25,6 +25,6 @@ export function Head({ title = "Capi Multisig Util" }: { title?: string }) {
       />
       <meta property="og:image:width" content="1500" />
       <meta property="og:image:height" content="500" />
-    </_Head>
+    </Head_>
   )
 }

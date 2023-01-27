@@ -1,11 +1,36 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "useUnknownInCatchVariables": true
   },
   "importMap": "./import_map.json",
   "lock": false,
   "tasks": {
     "dev": "deno run -A --watch=static/,routes/ dev.ts"
+  },
+  "lint": {
+    "files": {
+      "include": [
+        "."
+      ]
+    },
+    "rules": {
+      "exclude": [
+        "no-empty-interface",
+        "no-explicit-any",
+        "no-namespace",
+        "no-empty",
+        "no-extra-semi",
+        "ban-types"
+      ],
+      "tags": [
+        "recommended"
+      ]
+    }
   }
 }
