@@ -1,0 +1,13 @@
+name: Check Formatting
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+jobs:
+  check:
+    name: Check Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dprint/check@b8a69d368d232496f6e82dac8fb12044fe3147d6 # v2.1
