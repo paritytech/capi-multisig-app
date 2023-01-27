@@ -112,9 +112,9 @@ The below list includes all other features of the multisig tool not currently pl
 # User stories
 
 ## Actors
-Alice - in user stories below Alice represents the user who initiates the multisig creation or editing process. As such Alice is also the first signatory in the multisig.
-Bob, Charlie - Bob represents signatory 2 and Charlie represent signatory 3. "Bob or Charlie" means any of the other signatories, "Bob and Charlie" means all of the other signatories.
-System - in this context system refers to the multisig tool itself. This is used where the system needs to store data temporarily or access stored data.
+* Alice - in user stories below Alice represents the user who initiates the multisig creation or editing process. As such Alice is also the first signatory in the multisig.
+* Bob, Charlie - Bob represents signatory 2 and Charlie represent signatory 3. "Bob or Charlie" means any of the other signatories, "Bob and Charlie" means all of the other signatories.
+* System - in this context system refers to the multisig tool itself. This is used where the system needs to store data temporarily or access stored data.
 
 ## Create a simple multisig
 1. As Alice, I want to initiate the process of creating a multisig, so that I can learn more about the prerequisites and collect any necessary inputs.
