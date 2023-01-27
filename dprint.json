@@ -5,17 +5,15 @@
   "typescript": {
     "quoteProps": "asNeeded",
     "arrowFunction.useParentheses": "force",
-    "semiColons": "asi"
+    "semiColons": "asi",
+    "preferSingleLine": true
   },
-  "includes": [
-    "**.{json,md,ts,tsx}"
-  ],
+  "json": { "preferSingleLine": true },
+  "includes": ["**.{json,md,ts,tsx}"],
   "excludes": [],
   "plugins": [
-    "https://plugins.dprint.dev/dockerfile-0.3.0.wasm",
     "https://plugins.dprint.dev/json-0.17.0.wasm",
     "https://plugins.dprint.dev/markdown-0.15.1.wasm",
-    "https://plugins.dprint.dev/toml-0.5.4.wasm",
     "https://plugins.dprint.dev/typescript-0.79.0.wasm"
   ]
 }

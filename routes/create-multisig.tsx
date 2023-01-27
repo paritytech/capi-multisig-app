@@ -15,21 +15,11 @@ export default function Create() {
       />
       <Navbar />
       <TestBlock className="">
-        <TestBlock className="">
-          Multisig Name
-        </TestBlock>
-        <TestBlock className="">
-          Threshold
-        </TestBlock>
-        <TestBlock className="">
-          Depositor
-        </TestBlock>
-        <TestBlock className="">
-          Add signatory
-        </TestBlock>
-        <TestBlock className="">
-          Create
-        </TestBlock>
+        <TestBlock className="">Multisig Name</TestBlock>
+        <TestBlock className="">Threshold</TestBlock>
+        <TestBlock className="">Depositor</TestBlock>
+        <TestBlock className="">Add signatory</TestBlock>
+        <TestBlock className="">Create</TestBlock>
       </TestBlock>
     </Layout>
   )

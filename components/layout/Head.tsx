@@ -9,10 +9,7 @@ export function Head({ title = "Capi Multisig Util" }: { title?: string }) {
         content="Easily manage your tokens and assets with multiple levels of security and approvals."
       />
       <meta property="og:title" content={title} />
-      <meta
-        property="og:description"
-        content="A secure and user-friendly multisig app."
-      />
+      <meta property="og:description" content="A secure and user-friendly multisig app." />
       <meta property="og:site_name" content="Capi Multisig Util" />
       <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
       <meta property="og:locale" content="en_US" />

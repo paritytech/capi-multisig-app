@@ -6,13 +6,7 @@ import { TestBlock } from "../components/TestBlock.tsx"
 export default function Landing() {
   return (
     <Layout>
-      <Header
-        title={
-          <TestBlock>
-            Overview
-          </TestBlock>
-        }
-      />
+      <Header title={<TestBlock>Overview</TestBlock>} />
       <Navbar />
       <TestBlock className="h-80">
         None of the accounts connected is a part of a multisig. You can create a new multisig from

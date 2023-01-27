@@ -15,15 +15,9 @@ export default function Create() {
       />
       <Navbar />
       <TestBlock className="h-80">
-        <TestBlock className="">
-          Multisig Name
-        </TestBlock>
-        <TestBlock className="">
-          Signatories List
-        </TestBlock>
-        <TestBlock className="">
-          Start new transaction
-        </TestBlock>
+        <TestBlock className="">Multisig Name</TestBlock>
+        <TestBlock className="">Signatories List</TestBlock>
+        <TestBlock className="">Start new transaction</TestBlock>
       </TestBlock>
     </Layout>
   )
