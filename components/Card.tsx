@@ -10,7 +10,7 @@ export const Card = ({ children, className }: Props) => {
   return (
     <div
       className={classNames(
-        "rounded-lg shadow w-full bg-white border border-cborder py-10 px-4",
+        "rounded-lg shadow w-full bg-white border border-nebula py-10 px-4",
         className,
       )}
     >
