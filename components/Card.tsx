@@ -1,12 +1,9 @@
 import classNames from "classnames"
 import type { ComponentChildren } from "preact"
 
-interface Props {
-  children: ComponentChildren
-  className?: string
-}
-
-export const Card = ({ children, className }: Props) => {
+export const Card = (
+  { children, className }: { children: ComponentChildren; className?: string },
+) => {
   return (
     <div
       className={classNames(

@@ -2,16 +2,11 @@ import classNames from "classnames"
 import { JSX } from "preact"
 import type { ComponentChildren } from "preact"
 
-interface Props {
-  variant: "fill" | "ghost"
-  iconLeft?: ComponentChildren
-  iconRight?: ComponentChildren
-}
 export const Button = (
   { variant, size, disabled, className, iconLeft, iconRight, children, ...rest }:
     & JSX.IntrinsicAttributes
     & JSX.HTMLAttributes<HTMLButtonElement>
-    & Props,
+    & { variant: "fill" | "ghost"; iconLeft?: ComponentChildren; iconRight?: ComponentChildren },
 ) => {
   return (
     <button
