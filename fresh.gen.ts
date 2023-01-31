@@ -4,6 +4,7 @@
 
 import config from "./deno.json" assert { type: "json" }
 import * as $$0 from "./islands/CreateMultisig.tsx"
+import * as $$1 from "./islands/WalletConnect.tsx"
 import * as $0 from "./routes/create-multisig.tsx"
 import * as $1 from "./routes/create-transaction.tsx"
 import * as $2 from "./routes/index.tsx"
@@ -16,7 +17,7 @@ const manifest = {
     "./routes/index.tsx": $2,
     "./routes/transactions.tsx": $3,
   },
-  islands: { "./islands/CreateMultisig.tsx": $$0 },
+  islands: { "./islands/CreateMultisig.tsx": $$0, "./islands/WalletConnect.tsx": $$1 },
   baseUrl: import.meta.url,
   config,
 }
