@@ -15,7 +15,9 @@ export default function Create() {
         }
       />
       <Navbar />
-      <CreateMultisig />
+      <div className="mx-10 mb-10">
+        <CreateMultisig />
+      </div>
     </Layout>
   )
 }
