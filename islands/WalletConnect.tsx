@@ -1,12 +1,16 @@
 import { Menu, Transition } from "@headlessui/react"
+import { signal } from "@preact/signals"
 import { getWallets } from "@talisman-connect/wallets"
 import type { Wallet } from "@talisman-connect/wallets"
 import classNames from "classnames"
 
 const DAPP_NAME = "capi-multisig"
 
+const accounts = signal([])
+
 const WalletConnect = () => {
   const supportedWallets: Wallet[] = getWallets()
+
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">
@@ -24,7 +28,7 @@ const WalletConnect = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute left-0 origin-top-right focus:outline-none rounded-lg mt-px shadow w-96 bg-white border border-nebula py-10 px-4">
+          <Menu.Items className="absolute left-0 origin-top-right focus:outline-none rounded-lg mt-px shadow w-96 bg-white border border-nebula py-10 px-4 flex flex-col gap-4">
             {supportedWallets.map((wallet: Wallet) => {
               return (
                 <Menu.Item>
@@ -35,8 +39,9 @@ const WalletConnect = () => {
                       onClick={async () => {
                         try {
                           await wallet.enable(DAPP_NAME)
-                          const unsubscribe = await wallet.subscribeAccounts((accounts) => {
-                            console.log("accounts: ", accounts)
+                          const unsubscribe = await wallet.subscribeAccounts((accounts_) => {
+                            accounts.value = accounts_
+                            console.log("accounts.values:", accounts.value)
                           })
                         } catch (err) {
                           // TODO Handle error. Refer to `libs/wallets/src/lib/errors`
