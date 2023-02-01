@@ -17,12 +17,13 @@ import { TypeSafeScanDocumentCommand } from "https://esm.sh/v106/typesafe-dynamo
 // @deno-types="https://esm.sh/v106/typesafe-dynamodb@0.2.3/lib/update-document-command.d.ts"
 import { TypeSafeUpdateDocumentCommand } from "https://esm.sh/v106/typesafe-dynamodb@0.2.3/es2022/lib/update-document-command.js"
 import { Animal } from "./model.ts"
+import "std/dotenv/load.ts"
 
 export const client = DynamoDBDocument.from(
   new DynamoDBClient({
     region: "us-east-1",
     credentials: {
-      accessKeyId: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
+      accessKeyId: Deno.env.get("AWS_ACCESS_KEY_ID")!,
       secretAccessKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
     },
   }),
