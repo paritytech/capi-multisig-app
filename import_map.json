@@ -13,6 +13,9 @@
     "ddb/": "https://esm.sh/v106/@aws-sdk/client-dynamodb@3.262.0/",
     "ddb_doc/": "https://esm.sh/v106/@aws-sdk/lib-dynamodb@3.262.0/",
     "ts_ddb_types/": "https://esm.sh/v106/typesafe-dynamodb@0.2.3/lib/",
-    "ts_ddb_runtime/": "https://esm.sh/v106/typesafe-dynamodb@0.2.3/es2022/lib/"
+    "ts_ddb_runtime/": "https://esm.sh/v106/typesafe-dynamodb@0.2.3/es2022/lib/",
+    "polkadot/": "http://localhost:4646/frame/wss/rpc.polkadot.io/@v0.9.37/",
+    "polkadot_dev/": "http://localhost:4646/frame/dev/polkadot/@v0.9.36/",
+    "capi": "http://localhost:4646/mod.ts"
   }
 }
