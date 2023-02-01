@@ -8,6 +8,7 @@
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
     "twind": "https://esm.sh/twind@0.16.17",
     "twind/": "https://esm.sh/twind@0.16.17/",
-    "classnames": "https://esm.sh/classnames@2.3.2"
+    "classnames": "https://esm.sh/classnames@2.3.2",
+    "std/": "https://deno.land/std@0.175.0/"
   }
 }
