@@ -1,6 +1,10 @@
 import type { ComponentChildren } from "preact"
 import { Head } from "./Head.tsx"
 
+export * from "./Head.tsx"
+export * from "./Header.tsx"
+export * from "./Navbar.tsx"
+
 export const Layout = ({ children }: { children: ComponentChildren }) => {
   return (
     <>

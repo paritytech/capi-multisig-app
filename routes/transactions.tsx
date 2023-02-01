@@ -1,7 +1,4 @@
-import { Header } from "../components/layout/Header.tsx"
-import { Layout } from "../components/layout/Layout.tsx"
-import { Navbar } from "../components/layout/Navbar.tsx"
-import { TestBlock } from "../components/TestBlock.tsx"
+import { Header, Layout, Navbar, TestBlock } from "components"
 
 export default function Transactions() {
   return (
