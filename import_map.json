@@ -9,6 +9,10 @@
     "twind": "https://esm.sh/twind@0.16.17",
     "twind/": "https://esm.sh/twind@0.16.17/",
     "classnames": "https://esm.sh/classnames@2.3.2",
-    "std/": "https://deno.land/std@0.175.0/"
+    "std/": "https://deno.land/std@0.175.0/",
+    "ddb/": "https://esm.sh/v106/@aws-sdk/client-dynamodb@3.262.0/",
+    "ddb_doc/": "https://esm.sh/v106/@aws-sdk/lib-dynamodb@3.262.0/",
+    "ts_ddb_types/": "https://esm.sh/v106/typesafe-dynamodb@0.2.3/lib/",
+    "ts_ddb_runtime/": "https://esm.sh/v106/typesafe-dynamodb@0.2.3/es2022/lib/"
   }
 }
