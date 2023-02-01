@@ -17,7 +17,7 @@
     "polkadot/": "http://localhost:4646/frame/wss/rpc.polkadot.io/@v0.9.37/",
     "polkadot_dev/": "http://localhost:4646/frame/dev/polkadot/@v0.9.36/",
     "capi": "http://localhost:4646/mod.ts",
-    "components": "./components/mod.ts",
+    "components/": "./components/mod.ts",
     "islands/": "./islands/",
     "server/": "./server/"
   }
