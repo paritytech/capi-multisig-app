@@ -14,6 +14,8 @@ import { TypeSafeQueryDocumentCommand } from "ts_ddb_runtime/query-document-comm
 import { TypeSafeScanDocumentCommand } from "ts_ddb_runtime/scan-document-command.js"
 // @deno-types="ts_ddb_types/update-document-command.d.ts"
 import { TypeSafeUpdateDocumentCommand } from "ts_ddb_runtime/update-document-command.js"
+// @deno-types="ts_ddb_types/get-document-command.d.ts"
+import { TypeSafeGetDocumentCommand } from "ts_ddb_runtime/get-document-command.js"
 import { Animal } from "./model.ts"
 import "std/dotenv/load.ts"
 
@@ -32,5 +34,6 @@ export const Delete = TypeSafeDeleteDocumentCommand<Animal, "id", undefined>()
 export const Query = TypeSafeQueryDocumentCommand<Animal>()
 export const Scan = TypeSafeScanDocumentCommand<Animal>()
 export const Update = TypeSafeUpdateDocumentCommand<Animal, "id", undefined>()
+export const Get = TypeSafeGetDocumentCommand<Animal, "id", undefined>()
 
 export const TableName = "capi_multisig"
