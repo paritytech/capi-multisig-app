@@ -5,8 +5,7 @@
   "typescript": {
     "quoteProps": "asNeeded",
     "arrowFunction.useParentheses": "force",
-    "semiColons": "asi",
-    "preferSingleLine": true
+    "semiColons": "asi"
   },
   "json": { "preferSingleLine": true },
   "includes": ["**.{json,md,ts,tsx}"],

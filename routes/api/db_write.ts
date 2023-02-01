@@ -1,5 +1,5 @@
-import { client, Put, TableName } from "../../server/mod.ts";
-import { Handlers } from "$fresh/server.ts";
+import { Handlers } from "$fresh/server.ts"
+import { client, Put, TableName } from "../../server/mod.ts"
 
 export const handler: Handlers = {
   async GET() {
@@ -12,7 +12,7 @@ export const handler: Handlers = {
           bark: "loud",
         },
       }),
-    );
-    return new Response("Hi");
+    )
+    return new Response("Hi")
   },
-};
+}
