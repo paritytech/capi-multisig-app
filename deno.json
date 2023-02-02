@@ -12,8 +12,8 @@
   "importMap": "./import_map.json",
   "lock": false,
   "tasks": {
-    "capi": "deno run -A https://raw.githubusercontent.com/paritytech/capi/rune/main.ts --serve --capi=https://raw.githubusercontent.com/paritytech/capi/rune/mod.ts",
-    "dev": "deno task capi -- deno run -A --watch=static/,routes/ dev.ts"
+    "capi": "deno run -A -r https://raw.githubusercontent.com/paritytech/capi/rune/main.ts",
+    "dev": "deno task capi --serve -- deno run -A -r=http://localhost:4646/ --watch=static/,routes/ dev.ts"
   },
   "lint": {
     "files": { "include": ["."] },
