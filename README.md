@@ -157,7 +157,7 @@ The below list includes all other features of the multisig tool not currently pl
 
 ## Create a multisig with signatory proxies
 
-1. As Alice, I want to create a new multisig and enforce signatory proxies, so that each individual signatory can be replaced in the future (should the need arise) without extra costs for re-creating the whole multisig. 
+1. As Alice, I want to create a new multisig and enforce signatory proxies, so that each individual signatory can be replaced in the future (should the need arise) without extra costs for re-creating the whole multisig.
 2. As Alice, I want to create Pure Proxy that will become the "stash" in the multisig set-up, so that I can attach the multisig set-up to the stash.
 3. As Alice, I want to configure the future multisig by adding Bob and Charlie as signatories and setting a signatory threshold, so that the multisig has valid governance rules.
 4. As Alice, I want to create a Pure Proxy for myself, Bob and Charlie and add these to the multisig configuration, so that the signatories are set-up correctly with proxies.
