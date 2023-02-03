@@ -1,11 +1,10 @@
-import { alice } from "capi"
-import { System } from "http://localhost:4646/frame/dev/polkadot/@v0.9.36/mod.ts"
+import { System } from "http://localhost:4646/frame/wss/rpc.polkadot.io/@latest/mod.ts"
 import { useEffect } from "preact/hooks"
 
 export default function CapiComponent() {
   useEffect(() => {
     ;(async () => {
-      console.log(await System.Account.entry([alice.publicKey]).run())
+      console.log(await System.Account.keyPage(10).run())
     })()
   }, [])
   return <div>Capi-using component</div>
