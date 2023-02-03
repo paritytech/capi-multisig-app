@@ -17,7 +17,6 @@ import { TypeSafeUpdateDocumentCommand } from "ts_ddb_runtime/update-document-co
 // @deno-types="ts_ddb_types/get-document-command.d.ts"
 import { TypeSafeGetDocumentCommand } from "ts_ddb_runtime/get-document-command.js"
 import { Animal } from "./model.ts"
-import "std/dotenv/load.ts"
 
 export const client = DynamoDBDocument.from(
   new DynamoDBClient({
