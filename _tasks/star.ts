@@ -14,4 +14,5 @@ for await (
 const dir = path.join(Deno.cwd(), "target")
 await fs.ensureDir(dir)
 const dest = path.join(dir, "star.ts")
+console.log(`Writing "${dest}".`)
 await Deno.writeTextFile(dest, generated)
