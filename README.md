@@ -96,13 +96,37 @@ Some functionality of the Multisig tool requires off-chain data storage. Details
 
 # UI Considerations
 
-## Media Forms
+## Support
+
+### Media
+- Desktop
+
+### Browser
+- Google Chrome (latest released version, v109+)
+
+### Wallets
+- [Talisman - Polkadot Wallet](https://chrome.google.com/webstore/detail/talisman-polkadot-wallet/fijngjgcjhjmmpcmkeiomlglpeiijkld)
+- [Polkadot{.js} extension](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd)
+
+### Testing chains
+- [Local (polkadot v0.9.37)](https://github.com/paritytech/polkadot)
+- Testnet Westend
+- Testnet Rococo
+
+## Validation rules (tbd)
+- What are the validation rules of the each input/form and the UX behaviour?
+
+## User support (tbd)
+- When money is involved, it's important to ensure that the user understands what they are doing and how they interpret the actions taken.
+  - info / docs / tooltips / icons / articles / videos / readmes / examples
 
 ## Screen Transitions
 
 ## Transaction state
 
 # Other considerations / NFRs
+- Compliance or legal requirements. Real money can be involved (mainnet). Terms of Service? (tbd)
+
 
 # Project scope
 
@@ -147,25 +171,42 @@ The below list includes all other features of the multisig tool not currently pl
 - Bob, Charlie - Bob represents signatory 2 and Charlie represent signatory 3. "Bob or Charlie" means any of the other signatories, "Bob and Charlie" means all of the other signatories.
 - System - in this context system refers to the multisig tool itself. This is used where the system needs to store data temporarily or access stored data.
 
-## Create a simple multisig
+## Create a simple multisig with stash
 
 1. As Alice, I want to initiate the process of creating a multisig, so that I can learn more about the prerequisites and collect any necessary inputs. (A screen outlining the process and any requirements)
-2. As Alice, I want to create Pure Proxy that will become the "stash" in the multisig set-up, so that I can attach the multisig set-up to the stash.
-3. As Alice, I want to configure the future multisig by adding Bob and Charlie as signatories and setting a signatory threshold, so that the multisig has valid governance rules.
+2. As Alice, I want to configure the future multisig by adding Bob and Charlie as signatories and setting a signatory threshold, so that the multisig has valid governance rules.
+3. As Alice, I want to create Pure Proxy that will become the "Stash" in the multisig set-up, so that I can attach the multisig set-up to the Stash and remove myself as its controller, so the multisig will only have control over the Stash.
 4. As Alice, I want to see a summary of my multisig configuration, so that I can confirm all the details before committing the configuration and paying the associated fees.
 5. As Alice, Bob or Charlie, I want to view the newly created multisig, so that I can transact from it.
 
-## Create a multisig with signatory proxies
+<a href="url"><img src="https://user-images.githubusercontent.com/7630720/216567452-95922450-5921-4cdd-b7b0-5df8dfcd9648.png" width="50%" ></a>
 
-1. As Alice, I want to create a new multisig and enforce signatory proxies, so that each individual signatory can be replaced in the future (should the need arise) without extra costs for re-creating the whole multisig.
-2. As Alice, I want to create Pure Proxy that will become the "stash" in the multisig set-up, so that I can attach the multisig set-up to the stash.
-3. As Alice, I want to configure the future multisig by adding Bob and Charlie as signatories and setting a signatory threshold, so that the multisig has valid governance rules.
-4. As Alice, I want to create a Pure Proxy for myself, Bob and Charlie and add these to the multisig configuration, so that the signatories are set-up correctly with proxies.
+
+## Create a multisig with signatory proxies and stash
+
+1. As Alice, I want to create a new multisig and enforce signatory proxies, so that each individual signatory can be replaced in the future (should the need arise) without extra costs for re-creating the whole multisig. In the event of a bad actor among the signatories, I will not be able to replace them unilaterally, requiring the creation of a new multisig.
+2. As Alice, I want to create Pure Proxy that will become the "stash" in the multisig set-up, so that I can attach the multisig set-up to the stash and remove myself as its controller, so the multisig will only have control over the Stash.
+3. As Alice, I want to create a Pure Proxy for myself, Bob and Charlie and remove myself as the controller of Bob and Charlie's Pure Proxies, granting them exclusive control over their proxies.
+4. As Alice, I want to configure the future multisig by adding Bob and Charlie Pure Proxies as signatories and setting a signatory threshold, so that the multisig has valid governance rules. 
 5. As Alice, I want to see a summary of my multisig configuration, so that I can confirm all the details before committing the configuration and paying the associated fees.
-6. As Alice, Bob or Charlie, I want to view the newly created multisig, so that I can transact from it.
+6. As Alice, Bob or Charlie, I want to view the newly created multisig and related proxies, so that I can transact from it.
+
+[*Ongoing Capi related discussion](https://github.com/paritytech/capi/issues/525)
+
+<a href="url"><img src="https://user-images.githubusercontent.com/7630720/216567471-04ba7847-34fe-42c5-a5ff-46c08930ec20.png" width="60%" ></a>
+
+
+## User fees
+- Create Pure Proxies (reserved fee)
+- Initial funding for Pure Proxies and Multisig ([Existential Deposit](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-))
+- [Transaction Fees](https://wiki.polkadot.network/docs/learn-transaction-fees)
+
 
 # References and Links
 
 - [UI3 Components Figma](https://www.figma.com/file/w7tmesabD9ylgQ0RgmB6tK/UI3-components?node-id=722%3A6917&t=H52yPh9xTNJcnb0C-0)
-- [GH Discussion](https://github.com/paritytech/capi_multisig_app_planning)
-- [UI3 GH Repo](https://github.com/paritytech/ui3)
+- [Multisig/Proxies Figma](https://www.figma.com/file/A1Tm8cDoNapzj4dqG83LjP/0.1-%2F-Multisig-%2B-Proxies?node-id=0%3A1&t=XZvryFSud5b1I4tV-0)
+- [Capi Multisig Issues](https://github.com/paritytech/capi-multisig-app/issues)
+- [UI3 Github Repo](https://github.com/paritytech/ui3)
+- [Wiki Proxies](https://wiki.polkadot.network/docs/learn-proxies)
+
