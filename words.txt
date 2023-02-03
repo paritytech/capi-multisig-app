@@ -13,3 +13,4 @@ asynciterable
 deno
 Polkadot
 typesafe
+westend
