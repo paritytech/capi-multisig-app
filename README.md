@@ -114,7 +114,7 @@ Some functionality of the Multisig tool requires off-chain data storage. Details
 - Testnet Rococo
 
 ## Validation rules (tbd)
-- What are the validation rules of the each input/form and the UX behaviour?
+- What are the validation rules of the each input/form and the UX behavior?
 
 ## User support (tbd)
 - When money is involved, it's important to ensure that the user understands what they are doing and how they interpret the actions taken.
