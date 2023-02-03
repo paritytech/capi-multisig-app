@@ -12,9 +12,10 @@
   "importMap": "./import_map.json",
   "lock": false,
   "tasks": {
-    "capi": "deno run -A -r https://raw.githubusercontent.com/paritytech/capi/rune/main.ts",
-    "cache": "deno task capi --serve -- deno cache -r=http://localhost:4646/",
-    "dev": "deno task capi --serve -- deno run -A -r=http://localhost:4646/ --watch=static/,routes/ dev.ts"
+    "ctx": "deno run -A -r https://raw.githubusercontent.com/paritytech/capi/rune/main.ts --serve",
+    "cache": "deno task ctx -- deno cache -r=http://localhost:4646/",
+    "star": "deno run -A _tasks/star.ts && deno task cache target/star.ts --check",
+    "dev": "deno task ctx -- deno run -A -r=http://localhost:4646/ --watch=static/,routes/ dev.ts"
   },
   "lint": {
     "files": { "include": ["."] },
