@@ -1,5 +1,5 @@
 import { Header, Layout, Navbar, TestBlock } from "components"
-import CapiComponent from "../islands/CapiComponent.tsx"
+import CapiComponent from "islands/CapiComponent.tsx"
 
 export default function Landing() {
   return (

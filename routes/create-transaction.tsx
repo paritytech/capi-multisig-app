@@ -1,8 +1,8 @@
-import { Header, Layout, Navbar, TestBlock } from "components"
+import { Header, Navbar, TestBlock } from "components"
 
 export default function Create() {
   return (
-    <Layout>
+    <>
       <Header
         title={
           <TestBlock>
@@ -16,6 +16,6 @@ export default function Create() {
         <TestBlock className="">Signatories List</TestBlock>
         <TestBlock className="">Start new transaction</TestBlock>
       </TestBlock>
-    </Layout>
+    </>
   )
 }

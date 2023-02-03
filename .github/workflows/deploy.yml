@@ -1,5 +1,5 @@
 name: Deploy
-on: [push]
+on: push
 jobs:
   deploy:
     name: Deploy
@@ -18,5 +18,5 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "capi-multisig-app"
-          entrypoint: "./main.ts"
+          project: capi-multisig-app
+          entrypoint: ./main.ts

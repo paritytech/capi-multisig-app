@@ -1,8 +1,8 @@
-import { Header, Layout, Navbar, TestBlock } from "components"
+import { Header, Navbar, TestBlock } from "components"
 
 export default function Transactions() {
   return (
-    <Layout>
+    <>
       <Header
         title={
           <TestBlock>
@@ -16,6 +16,6 @@ export default function Transactions() {
         <TestBlock>Transaction 2</TestBlock>
         <TestBlock>...</TestBlock>
       </TestBlock>
-    </Layout>
+    </>
   )
 }
