@@ -1,13 +1,17 @@
-export type Animal = Dog | Cat
+export type Account = Real | Proxy | Multisig
 
-export interface Dog extends AnimalBase<"Dog"> {
-  bark: "quiet" | "medium" | "loud"
-}
-export interface Cat extends AnimalBase<"Cat"> {
-  claws: "filed" | "sharp" | "why get a cat in the first place?"
+interface Real extends AccountBase<"Real"> {}
+
+interface Proxy extends AccountBase<"Proxy"> {}
+
+interface Multisig extends AccountBase<"Multisig>"> {
+  signatories: string[]
+  threshold: number
 }
 
-interface AnimalBase<Kind extends string> {
-  id: string
+interface AccountBase<Kind extends string> {
+  id: string // public key
+  proxies?: {}
+  multisigs?: {}
   kind: Kind
 }

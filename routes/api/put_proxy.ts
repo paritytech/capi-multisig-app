@@ -7,12 +7,11 @@ export const handler: Handlers = {
       new Put({
         TableName,
         Item: {
-          id: crypto.randomUUID(),
-          kind: "Dog",
-          bark: "loud",
+          id: "alice_pure", // crypto.randomUUID(),
+          kind: "Proxy",
         },
       }),
     )
-    return new Response("Hi")
+    return new Response("Put Proxy - Success")
   },
 }

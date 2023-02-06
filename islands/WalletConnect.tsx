@@ -9,9 +9,8 @@ const DAPP_NAME = "capi-multisig"
 const accounts = signal([])
 const selectedAccount = signal(undefined)
 
-const shortenAddress = (address: string) => {
-  return `${address.slice(0, 9)}...${address.slice(address.length - 8, address.length)}`
-}
+const shortenAddress = (address: string) =>
+  `${address.slice(0, 9)}...${address.slice(address.length - 8, address.length)}`
 
 const WalletConnect = () => {
   const supportedWallets: Wallet[] = getWallets()
