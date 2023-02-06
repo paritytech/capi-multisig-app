@@ -3,6 +3,7 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" }
+import * as $$0 from "./islands/CapiComponent.tsx"
 import * as $0 from "./routes/api/db_write.ts"
 import * as $1 from "./routes/create-multisig.tsx"
 import * as $2 from "./routes/create-transaction.tsx"
@@ -17,7 +18,9 @@ const manifest = {
     "./routes/index.tsx": $3,
     "./routes/transactions.tsx": $4,
   },
-  islands: {},
+  islands: {
+    "./islands/CapiComponent.tsx": $$0,
+  },
   baseUrl: import.meta.url,
   config,
 }

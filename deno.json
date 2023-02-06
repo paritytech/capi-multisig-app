@@ -2,6 +2,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
+    "lib": ["deno.ns", "dom"],
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -10,7 +11,12 @@
   },
   "importMap": "./import_map.json",
   "lock": false,
-  "tasks": { "dev": "deno run -A --watch=static/,routes/ dev.ts" },
+  "tasks": {
+    "ctx": "deno run -A -r --unstable https://raw.githubusercontent.com/paritytech/capi/026e4f0c1a/main.ts --serve",
+    "cache": "deno task ctx -- deno cache -r=http://localhost:4646/",
+    "star": "deno run -A _tasks/star.ts && deno task cache target/star.ts",
+    "dev": "deno task ctx -- deno run -A -r=http://localhost:4646/ --watch=static/,routes/ dev.ts"
+  },
   "lint": {
     "files": { "include": ["."] },
     "rules": {

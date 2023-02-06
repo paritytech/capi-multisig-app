@@ -1,7 +1,7 @@
 import type { ComponentChildren } from "preact"
 import { TestBlock } from "../TestBlock.tsx"
 
-export const Header = ({ title }: { title: ComponentChildren }) => {
+export function Header({ title }: { title: ComponentChildren }) {
   return (
     <header>
       <TestBlock className="flex flex-row flex-nowrap justify-between">
