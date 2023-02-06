@@ -13,8 +13,8 @@ jobs:
       - uses: denoland/setup-deno@9db7f66e8e16b5699a514448ce994936c63f0d54 # v1.1.0
         with:
           deno-version: v1.x
-      - name: Star
-        run: deno task star
+      - run: deno task star
+      - run: deno run -A _tasks/deploy_import_map.ts
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
