@@ -12,7 +12,7 @@
   "importMap": "./import_map.json",
   "lock": false,
   "tasks": {
-    "ctx": "deno run -A -r https://raw.githubusercontent.com/paritytech/capi/rune/main.ts --serve",
+    "ctx": "deno run -A -r --unstable https://raw.githubusercontent.com/paritytech/capi/rune/main.ts --serve",
     "cache": "deno task ctx -- deno cache -r=http://localhost:4646/",
     "star": "deno run -A _tasks/star.ts && deno task cache target/star.ts",
     "dev": "deno task ctx -- deno run -A -r=http://localhost:4646/ --watch=static/,routes/ dev.ts"
