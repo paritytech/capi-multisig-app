@@ -57,12 +57,29 @@ const CreateMultisig = () => {
     signatories.value = signatories.value.concat("")
   }
 
-  const createMultisig = () => {
-    console.log("name: ", name.value) //
-    console.log("depositorAddress", depositorAddress.value)
-    console.log("threshold: ", threshold.value)
-    console.log("signatories:", signatories.value)
-    // TODO run capi
+  const createMultisig = async () => {
+    await fetch("/api/put_multisig", {
+      // TODO separate function
+      // TODO do we need all these headers?
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({
+        // id: crypto.randomUUID(),
+        id: name.value, // TODO
+        name: name.value,
+        depositorAddress: depositorAddress.value,
+        threshold: threshold.value,
+        signatories: signatories.value,
+      }),
+    })
   }
 
   return (
@@ -148,5 +165,4 @@ const CreateMultisig = () => {
     </Card>
   )
 }
-
 export default CreateMultisig

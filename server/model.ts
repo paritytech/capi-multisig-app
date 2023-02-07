@@ -4,7 +4,7 @@ interface Real extends AccountBase<"Real"> {}
 
 interface Proxy extends AccountBase<"Proxy"> {}
 
-interface Multisig extends AccountBase<"Multisig>"> {
+interface Multisig extends AccountBase<"Multisig"> {
   signatories: string[]
   threshold: number
 }

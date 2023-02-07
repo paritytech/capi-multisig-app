@@ -41,7 +41,7 @@ const WalletConnect = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute left-0 origin-top-right focus:outline-none rounded-lg mt-px shadow w-96 bg-white border border-nebula py-10 px-8 flex flex-col gap-4">
+          <Menu.Items className="absolute left-0 origin-top-right focus:outline-none rounded-lg shadow w-96 bg-white border border-nebula py-10 px-8 flex flex-col gap-4">
             <p className="text-xl text-center">Connect a wallet</p>
             {accounts.value.length > 0
               ? (
