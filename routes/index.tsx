@@ -1,7 +1,5 @@
-import { Card } from "../components/Card.tsx"
-import { Header } from "../components/layout/Header.tsx"
-import { Layout } from "../components/layout/Layout.tsx"
-import { Navbar } from "../components/layout/Navbar.tsx"
+import { Header, Layout, Navbar, Card } from "components"
+import CapiComponent from "islands/CapiComponent.tsx"
 
 export default function Landing() {
   return (
@@ -13,7 +11,8 @@ export default function Landing() {
           <p>None of the accounts connected is a part of a multisig.</p>
           <p>You can create a new multisig from the top toolbar.</p>
         </Card>
+        <CapiComponent />
       </div>
-    </Layout>
+    </Layout >
   )
 }

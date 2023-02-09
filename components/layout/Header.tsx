@@ -2,7 +2,7 @@ import type { ComponentChildren } from "preact"
 import WalletConnect from "../../islands/WalletConnect.tsx"
 import { TestBlock } from "../TestBlock.tsx"
 
-export const Header = ({ title }: { title: ComponentChildren }) => {
+export function Header({ title }: { title: ComponentChildren }) {
   return (
     <header className="bg-white py-2 px-6 rounded-t border border-nebula">
       <div className="flex flex-row flex-nowrap justify-between items-center">
