@@ -1,5 +1,5 @@
 import { Header, Layout, Navbar, TestBlock } from "components"
-import CreateMultisig from '../islands/CreateMultisig.tsx';
+import CreateMultisig from "../islands/CreateMultisig.tsx"
 
 export default function Create() {
   return (

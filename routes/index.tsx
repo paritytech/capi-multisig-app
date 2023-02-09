@@ -1,4 +1,4 @@
-import { Header, Layout, Navbar, Card } from "components"
+import { Card, Header, Layout, Navbar } from "components"
 import CapiComponent from "islands/CapiComponent.tsx"
 
 export default function Landing() {
@@ -13,6 +13,6 @@ export default function Landing() {
         </Card>
         <CapiComponent />
       </div>
-    </Layout >
+    </Layout>
   )
 }
