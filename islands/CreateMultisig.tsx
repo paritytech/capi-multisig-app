@@ -1,4 +1,5 @@
 import { computed, signal } from "@preact/signals"
+import { JSX } from "preact/jsx-runtime"
 import { Button } from "../components/Button.tsx"
 import { Card } from "../components/Card.tsx"
 import { IconPlus } from "../components/icons/IconPlus.tsx"
@@ -30,18 +31,17 @@ const errorsThreshold = computed(() => {
   return errors
 })
 
-const CreateMultisig = () => {
-  // TODO maybe we could do another type workaround here
-  const setName = (event: Event) => {
-    name.value = (event.target as HTMLInputElement).value
+export default function CreateMultisig() {
+  const setName = ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+    name.value = currentTarget.value
   }
 
-  const setThreshold = (event: Event) => {
-    threshold.value = (event.target as HTMLInputElement).valueAsNumber
+  const setThreshold = ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+    threshold.value = currentTarget.valueAsNumber
   }
 
-  const setDepositorAddress = (event: Event) => {
-    depositorAddress.value = (event.target as HTMLInputElement).value
+  const setDepositorAddress = ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+    depositorAddress.value = currentTarget.value
   }
 
   const setSignatory = ({ index, value }: { index: number; value: string }) => {
@@ -65,7 +65,6 @@ const CreateMultisig = () => {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       cache: "no-cache",
       credentials: "same-origin",
@@ -165,4 +164,3 @@ const CreateMultisig = () => {
     </Card>
   )
 }
-export default CreateMultisig

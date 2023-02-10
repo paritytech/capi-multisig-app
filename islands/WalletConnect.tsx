@@ -1,19 +1,34 @@
 import { Menu, Transition } from "@headlessui/react"
 import { signal } from "@preact/signals"
 import { getWallets } from "@talisman-connect/wallets"
-import type { Wallet } from "@talisman-connect/wallets"
+import type { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import classNames from "classnames"
 
 const DAPP_NAME = "capi-multisig"
 
-const accounts = signal([])
-const selectedAccount = signal(undefined)
+const accounts = signal<WalletAccount[]>([])
+const selectedAccount = signal<WalletAccount | undefined>(undefined)
 
 const shortenAddress = (address: string) =>
   `${address.slice(0, 9)}...${address.slice(address.length - 8, address.length)}`
 
 const WalletConnect = () => {
   const supportedWallets: Wallet[] = getWallets()
+
+  const setWallet = (wallet: Wallet) => async (event: Event) => {
+    event.preventDefault()
+    try {
+      await wallet.enable(DAPP_NAME)
+      // TODO unsubscribe
+      const unsubscribe = await wallet.subscribeAccounts((accounts_) => {
+        if (accounts_) {
+          accounts.value = accounts_
+        }
+      })
+    } catch (err) {
+      // TODO Handle error. Refer to `libs/wallets/src/lib/errors`
+    }
+  }
 
   return (
     <div>
@@ -23,7 +38,7 @@ const WalletConnect = () => {
         >
           {selectedAccount.value
             ? (
-              <p className="flex-inline items-center">
+              <p className="items-center">
                 <span className="mr-4">{selectedAccount.value.name}</span>
                 <span className="font-mono text-sm">
                   {shortenAddress(selectedAccount.value.address)}
@@ -65,23 +80,11 @@ const WalletConnect = () => {
               : supportedWallets.map((wallet: Wallet) => {
                 return (
                   <Menu.Item>
-                    {({ active }) => (
+                    {({ active }: { active: boolean }) => (
                       <button
                         className={classNames({ "bg-jaguar": active }, "px-4 py-2")}
                         key={wallet.extensionName}
-                        onClick={async (event) => {
-                          event.preventDefault()
-                          try {
-                            await wallet.enable(DAPP_NAME)
-                            // TODO unsubscribe
-                            const unsubscribe = await wallet.subscribeAccounts((accounts_) => {
-                              accounts.value = accounts_
-                              console.log("accounts.values:", accounts.value)
-                            })
-                          } catch (err) {
-                            // TODO Handle error. Refer to `libs/wallets/src/lib/errors`
-                          }
-                        }}
+                        onClick={setWallet(wallet)}
                       >
                         {wallet.title}
                       </button>
