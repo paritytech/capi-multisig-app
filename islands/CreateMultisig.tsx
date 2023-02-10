@@ -50,10 +50,8 @@ export default function CreateMultisig() {
   )
 
   const setSignatory = useCallback(({ index, value }: { index: number; value: string }) => {
-    signatories.value = signatories.value.map((signatory, index_) => {
-      if (index_ === index) {
-        return value
-      }
+    signatories.value = signatories.value.map((signatory, idx) => {
+      if (idx === index) return value
       return signatory
     })
   }, [])

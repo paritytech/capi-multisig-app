@@ -2,9 +2,8 @@ import { Menu, Transition } from "@headlessui/react"
 import { signal } from "@preact/signals"
 import { getWallets } from "@talisman-connect/wallets"
 import type { Wallet, WalletAccount } from "@talisman-connect/wallets"
+import { DAPP_NAME } from "misc"
 import { useCallback } from "preact/hooks"
-
-const DAPP_NAME = "capi-multisig"
 
 const selectedWallet = signal<Wallet | undefined>(undefined)
 const accounts = signal<WalletAccount[]>([])

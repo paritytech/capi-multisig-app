@@ -22,6 +22,7 @@
     "capi": "http://localhost:4646/mod.ts",
     "components": "./components/mod.ts",
     "islands/": "./islands/",
-    "server/": "./server/"
+    "server/": "./server/",
+    "misc": "./misc/mod.ts"
   }
 }
