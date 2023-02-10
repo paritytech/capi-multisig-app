@@ -1,8 +1,7 @@
 import { computed, signal } from "@preact/signals"
+import { Button, Card, IconPlus } from "components"
+import { useCallback } from "preact/hooks"
 import { JSX } from "preact/jsx-runtime"
-import { Button } from "../components/Button.tsx"
-import { Card } from "../components/Card.tsx"
-import { IconPlus } from "../components/icons/IconPlus.tsx"
 
 const DEFAULT_THRESHOLD = 2
 const name = signal("")
@@ -32,32 +31,38 @@ const errorsThreshold = computed(() => {
 })
 
 export default function CreateMultisig() {
-  const setName = ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+  const setName = useCallback(({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
     name.value = currentTarget.value
-  }
+  }, [])
 
-  const setThreshold = ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-    threshold.value = currentTarget.valueAsNumber
-  }
+  const setThreshold = useCallback(
+    ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      threshold.value = currentTarget.valueAsNumber
+    },
+    [],
+  )
 
-  const setDepositorAddress = ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-    depositorAddress.value = currentTarget.value
-  }
+  const setDepositorAddress = useCallback(
+    ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      depositorAddress.value = currentTarget.value
+    },
+    [],
+  )
 
-  const setSignatory = ({ index, value }: { index: number; value: string }) => {
+  const setSignatory = useCallback(({ index, value }: { index: number; value: string }) => {
     signatories.value = signatories.value.map((signatory, index_) => {
       if (index_ === index) {
         return value
       }
       return signatory
     })
-  }
+  }, [])
 
-  const addSignatory = () => {
+  const addSignatory = useCallback(() => {
     signatories.value = signatories.value.concat("")
-  }
+  }, [])
 
-  const createMultisig = async () => {
+  const createMultisig = useCallback(async () => {
     await fetch("/api/put_multisig", {
       // TODO separate function
       // TODO do we need all these headers?
@@ -79,7 +84,7 @@ export default function CreateMultisig() {
         signatories: signatories.value,
       }),
     })
-  }
+  }, [])
 
   return (
     <Card className="mt-10 px-8 flex flex-col gap-5">
