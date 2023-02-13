@@ -1,9 +1,9 @@
 import { computed, signal } from "@preact/signals"
 import { Button, Card, IconPlus } from "components"
+import { DEFAULT_THRESHOLD } from "misc"
 import { useCallback } from "preact/hooks"
 import { JSX } from "preact/jsx-runtime"
 
-const DEFAULT_THRESHOLD = 2
 const name = signal("")
 const threshold = signal(DEFAULT_THRESHOLD)
 const depositorAddress = signal("")
