@@ -196,6 +196,38 @@ The below list includes all other features of the multisig tool not currently pl
 <a href="url"><img src="https://user-images.githubusercontent.com/7630720/216567471-04ba7847-34fe-42c5-a5ff-46c08930ec20.png" width="60%" ></a>
 
 
+## Edit Multisig
+
+1. As Alice, I want to select a multisig which I intend to edit so that I can propose changes. 
+2. As Alice, I want to capture my proposed changes to the multisig configuration so that I can submit the proposal to the multisig for signature/approval. (This may include adding/ removing/ changing signatories and/or updating the threshold value).
+3. As Alice, I want to sign and submit my proposal to the multisig so that it can be approved and the new governance model can take effect.
+4. As Bob and Charlie, I want to view the proposed changes so that I can decide whether to approve or reject them.
+5. Approve/Reject
+  a. As Bob and Charlie, I want to sign and approve the proposed changes so that the new configuration can be implemented.
+  b. As Bob and Charlie, I want to reject the proposed changes so that the new configuration is discarded and not implemented.
+6. As Alice, I want to be notified that my proposed changes have either been approved or rejected.
+
+
+## Submit Transaction
+
+1. As Alice, I want to select a multisig from which I intend to transact so that I can submit a new transaction.
+2. As Alice, I want to capture the details of my proposed transaction so that I can submit it for signature. (This would include the amount/value and target address of the transfer).
+3. As Alice, I want to sign and submit my proposed transaction so that it can be signed by other required signatories and processed.
+
+
+## Sign/Reject a proposed transaction:
+
+1. As Bob or Charlie, I want to see a list of pending transactions so that I can review and approve or reject them.
+2. Approve/Reject
+  a. As Bob or Charlie, I want to sign and approve a transaction so that it can be processed.
+  b. As Bob or Charlie, I want to reject a transaction so that it is discarded and not processed.
+
+
+## View transaction history:
+
+1. As Alice, Bob, or Charlie, I want to see a list of past transactions from a selected multisig so that I can review them.
+
+
 ## User fees
 - Create Pure Proxies (reserved fee)
 - Initial funding for Pure Proxies and Multisig ([Existential Deposit](https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-))
