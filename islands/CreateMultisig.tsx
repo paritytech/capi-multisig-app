@@ -1,5 +1,8 @@
 import { computed, signal } from "@preact/signals"
 import { Button, Card, IconPlus } from "components"
+import { client } from "http://localhost:4646/frame/wss/rpc.polkadot.io/@v0.9.37/mod.ts"
+import { alice, bob, charlie } from "http://localhost:4646/mod.ts"
+import { MultisigRune } from "http://localhost:4646/patterns/mod.ts"
 import { DEFAULT_THRESHOLD } from "misc"
 import { useCallback } from "preact/hooks"
 import { JSX } from "preact/jsx-runtime"
@@ -60,28 +63,12 @@ export default function CreateMultisig() {
     signatories.value = signatories.value.concat("")
   }, [])
 
-  const createMultisig = useCallback(async () => {
-    await fetch("/api/put_multisig", {
-      // TODO separate function
-      // TODO do we need all these headers?
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-cache",
-      credentials: "same-origin",
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify({
-        // id: crypto.randomUUID(),
-        id: name.value, // TODO
-        name: name.value,
-        depositorAddress: depositorAddress.value,
-        threshold: threshold.value,
-        signatories: signatories.value,
-      }),
+  const createMultisig = useCallback(() => {
+    const multisig = MultisigRune.from(client, {
+      signatories: [alice.publicKey, bob.publicKey, charlie.publicKey],
+      threshold: 2,
     })
+    console.log("multisig: ", multisig)
   }, [])
 
   return (
