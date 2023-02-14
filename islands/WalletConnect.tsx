@@ -2,31 +2,33 @@ import { Menu, Transition } from "@headlessui/react"
 import { signal } from "@preact/signals"
 import { getWallets } from "@talisman-connect/wallets"
 import type { Wallet, WalletAccount } from "@talisman-connect/wallets"
-import { DAPP_NAME } from "misc"
-import { useCallback } from "preact/hooks"
+import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
+import { useCallback, useEffect } from "preact/hooks"
 
 const selectedWallet = signal<Wallet | undefined>(undefined)
 const accounts = signal<WalletAccount[]>([])
 const selectedAccount = signal<WalletAccount | undefined>(undefined)
 
+const setSelectedWallet = async (wallet: Wallet) => {
+  try {
+    await wallet.enable(DAPP_NAME)
+    // TODO implement unsubscribe
+    await wallet.subscribeAccounts((accounts_) => {
+      if (accounts_) {
+        accounts.value = accounts_
+        localStorage.setItem(SELECTED_WALLET, wallet.extensionName)
+        selectedWallet.value = wallet
+      }
+    })
+  } catch (err) {
+    throw err
+  }
+}
+
 function SelectWallet({ wallets }: { wallets: Wallet[] }) {
   const selectWallet = useCallback((wallet: Wallet) => (event: Event) => {
     event.preventDefault()
-    const getAccounts = async () => {
-      try {
-        await wallet.enable(DAPP_NAME)
-        // TODO implement unsubscribe
-        await wallet.subscribeAccounts((accounts_) => {
-          if (accounts_) {
-            accounts.value = accounts_
-            selectedWallet.value = wallet
-          }
-        })
-      } catch (err) {
-        throw err
-      }
-    }
-    getAccounts()
+    setSelectedWallet(wallet)
   }, [close])
 
   return (
@@ -79,10 +81,13 @@ function SelectAccount() {
   const disconnect = useCallback(() => {
     selectedWallet.value = undefined
     selectedAccount.value = undefined
+    localStorage.removeItem(SELECTED_WALLET)
+    localStorage.removeItem(SELECTED_ACCOUNT)
   }, [])
 
   const selectAccount = useCallback((account: WalletAccount) => () => {
     selectedAccount.value = account
+    localStorage.setItem(SELECTED_ACCOUNT, account.address)
   }, [])
 
   return (
@@ -120,6 +125,27 @@ function SelectAccount() {
 export default function WalletConnect() {
   const supportedWallets: Wallet[] = getWallets()
 
+  useEffect(() => {
+    const selectedWalletName = localStorage.getItem(SELECTED_WALLET)
+    const selectedWallet_ = supportedWallets.find(
+      (currentWallet) => currentWallet.extensionName === selectedWalletName,
+    )
+
+    if (selectedWallet_) {
+      if (accounts.value.length > 0) {
+        const selectedAccountAddress = localStorage.getItem(SELECTED_ACCOUNT)
+        const selectedAccount_ = accounts.value.find((currentAccount) =>
+          currentAccount.address === selectedAccountAddress
+        )
+        if (selectedAccount_) {
+          selectedAccount.value = selectedAccount_
+        }
+      } else {
+        setSelectedWallet(selectedWallet_)
+      }
+    }
+  }, [selectedWallet.value])
+
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">
@@ -139,7 +165,7 @@ export default function WalletConnect() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute w-[440px] mt-px left-0 origin-top-right focus:outline-none rounded-lg shadow w-96 bg-white border border-nebula py-10 px-8 flex flex-col gap-4">
+          <Menu.Items className="absolute w-[440px] mt-px left-0 origin-top-right focus:outline-none rounded-lg shadow bg-white border border-nebula py-10 px-8 flex flex-col gap-4">
             {selectedWallet.value
               ? <SelectAccount />
               : <SelectWallet wallets={supportedWallets} />}
