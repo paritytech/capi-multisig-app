@@ -196,7 +196,7 @@ The below list includes all other features of the multisig tool not currently pl
 5. As Alice, I want to see a summary of my multisig configuration, so that I can confirm all the details before committing the configuration and paying the associated fees.
 6. As Alice, Bob or Charlie, I want to view the newly created multisig and related proxies, so that I can transact from it.
 
-[*Ongoing Capi related discussion](https://github.com/paritytech/capi/issues/525)
+[\*Ongoing Capi related discussion](https://github.com/paritytech/capi/issues/525)
 
 <a href="url"><img src="https://user-images.githubusercontent.com/7630720/216567471-04ba7847-34fe-42c5-a5ff-46c08930ec20.png" width="60%" ></a>
 
