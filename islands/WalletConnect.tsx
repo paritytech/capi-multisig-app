@@ -5,6 +5,11 @@ import type { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
 import { useCallback, useEffect } from "preact/hooks"
 
+import { alice, bob, ss58 } from "capi"
+import { MultiAddress } from "http://localhost:4646/frame/dev/polkadot/@latest/types/sp_runtime/multiaddress.ts"
+import { Balances, client } from "http://localhost:4646/frame/dev/polkadot/@v0.9.37/mod.ts"
+import { MultisigRune } from "http://localhost:4646/patterns/MultisigRune.ts"
+
 const selectedWallet = signal<Wallet | undefined>(undefined)
 const accounts = signal<WalletAccount[]>([])
 const selectedAccount = signal<WalletAccount | undefined>(undefined)
@@ -88,7 +93,48 @@ function SelectAccount() {
   const selectAccount = useCallback((account: WalletAccount) => () => {
     selectedAccount.value = account
     localStorage.setItem(SELECTED_ACCOUNT, account.address)
+    capiTesting(account)
   }, [])
+
+  const capiTesting = async (account: WalletAccount & Wallet) => {
+    const accountAddressToCapi = await MultiAddress.Id(ss58.decode(account.address)[1]).run()
+    const accountAddressPubKey = ss58.decode(account.address)[1]
+
+    await Balances
+      .transfer({
+        value: 12345n,
+        dest: bob.address,
+      })
+      .signed({
+        sender: {
+          address: accountAddressToCapi,
+          sign: account.signer,
+        },
+      })
+      .sent()
+      .logStatus("Existential deposit:")
+      .finalized()
+      .run()
+
+    const multisig = MultisigRune.from(client, {
+      signatories: [
+        alice.publicKey,
+        bob.publicKey,
+        accountAddressPubKey,
+      ],
+      threshold: 2,
+    })
+
+    const multisigAddress = await multisig.address.run()
+    console.log("Created multisig address: ", ss58.encode(0, multisigAddress))
+
+    // https://polkadot.js.org/docs/keyring/start/ss58/
+    // console.log("account.address", account.address)
+    // const dec = ss58.decode(account.address)[1]
+    // const enc = ss58.encode(42, dec)
+    // console.log("dec", dec)
+    // console.log("enc", enc)
+  }
 
   return (
     <div className="space-y-4">
