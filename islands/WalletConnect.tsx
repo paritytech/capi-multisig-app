@@ -2,6 +2,7 @@ import { Menu, Transition } from "@headlessui/react"
 import { signal } from "@preact/signals"
 import { getWallets } from "@talisman-connect/wallets"
 import type { Wallet, WalletAccount } from "@talisman-connect/wallets"
+import classNames from "classnames"
 import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
 import type { Web3GlobalThis } from "misc"
 import { useCallback, useEffect } from "preact/hooks"
@@ -18,6 +19,9 @@ const setSelectedWallet = async (wallet: Wallet) => {
         accounts.value = accounts_
         localStorage.setItem(SELECTED_WALLET, wallet.extensionName)
         selectedWallet.value = wallet
+
+        const isAccountSelected = !!localStorage.getItem(SELECTED_ACCOUNT)
+        if (isAccountSelected) return
         const firstAccount = accounts_[0]
         if (firstAccount) {
           selectedAccount.value = accounts_[0]
@@ -64,7 +68,11 @@ function SelectWallet({ wallets }: { wallets: Wallet[] }) {
             <Menu.Item>
               <button
                 onClick={selectWallet(wallet)}
-                className="group flex  items-center space-x-3 py-4 w-full focus:outline-none"
+                disabled={!wallet.installed}
+                className={classNames(
+                  "group flex items-center space-x-3 py-4 w-full focus:outline-none",
+                  { "cursor-not-allowed": !wallet.installed },
+                )}
               >
                 <img src={wallet.logo.src} alt={wallet.logo.alt} className="h-10 w-10" />
                 <div className="flex w-full flex-row justify-between">
