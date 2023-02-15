@@ -3,6 +3,7 @@ import { signal } from "@preact/signals"
 import { getWallets } from "@talisman-connect/wallets"
 import type { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
+import type { Web3GlobalThis } from "misc"
 import { useCallback, useEffect } from "preact/hooks"
 
 const selectedWallet = signal<Wallet | undefined>(undefined)
@@ -12,7 +13,6 @@ const selectedAccount = signal<WalletAccount | undefined>(undefined)
 const setSelectedWallet = async (wallet: Wallet) => {
   try {
     await wallet.enable(DAPP_NAME)
-    // TODO implement unsubscribe
     await wallet.subscribeAccounts((accounts_) => {
       if (accounts_) {
         accounts.value = accounts_
@@ -23,6 +23,24 @@ const setSelectedWallet = async (wallet: Wallet) => {
   } catch (err) {
     throw err
   }
+}
+
+const setIntervalToSelectWallet = (wallet: Wallet) => {
+  let counter = 0
+  // Sets an interval to listen to `window` until the
+  // `injectedWeb3` property is present
+  const interval = setInterval(() => {
+    counter++
+    if (counter === 10) {
+      clearInterval(interval)
+    } else {
+      const isExtensionLoaded = (window as Web3GlobalThis)?.injectedWeb3
+      setSelectedWallet(wallet)
+      if (isExtensionLoaded) {
+        clearInterval(interval)
+      }
+    }
+  }, 100)
 }
 
 function SelectWallet({ wallets }: { wallets: Wallet[] }) {
@@ -141,7 +159,7 @@ export default function WalletConnect() {
           selectedAccount.value = selectedAccount_
         }
       } else {
-        setSelectedWallet(selectedWallet_)
+        setIntervalToSelectWallet(selectedWallet_)
       }
     }
   }, [selectedWallet.value])
