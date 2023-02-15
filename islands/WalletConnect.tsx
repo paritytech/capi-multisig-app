@@ -18,6 +18,11 @@ const setSelectedWallet = async (wallet: Wallet) => {
         accounts.value = accounts_
         localStorage.setItem(SELECTED_WALLET, wallet.extensionName)
         selectedWallet.value = wallet
+        const firstAccount = accounts_[0]
+        if (firstAccount) {
+          selectedAccount.value = accounts_[0]
+          localStorage.setItem(SELECTED_ACCOUNT, firstAccount.address)
+        }
       }
     })
   } catch (err) {
