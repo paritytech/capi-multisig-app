@@ -9,27 +9,6 @@ const threshold = signal(DEFAULT_THRESHOLD)
 const depositorAddress = signal("")
 const signatories = signal([""])
 
-const errorsName = computed(() => {
-  if (!name.value) {
-    return ["Name is empty"]
-  }
-  return []
-})
-
-const errorsThreshold = computed(() => {
-  const errors: string[] = []
-  if (!threshold.value) {
-    errors.push("Provide a threshold")
-  }
-  if (threshold.value < 2) {
-    errors.push("Threshold must be greater than 2")
-  }
-  if (threshold.value > signatories.value.length) {
-    errors.push("Threshold must be lesser than amount of signatories")
-  }
-  return errors
-})
-
 export default function CreateMultisig() {
   const setName = useCallback(({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
     name.value = currentTarget.value
@@ -97,12 +76,6 @@ export default function CreateMultisig() {
           onInput={setName}
         />
         <p>The name will not be written on chain</p>
-
-        {errorsName.value && errorsName.value.length > 0 && (
-          <div className="flex flex-col gap-2">
-            {errorsName.value.map((error) => <p key={error} className="text-red-600">{error}</p>)}
-          </div>
-        )}
       </div>
 
       <div className="flex flex-col gap-2 w-40">
@@ -114,14 +87,6 @@ export default function CreateMultisig() {
           value={threshold.value}
           onChange={setThreshold}
         />
-
-        {errorsThreshold.value && errorsThreshold.value.length > 0 && (
-          <div className="flex flex-col gap-2">
-            {errorsThreshold.value.map((error) => (
-              <p key={error} className="text-red-600">{error}</p>
-            ))}
-          </div>
-        )}
       </div>
 
       <div className="flex flex-col gap-2">
