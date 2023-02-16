@@ -1,5 +1,6 @@
 import { Card, Header, Layout, Navbar } from "components"
 import CapiComponent from "islands/CapiComponent.tsx"
+import FormikComponent from "islands/FormikComponent.tsx"
 
 export default function Landing() {
   return (
@@ -12,6 +13,7 @@ export default function Landing() {
           <p>You can create a new multisig from the top toolbar.</p>
         </Card>
         <CapiComponent />
+        <FormikComponent />
       </div>
     </Layout>
   )

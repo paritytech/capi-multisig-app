@@ -14,7 +14,8 @@ import * as $7 from "./routes/index.tsx";
 import * as $8 from "./routes/transactions.tsx";
 import * as $$0 from "./islands/CapiComponent.tsx";
 import * as $$1 from "./islands/CreateMultisig.tsx";
-import * as $$2 from "./islands/WalletConnect.tsx";
+import * as $$2 from "./islands/FormikComponent.tsx";
+import * as $$3 from "./islands/WalletConnect.tsx";
 
 const manifest = {
   routes: {
@@ -31,7 +32,8 @@ const manifest = {
   islands: {
     "./islands/CapiComponent.tsx": $$0,
     "./islands/CreateMultisig.tsx": $$1,
-    "./islands/WalletConnect.tsx": $$2,
+    "./islands/FormikComponent.tsx": $$2,
+    "./islands/WalletConnect.tsx": $$3,
   },
   baseUrl: import.meta.url,
   config,
