@@ -14,7 +14,6 @@ import * as $4 from "./routes/api/update_real.ts"
 import * as $5 from "./routes/create-multisig.tsx"
 import * as $6 from "./routes/create-transaction.tsx"
 import * as $7 from "./routes/index.tsx"
-import * as $8 from "./routes/transactions.tsx"
 
 const manifest = {
   routes: {
@@ -26,7 +25,6 @@ const manifest = {
     "./routes/create-multisig.tsx": $5,
     "./routes/create-transaction.tsx": $6,
     "./routes/index.tsx": $7,
-    "./routes/transactions.tsx": $8,
   },
   islands: {
     "./islands/CapiComponent.tsx": $$0,
