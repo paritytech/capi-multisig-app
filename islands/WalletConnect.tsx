@@ -103,6 +103,13 @@ function SelectWallet({ wallets }: { wallets: Wallet[] }) {
   )
 }
 
+const EmptyStateNoAccounts = () => (
+  <div className="flex flex-col items-center ">
+    <h3 className="mt-2 text-sm font-medium text-gray-900">No accounts</h3>
+    <p className="mt-1 text-sm text-gray-500">Get started by creating a new account.</p>
+  </div>
+)
+
 function SelectAccount() {
   const wallet = selectedWallet.value
   if (!wallet) {
@@ -133,22 +140,24 @@ function SelectAccount() {
         </div>
       </div>
       <div className="space-y-2">
-        {accounts.value.map((account) => (
-          <Menu.Item>
-            <button
-              className="focus:outline-none flex flex-col w-full hover:bg-gray-100 px-4 py-2 rounded-md"
-              onClick={selectAccount(account)}
-            >
-              <div className="flex w-full justify-between items-center gap-1">
-                <span className="mr-4">{account.name}</span>
-                {selectedAccount.value === account && (
-                  <span className="block h-3 w-3 rounded-full bg-green-400" />
-                )}
-              </div>
-              <span className="font-mono text-xs">{account.address}</span>
-            </button>
-          </Menu.Item>
-        ))}
+        {accounts.value.length
+          ? accounts.value.map((account) => (
+            <Menu.Item>
+              <button
+                className="focus:outline-none flex flex-col w-full hover:bg-gray-100 px-4 py-2 rounded-md"
+                onClick={selectAccount(account)}
+              >
+                <div className="flex w-full justify-between items-center gap-1">
+                  <span className="mr-4">{account.name}</span>
+                  {selectedAccount.value === account && (
+                    <span className="block h-3 w-3 rounded-full bg-green-400" />
+                  )}
+                </div>
+                <span className="font-mono text-xs">{account.address}</span>
+              </button>
+            </Menu.Item>
+          ))
+          : <EmptyStateNoAccounts />}
       </div>
     </div>
   )
@@ -196,7 +205,7 @@ export default function WalletConnect() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute w-[440px] mt-px left-0 origin-top-right focus:outline-none rounded-lg shadow bg-white border border-nebula py-10 px-8 flex flex-col gap-4">
+          <Menu.Items className="absolute w-[440px] mt-px right-0 origin-top-right focus:outline-none rounded-lg shadow bg-white border border-nebula py-10 px-8 flex flex-col gap-4">
             {selectedWallet.value
               ? <SelectAccount />
               : <SelectWallet wallets={supportedWallets} />}
