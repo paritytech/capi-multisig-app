@@ -2,33 +2,35 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import config from "./deno.json" assert { type: "json" }
-import * as $$0 from "./islands/CapiComponent.tsx"
-import * as $$1 from "./islands/CreateMultisig.tsx"
-import * as $$2 from "./islands/WalletConnect.tsx"
-import * as $0 from "./routes/api/db_get.ts"
-import * as $1 from "./routes/api/put_alice.ts"
-import * as $2 from "./routes/api/put_alice_sk.ts"
-import * as $3 from "./routes/api/put_bob.ts"
-import * as $4 from "./routes/api/put_bob_sk.ts"
-import * as $5 from "./routes/api/put_multi.ts"
-import * as $6 from "./routes/api/update_real.ts"
-import * as $7 from "./routes/create-multisig.tsx"
-import * as $8 from "./routes/create-transaction.tsx"
-import * as $9 from "./routes/index.tsx"
+import config from "./deno.json" assert { type: "json" };
+import * as $0 from "./routes/api/put_account.ts";
+import * as $1 from "./routes/api/put_alice.ts";
+import * as $2 from "./routes/api/put_alice_sk.ts";
+import * as $3 from "./routes/api/put_bob.ts";
+import * as $4 from "./routes/api/put_bob_sk.ts";
+import * as $5 from "./routes/api/put_multi.ts";
+import * as $6 from "./routes/api/query_alice.ts";
+import * as $7 from "./routes/api/update_real.ts";
+import * as $8 from "./routes/create-multisig.tsx";
+import * as $9 from "./routes/create-transaction.tsx";
+import * as $10 from "./routes/index.tsx";
+import * as $$0 from "./islands/CapiComponent.tsx";
+import * as $$1 from "./islands/CreateMultisig.tsx";
+import * as $$2 from "./islands/WalletConnect.tsx";
 
 const manifest = {
   routes: {
-    "./routes/api/db_get.ts": $0,
+    "./routes/api/put_account.ts": $0,
     "./routes/api/put_alice.ts": $1,
     "./routes/api/put_alice_sk.ts": $2,
     "./routes/api/put_bob.ts": $3,
     "./routes/api/put_bob_sk.ts": $4,
     "./routes/api/put_multi.ts": $5,
-    "./routes/api/update_real.ts": $6,
-    "./routes/create-multisig.tsx": $7,
-    "./routes/create-transaction.tsx": $8,
-    "./routes/index.tsx": $9,
+    "./routes/api/query_alice.ts": $6,
+    "./routes/api/update_real.ts": $7,
+    "./routes/create-multisig.tsx": $8,
+    "./routes/create-transaction.tsx": $9,
+    "./routes/index.tsx": $10,
   },
   islands: {
     "./islands/CapiComponent.tsx": $$0,
@@ -37,6 +39,6 @@ const manifest = {
   },
   baseUrl: import.meta.url,
   config,
-}
+};
 
-export default manifest
+export default manifest;

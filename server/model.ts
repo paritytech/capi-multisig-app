@@ -12,5 +12,5 @@ interface Multisig extends AccountBase<"Multisig"> {
 interface AccountBase<Kind extends string> {
   pk: string // public key
   sk: string // sorting key
-  name: string
+  kind: Kind // TODO only for testing purposes
 }

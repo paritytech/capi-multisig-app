@@ -6,6 +6,7 @@ import classNames from "classnames"
 import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
 import type { Web3GlobalThis } from "misc"
 import { useCallback, useEffect } from "preact/hooks"
+import { putAccount } from "../misc/putAccount.ts"
 
 const selectedWallet = signal<Wallet | undefined>(undefined)
 const accounts = signal<WalletAccount[]>([])
@@ -24,8 +25,9 @@ const setSelectedWallet = async (wallet: Wallet) => {
         if (isAccountSelected) return
         const firstAccount = accounts_[0]
         if (firstAccount) {
-          selectedAccount.value = accounts_[0]
+          selectedAccount.value = firstAccount
           localStorage.setItem(SELECTED_ACCOUNT, firstAccount.address)
+          putAccount({ pk: firstAccount.address, sk: `real#${firstAccount.address}` })
         }
       }
     })
@@ -126,6 +128,7 @@ function SelectAccount() {
   const selectAccount = useCallback((account: WalletAccount) => () => {
     selectedAccount.value = account
     localStorage.setItem(SELECTED_ACCOUNT, account.address)
+    putAccount({ pk: account.address, sk: `real#${account.address}` })
   }, [])
 
   return (
