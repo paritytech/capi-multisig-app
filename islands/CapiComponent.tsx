@@ -4,7 +4,7 @@ import { useEffect } from "preact/hooks"
 export default function CapiComponent() {
   useEffect(() => {
     ;(async () => {
-      console.log(await System.Account.keyPage(10).run())
+      // console.log(await System.Account.keyPage(10).run())
     })()
   }, [])
   return <div>Capi-using component</div>

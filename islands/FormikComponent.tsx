@@ -1,3 +1,5 @@
+// https://github.com/denoland/fresh/issues/1035
+
 // https://deno.land/manual@v1.30.3/node/cdns
 // https://deno.land/manual@v1.30.3/node/npm_specifiers
 
@@ -10,7 +12,7 @@
 // } from "https://esm.sh/formik@2.2.9?alias=react:preact/compat&deps=preact@10.5.14"
 // import { ErrorMessage, Field, Form, Formik } from "https://esm.sh/formik@2.2.9?external=react"
 // import { ErrorMessage, Field, Form, Formik } from "https://esm.sh/formik@2.2.9"
-// import Formik from "npm:formik@2.2.9"
+// import { ErrorMessage, Field, Form, Formik } from "npm:formik@2.2.9"
 import { ErrorMessage, Field, Form, Formik } from "https://cdn.skypack.dev/formik"
 
 // ----- Schema -----

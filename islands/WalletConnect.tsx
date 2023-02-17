@@ -6,9 +6,11 @@ import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
 import { useCallback, useEffect } from "preact/hooks"
 
 import { alice, bob, ss58 } from "capi"
-import { MultiAddress } from "http://localhost:4646/frame/dev/polkadot/@latest/types/sp_runtime/multiaddress.ts"
-import { Balances, client } from "http://localhost:4646/frame/dev/polkadot/@v0.9.37/mod.ts"
 import { MultisigRune } from "http://localhost:4646/patterns/MultisigRune.ts"
+import { Balances, client, Proxy, System } from "polkadot_dev/mod.ts"
+import { Event as ProxyEvent } from "polkadot_dev/types/pallet_proxy/pallet.ts"
+import { RuntimeEvent } from "polkadot_dev/types/polkadot_runtime.ts"
+import { MultiAddress } from "polkadot_dev/types/sp_runtime/multiaddress.ts"
 
 const selectedWallet = signal<Wallet | undefined>(undefined)
 const accounts = signal<WalletAccount[]>([])
@@ -100,9 +102,28 @@ function SelectAccount() {
     const accountAddressToCapi = await MultiAddress.Id(ss58.decode(account.address)[1]).run()
     const accountAddressPubKey = ss58.decode(account.address)[1]
 
+    const getAccountBalance = (pubKey: Uint8Array) =>
+      System.Account.entry([pubKey]).run().then((balance) => balance.data.free)
+
+    // Fund testing account (extension)
     await Balances
       .transfer({
-        value: 12345n,
+        value: 1000000000000n, // 100 // 1 = 10**10
+        dest: accountAddressToCapi,
+      })
+      .signed({ sender: alice })
+      .sent()
+      .logStatus("Existential deposit:")
+      .finalized()
+      .run()
+
+    // Check Account balance
+    console.log("account balance: ", await getAccountBalance(accountAddressPubKey))
+
+    // Test signing with the account (extension) and send funds from it
+    await Balances
+      .transfer({
+        value: 10000000000n, // 1 = 10**10
         dest: bob.address,
       })
       .signed({
@@ -116,6 +137,7 @@ function SelectAccount() {
       .finalized()
       .run()
 
+    // Create a multisig with the account (extension) as the signatory
     const multisig = MultisigRune.from(client, {
       signatories: [
         alice.publicKey,
@@ -127,6 +149,32 @@ function SelectAccount() {
 
     const multisigAddress = await multisig.address.run()
     console.log("Created multisig address: ", ss58.encode(0, multisigAddress))
+
+    // Create a Pure proxy (Vault) by the account (extension)
+    const proxies = await Proxy.createPure({ proxyType: "Any", delay: 0, index: 0 })
+      .signed({
+        sender: {
+          address: accountAddressToCapi,
+          sign: account.signer,
+        },
+      })
+      .sent()
+      .logStatus("creating pure proxy")
+      .txEvents()
+      .map((events) => {
+        return events.map((e) => e.event).filter((x) => x.type == "Proxy")
+        // ---- Error -> Uncaught (in promise) TypeError: undefined is not a function
+        // return events
+        //   .map((e) => e.event)
+        //   .filter(RuntimeEvent.isProxy)
+        //   .map((e) => e.value)
+        //   .filter(ProxyEvent.isPureCreated)
+      })
+      .run()
+
+    const proxyAddrUint = proxies[0].value.pure
+    const proxyAddr = ss58.encode(0, proxyAddrUint)
+    console.log("Pure proxy address: ", proxyAddr)
 
     // https://polkadot.js.org/docs/keyring/start/ss58/
     // console.log("account.address", account.address)
