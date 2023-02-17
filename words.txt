@@ -5,6 +5,10 @@ asynciterable
 azuretools
 capi
 deno
+Polkadot
+headlessui
+typesafe
+multisigs
 denoland
 deployctl
 dprint

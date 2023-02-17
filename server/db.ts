@@ -16,7 +16,8 @@ import { TypeSafeScanDocumentCommand } from "ts_ddb_runtime/scan-document-comman
 import { TypeSafeUpdateDocumentCommand } from "ts_ddb_runtime/update-document-command.js"
 // @deno-types="ts_ddb_types/get-document-command.d.ts"
 import { TypeSafeGetDocumentCommand } from "ts_ddb_runtime/get-document-command.js"
-import { Animal } from "./model.ts"
+import { Account } from "./model.ts"
+import "std/dotenv/load.ts"
 
 export const client = DynamoDBDocument.from(
   new DynamoDBClient({
@@ -26,13 +27,13 @@ export const client = DynamoDBDocument.from(
       secretAccessKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
     },
   }),
-) as unknown as TypeSafeDocumentClientV3<Animal, "id">
+) as unknown as TypeSafeDocumentClientV3<Account, "id">
 
-export const Put = TypeSafePutDocumentCommand<Animal>()
-export const Delete = TypeSafeDeleteDocumentCommand<Animal, "id", undefined>()
-export const Query = TypeSafeQueryDocumentCommand<Animal>()
-export const Scan = TypeSafeScanDocumentCommand<Animal>()
-export const Update = TypeSafeUpdateDocumentCommand<Animal, "id", undefined>()
-export const Get = TypeSafeGetDocumentCommand<Animal, "id", undefined>()
+export const Put = TypeSafePutDocumentCommand<Account>()
+export const Delete = TypeSafeDeleteDocumentCommand<Account, "id", undefined>()
+export const Query = TypeSafeQueryDocumentCommand<Account>()
+export const Scan = TypeSafeScanDocumentCommand<Account>()
+export const Update = TypeSafeUpdateDocumentCommand<Account, "id", undefined>()
+export const Get = TypeSafeGetDocumentCommand<Account, "id", undefined>()
 
 export const TableName = "capi_multisig"

@@ -1,16 +1,18 @@
-import { Header, Layout, Navbar, TestBlock } from "components"
+import { Card, Header, Layout, Navbar } from "components"
 import CapiComponent from "islands/CapiComponent.tsx"
 
 export default function Landing() {
   return (
     <Layout>
-      <Header title={<TestBlock>Overview</TestBlock>} />
-      <Navbar />
-      <TestBlock className="h-80">
-        None of the accounts connected is a part of a multisig. You can create a new multisig from
-        the top toolbar.
-      </TestBlock>
-      <CapiComponent />
+      <Header />
+      <Navbar title={<h1 className="text-2xl">Overview</h1>} />
+      <div className="flex flex-col items-center justify-center mt-10 gap-4">
+        <Card className="flex flex-col items-center w-[600px]">
+          <p>None of the accounts connected is a part of a multisig.</p>
+          <p>You can create a new multisig from the top toolbar.</p>
+        </Card>
+        <CapiComponent />
+      </div>
     </Layout>
   )
 }
