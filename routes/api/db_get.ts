@@ -7,7 +7,7 @@ export const handler: Handlers = {
       new Get({
         TableName,
         Key: {
-          id: "43fddbf1-1149-4b70-837c-74530517a854",
+          pk: "alice",
         },
       }),
     )

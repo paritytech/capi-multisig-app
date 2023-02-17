@@ -10,8 +10,7 @@ interface Multisig extends AccountBase<"Multisig"> {
 }
 
 interface AccountBase<Kind extends string> {
-  id: string // public key
-  proxies?: {}
-  multisigs?: {}
-  kind: Kind
+  pk: string // public key
+  sk: string // sorting key
+  name: string
 }
