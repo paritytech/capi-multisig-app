@@ -1,12 +1,15 @@
-import { computed, signal } from "@preact/signals"
-import { Button, Card, IconPlus } from "components"
+import { signal } from "@preact/signals"
+import { ss58 } from "capi"
+import { AccountSelect, Button, Card, IconPlus } from "components"
+import { client } from "http://localhost:4646/frame/dev/polkadot/@v0.9.37/mod.ts"
+import { MultisigRune } from "http://localhost:4646/patterns/MultisigRune.ts"
 import { DEFAULT_THRESHOLD } from "misc"
 import { useCallback } from "preact/hooks"
 import { JSX } from "preact/jsx-runtime"
+import { accounts, selectedAccount } from "./WalletConnect.tsx"
 
 const name = signal("")
 const threshold = signal(DEFAULT_THRESHOLD)
-const depositorAddress = signal("")
 const signatories = signal([""])
 
 export default function CreateMultisig() {
@@ -17,13 +20,6 @@ export default function CreateMultisig() {
   const setThreshold = useCallback(
     ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       threshold.value = currentTarget.valueAsNumber
-    },
-    [],
-  )
-
-  const setDepositorAddress = useCallback(
-    ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      depositorAddress.value = currentTarget.value
     },
     [],
   )
@@ -39,7 +35,7 @@ export default function CreateMultisig() {
     signatories.value = signatories.value.concat("")
   }, [])
 
-  const createMultisig = useCallback(async () => {
+  const putMultisig = async ({ pk, name, threshold, signatories }: any) => {
     await fetch("/api/put_multisig", {
       // TODO separate function
       // TODO do we need all these headers?
@@ -53,14 +49,65 @@ export default function CreateMultisig() {
       redirect: "follow",
       referrerPolicy: "no-referrer",
       body: JSON.stringify({
-        // id: crypto.randomUUID(),
-        id: name.value, // TODO
-        name: name.value,
-        depositorAddress: depositorAddress.value,
-        threshold: threshold.value,
-        signatories: signatories.value,
+        pk,
+        sk: `#${pk}`,
+        name,
+        threshold,
+        signatories,
       }),
     })
+  }
+
+  const putSignatory = async (
+    { accountAddress, multisigAddress, name, threshold, signatories }: any,
+  ) => {
+    await fetch("/api/put_signatory", {
+      // TODO separate function
+      // TODO do we need all these headers?
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({
+        accountAddress,
+        multisigAddress,
+        name,
+        signatories,
+        threshold,
+      }),
+    })
+  }
+
+  const createMultisig = useCallback(async () => {
+    const decodedSignatories = signatories.value.map((signatory) => ss58.decode(signatory)[1])
+    const multisig = MultisigRune.from(client, {
+      signatories: decodedSignatories,
+      threshold: threshold.value,
+    })
+    const multisigAddress = await multisig.address.run()
+    const address = ss58.encode(0, multisigAddress)
+    // console.log("multisigAddress:", ss58.encode(0, multisigAddress))
+    putMultisig({
+      pk: address,
+      name: name.value,
+      threshold: threshold.value,
+      signatories: signatories.value,
+    })
+    Promise.all(signatories.value.map((signatory) => {
+      putSignatory({
+        accountAddress: signatory,
+        multisigAddress: address,
+        pk: signatory,
+        name: name.value,
+        threshold: threshold.value,
+        signatories: signatories.value,
+      })
+    }))
   }, [])
 
   return (
@@ -92,13 +139,10 @@ export default function CreateMultisig() {
       <div className="flex flex-col gap-2">
         <label className="text-tuna">Depositor:</label>
 
-        {/* TODO Replace to Select */}
-        <input
-          className="rounded-lg bg-jaguar border-gray-300 text-gray-900 w-full focus:ring-1 focus:ring-pink-500 focus:border-pink-500"
-          placeholder="Depositor Address"
-          type="text"
-          value={depositorAddress.value}
-          onInput={setDepositorAddress}
+        <AccountSelect
+          selectedAccount={selectedAccount.value}
+          accounts={accounts.value}
+          setSelectedAccount={console.log}
         />
       </div>
 
@@ -121,7 +165,7 @@ export default function CreateMultisig() {
       })}
 
       <div className="self-end">
-        <Button variant="ghost" iconLeft={<IconPlus />} onClick={addSignatory}>
+        <Button variant="ghost" iconLeft={<IconPlus className="h-6 w-6" />} onClick={addSignatory}>
           Add signatory
         </Button>
       </div>

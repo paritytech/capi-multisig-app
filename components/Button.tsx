@@ -12,7 +12,7 @@ export const Button = (
     <button
       className={classNames(
         "flex flex-row gap-3 items-center justify-center rounded-full w-full",
-        "font-semibold py-3 px-10",
+        "font-semibold py-3 px-8 w-52",
         "outline-none focus:outline-none",
         { "bg-transparent text-tuna hover:text-pink-800": variant === "ghost" },
         {

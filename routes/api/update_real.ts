@@ -7,7 +7,8 @@ export const handler: Handlers = {
       new Update({
         TableName,
         Key: {
-          id: "alice",
+          sk: "alice",
+          pk: "",
         },
         UpdateExpression: "SET proxies = list_append(proxies, :i)",
         ExpressionAttributeValues: {

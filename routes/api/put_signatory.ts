@@ -3,21 +3,22 @@ import { client, Put, TableName } from "../../server/mod.ts"
 
 export const handler: Handlers = {
   async POST(req) {
-    const { pk, sk, signatories = [], threshold, name } = await req.json()
+    const { accountAddress, multisigAddress, name, signatories, threshold } = await req.json()
 
     await client.send(
       new Put({
         TableName,
         Item: {
-          pk,
-          sk,
-          name,
+          pk: accountAddress,
+          sk: `MULTI#${multisigAddress}`,
           kind: "Multisig",
+          name,
           signatories,
           threshold,
         },
       }),
     )
-    return new Response("Put Multisig - Success")
+
+    return new Response("Put Signatory - Success")
   },
 }

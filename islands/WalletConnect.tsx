@@ -1,15 +1,43 @@
 import { Menu, Transition } from "@headlessui/react"
-import { signal } from "@preact/signals"
+import { computed, signal } from "@preact/signals"
 import { getWallets } from "@talisman-connect/wallets"
 import type { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import classNames from "classnames"
 import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
 import type { Web3GlobalThis } from "misc"
 import { useCallback, useEffect } from "preact/hooks"
+import { putAccount } from "../misc/db/putAccount.ts"
 
-const selectedWallet = signal<Wallet | undefined>(undefined)
-const accounts = signal<WalletAccount[]>([])
-const selectedAccount = signal<WalletAccount | undefined>(undefined)
+export const selectedWallet = signal<Wallet | undefined>(undefined)
+export const accounts = signal<WalletAccount[]>([])
+export const selectedAccount = signal<WalletAccount | undefined>(undefined)
+
+const multisigs = computed(async () => {
+  if (selectedAccount.value?.address) {
+    const res = await fetch("/api/query_multi", {
+      // TODO separate function
+      // TODO do we need all these headers?
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({
+        pk: selectedAccount.value?.address,
+      }),
+    }).then((response) => response.json())
+    // .then((data) => {
+    //   console.log('Multisigs:', data.Items);
+    // })
+    console.log("fetch multisigs: ", res)
+    return res
+  }
+  return "unknown"
+})
 
 const setSelectedWallet = async (wallet: Wallet) => {
   try {
@@ -24,8 +52,13 @@ const setSelectedWallet = async (wallet: Wallet) => {
         if (isAccountSelected) return
         const firstAccount = accounts_[0]
         if (firstAccount) {
-          selectedAccount.value = accounts_[0]
+          selectedAccount.value = firstAccount
           localStorage.setItem(SELECTED_ACCOUNT, firstAccount.address)
+          putAccount({
+            pk: firstAccount.address,
+            sk: `REAL#${firstAccount.address}`,
+            name: firstAccount.name,
+          })
         }
       }
     })
@@ -126,6 +159,7 @@ function SelectAccount() {
   const selectAccount = useCallback((account: WalletAccount) => () => {
     selectedAccount.value = account
     localStorage.setItem(SELECTED_ACCOUNT, account.address)
+    putAccount({ pk: account.address, sk: `REAL#${account.address}`, name: account.name })
   }, [])
 
   return (
@@ -165,6 +199,7 @@ function SelectAccount() {
 export default function WalletConnect() {
   const supportedWallets: Wallet[] = getWallets()
 
+  console.log("multisigs: ", multisigs.value)
   useEffect(() => {
     const selectedWalletName = localStorage.getItem(SELECTED_WALLET)
     const selectedWallet_ = supportedWallets.find(

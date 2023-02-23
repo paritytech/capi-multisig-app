@@ -27,13 +27,13 @@ export const client = DynamoDBDocument.from(
       secretAccessKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
     },
   }),
-) as unknown as TypeSafeDocumentClientV3<Account, "id">
+) as unknown as TypeSafeDocumentClientV3<Account, "pk">
 
 export const Put = TypeSafePutDocumentCommand<Account>()
-export const Delete = TypeSafeDeleteDocumentCommand<Account, "id", undefined>()
+export const Delete = TypeSafeDeleteDocumentCommand<Account, "pk", undefined>()
 export const Query = TypeSafeQueryDocumentCommand<Account>()
 export const Scan = TypeSafeScanDocumentCommand<Account>()
-export const Update = TypeSafeUpdateDocumentCommand<Account, "id", undefined>()
-export const Get = TypeSafeGetDocumentCommand<Account, "id", undefined>()
+export const Update = TypeSafeUpdateDocumentCommand<Account, "pk", undefined>()
+export const Get = TypeSafeGetDocumentCommand<Account, "pk", undefined>()
 
 export const TableName = "capi_multisig"
