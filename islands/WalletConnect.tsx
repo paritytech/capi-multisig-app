@@ -199,7 +199,6 @@ function SelectAccount() {
 export default function WalletConnect() {
   const supportedWallets: Wallet[] = getWallets()
 
-  console.log("multisigs: ", multisigs.value)
   useEffect(() => {
     const selectedWalletName = localStorage.getItem(SELECTED_WALLET)
     const selectedWallet_ = supportedWallets.find(
