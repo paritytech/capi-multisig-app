@@ -15,8 +15,8 @@
     "ctx": "deno run -A -r --unstable https://raw.githubusercontent.com/paritytech/capi/5d37aac/main.ts --serve",
     "cache": "deno task ctx -- deno cache -r=http://localhost:4646/",
     "star": "deno run -A _tasks/star.ts && deno task cache target/star.ts",
-    "dev2": "deno task ctx -- deno run -A -r=http://localhost:4646/ --watch=static/,routes/ dev.ts",
-    "dev": "deno run -A --watch=static/,routes/ dev.ts"
+    "dev": "deno task ctx -- deno run -A -r=http://localhost:4646/ --watch=static/,routes/ dev.ts",
+    "dev2": "deno run -A --watch=static/,routes/ dev.ts"
   },
   "lint": {
     "files": { "include": ["."] },

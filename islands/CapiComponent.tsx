@@ -1,4 +1,4 @@
-import { System } from "http://localhost:4646/frame/wss/rpc.polkadot.io/@v0.9.37/mod.ts"
+// import { System } from "http://localhost:4646/frame/wss/rpc.polkadot.io/@v0.9.37/mod.ts"
 import { useEffect } from "preact/hooks"
 
 export default function CapiComponent() {
