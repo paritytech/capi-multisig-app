@@ -1,7 +1,8 @@
-import { Card, Header, Layout, Navbar } from "components";
-import CapiComponent from "islands/CapiComponent.tsx";
+import { Card, Header, Layout, Navbar } from "components"
+// import CapiComponent from "islands/CapiComponent.tsx"
 // import FormikComponent from "islands/FormikComponent.tsx";
-import ReactHookFormComponent from "islands/ReactHookFormComponent.tsx";
+// import ReactHookFormComponent from "islands/ReactHookFormComponent.tsx"
+import WizardApp from "../islands/WizardApp.tsx"
 
 export default function Landing() {
   return (
@@ -10,13 +11,18 @@ export default function Landing() {
       <Navbar />
       <div className="flex justify-center mt-10">
         <Card className="flex flex-col items-center w-[600px]">
+          <WizardApp />
+        </Card>
+        {
+          /* <Card className="flex flex-col items-center w-[600px]">
           <p>None of the accounts connected is a part of a multisig.</p>
           <p>You can create a new multisig from the top toolbar.</p>
-        </Card>
+        </Card> */
+        }
       </div>
-      <CapiComponent />
+      {/* <CapiComponent /> */}
       {/* <FormikComponent /> */}
-      <ReactHookFormComponent />
+      {/* <ReactHookFormComponent /> */}
     </Layout>
-  );
+  )
 }

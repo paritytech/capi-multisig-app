@@ -9,7 +9,7 @@
 // import { ErrorMessage, Field, Form, Formik } from "https://esm.sh/formik@2.2.9?external=react"
 // import { ErrorMessage, Field, Form, Formik } from "https://esm.sh/formik@2.2.9";
 // import { ErrorMessage, Field, Form, Formik } from "npm:formik@2.2.9"
-import { ErrorMessage, Field, Form, Formik } from "https://cdn.skypack.dev/formik";
+import { ErrorMessage, Field, Form, Formik } from "https://cdn.skypack.dev/formik"
 // import {
 //   Field,
 //   Form,
@@ -27,8 +27,8 @@ export default function FormikComponent() {
           email: "",
         }}
         onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(values, null, 2));
+          await new Promise((r) => setTimeout(r, 500))
+          alert(JSON.stringify(values, null, 2))
         }}
       >
         <Form>
@@ -44,5 +44,5 @@ export default function FormikComponent() {
         </Form>
       </Formik>
     </div>
-  );
+  )
 }
