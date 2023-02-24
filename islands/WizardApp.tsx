@@ -28,14 +28,15 @@ interface IWizardContext {
   setSteps: (steps: number) => void
 }
 
-const WizardContext = createContext<IWizardContext>({
+const defaultWizardValues = {
   activeStep: 0,
   steps: 0,
   goNext: () => {},
   goPrev: () => {},
   setActiveStep: () => {},
   setSteps: () => {},
-})
+}
+const WizardContext = createContext<IWizardContext>(defaultWizardValues)
 
 // ------ Wizard Hooks
 const useWizardNavigation = () => {
@@ -70,8 +71,8 @@ const useWizardProgress = () => {
 
 // ------ Wizard Component
 function Wizard({ children }: { children: ComponentChildren }) {
-  const [activeStep, setActiveStep] = useState(0)
-  const [steps, setSteps] = useState(0)
+  const [activeStep, setActiveStep] = useState(defaultWizardValues.activeStep)
+  const [steps, setSteps] = useState(defaultWizardValues.steps)
 
   const goNext = () => {
     setActiveStep(activeStep + 1)
