@@ -1,7 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react"
 import type { WalletAccount } from "@talisman-connect/wallets"
 import classNames from "classnames"
-import { IconCheck, IconChevronDown } from "components"
+import { IconCheck, IconChevronDown, Identicon } from "components"
 
 export function AccountSelect({
   selectedAccount,
@@ -19,8 +19,9 @@ export function AccountSelect({
           <Listbox.Button className="relative w-full rounded-lg bg-jaguar border-gray-300 text-gray-900 border border-gray-300 pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500">
             {selectedAccount
               ? (
-                <span className="flex items-center gap-4">
-                  <span>
+                <span className="flex items-center gap-2">
+                  <Identicon value={selectedAccount.address} size={32} />
+                  <span className="font-bold">
                     {selectedAccount.name}
                   </span>
                   <span>
@@ -62,21 +63,15 @@ export function AccountSelect({
                         "flex flex-row gap-4 items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer",
                       )}
                     >
-                      <div className="text-black text-left w-full">
-                        <p
-                          className={classNames(
-                            {
-                              "font-bold": selected,
-                            },
-                            "flex items-center justify-between gap-2 py-1 leading-4",
-                          )}
-                        >
-                          <p className="block py-1 leading-4 space-x-4">
-                            <span className="font-bold">{account.name}</span>
-                            <span>{account.address}</span>
-                          </p>
-                          {selected && <IconCheck className="h-6 w-6 text-green-500" />}
+                      <div className="flex gap-2 items-center text-black text-left w-full ">
+                        <Identicon value={account.address} size={32} />
+                        <p className="leading-4">
+                          <span className="font-bold">{account.name}</span>
                         </p>
+                        <p className=" leading-4">
+                          <span className="">{account.address}</span>
+                        </p>
+                        {selected && <IconCheck className="h-6 w-6 text-green-500" />}
                       </div>
                     </div>
                   )}
