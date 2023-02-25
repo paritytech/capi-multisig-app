@@ -7,9 +7,9 @@ import { DAPP_NAME, SELECTED_ACCOUNT, SELECTED_WALLET } from "misc"
 import type { Web3GlobalThis } from "misc"
 import { useCallback, useEffect } from "preact/hooks"
 
-const selectedWallet = signal<Wallet | undefined>(undefined)
-const accounts = signal<WalletAccount[]>([])
-const selectedAccount = signal<WalletAccount | undefined>(undefined)
+export const selectedWallet = signal<Wallet | undefined>(undefined)
+export const accounts = signal<WalletAccount[]>([])
+export const selectedAccount = signal<WalletAccount | undefined>(undefined)
 
 const setSelectedWallet = async (wallet: Wallet) => {
   try {

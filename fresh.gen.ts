@@ -3,10 +3,11 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" }
-import * as $$0 from "./islands/CapiComponent.tsx"
-import * as $$1 from "./islands/CreateMultisig.tsx"
-import * as $$2 from "./islands/WalletConnect.tsx"
-import * as $$3 from "./islands/WizardApp.tsx"
+import * as $$0 from "./islands/AccountSelect.tsx"
+import * as $$1 from "./islands/CapiComponent.tsx"
+import * as $$2 from "./islands/CreateMultisig.tsx"
+import * as $$3 from "./islands/WalletConnect.tsx"
+import * as $$4 from "./islands/WizardApp.tsx"
 import * as $0 from "./routes/api/db_get.ts"
 import * as $1 from "./routes/api/put_multisig.ts"
 import * as $2 from "./routes/api/put_proxy.ts"
@@ -28,10 +29,11 @@ const manifest = {
     "./routes/index.tsx": $7,
   },
   islands: {
-    "./islands/CapiComponent.tsx": $$0,
-    "./islands/CreateMultisig.tsx": $$1,
-    "./islands/WalletConnect.tsx": $$2,
-    "./islands/WizardApp.tsx": $$3,
+    "./islands/AccountSelect.tsx": $$0,
+    "./islands/CapiComponent.tsx": $$1,
+    "./islands/CreateMultisig.tsx": $$2,
+    "./islands/WalletConnect.tsx": $$3,
+    "./islands/WizardApp.tsx": $$4,
   },
   baseUrl: import.meta.url,
   config,
