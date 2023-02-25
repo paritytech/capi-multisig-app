@@ -6,6 +6,7 @@ azuretools
 capi
 deno
 Polkadot
+hashers
 headlessui
 typesafe
 multisigs
