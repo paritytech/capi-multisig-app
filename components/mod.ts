@@ -1,4 +1,5 @@
 export * from "./AccountSelect.tsx"
+export * from "./AddressInput.tsx"
 export * from "./Button.tsx"
 export * from "./Card.tsx"
 export * from "./icons/mod.ts"

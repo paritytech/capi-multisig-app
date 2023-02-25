@@ -1,4 +1,4 @@
-import { computed, signal } from "@preact/signals"
+import { signal } from "@preact/signals"
 import { Button, Card, IconPlus } from "components"
 import { DEFAULT_THRESHOLD } from "misc"
 import { useCallback } from "preact/hooks"

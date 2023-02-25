@@ -2,6 +2,7 @@ import { Card, Header, Identicon, Layout, Navbar } from "components"
 import CapiComponent from "islands/CapiComponent.tsx"
 import WizardApp from "islands/WizardApp.tsx"
 import Select from "../islands/AccountSelect.tsx"
+import Inputs from "../islands/Inputs.tsx"
 
 export default function Landing() {
   return (
@@ -20,6 +21,10 @@ export default function Landing() {
         <Card className="flex flex-col items-center w-[600px] space-y-4">
           <h2 className="font-bold">AccountSelect</h2>
           <Select />
+        </Card>
+        <Card className="flex flex-col items-center w-[600px] space-y-4">
+          <h2 className="font-bold">AddressInput</h2>
+          <Inputs />
         </Card>
         <Card className="flex flex-col items-center w-[600px]">
           <p>None of the accounts connected is a part of a multisig.</p>
