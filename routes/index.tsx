@@ -17,7 +17,8 @@ export default function Landing() {
           <Identicon size={32} value="5EP1x5VUMwQiaWHkNa5d6qE2FqRW8Apyw6P67NPUzzHMdDz4" />
           <Identicon size={32} value="5EHufKvrjg3QGn4VFgFpSq7fybnLauire1ULHEcosAg8E47X" />
         </Card>
-        <Card className="flex flex-col items-center w-[600px]">
+        <Card className="flex flex-col items-center w-[600px] space-y-4">
+          <h2 className="font-bold">AccountSelect</h2>
           <Select />
         </Card>
         <Card className="flex flex-col items-center w-[600px]">
