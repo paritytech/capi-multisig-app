@@ -1,5 +1,5 @@
 import { ss58 } from "capi"
-import { hashers } from "http://localhost:4646/util/mod.ts"
+import { hashers } from "capi/util"
 import { findScheme, SCHEMA } from "./scheme.tsx"
 
 /*
