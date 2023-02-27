@@ -2,6 +2,7 @@ import classNames from "classnames"
 import { Identicon } from "components"
 import { isValidAddress } from "misc"
 import { useCallback, useEffect, useState } from "preact/hooks"
+import { JSX } from "preact/jsx-runtime"
 
 interface Props {
   id?: string
@@ -9,8 +10,7 @@ interface Props {
   placeholder: string
   label: string
   value: string
-  // TODO any
-  onChange: (event: any) => void
+  onChange: ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => void
   errors?: string[]
 }
 

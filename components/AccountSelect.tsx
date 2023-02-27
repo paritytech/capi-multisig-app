@@ -15,7 +15,7 @@ export function AccountSelect({
   return (
     <Listbox value={selectedAccount} onChange={setSelectedAccount}>
       {({ open }: { open: boolean }) => (
-        <div className="mt-1 relative">
+        <div className="mt-1 relative w-full">
           <Listbox.Button className="relative w-full rounded-lg bg-jaguar border-gray-300 text-gray-900 border border-gray-300 pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-pink-500 focus:border-pink-500">
             {selectedAccount
               ? (
