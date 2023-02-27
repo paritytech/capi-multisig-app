@@ -1,3 +1,3 @@
 export * from "./constants.ts"
-export * from "./isValidAddress.ts"
 export * from "./types.ts"
+export * from "./utils/mod.ts"

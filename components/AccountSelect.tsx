@@ -2,6 +2,7 @@ import { Listbox, Transition } from "@headlessui/react"
 import type { WalletAccount } from "@talisman-connect/wallets"
 import classNames from "classnames"
 import { IconCheck, IconChevronDown, Identicon } from "components"
+import { shortAddress } from "misc"
 
 export function AccountSelect({
   selectedAccount,
@@ -25,7 +26,7 @@ export function AccountSelect({
                     {selectedAccount.name}
                   </span>
                   <span>
-                    {selectedAccount.address}
+                    {shortAddress(selectedAccount.address)}
                   </span>
                 </span>
               )
@@ -69,7 +70,7 @@ export function AccountSelect({
                           <span className="font-bold">{account.name}</span>
                         </p>
                         <p className=" leading-4">
-                          <span className="">{account.address}</span>
+                          <span className="">{shortAddress(account.address)}</span>
                         </p>
                         {selected && <IconCheck className="h-6 w-6 text-green-500" />}
                       </div>
