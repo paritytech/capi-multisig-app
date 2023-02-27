@@ -15,9 +15,8 @@ import * as $$0 from "./islands/AccountSelect.tsx";
 import * as $$1 from "./islands/CapiComponent.tsx";
 import * as $$2 from "./islands/CreateMultisig.tsx";
 import * as $$3 from "./islands/Inputs.tsx";
-import * as $$4 from "./islands/ReactHookForm.tsx";
-import * as $$5 from "./islands/WalletConnect.tsx";
-import * as $$6 from "./islands/WizardApp.tsx";
+import * as $$4 from "./islands/WalletConnect.tsx";
+import * as $$5 from "./islands/WizardApp.tsx";
 
 const manifest = {
   routes: {
@@ -35,9 +34,8 @@ const manifest = {
     "./islands/CapiComponent.tsx": $$1,
     "./islands/CreateMultisig.tsx": $$2,
     "./islands/Inputs.tsx": $$3,
-    "./islands/ReactHookForm.tsx": $$4,
-    "./islands/WalletConnect.tsx": $$5,
-    "./islands/WizardApp.tsx": $$6,
+    "./islands/WalletConnect.tsx": $$4,
+    "./islands/WizardApp.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,
