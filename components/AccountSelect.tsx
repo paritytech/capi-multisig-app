@@ -49,7 +49,7 @@ export function AccountSelect({
                 <Listbox.Option
                   key={account}
                   className={({ active }: { active: boolean }) =>
-                    classNames({ "bg-gray-100": active })}
+                    classNames({ "bg-magnolia": active })}
                   value={account}
                 >
                   {({
@@ -61,7 +61,7 @@ export function AccountSelect({
                   }) => (
                     <div
                       className={classNames(
-                        "flex flex-row gap-4 items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer",
+                        "flex flex-row gap-4 items-center p-2 rounded-md hover:bg-magnolia cursor-pointer",
                       )}
                     >
                       <div className="flex gap-2 items-center text-black text-left w-full ">
@@ -70,9 +70,13 @@ export function AccountSelect({
                           <span className="font-bold">{account.name}</span>
                         </p>
                         <p className=" leading-4">
-                          <span className="">{shortAddress(account.address)}</span>
+                          <span>{shortAddress(account.address)}</span>
                         </p>
-                        {selected && <IconCheck className="h-6 w-6 text-green-500" />}
+                        {selected && (
+                          <div className="ml-auto">
+                            <IconCheck className="h-6 w-6" />
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
