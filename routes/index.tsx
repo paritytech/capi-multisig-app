@@ -10,7 +10,7 @@ export default function Landing() {
       <Header />
       <Navbar title={<h1 className="text-2xl">Overview</h1>} />
       <div className="flex flex-col items-center justify-center mt-10 gap-4">
-        <Card className="flex flex-col items-center w-[600px]">
+        <Card className="flex flex-col items-center w-[600px] py-6">
           <WizardApp />
         </Card>
         <Card className="flex flex-col items-center w-[600px] space-y-4">
