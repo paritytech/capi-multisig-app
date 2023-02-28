@@ -145,8 +145,9 @@ const multisigInitSchema = z.object({
 type IMultisigInitEntity = z.infer<typeof multisigInitSchema>
 
 function MultisigInit() {
-  const { register, trigger, handleSubmit, formState: { errors } } = useForm<IMultisigInitEntity>({
+  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigInitEntity>({
     resolver: zodResolver(multisigInitSchema),
+    mode: "onChange",
   })
   const { formData, updateFormData } = useWizardForm()
   const { goNext } = useWizardNavigation()
@@ -169,7 +170,6 @@ function MultisigInit() {
         defaultValue={formData.multisigName}
         placeholder="Enter the name..."
         className="block w-full rounded-lg border border-gray-300 p-2 my-2 w-1/3"
-        onBlur={() => trigger("multisigName")}
       />
       {errors.multisigName && (
         <div className="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
@@ -194,11 +194,10 @@ const multisigMemberSchema = z.object({
 type IMultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
 function MultisigMembers() {
-  const { register, trigger, handleSubmit, formState: { errors } } = useForm<IMultisigMemberEntity>(
-    {
-      resolver: zodResolver(multisigMemberSchema),
-    },
-  )
+  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigMemberEntity>({
+    resolver: zodResolver(multisigMemberSchema),
+    mode: "onChange",
+  })
   const { formData, updateFormData } = useWizardForm()
   const { goNext, goPrev } = useWizardNavigation()
 
@@ -227,7 +226,6 @@ function MultisigMembers() {
         defaultValue={formData.member}
         placeholder="Enter the address..."
         className="block w-full rounded-lg border border-gray-300 p-2 my-2 w-1/3"
-        onBlur={() => trigger("member")}
       />
       {errors.member && (
         <div className="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
@@ -258,8 +256,9 @@ const multisigFundSchema = z.object({
 type IMultisigFundEntity = z.infer<typeof multisigFundSchema>
 
 function MultisigFund() {
-  const { register, trigger, handleSubmit, formState: { errors } } = useForm<IMultisigFundEntity>({
+  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
+    mode: "onChange",
   })
   const { formData, updateFormData } = useWizardForm()
   const { goNext, goPrev } = useWizardNavigation()
@@ -291,7 +290,6 @@ function MultisigFund() {
         defaultValue={`${formData.fund}`}
         placeholder="0 DOT"
         className="block w-full rounded-lg border border-gray-300 p-2 my-2 w-1/3"
-        onBlur={() => trigger("fund")}
       />
       {errors.fund && (
         <div className="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
