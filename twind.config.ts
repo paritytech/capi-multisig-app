@@ -11,6 +11,7 @@ export default ((): Options => ({
         nebula: "#D1D1DB",
         platinum: "#DFE1E6",
         jaguar: "rgba(0, 0, 0, 0.05)",
+        dimmed: "rgba(0, 0, 0, 0.44)",
         magnolia: "#F3F5FB",
       },
     },
