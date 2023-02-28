@@ -36,13 +36,13 @@ interface IWizardContext {
 type IFormData = Record<string, any>
 
 // ------ Default form
-const defaultValuesMultisigInit: IMultisigInitFormData = {
+const defaultValuesMultisigInit: IMultisigInitEntity = {
   multisigName: "",
 }
-const defaultValuesMembers: IMultisigMemberSchema = {
+const defaultValuesMembers: IMultisigMemberEntity = {
   member: "",
 }
-const defaultValuesFund: IMultisigFundSchema = {
+const defaultValuesFund: IMultisigFundEntity = {
   fund: null,
 }
 
@@ -142,16 +142,16 @@ function Pages({ children }: { children: ComponentChildren }) {
 const multisigInitSchema = z.object({
   multisigName: z.string().min(1, { message: "Required a multisig address" }),
 })
-type IMultisigInitFormData = z.infer<typeof multisigInitSchema>
+type IMultisigInitEntity = z.infer<typeof multisigInitSchema>
 
 function MultisigInit() {
-  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigInitFormData>({
+  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigInitEntity>({
     resolver: zodResolver(multisigInitSchema),
   })
   const { formData, updateFormData } = useWizardForm()
   const { goNext } = useWizardNavigation()
 
-  const onSubmit = (formDataNew: IMultisigInitFormData) => {
+  const onSubmit = (formDataNew: IMultisigInitEntity) => {
     updateFormData(formDataNew)
     goNext()
   }
@@ -189,21 +189,21 @@ const multisigMemberSchema = z.object({
     message: "Invalid polkadot address",
   }),
 })
-type IMultisigMemberSchema = z.infer<typeof multisigMemberSchema>
+type IMultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
 function MultisigMembers() {
-  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigMemberSchema>({
+  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
   })
   const { formData, updateFormData } = useWizardForm()
   const { goNext, goPrev } = useWizardNavigation()
 
-  const onSubmit = (formDataNew: IMultisigMemberSchema) => {
+  const onSubmit = (formDataNew: IMultisigMemberEntity) => {
     updateFormData(formDataNew)
     goNext()
   }
 
-  const onBack = (formDataNew: IMultisigMemberSchema) => {
+  const onBack = (formDataNew: IMultisigMemberEntity) => {
     updateFormData(formDataNew)
     goPrev()
   }
@@ -250,21 +250,21 @@ const multisigFundSchema = z.object({
     }),
   ).nullable(),
 })
-type IMultisigFundSchema = z.infer<typeof multisigFundSchema>
+type IMultisigFundEntity = z.infer<typeof multisigFundSchema>
 
 function MultisigFund() {
-  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigFundSchema>({
+  const { register, handleSubmit, formState: { errors } } = useForm<IMultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
   })
   const { formData, updateFormData } = useWizardForm()
   const { goNext, goPrev } = useWizardNavigation()
 
-  const onSubmit = (formDataNew: IMultisigFundSchema) => {
+  const onSubmit = (formDataNew: IMultisigFundEntity) => {
     updateFormData(formDataNew)
     goNext()
   }
 
-  const onBack = (formDataNew: IMultisigFundSchema) => {
+  const onBack = (formDataNew: IMultisigFundEntity) => {
     updateFormData(formDataNew)
     goPrev()
   }
