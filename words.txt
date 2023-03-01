@@ -1,4 +1,7 @@
 capi
+clsx
+compat
+csstools
 polkadot
 amannn
 asynciterable
@@ -15,9 +18,12 @@ dprint
 esbenp
 karlkallavus
 multiaddress
+pnpm
 preact
 sastan
 tailwind
+tailwindcss
 twind
 typesafe
+vite
 westend

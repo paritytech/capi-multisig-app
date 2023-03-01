@@ -3,5 +3,5 @@
   "version": "0.2",
   "dictionaryDefinitions": [{ "name": "project-words", "path": "words.txt", "addWords": true }],
   "dictionaries": ["project-words"],
-  "ignorePaths": []
+  "ignorePaths": ["pnpm-lock.yaml", "src/assets/", "public", ".gitignore", ".prettierignore", ".prettierrc"]
 }
