@@ -31,7 +31,6 @@ export function AddressInput({
 
   useEffect(() => {
     validateAddress(value)
-    // validateAddress(value).catch(console.error);
   }, [validateAddress, value])
 
   return (

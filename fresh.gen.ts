@@ -6,9 +6,10 @@ import config from "./deno.json" assert { type: "json" }
 import * as $$0 from "./islands/AccountSelect.tsx"
 import * as $$1 from "./islands/CapiComponent.tsx"
 import * as $$2 from "./islands/CreateMultisig.tsx"
-import * as $$3 from "./islands/Inputs.tsx"
-import * as $$4 from "./islands/WalletConnect.tsx"
-import * as $$5 from "./islands/WizardApp.tsx"
+import * as $$3 from "./islands/ExpandCard.tsx"
+import * as $$4 from "./islands/Inputs.tsx"
+import * as $$5 from "./islands/WalletConnect.tsx"
+import * as $$6 from "./islands/WizardApp.tsx"
 import * as $0 from "./routes/api/db_get.ts"
 import * as $1 from "./routes/api/put_multisig.ts"
 import * as $2 from "./routes/api/put_proxy.ts"
@@ -33,9 +34,10 @@ const manifest = {
     "./islands/AccountSelect.tsx": $$0,
     "./islands/CapiComponent.tsx": $$1,
     "./islands/CreateMultisig.tsx": $$2,
-    "./islands/Inputs.tsx": $$3,
-    "./islands/WalletConnect.tsx": $$4,
-    "./islands/WizardApp.tsx": $$5,
+    "./islands/ExpandCard.tsx": $$3,
+    "./islands/Inputs.tsx": $$4,
+    "./islands/WalletConnect.tsx": $$5,
+    "./islands/WizardApp.tsx": $$6,
   },
   baseUrl: import.meta.url,
   config,

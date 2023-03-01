@@ -2,6 +2,7 @@ import { Card, Header, Identicon, Layout, Navbar } from "components"
 import CapiComponent from "islands/CapiComponent.tsx"
 import WizardApp from "islands/WizardApp.tsx"
 import Select from "../islands/AccountSelect.tsx"
+import ExpandCard from "../islands/ExpandCard.tsx"
 import Inputs from "../islands/Inputs.tsx"
 
 export default function Landing() {
