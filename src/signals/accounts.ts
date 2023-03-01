@@ -33,7 +33,7 @@ async function getAccounts() {
     try {
       await wallet.enable('Capi Multisig App')
       // TODO unsubscribe unknown
-      const unsubscribe = await wallet.subscribeAccounts((a) => {
+      await wallet.subscribeAccounts((a) => {
         accounts.value = a ?? []
         if (!storedAccount && accounts.value.length > 0) {
           defaultAccount.value = accounts.value[0]

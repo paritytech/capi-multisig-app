@@ -3,6 +3,8 @@ capi
 clsx
 compat
 csstools
+dbaeumer
+eslint
 polkadot
 amannn
 asynciterable
