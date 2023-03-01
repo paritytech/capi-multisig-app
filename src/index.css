@@ -11,9 +11,6 @@ body {
 #app {
   @apply h-full min-h-full bg-gray-100;
 }
-.header {
-  @apply h-14 bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col text-white p-4;
-}
 .listbox-button {
   @apply relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 sm:text-sm;
 }
