@@ -3,6 +3,7 @@
     "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker",
-    "csstools.postcss"
+    "csstools.postcss",
+    "bradlc.vscode-tailwindcss"
   ]
 }
