@@ -2,7 +2,7 @@ import type { ComponentChildren } from "preact"
 import { Tabs } from "../Tabs.tsx"
 
 const tabs = [
-  { name: "New multisig", href: "/create-multisig", current: false },
+  { name: "Multisig Dashboard", href: "/create-multisig", current: false },
   { name: "New transaction", href: "/create-transaction", current: true },
 ]
 
