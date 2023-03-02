@@ -9,7 +9,5 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier"
   ],
-  "plugins": [
-    "@typescript-eslint"
-  ]
+  "plugins": ["@typescript-eslint"]
 }
