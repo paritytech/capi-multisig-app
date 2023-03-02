@@ -32,6 +32,7 @@ export const Button = ({
         {
           'bg-button hover:bg-button/90 text-white': variant === 'fill',
         },
+        { 'cursor-not-allowed opacity-70': disabled },
         className,
       )}
       disabled={disabled}
