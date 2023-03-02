@@ -1,4 +1,10 @@
+bradlc
 capi
+clsx
+compat
+csstools
+dbaeumer
+eslint
 polkadot
 amannn
 asynciterable
@@ -15,8 +21,12 @@ dprint
 esbenp
 karlkallavus
 multiaddress
+pnpm
 preact
 sastan
+tailwind
+tailwindcss
 twind
 typesafe
+vite
 westend
