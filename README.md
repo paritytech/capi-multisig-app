@@ -15,7 +15,7 @@ CAPI Multisig is built using CAPI on the Polkadot blockchain, enabling users to 
 - View multisig vault details, including threshold, members, and pending transactions
 - Approve pending transactions using any of the member accounts until threshold is met
 - Transfer assets from a multisig vault to another account
-- Notification for queued, pending, in block, finalised transactions and dispatch errors
+- Notification for queued, pending, in block, finalized transactions and dispatch errors
 - Form validation to guide the user through the process and input level validation
 - Tooltips to explain what each form field means
 - Future phase 2 features include editable members, transaction history, and node switch
