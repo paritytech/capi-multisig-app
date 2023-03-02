@@ -1,15 +1,15 @@
 import { Page } from './templates/base'
 import { CenteredCard } from '../components/CenteredCard'
 import { Link } from 'react-router-dom'
+import { Button } from '../components/Button'
+import { IconPlus } from '../components/icons/IconPlus'
 
 export function Dashboard() {
   return (
     <Page>
       <CenteredCard>
         <Link to="/create-multisig">
-          <button className="py-3 px-6 bg-slate-800 text-white">
-            New multisig
-          </button>
+          <Button variant="fill">New multisig</Button>
         </Link>
       </CenteredCard>
     </Page>
