@@ -21,10 +21,10 @@ export const Button = ({
   return (
     <button
       className={classNames(
-        'flex flex-row gap-3 items-center justify-center rounded-full',
+        'flex flex-row gap-3 items-center justify-center rounded-full whitespace-nowrap',
         'font-semibold py-3 px-10',
         'outline-none focus:outline-none',
-        { 'w-full': full },
+        full ? 'w-full' : 'w-fit',
         {
           'bg-transparent text-button hover:text-button/90':
             variant === 'ghost',
