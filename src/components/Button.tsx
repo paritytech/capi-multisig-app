@@ -43,8 +43,7 @@ export const Button = ({
         },
         full ? 'w-full' : 'w-fit',
         {
-          'bg-transparent text-button hover:shadow':
-            variant === 'ghost',
+          'bg-transparent text-button hover:shadow': variant === 'ghost',
         },
         {
           'bg-button-danger hover:bg-button-danger/90 text-white':
