@@ -10,9 +10,7 @@ export function Dashboard() {
       <CenteredCard>
         <Link to="/create-multisig">
           <div className="flex flex-col gap-4 wrap">
-            <Button variant="fill" iconLeft={<IconPlus />}>
-              New multisig
-            </Button>
+            <Button iconLeft={<IconPlus />}>New multisig</Button>
           </div>
         </Link>
       </CenteredCard>
