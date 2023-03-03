@@ -3,7 +3,8 @@ import { JSX } from 'preact'
 import type { ComponentChildren } from 'preact'
 
 export const Button = ({
-  variant,
+  variant = 'primary',
+  size = 'md',
   disabled,
   className,
   iconLeft,
@@ -12,25 +13,49 @@ export const Button = ({
   children,
   ...rest
 }: JSX.IntrinsicAttributes &
-  JSX.HTMLAttributes<HTMLButtonElement> & {
-    variant: 'fill' | 'ghost'
+  Omit<JSX.HTMLAttributes<HTMLButtonElement>, 'size'> & {
+    variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
+    size?: 'md' | 'xl'
     full?: boolean
     iconLeft?: ComponentChildren
     iconRight?: ComponentChildren
   }) => {
+  const iconClassName = classNames(
+    'flex items-center ',
+    {
+      'h-6 w-6': size === 'md',
+    },
+    {
+      'h-9 w-9 text-2xl': size === 'xl',
+    },
+  )
   return (
     <button
       className={classNames(
-        'flex flex-row gap-3 items-center justify-center rounded-full whitespace-nowrap',
-        'font-semibold py-3 px-10',
+        'flex flex-row items-center gap-2 justify-center whitespace-nowrap box-border',
+        'font-semibold rounded-full',
         'outline-none focus:outline-none',
+        {
+          'py-3 px-8': size === 'md',
+        },
+        {
+          'min-w-[300px] py-7 px-16 text-2xl': size === 'xl',
+        },
         full ? 'w-full' : 'w-fit',
         {
-          'bg-transparent text-button hover:text-button/90':
+          'bg-transparent text-button hover:shadow':
             variant === 'ghost',
         },
         {
-          'bg-button hover:bg-button/90 text-white': variant === 'fill',
+          'bg-button-danger hover:bg-button-danger/90 text-white':
+            variant === 'danger',
+        },
+        {
+          'bg-button-secondary hover:bg-button-secondary/90 text-button-secondary-text':
+            variant === 'secondary',
+        },
+        {
+          'bg-button hover:bg-button/90 text-white': variant === 'primary',
         },
         { 'cursor-not-allowed opacity-70': disabled },
         className,
@@ -38,13 +63,9 @@ export const Button = ({
       disabled={disabled}
       {...rest}
     >
-      {iconLeft && (
-        <div className="flex items-center h-5 w-5 -mr-1">{iconLeft}</div>
-      )}
+      {iconLeft && <div className={iconClassName}>{iconLeft}</div>}
       {children}
-      {iconRight && (
-        <div className="flex items-center h-5 w-5 -ml-1">{iconRight}</div>
-      )}
+      {iconRight && <div className={iconClassName}>{iconRight}</div>}
     </button>
   )
 }
