@@ -4,7 +4,7 @@ import type { Tab } from './Tabs'
 
 const tabs: Tab[] = [
   { name: 'Dashboard', href: '/' },
-  { name: 'Transaction history', href: '/transaction-history' },
+  { name: 'Transaction history', href: '/transaction-history', disabled: true },
 ]
 
 export function TopBar() {
