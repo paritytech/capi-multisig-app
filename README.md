@@ -2,19 +2,20 @@
 
 Multisig (multiple signatories) is a concept of having several entities sign off a transaction made from the account (wallet). This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations, decentralization.
 
-CAPI Multisig (working name) is an application for managing multi-signature wallets (vaults?) and performing multi-signature transactions on blockchains in the Polkadot network. 
+CAPI Multisig (working name) is an application for managing multi-signature wallets (vaults?) and performing multi-signature transactions on blockchains in the Polkadot network.
 With CAPI Multisig, users can easily create and manage wallets that require multiple signatures for transactions, providing an extra layer of security against potential theft or misuse of funds.
 The app offers a user-friendly interface that makes it easy to create and manage a multisig vault.
 
 CAPI Multisig is built using CAPI on the Polkadot blockchain, enabling users to work with most major Polkadot-compatible wallets and tokens.
 
 ## Features
+
 - Create multisig setup using a PureProxy as vault
 - List multisig vaults for a given account
 - View multisig vault details, including threshold, members, and pending transactions
 - Approve pending transactions using any of the member accounts until threshold is met
 - Transfer assets from a multisig vault to another account
-- Notification for queued, pending, in block, finalised transactions and dispatch errors
+- Notification for queued, pending, in block, finalized transactions and dispatch errors
 - Form validation to guide the user through the process and input level validation
 - Tooltips to explain what each form field means
 - Future phase 2 features include editable members, transaction history, and node switch
@@ -23,7 +24,6 @@ CAPI Multisig is built using CAPI on the Polkadot blockchain, enabling users to 
 # Tech stack (coming soon)
 
 # Getting Started (coming soon)
-
 
 # References and Links
 

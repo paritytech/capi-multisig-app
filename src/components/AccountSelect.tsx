@@ -2,7 +2,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { WalletAccount } from '@talisman-connect/wallets'
 import { Fragment } from 'preact/jsx-runtime'
 import { accounts, defaultAccount } from '../signals'
-import { ChevronUpDownIcon } from './icons'
+import { IconChevronUpDown } from './icons/IconChevronUpDown'
 
 const placeholder = {
   name: 'No account found',
@@ -24,7 +24,12 @@ export default function AccountSelect() {
             <span className="block truncate">
               {defaultAccount.value?.name ?? placeholder.name}
             </span>
-            <ChevronUpDownIcon />
+            <span
+              className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+              aria-hidden="true"
+            >
+              <IconChevronUpDown className="h-5 w-5 text-gray-400" />
+            </span>
           </Listbox.Button>
           <Transition
             as={Fragment}
