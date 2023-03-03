@@ -1,16 +1,18 @@
 import { Button } from './Button'
 import { useForm } from 'react-hook-form'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 // import { isValidAddress } from "misc"
 import { createContext, toChildArray } from 'preact'
 import type { ComponentChildren } from 'preact'
-import { useContext, useEffect, useState } from 'preact/hooks'
+import { useContext, useEffect } from 'preact/hooks'
+import { signal } from '@preact/signals'
+import type { Signal } from '@preact/signals'
 
 // ------ Usage of Wizard
 export default function WizardApp() {
   return (
-    <Wizard>
+    <Wizard forms={createDefaultMultisigStepForms()}>
       <Pages>
         <MultisigInit />
         <MultisigMembers />
@@ -23,106 +25,71 @@ export default function WizardApp() {
 
 // ------ Context
 interface IWizardContext {
-  activeStep: number
-  steps: number
+  activeStep: Signal<number>
+  steps: Signal<number>
   formData: IFormData
   goNext: () => void
   goPrev: () => void
-  setActiveStep: (step: number) => void
-  setSteps: (totalSteps: number) => void
-  setFormData: (formData: IFormData) => void
 }
 
 type IFormData = Record<string, any>
 
-// ------ Default form
-const defaultValuesMultisigInit: IMultisigInitEntity = {
-  multisigName: '',
-}
-const defaultValuesMembers: IMultisigMemberEntity = {
-  member: '',
-}
-const defaultValuesFund: IMultisigFundEntity = {
-  fund: null,
-}
+function createWizardContext() {
+  const activeStep = signal(0)
+  const steps = signal(0)
+  const formData = {}
 
-// ------ Default context
-const defaultWizardValues: IWizardContext = {
-  activeStep: 0,
-  steps: 0,
-  formData: {
-    ...defaultValuesMultisigInit,
-    ...defaultValuesMembers,
-    ...defaultValuesFund,
-  },
-  goNext: () => {},
-  goPrev: () => {},
-  setActiveStep: () => {},
-  setSteps: () => {},
-  setFormData: () => {},
-}
-const WizardContext = createContext<IWizardContext>(defaultWizardValues)
+  function goNext() {
+    activeStep.value = activeStep.value + 1
+  }
 
-// ------ Hooks
-const useWizardNavigation = () => {
-  const { activeStep, goNext, goPrev, steps } = useContext(WizardContext)
+  function goPrev() {
+    activeStep.value = activeStep.value - 1
+  }
+
   return {
     activeStep,
+    steps,
+    formData,
     goNext,
     goPrev,
-    steps,
   }
 }
 
-const useWizardPages = (totalSteps: number) => {
-  const { setSteps, activeStep } = useContext(WizardContext)
+const WizardContext = createContext<IWizardContext>(createWizardContext())
 
-  useEffect(() => {
-    setSteps(totalSteps)
-  }, [totalSteps, setSteps])
-
-  return {
-    activeStep,
-  }
+// ------ Hooks
+function useWizard() {
+  return useContext(WizardContext)
 }
 
-const useWizardForm = () => {
-  const { formData, setFormData } = useContext(WizardContext)
+function useWizardForm<T>() {
+  const { formData, activeStep } = useWizard()
+  const formDataActive: T = formData[activeStep.value]
 
-  const updateFormData = (formDataNew: IFormData) => {
-    setFormData({ ...formData, ...formDataNew })
+  const updateFormDataActive = (formDataNew: IFormData) => {
+    for (const key in formDataNew) {
+      formDataActive[key].value = formDataNew[key]
+    }
   }
 
   return {
-    formData,
-    updateFormData,
+    formData: formDataActive,
+    updateFormData: updateFormDataActive,
+    formDataAll: formData,
   }
 }
 
 // ------ Components
-function Wizard({ children }: { children: ComponentChildren }) {
-  const [activeStep, setActiveStep] = useState(defaultWizardValues.activeStep)
-  const [steps, setSteps] = useState(defaultWizardValues.steps)
-  const [formData, setFormData] = useState(defaultWizardValues.formData)
+interface IPropsWizard {
+  children: ComponentChildren
+  forms: IFormData
+}
 
-  const goNext = () => {
-    setActiveStep(activeStep + 1)
-  }
+function Wizard({ children, forms }: IPropsWizard) {
+  const contextWizard = createWizardContext()
 
-  const goPrev = () => {
-    setActiveStep(activeStep - 1)
-  }
-
-  const contextWizard = {
-    activeStep,
-    setActiveStep,
-    steps,
-    setSteps,
-    goNext,
-    goPrev,
-    formData,
-    setFormData,
-  }
+  if (forms) contextWizard.formData = forms
 
   return (
     <WizardContext.Provider value={contextWizard}>
@@ -132,17 +99,45 @@ function Wizard({ children }: { children: ComponentChildren }) {
 }
 
 function Pages({ children }: { children: ComponentChildren }) {
+  const { activeStep, steps } = useWizard()
   const totalSteps = toChildArray(children).length
-  const { activeStep } = useWizardPages(totalSteps)
-  return <div className="w-full">{toChildArray(children)[activeStep]}</div>
+
+  useEffect(() => {
+    steps.value = totalSteps
+  }, [totalSteps])
+
+  return <div class="w-full">{toChildArray(children)[activeStep.value]}</div>
 }
 
-// ------ Pages
+// ------ STEPS
+// Define all possible steps
+export enum MultisigStep {
+  MultisigInit,
+  MultisigMembers,
+  MultisigFund,
+  MultisigSummary,
+}
+
+// Define default forms
+export function createDefaultMultisigStepForms() {
+  return {
+    [MultisigStep.MultisigInit]: createDefaultMultisigInit(),
+    [MultisigStep.MultisigMembers]: createDefaultMultisigMembers(),
+    [MultisigStep.MultisigFund]: createDefaultMultisigFund(),
+  }
+}
+
 // ------ Multisig Init
 const multisigInitSchema = z.object({
-  multisigName: z.string().min(1, { message: 'Required a multisig address' }),
+  name: z.string().min(1, { message: 'Required a multisig address' }),
 })
 type IMultisigInitEntity = z.infer<typeof multisigInitSchema>
+
+export function createDefaultMultisigInit() {
+  return {
+    name: signal(''),
+  }
+}
 
 function MultisigInit() {
   const {
@@ -153,8 +148,8 @@ function MultisigInit() {
     resolver: zodResolver(multisigInitSchema),
     mode: 'onChange',
   })
-  const { formData, updateFormData } = useWizardForm()
-  const { goNext } = useWizardNavigation()
+  const { goNext } = useWizard()
+  const { formData, updateFormData } = useWizardForm<IMultisigInitEntity>()
 
   const onSubmit = (formDataNew: IMultisigInitEntity) => {
     updateFormData(formDataNew)
@@ -163,26 +158,26 @@ function MultisigInit() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="font-normal text-xl leading-8">1. Multisig setup</h1>
-      <hr className="border-t border-gray-300 mt-6 mb-4" />
-      <label className="leading-6">
-        Multisig Name: <span className="text-pink-600">*</span>
+      <h1 class="font-normal text-xl leading-8">1. Multisig setup</h1>
+      <hr class="border-t border-gray-300 mt-6 mb-4" />
+      <label class="leading-6">
+        Multisig Name: <span class="text-pink-600">*</span>
       </label>
       <input
-        {...register('multisigName')}
-        id="multisigName"
-        defaultValue={formData.multisigName}
+        {...register('name')}
+        id="name"
+        defaultValue={formData.name}
         placeholder="Enter the name..."
-        className="block w-full rounded-lg border border-gray-300 p-2 my-2 w-1/3"
+        class="block rounded-lg border border-gray-300 p-2 my-2 w-1/2"
       />
-      {errors.multisigName && (
-        <div className="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
-          {errors.multisigName.message}
+      {errors.name && (
+        <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+          {errors.name.message}
         </div>
       )}
-      <hr className="border-t border-gray-300 mt-4 mb-2" />
-      <div className="flex justify-end">
-        <Button variant="ghost" type="submit" className="w-auto">
+      <hr class="border-t border-gray-300 mt-4 mb-2" />
+      <div class="flex justify-end">
+        <Button variant="ghost" type="submit" class="w-auto">
           Next {'>'}
         </Button>
       </div>
@@ -190,13 +185,19 @@ function MultisigInit() {
   )
 }
 // ------ Multisig Members
-const isValidAddress = () => true
+const isValidAddress = () => true // TODO: update when function added
 const multisigMemberSchema = z.object({
   member: z.string({}).refine(isValidAddress, {
-    message: 'Invalid polkadot address',
+    message: 'Invalid address',
   }),
 })
 type IMultisigMemberEntity = z.infer<typeof multisigMemberSchema>
+
+function createDefaultMultisigMembers() {
+  return {
+    member: signal(''),
+  }
+}
 
 function MultisigMembers() {
   const {
@@ -207,8 +208,8 @@ function MultisigMembers() {
     resolver: zodResolver(multisigMemberSchema),
     mode: 'onChange',
   })
-  const { formData, updateFormData } = useWizardForm()
-  const { goNext, goPrev } = useWizardNavigation()
+  const { goNext, goPrev } = useWizard()
+  const { formData, updateFormData } = useWizardForm<IMultisigMemberEntity>()
 
   const onSubmit = (formDataNew: IMultisigMemberEntity) => {
     updateFormData(formDataNew)
@@ -225,32 +226,32 @@ function MultisigMembers() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="font-normal text-xl leading-8">2. Members</h1>
-      <hr className="border-t border-gray-300 mt-6 mb-4" />
-      <label className="leading-6">
-        Member: <span className="text-pink-600">*</span>
+      <h1 class="font-normal text-xl leading-8">2. Members</h1>
+      <hr class="border-t border-gray-300 mt-6 mb-4" />
+      <label class="leading-6">
+        Member: <span class="text-pink-600">*</span>
       </label>
       <input
         {...register('member')}
         defaultValue={formData.member}
         placeholder="Enter the address..."
-        className="block w-full rounded-lg border border-gray-300 p-2 my-2 w-1/3"
+        class="block w-full rounded-lg border border-gray-300 p-2 my-2"
       />
       {errors.member && (
-        <div className="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+        <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
           {errors.member.message}
         </div>
       )}
-      <hr className="border-t border-gray-300 mt-4 mb-4" />
-      <div className="flex justify-between">
+      <hr class="border-t border-gray-300 mt-4 mb-4" />
+      <div class="flex justify-between">
         <Button
           variant="ghost"
           onClick={handleSubmit(onBack, onErrorBack)}
-          className="w-auto"
+          class="w-auto"
         >
           {'<'} Back
         </Button>
-        <Button variant="fill" type="submit" className="w-auto">
+        <Button variant="ghost" type="submit" class="w-auto">
           Sign & create
         </Button>
       </div>
@@ -270,6 +271,12 @@ const multisigFundSchema = z.object({
 })
 type IMultisigFundEntity = z.infer<typeof multisigFundSchema>
 
+function createDefaultMultisigFund() {
+  return {
+    fund: signal(null),
+  }
+}
+
 function MultisigFund() {
   const {
     register,
@@ -279,8 +286,8 @@ function MultisigFund() {
     resolver: zodResolver(multisigFundSchema),
     mode: 'onChange',
   })
-  const { formData, updateFormData } = useWizardForm()
-  const { goNext, goPrev } = useWizardNavigation()
+  const { goNext, goPrev } = useWizard()
+  const { formData, updateFormData } = useWizardForm<IMultisigFundEntity>()
 
   const onSubmit = (formDataNew: IMultisigFundEntity) => {
     updateFormData(formDataNew)
@@ -298,34 +305,34 @@ function MultisigFund() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="font-normal text-xl leading-8">3. Fund the multisig</h1>
-      <hr className="border-t border-gray-300 mt-6 mb-4" />
-      <label className="leading-6">
-        Fund the multisig: <span className="text-pink-600">*</span>
+      <h1 class="font-normal text-xl leading-8">3. Fund the multisig</h1>
+      <hr class="border-t border-gray-300 mt-6 mb-4" />
+      <label class="leading-6">
+        Fund the multisig: <span class="text-pink-600">*</span>
       </label>
       <input
         {...register('fund', { valueAsNumber: true })}
         type="number"
         defaultValue={`${formData.fund}`}
         placeholder="0 DOT"
-        className="block w-full rounded-lg border border-gray-300 p-2 my-2 w-1/3"
+        class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
       />
       {errors.fund && (
-        <div className="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+        <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
           {errors.fund.message}
         </div>
       )}
-      <hr className="border-t border-gray-300 mt-4 mb-4" />
-      <div className="flex justify-between">
+      <hr class="border-t border-gray-300 mt-4 mb-4" />
+      <div class="flex justify-between">
         <Button
           variant="ghost"
           onClick={handleSubmit(onBack, onErrorBack)}
-          className="w-auto"
+          class="w-auto"
         >
           {'<'} Back
         </Button>
-        <Button variant="fill" type="submit" className="w-auto">
-          Sign & fund
+        <Button variant="ghost" type="submit" class="w-auto">
+          Sign &amp; fund
         </Button>
       </div>
     </form>
@@ -334,24 +341,31 @@ function MultisigFund() {
 
 // ------ Multisig Summary
 function MultisigSummary() {
-  const { formData } = useWizardForm()
-  const { goPrev } = useWizardNavigation()
+  const { goPrev } = useWizard()
+  const { formDataAll } = useWizardForm()
+
+  console.log('formDataAll', formDataAll)
 
   return (
     <div>
-      <h1 className="font-normal text-xl leading-8">Summary</h1>
-      <hr className="border-t border-gray-300 mt-6 mb-4" />
-      <pre className="font-mono whitespace-pre-wrap overflow-x-auto bg-gray-100 p-4 rounded-lg shadow-md">
-        {JSON.stringify(formData, null, 2)}
+      <h1 class="font-normal text-xl leading-8">Summary</h1>
+      <hr class="border-t border-gray-300 mt-6 mb-4" />
+      <pre className="bg-gray-100 p-4 rounded-lg shadow-md overflow-x-auto">
+        {Object.entries(formDataAll).map(([objectKey, objectValue]) => (
+          <div key={objectKey}>
+            {Object.entries(objectValue).map(([key, value]) => (
+              <div key={key} className="flex mb-2">
+                <span className="font-bold text-gray-800 mr-2">{key}:</span>
+                <span className="font-mono text-gray-900">{value}</span>
+              </div>
+            ))}
+          </div>
+        ))}
       </pre>
-      <hr className="border-t border-gray-300 mt-4 mb-2" />
-      <div className="flex justify-start">
-        <Button
-          variant="ghost"
-          type="submit"
-          className="w-auto"
-          onClick={goPrev}
-        >
+
+      <hr class="border-t border-gray-300 mt-4 mb-2" />
+      <div class="flex justify-start">
+        <Button variant="ghost" type="submit" class="w-auto" onClick={goPrev}>
           {'<'} Back
         </Button>
       </div>
