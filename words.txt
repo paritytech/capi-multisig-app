@@ -30,3 +30,4 @@ twind
 typesafe
 vite
 westend
+hashers
