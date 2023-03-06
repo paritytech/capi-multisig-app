@@ -5,39 +5,66 @@ import * as z from 'zod'
 // import { isValidAddress } from "misc"
 import { createContext, toChildArray } from 'preact'
 import type { ComponentChildren } from 'preact'
-import { useContext, useEffect } from 'preact/hooks'
+import { useContext } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import type { Signal } from '@preact/signals'
 
 // ------ Usage of Wizard
 export default function WizardApp() {
   return (
-    <Wizard forms={createDefaultMultisigStepForms()}>
-      <Pages>
+    <Wizard>
+      <Steps>
         <MultisigInit />
         <MultisigMembers />
         <MultisigFund />
         <MultisigSummary />
-      </Pages>
+      </Steps>
     </Wizard>
   )
 }
 
-// ------ Context
+// ------ Types
+enum MultisigStep {
+  MultisigInit,
+  MultisigMembers,
+  MultisigFund,
+  MultisigSummary,
+}
+
+interface IFormData {
+  [MultisigStep.MultisigInit]: IMultisigInitEntitySignal
+  [MultisigStep.MultisigMembers]: IMultisigMemberEntitySignal
+  [MultisigStep.MultisigFund]: IMultisigFundEntitySignal
+}
+
+type IMultisigEntitiesSignal =
+  | IMultisigInitEntitySignal
+  | IMultisigMemberEntitySignal
+  | IMultisigFundEntitySignal
+
+type IMultisigEntities =
+  | IMultisigInitEntity
+  | IMultisigMemberEntity
+  | IMultisigFundEntity
+
 interface IWizardContext {
   activeStep: Signal<number>
-  steps: Signal<number>
   formData: IFormData
   goNext: () => void
   goPrev: () => void
 }
 
-type IFormData = Record<string, any>
+function createDefaultFormData(): IFormData {
+  return {
+    [MultisigStep.MultisigInit]: createDefaultMultisigInit(),
+    [MultisigStep.MultisigMembers]: createDefaultMembers(),
+    [MultisigStep.MultisigFund]: createDefaultFund(),
+  }
+}
 
 function createWizardContext() {
   const activeStep = signal(0)
-  const steps = signal(0)
-  const formData = {}
+  const formData: IFormData = createDefaultFormData()
 
   function goNext() {
     activeStep.value = activeStep.value + 1
@@ -49,48 +76,47 @@ function createWizardContext() {
 
   return {
     activeStep,
-    steps,
     formData,
     goNext,
     goPrev,
   }
 }
 
-const WizardContext = createContext<IWizardContext>(createWizardContext())
+const WizardContext = createContext<IWizardContext | null>(null)
 
 // ------ Hooks
 function useWizard() {
-  return useContext(WizardContext)
+  const context = useContext(WizardContext)
+  if (!context) {
+    throw new Error(
+      'You are using the useWizard() hook outside a Wizard component.',
+    )
+  }
+  return context
 }
 
-function useWizardForm<T>() {
+function useWizardActiveForm<
+  T extends IMultisigEntities,
+  S extends IMultisigEntitiesSignal & Record<string, any>,
+>() {
   const { formData, activeStep } = useWizard()
-  const formDataActive: T = formData[activeStep.value]
+  const formDataActive = formData[activeStep.value as keyof IFormData] as S
 
-  const updateFormDataActive = (formDataNew: IFormData) => {
+  const updateFormDataActive = (formDataNew: T) => {
     for (const key in formDataNew) {
       formDataActive[key].value = formDataNew[key]
     }
   }
 
   return {
-    formData: formDataActive,
-    updateFormData: updateFormDataActive,
-    formDataAll: formData,
+    updateFormDataActive,
+    formDataActive,
   }
 }
 
 // ------ Components
-interface IPropsWizard {
-  children: ComponentChildren
-  forms: IFormData
-}
-
-function Wizard({ children, forms }: IPropsWizard) {
+function Wizard({ children }: { children: ComponentChildren }) {
   const contextWizard = createWizardContext()
-
-  if (forms) contextWizard.formData = forms
-
   return (
     <WizardContext.Provider value={contextWizard}>
       {children}
@@ -98,42 +124,23 @@ function Wizard({ children, forms }: IPropsWizard) {
   )
 }
 
-function Pages({ children }: { children: ComponentChildren }) {
-  const { activeStep, steps } = useWizard()
-  const totalSteps = toChildArray(children).length
-
-  useEffect(() => {
-    steps.value = totalSteps
-  }, [totalSteps])
-
+function Steps({ children }: { children: ComponentChildren }) {
+  const { activeStep } = useWizard()
   return <div class="w-full">{toChildArray(children)[activeStep.value]}</div>
 }
 
 // ------ STEPS
-// Define all possible steps
-export enum MultisigStep {
-  MultisigInit,
-  MultisigMembers,
-  MultisigFund,
-  MultisigSummary,
-}
-
-// Define default forms
-export function createDefaultMultisigStepForms() {
-  return {
-    [MultisigStep.MultisigInit]: createDefaultMultisigInit(),
-    [MultisigStep.MultisigMembers]: createDefaultMultisigMembers(),
-    [MultisigStep.MultisigFund]: createDefaultMultisigFund(),
-  }
-}
-
 // ------ Multisig Init
 const multisigInitSchema = z.object({
   name: z.string().min(1, { message: 'Required a multisig address' }),
 })
 type IMultisigInitEntity = z.infer<typeof multisigInitSchema>
 
-export function createDefaultMultisigInit() {
+type IMultisigInitEntitySignal = {
+  name: Signal<string>
+}
+
+function createDefaultMultisigInit(): IMultisigInitEntitySignal {
   return {
     name: signal(''),
   }
@@ -149,10 +156,13 @@ function MultisigInit() {
     mode: 'onChange',
   })
   const { goNext } = useWizard()
-  const { formData, updateFormData } = useWizardForm<IMultisigInitEntity>()
+  const { formDataActive, updateFormDataActive } = useWizardActiveForm<
+    IMultisigInitEntity,
+    IMultisigInitEntitySignal
+  >()
 
   const onSubmit = (formDataNew: IMultisigInitEntity) => {
-    updateFormData(formDataNew)
+    updateFormDataActive(formDataNew)
     goNext()
   }
 
@@ -166,7 +176,7 @@ function MultisigInit() {
       <input
         {...register('name')}
         id="name"
-        defaultValue={formData.name}
+        defaultValue={formDataActive.name}
         placeholder="Enter the name..."
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/2"
       />
@@ -193,7 +203,11 @@ const multisigMemberSchema = z.object({
 })
 type IMultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
-function createDefaultMultisigMembers() {
+interface IMultisigMemberEntitySignal {
+  member: Signal<string>
+}
+
+function createDefaultMembers(): IMultisigMemberEntitySignal {
   return {
     member: signal(''),
   }
@@ -209,15 +223,18 @@ function MultisigMembers() {
     mode: 'onChange',
   })
   const { goNext, goPrev } = useWizard()
-  const { formData, updateFormData } = useWizardForm<IMultisigMemberEntity>()
+  const { formDataActive, updateFormDataActive } = useWizardActiveForm<
+    IMultisigMemberEntity,
+    IMultisigMemberEntitySignal
+  >()
 
   const onSubmit = (formDataNew: IMultisigMemberEntity) => {
-    updateFormData(formDataNew)
+    updateFormDataActive(formDataNew)
     goNext()
   }
 
   const onBack = (formDataNew: IMultisigMemberEntity) => {
-    updateFormData(formDataNew)
+    updateFormDataActive(formDataNew)
     goPrev()
   }
   const onErrorBack = () => {
@@ -233,7 +250,7 @@ function MultisigMembers() {
       </label>
       <input
         {...register('member')}
-        defaultValue={formData.member}
+        defaultValue={formDataActive.member}
         placeholder="Enter the address..."
         class="block w-full rounded-lg border border-gray-300 p-2 my-2"
       />
@@ -261,19 +278,17 @@ function MultisigMembers() {
 
 // ------ Multisig Fund
 const multisigFundSchema = z.object({
-  fund: z
-    .optional(
-      z.number({ invalid_type_error: 'Fund must be greater than 0' }).min(1, {
-        message: 'Fund must be greater than 0',
-      }),
-    )
-    .nullable(),
+  fund: z.number().min(1, { message: 'Fund must be greater than 0' }),
 })
 type IMultisigFundEntity = z.infer<typeof multisigFundSchema>
 
-function createDefaultMultisigFund() {
+interface IMultisigFundEntitySignal {
+  fund: Signal<number>
+}
+
+function createDefaultFund(): IMultisigFundEntitySignal {
   return {
-    fund: signal(null),
+    fund: signal(1),
   }
 }
 
@@ -287,15 +302,18 @@ function MultisigFund() {
     mode: 'onChange',
   })
   const { goNext, goPrev } = useWizard()
-  const { formData, updateFormData } = useWizardForm<IMultisigFundEntity>()
+  const { formDataActive, updateFormDataActive } = useWizardActiveForm<
+    IMultisigFundEntity,
+    IMultisigFundEntitySignal
+  >()
 
   const onSubmit = (formDataNew: IMultisigFundEntity) => {
-    updateFormData(formDataNew)
+    updateFormDataActive(formDataNew)
     goNext()
   }
 
   const onBack = (formDataNew: IMultisigFundEntity) => {
-    updateFormData(formDataNew)
+    updateFormDataActive(formDataNew)
     goPrev()
   }
 
@@ -313,7 +331,7 @@ function MultisigFund() {
       <input
         {...register('fund', { valueAsNumber: true })}
         type="number"
-        defaultValue={`${formData.fund}`}
+        defaultValue={formDataActive.fund.toString()}
         placeholder="0 DOT"
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
       />
@@ -341,17 +359,15 @@ function MultisigFund() {
 
 // ------ Multisig Summary
 function MultisigSummary() {
-  const { goPrev } = useWizard()
-  const { formDataAll } = useWizardForm()
-
-  console.log('formDataAll', formDataAll)
+  const { goPrev, formData } = useWizard()
+  console.log('formDataAll', formData)
 
   return (
     <div>
       <h1 class="font-normal text-xl leading-8">Summary</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
       <pre className="bg-gray-100 p-4 rounded-lg shadow-md overflow-x-auto">
-        {Object.entries(formDataAll).map(([objectKey, objectValue]) => (
+        {Object.entries(formData).map(([objectKey, objectValue]) => (
           <div key={objectKey}>
             {Object.entries(objectValue).map(([key, value]) => (
               <div key={key} className="flex mb-2">
@@ -372,3 +388,4 @@ function MultisigSummary() {
     </div>
   )
 }
+getSelection
