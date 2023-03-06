@@ -15,6 +15,7 @@ interface IdenticonProps {
   disableCursorCopy?: boolean
   disableClipboardCopy?: boolean
   colors?: string[]
+  className?: string
 }
 
 /*
@@ -28,6 +29,7 @@ export const Identicon = ({
   disableCursorCopy = false,
   disableClipboardCopy = false,
   colors: initialColors,
+  className,
 }: IdenticonProps) => {
   const xy = getCircleXY()
 
@@ -50,6 +52,7 @@ export const Identicon = ({
       onClick={copyToClipboard}
       className={classNames({
         'cursor-copy': !(disableCursorCopy || disableClipboardCopy),
+        className,
       })}
     >
       <svg
