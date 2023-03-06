@@ -15,7 +15,7 @@ export function Tabs({ tabs, className }: { tabs: Tab[]; className?: string }) {
           tab.disabled ? (
             <span
               className={classNames(
-                'text-tabs-dimmed/75 border-transparent hover:border-tabs-dimmed/75 cursor-not-allowed',
+                'text-tabs-dimmed/75 border-transparent cursor-not-allowed',
                 'block border-b-2 whitespace-nowrap py-4 px-6 font-medium',
               )}
             >
