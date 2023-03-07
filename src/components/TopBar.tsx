@@ -1,19 +1,18 @@
 import AccountSelect from './AccountSelect'
-import { Link } from 'react-router-dom'
+import { Tabs } from './Tabs'
+import type { Tab } from './Tabs'
+
+const tabs: Tab[] = [
+  { name: 'Dashboard', href: '/' },
+  { name: 'Transaction history', href: '/transaction-history', disabled: true },
+]
 
 export function TopBar() {
   return (
-    <header className="flex w-full justify-end p-4 bg-white">
-      <ul className="flex w-full justify-center p-4">
-        <li className="mr-6">
-          <Link to="/">Dashboard</Link>
-        </li>
-        <li>
-          <span className="text-gray-400 cursor-not-allowed">
-            Transaction history
-          </span>
-        </li>
-      </ul>
+    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-white">
+      <div className="self-end mx-auto">
+        <Tabs tabs={tabs} />
+      </div>
       <AccountSelect />
     </header>
   )
