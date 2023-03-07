@@ -16,9 +16,7 @@ function addressToId(address: string): Uint8Array {
     pubKey: Uint8Array,
   ]
 
-  return Blake2_512.hash(pubKey).map(
-    (x, i) => (x + 256 - zeroHash[i]) % 256,
-  )
+  return Blake2_512.hash(pubKey).map((x, i) => (x + 256 - zeroHash[i]) % 256)
 }
 
 export function getColorsNew(address: string): string[] {

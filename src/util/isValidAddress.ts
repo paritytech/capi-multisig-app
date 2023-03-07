@@ -1,4 +1,4 @@
-import { ss58 } from "capi"
+import { ss58 } from 'capi'
 
 export function isValidAddress(address: string) {
   try {

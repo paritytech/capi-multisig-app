@@ -1,8 +1,8 @@
-import classNames from "clsx"
-import { useCallback, useEffect, useState } from "preact/hooks"
-import { JSX } from "preact/jsx-runtime"
-import { Identicon } from "./identicon/Identicon"
-import { isValidAddress } from "../util/isValidAddress"
+import classNames from 'clsx'
+import { JSX } from 'preact/jsx-runtime'
+import { Identicon } from './identicon/Identicon'
+import { isValidAddress } from '../util/isValidAddress'
+import { IconVoidIdenticon } from './icons/IconVoidIdenticon'
 
 interface Props {
   id?: string
@@ -10,7 +10,7 @@ interface Props {
   placeholder: string
   label: string
   value: string
-  onChange: ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => void
+  onChange: (e: JSX.TargetedEvent<HTMLInputElement, Event>) => void
 }
 
 export function AddressInput({
@@ -21,15 +21,7 @@ export function AddressInput({
   value,
   onChange,
 }: Props) {
-  const [isValid, setIsValid] = useState(false)
-
-  const validateAddress = useCallback((value: string) => {
-    setIsValid(isValidAddress(value))
-  }, [])
-
-  useEffect(() => {
-    validateAddress(value)
-  }, [validateAddress, value])
+  const isValid = isValidAddress(value);
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -38,19 +30,21 @@ export function AddressInput({
       </label>
 
       <div className="relative rounded-lg shadow-sm">
-        {isValid && (
-          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <Identicon value={value} size={20} />
-          </div>
-        )}
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          {isValid ? (
+            <Identicon value={value} size={24} />
+          ) : (
+            <IconVoidIdenticon className="h-6 w-6"/>
+          )}
+        </div>
+
         <input
           type="text"
           name={name}
           id={id}
           value={value}
           className={classNames(
-            "block w-full rounded-lg border-gray-300 focus:ring-1 focus:ring-pink-500 focus:border-pink-500",
-            isValid ? "pl-10" : "pl-3",
+            'pl-10 block w-full rounded-lg border-gray-300 focus:ring-1 focus:ring-pink-500 focus:border-pink-500',
           )}
           placeholder={placeholder}
           onChange={onChange}
