@@ -74,7 +74,7 @@ export function useWizardActiveForm<T extends IMultisigEntities>() {
 
   return {
     updateFormDataActive,
-    formDataActive: formDataActive.value as T,
+    formDataActive: formDataActive.value as T
   }
 }
 

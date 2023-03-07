@@ -8,7 +8,7 @@ export function MultisigSummary() {
 
   return (
     <div>
-      <h1 class="font-normal text-xl leading-8">Summary</h1>
+      <h1 class="text-xl leading-8">Summary</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
       <pre className="bg-gray-100 p-4 rounded-lg shadow-md overflow-x-auto">
         <div class="flex mb-2">
@@ -30,10 +30,10 @@ export function MultisigSummary() {
           </span>
         </div>
       </pre>
-      <hr class="border-t border-gray-300 mt-4 mb-2" />
+      <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-start">
         <Button variant="ghost" type="submit" onClick={goPrev}>
-          {'<'} Back
+          &lt; Back
         </Button>
       </div>
     </div>
