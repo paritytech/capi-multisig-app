@@ -9,6 +9,11 @@ module.exports = {
           'secondary-text': '#000000E3',
           danger: '#FD4935',
         },
+        tabs: {
+          DEFAULT: '#E6007A',
+          text: '#111827',
+          dimmed: '#6C6B80',
+        },
       },
     },
   },
