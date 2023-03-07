@@ -6,24 +6,19 @@ import { findScheme, SCHEMA } from './scheme'
   https://github.com/polkadot-js/ui/tree/master/packages/react-identicon
 */
 
-const Blake2_512 = new hashers.Blake2Hasher(512 as unknown as any, false)
+const Blake2_512 = new hashers.Blake2Hasher(512 as any, false)
 
-let zeroHash: Uint8Array = new Uint8Array()
+const zeroHash = Blake2_512.hash(new Uint8Array(32))
 
 function addressToId(address: string): Uint8Array {
-  if (!zeroHash.length) {
-    zeroHash = Blake2_512.hash(new Uint8Array(32))
-  }
-
   const [, pubKey] = ss58.decode(address) as [
     prefix: number,
     pubKey: Uint8Array,
   ]
 
-  const capi = Blake2_512.hash(pubKey).map(
+  return Blake2_512.hash(pubKey).map(
     (x, i) => (x + 256 - zeroHash[i]) % 256,
   )
-  return capi
 }
 
 export function getColorsNew(address: string): string[] {
