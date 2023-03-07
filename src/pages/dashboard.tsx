@@ -1,15 +1,24 @@
 import { Page } from './templates/base'
 import { CenteredCard } from '../components/CenteredCard'
 import { Link } from 'react-router-dom'
+import { useCallback, useState } from 'preact/hooks'
+import { JSX } from 'preact/jsx-runtime'
 import { Button } from '../components/Button'
 import { IconPlus } from '../components/icons/IconPlus'
 import { Identicon } from '../components/identicon/Identicon'
 import { defaultAccount } from '../signals/accounts'
 import { AddressInput } from '../components/AddressInput'
-import { useState } from 'preact/hooks'
 
 export function Dashboard() {
   const [address, setAddress] = useState('')
+
+  const onChange = useCallback(
+    ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      setAddress(currentTarget.value)
+    },
+    [],
+  )
+
   return (
     <Page>
       <CenteredCard>
@@ -30,7 +39,7 @@ export function Dashboard() {
           label="Address"
           placeholder="Enter recipient address"
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          onChange={onChange}
         />
       </CenteredCard>
     </Page>

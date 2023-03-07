@@ -2,7 +2,7 @@ import classNames from 'clsx'
 import { JSX } from 'preact/jsx-runtime'
 import { Identicon } from './identicon/Identicon'
 import { isValidAddress } from '../util/isValidAddress'
-import { IconVoidIdenticon } from './icons/IconVoidIdenticon'
+import { VoidIdenticon } from './identicon/VoidIdenticon'
 
 interface Props {
   id?: string
@@ -21,7 +21,7 @@ export function AddressInput({
   value,
   onChange,
 }: Props) {
-  const isValid = isValidAddress(value);
+  const isValid = isValidAddress(value)
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -34,7 +34,7 @@ export function AddressInput({
           {isValid ? (
             <Identicon value={value} size={24} />
           ) : (
-            <IconVoidIdenticon className="h-6 w-6"/>
+            <VoidIdenticon className="h-6 w-6" />
           )}
         </div>
 
