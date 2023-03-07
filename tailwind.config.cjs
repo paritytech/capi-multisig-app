@@ -14,6 +14,12 @@ module.exports = {
           text: '#111827',
           dimmed: '#6C6B80',
         },
+        input: {
+          focus: '#E6007A',
+          text: '#111827',
+          border: '#00000029',
+          bg: 'rgba(0, 0, 0, 0.03)',
+        }
       },
     },
   },

@@ -25,12 +25,12 @@ export function AddressInput({
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <label htmlFor={name} className="block text-gray-800">
+      <label htmlFor={name} className="block text-input-text">
         {label}
       </label>
 
       <div className="relative rounded-lg shadow-sm">
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center p-3">
           {isValid ? (
             <Identicon value={value} size={24} />
           ) : (
@@ -44,7 +44,7 @@ export function AddressInput({
           id={id}
           value={value}
           className={classNames(
-            'pl-10 block w-full rounded-lg border-gray-300 focus:ring-1 focus:ring-pink-500 focus:border-pink-500',
+            'pl-10 bg-input-bg block w-full rounded-lg border-input-border focus:ring-1 focus:ring-input-focus focus:border-input-focus',
           )}
           placeholder={placeholder}
           onChange={onChange}
