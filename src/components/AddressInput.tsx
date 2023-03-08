@@ -20,6 +20,7 @@ export function AddressInput({
   label,
   value,
   onChange,
+  ...props
 }: Props) {
   const isValid = isValidAddress(value)
 
@@ -48,6 +49,7 @@ export function AddressInput({
           )}
           placeholder={placeholder}
           onChange={onChange}
+          {...props}
         />
       </div>
     </div>
