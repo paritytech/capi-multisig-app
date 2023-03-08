@@ -5,14 +5,14 @@ import { signal } from '@preact/signals'
 import type { Signal } from '@preact/signals'
 
 import { Button } from '../Button'
-import { useWizardNavigation, useWizardActiveForm } from './Wizard'
+import { useWizardNavigation, useWizardFormDataStep } from './Wizard'
 
 export const multisigInitSchema = z.object({
   name: z.string().min(1, { message: 'Required a multisig name' }),
 })
-export type IMultisigInitEntity = z.infer<typeof multisigInitSchema>
+export type MultisigInitEntity = z.infer<typeof multisigInitSchema>
 
-export function createDefaultMultisigInit(): Signal<IMultisigInitEntity> {
+export function createDefaultMultisigInit(): Signal<MultisigInitEntity> {
   return signal({
     name: '',
   })
@@ -23,16 +23,16 @@ export function MultisigInit() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IMultisigInitEntity>({
+  } = useForm<MultisigInitEntity>({
     resolver: zodResolver(multisigInitSchema),
     mode: 'onChange',
   })
   const { goNext } = useWizardNavigation()
-  const { formDataActive, updateFormDataActive } =
-    useWizardActiveForm<IMultisigInitEntity>()
+  const { formDataStep, updateFormDataStep } =
+    useWizardFormDataStep<MultisigInitEntity>()
 
-  const onSubmit = (formDataNew: IMultisigInitEntity) => {
-    updateFormDataActive(formDataNew)
+  const onSubmit = (formDataNew: MultisigInitEntity) => {
+    updateFormDataStep(formDataNew)
     goNext()
   }
 
@@ -46,7 +46,7 @@ export function MultisigInit() {
       <input
         {...register('name')}
         id="name"
-        defaultValue={formDataActive.name}
+        defaultValue={formDataStep.name}
         placeholder="Enter the name..."
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/2"
       />

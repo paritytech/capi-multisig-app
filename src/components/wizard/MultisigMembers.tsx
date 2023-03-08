@@ -5,7 +5,7 @@ import { signal } from '@preact/signals'
 import type { Signal } from '@preact/signals'
 
 import { Button } from '../Button'
-import { useWizardNavigation, useWizardActiveForm } from './Wizard'
+import { useWizardNavigation, useWizardFormDataStep } from './Wizard'
 
 const isValidAddress = () => true // TODO: update when function added
 export const multisigMemberSchema = z.object({
@@ -13,9 +13,9 @@ export const multisigMemberSchema = z.object({
     message: 'Invalid address',
   }),
 })
-export type IMultisigMemberEntity = z.infer<typeof multisigMemberSchema>
+export type MultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
-export function createDefaultMembers(): Signal<IMultisigMemberEntity> {
+export function createDefaultMembers(): Signal<MultisigMemberEntity> {
   return signal({
     member: '',
   })
@@ -26,21 +26,21 @@ export function MultisigMembers() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IMultisigMemberEntity>({
+  } = useForm<MultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
     mode: 'onChange',
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formDataActive, updateFormDataActive } =
-    useWizardActiveForm<IMultisigMemberEntity>()
+  const { formDataStep, updateFormDataStep } =
+    useWizardFormDataStep<MultisigMemberEntity>()
 
-  const onSubmit = (formDataNew: IMultisigMemberEntity) => {
-    updateFormDataActive(formDataNew)
+  const onSubmit = (formDataNew: MultisigMemberEntity) => {
+    updateFormDataStep(formDataNew)
     goNext()
   }
 
-  const onBack = (formDataNew: IMultisigMemberEntity) => {
-    updateFormDataActive(formDataNew)
+  const onBack = (formDataNew: MultisigMemberEntity) => {
+    updateFormDataStep(formDataNew)
     goPrev()
   }
   const onErrorBack = () => {
@@ -56,7 +56,7 @@ export function MultisigMembers() {
       </label>
       <input
         {...register('member')}
-        defaultValue={formDataActive.member}
+        defaultValue={formDataStep.member}
         placeholder="Enter the address..."
         class="block w-full rounded-lg border border-gray-300 p-2 my-2"
       />

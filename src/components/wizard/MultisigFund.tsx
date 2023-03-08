@@ -5,14 +5,14 @@ import { signal } from '@preact/signals'
 import type { Signal } from '@preact/signals'
 
 import { Button } from '../Button'
-import { useWizardNavigation, useWizardActiveForm } from './Wizard'
+import { useWizardNavigation, useWizardFormDataStep } from './Wizard'
 
 export const multisigFundSchema = z.object({
   fund: z.number().min(1, { message: 'Fund must be greater than 0' }),
 })
-export type IMultisigFundEntity = z.infer<typeof multisigFundSchema>
+export type MultisigFundEntity = z.infer<typeof multisigFundSchema>
 
-export function createDefaultFund(): Signal<IMultisigFundEntity> {
+export function createDefaultFund(): Signal<MultisigFundEntity> {
   return signal({
     fund: 1,
   })
@@ -23,21 +23,21 @@ export function MultisigFund() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IMultisigFundEntity>({
+  } = useForm<MultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
     mode: 'onChange',
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formDataActive, updateFormDataActive } =
-    useWizardActiveForm<IMultisigFundEntity>()
+  const { formDataStep, updateFormDataStep } =
+    useWizardFormDataStep<MultisigFundEntity>()
 
-  const onSubmit = (formDataNew: IMultisigFundEntity) => {
-    updateFormDataActive(formDataNew)
+  const onSubmit = (formDataNew: MultisigFundEntity) => {
+    updateFormDataStep(formDataNew)
     goNext()
   }
 
-  const onBack = (formDataNew: IMultisigFundEntity) => {
-    updateFormDataActive(formDataNew)
+  const onBack = (formDataNew: MultisigFundEntity) => {
+    updateFormDataStep(formDataNew)
     goPrev()
   }
 
@@ -55,7 +55,7 @@ export function MultisigFund() {
       <input
         {...register('fund', { valueAsNumber: true })}
         type="number"
-        defaultValue={formDataActive.fund.toString()}
+        defaultValue={formDataStep.fund.toString()}
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
       />
       {errors.fund && (

@@ -4,11 +4,11 @@ import { signal, computed } from '@preact/signals'
 import type { Signal } from '@preact/signals'
 
 import { createDefaultMultisigInit } from './MultisigInit'
-import type { IMultisigInitEntity } from './MultisigInit'
+import type { MultisigInitEntity } from './MultisigInit'
 import { createDefaultMembers } from './MultisigMembers'
-import type { IMultisigMemberEntity } from './MultisigMembers'
+import type { MultisigMemberEntity } from './MultisigMembers'
 import { createDefaultFund } from './MultisigFund'
-import type { IMultisigFundEntity } from './MultisigFund'
+import type { MultisigFundEntity } from './MultisigFund'
 
 export enum MultisigStep {
   MultisigInit,
@@ -17,18 +17,18 @@ export enum MultisigStep {
   MultisigSummary,
 }
 
-export interface IFormData {
-  [MultisigStep.MultisigInit]: Signal<IMultisigInitEntity>
-  [MultisigStep.MultisigMembers]: Signal<IMultisigMemberEntity>
-  [MultisigStep.MultisigFund]: Signal<IMultisigFundEntity>
+export interface FormData {
+  [MultisigStep.MultisigInit]: Signal<MultisigInitEntity>
+  [MultisigStep.MultisigMembers]: Signal<MultisigMemberEntity>
+  [MultisigStep.MultisigFund]: Signal<MultisigFundEntity>
 }
 
-export type IMultisigEntities =
-  | IMultisigInitEntity
-  | IMultisigMemberEntity
-  | IMultisigFundEntity
+export type MultisigEntities =
+  | MultisigInitEntity
+  | MultisigMemberEntity
+  | MultisigFundEntity
 
-function createDefaultFormData(): IFormData {
+function createDefaultFormData(): FormData {
   return {
     [MultisigStep.MultisigInit]: createDefaultMultisigInit(),
     [MultisigStep.MultisigMembers]: createDefaultMembers(),
@@ -37,11 +37,11 @@ function createDefaultFormData(): IFormData {
 }
 
 function createWizardState() {
-  const activeStep = signal(0)
+  const step = signal(0)
   const formData = computed(() => createDefaultFormData())
 
   return {
-    activeStep,
+    step,
     formData: formData.value,
   }
 }
@@ -49,14 +49,14 @@ function createWizardState() {
 export const wizardState = createWizardState()
 
 export function useWizardNavigation() {
-  const { activeStep } = wizardState
+  const { step } = wizardState
 
   function goNext() {
-    activeStep.value = activeStep.value + 1
+    step.value = step.value + 1
   }
 
   function goPrev() {
-    activeStep.value = activeStep.value - 1
+    step.value = step.value - 1
   }
   return {
     goNext,
@@ -64,20 +64,20 @@ export function useWizardNavigation() {
   }
 }
 
-export function useWizardActiveForm<T extends IMultisigEntities>() {
-  const { formData, activeStep } = wizardState
-  const formDataActive = formData[activeStep.value as keyof IFormData]
+export function useWizardFormDataStep<T extends MultisigEntities>() {
+  const { formData, step } = wizardState
+  const formDataStep = formData[step.value as keyof FormData]
 
-  const updateFormDataActive = (formDataNew: T) => {
-    formDataActive.value = formDataNew
+  const updateFormDataStep = (formDataNew: T) => {
+    formDataStep.value = formDataNew
   }
 
   return {
-    updateFormDataActive,
-    formDataActive: formDataActive.value as T
+    updateFormDataStep,
+    formDataStep: formDataStep.value as T,
   }
 }
 
 export function Wizard({ children }: { children: ComponentChildren }) {
-  return <>{toChildArray(children)[wizardState.activeStep.value]}</>
+  return <>{toChildArray(children)[wizardState.step.value]}</>
 }

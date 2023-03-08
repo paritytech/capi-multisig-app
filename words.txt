@@ -30,13 +30,10 @@ twind
 typesafe
 vite
 westend
-<<<<<<< HEAD
 hashers
 Hasher
 rroot
 quazar
 hmirror
 vmirror
-=======
 hookform
->>>>>>> efa32d6 (modularize and adjust)

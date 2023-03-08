@@ -10,7 +10,7 @@ export function MultisigSummary() {
     <div>
       <h1 class="text-xl leading-8">Summary</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
-      <pre className="bg-gray-100 p-4 rounded-lg shadow-md overflow-x-auto">
+      <pre class="bg-gray-100 p-4 rounded-lg shadow-md overflow-x-auto">
         <div class="flex mb-2">
           <span class="font-bold text-gray-800 mr-2">Multisig name:</span>
           <span class="font-mono text-gray-900">
