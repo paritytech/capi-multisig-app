@@ -1,15 +1,11 @@
 {
-  "name": "capi-multisig",
+  "name": "root",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "format": "prettier . --write",
-    "lint": "pnpm eslint --fix src"
-  },
+  "workspaces": [
+    "common",
+    "server",
+    "www"
+  ],
   "dependencies": {
     "@headlessui/react": "^1.7.11",
     "@hookform/resolvers": "^2.9.11",
@@ -19,6 +15,7 @@
     "preact": "^10.12.1",
     "react-hook-form": "^7.43.3",
     "react-router-dom": "^6.8.1",
+    "scale-codec": "0.11.0-beta.1",
     "tailwind-merge": "^1.10.0",
     "vite-tsconfig-paths": "^4.0.5",
     "zod": "^3.20.6"
@@ -28,21 +25,12 @@
     "react-dom": "preact/compat"
   },
   "devDependencies": {
-    "@babel/core": ">=7.12.10 <8.0.0",
-    "@preact/preset-vite": "^2.5.0",
-    "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/line-clamp": "^0.4.2",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
-    "autoprefixer": "^10.4.13",
-    "clsx": "^1.2.1",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
-    "postcss": "^8.4.21",
-    "prettier": "^2.8.4",
-    "prettier-plugin-tailwindcss": "^0.2.3",
-    "tailwindcss": "^3.2.7",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4"
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "compile": "tsc -b",
+    "watch:server": "npm run compile -- -w",
+    "watch:www": "npm run watch -w www",
+    "build:www": "npm run build -w www"
   }
 }
