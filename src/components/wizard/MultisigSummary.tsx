@@ -14,19 +14,19 @@ export function MultisigSummary() {
         <div class="flex mb-2">
           <span class="font-bold text-gray-800 mr-2">Multisig name:</span>
           <span class="font-mono text-gray-900">
-            {formData[MultisigStep.MultisigInit].value.name}
+            {formData[MultisigStep.Init].value.name}
           </span>
         </div>
         <div class="flex mb-2">
           <span class="font-bold text-gray-800 mr-2">Multisig member:</span>
           <span class="font-mono text-gray-900">
-            {formData[MultisigStep.MultisigMembers].value.member}
+            {formData[MultisigStep.Members].value.member}
           </span>
         </div>
         <div class="flex mb-2">
           <span class="font-bold text-gray-800 mr-2">Multisig fund:</span>
           <span class="font-mono text-gray-900">
-            {formData[MultisigStep.MultisigFund].value.fund}
+            {formData[MultisigStep.Fund].value.fund}
           </span>
         </div>
       </pre>

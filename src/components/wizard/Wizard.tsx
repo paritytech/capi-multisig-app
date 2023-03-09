@@ -11,16 +11,23 @@ import { createDefaultFund } from './MultisigFund'
 import type { MultisigFundEntity } from './MultisigFund'
 
 export enum MultisigStep {
-  MultisigInit,
-  MultisigMembers,
-  MultisigFund,
-  MultisigSummary,
+  Init = 'init',
+  Members = 'member',
+  Fund = 'fund',
+  Summary = 'summary',
 }
 
+export const multisigSteps: MultisigStep[] = [
+  MultisigStep.Init,
+  MultisigStep.Members,
+  MultisigStep.Fund,
+  MultisigStep.Summary,
+]
+
 export interface FormData {
-  [MultisigStep.MultisigInit]: Signal<MultisigInitEntity>
-  [MultisigStep.MultisigMembers]: Signal<MultisigMemberEntity>
-  [MultisigStep.MultisigFund]: Signal<MultisigFundEntity>
+  [MultisigStep.Init]: Signal<MultisigInitEntity>
+  [MultisigStep.Members]: Signal<MultisigMemberEntity>
+  [MultisigStep.Fund]: Signal<MultisigFundEntity>
 }
 
 export type MultisigEntities =
@@ -30,9 +37,9 @@ export type MultisigEntities =
 
 function createDefaultFormData(): FormData {
   return {
-    [MultisigStep.MultisigInit]: createDefaultMultisigInit(),
-    [MultisigStep.MultisigMembers]: createDefaultMembers(),
-    [MultisigStep.MultisigFund]: createDefaultFund(),
+    [MultisigStep.Init]: createDefaultMultisigInit(),
+    [MultisigStep.Members]: createDefaultMembers(),
+    [MultisigStep.Fund]: createDefaultFund(),
   }
 }
 
@@ -66,7 +73,8 @@ export function useWizardNavigation() {
 
 export function useWizardFormDataStep<T extends MultisigEntities>() {
   const { formData, step } = wizardState
-  const formDataStep = formData[step.value as keyof FormData]
+  const stepIdx = multisigSteps[step.value] as keyof FormData
+  const formDataStep = formData[stepIdx]
 
   const updateFormDataStep = (formDataNew: T) => {
     formDataStep.value = formDataNew
