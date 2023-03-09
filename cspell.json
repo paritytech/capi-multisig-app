@@ -6,11 +6,10 @@
   ],
   "dictionaries": ["project-words"],
   "ignorePaths": [
-    "pnpm-lock.yaml",
-    "src/assets/",
-    "public",
+    "**/tsconfig.tsbuildinfo",
     ".gitignore",
-    ".prettierignore",
-    ".prettierrc"
+    "pnpm-lock.yaml",
+    "www/public",
+    "www/src/assets/"
   ]
 }

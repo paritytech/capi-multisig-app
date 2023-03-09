@@ -19,6 +19,7 @@ headlessui
 hmirror
 hookform
 karlkallavus
+ltex
 multiaddress
 multisigs
 nodenext
@@ -30,6 +31,7 @@ rroot
 sastan
 tailwind
 tailwindcss
+tsbuildinfo
 twind
 typesafe
 vite
