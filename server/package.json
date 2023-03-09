@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.288.0",
     "common": "workspace:../common",
     "typesafe-dynamodb": "^0.2.3"
   }
