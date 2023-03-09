@@ -8,5 +8,6 @@
   "paths": {
     "pages": ["src/pages"],
     "signals": ["src/signals"]
-  }
+  },
+  "references": [{ "path": "../common" }]
 }
