@@ -31,6 +31,6 @@
     "compile": "tsc -b",
     "watch:server": "npm run compile -- -w",
     "watch:www": "npm run watch -w www",
-    "build:www": "npm run build -w www"
+    "build": "npm run compile && npm run build -w www"
   }
 }
