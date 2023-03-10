@@ -1,34 +1,37 @@
-# Multisig
+# Capi Multisig App
 
-Multisig (multiple signatories) is a concept of having several entities sign off a transaction made from the account (wallet). This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations, decentralization.
+Multisig (multiple signatories) is a concept of having several entities sign off a transaction. This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations.
 
-CAPI Multisig (working name) is an application for managing multi-signature wallets (vaults?) and performing multi-signature transactions on blockchains in the Polkadot network.
-With CAPI Multisig, users can easily create and manage wallets that require multiple signatures for transactions, providing an extra layer of security against potential theft or misuse of funds.
-The app offers a user-friendly interface that makes it easy to create and manage a multisig vault.
+The Capi Multisig App is an application for managing multi-signature wallets and performing multi-signature transactions on blockchains in the Polkadot network.
 
-CAPI Multisig is built using CAPI on the Polkadot blockchain, enabling users to work with most major Polkadot-compatible wallets and tokens.
+In its first iteration, the Capi Multisig App connects to the Westend Testnet and provides functionality for creating a multisig setup which uses a `PureProxy` as vault (the account holding the funds).
 
-## Features
+## Prerequisites for app users
 
-- Create multisig setup using a PureProxy as vault
-- List multisig vaults for a given account
-- View multisig vault details, including threshold, members, and pending transactions
-- Approve pending transactions using any of the member accounts until threshold is met
-- Transfer assets from a multisig vault to another account
-- Notification for queued, pending, in block, finalized transactions and dispatch errors
-- Form validation to guide the user through the process and input level validation
-- Tooltips to explain what each form field means
-- Future phase 2 features include editable members, transaction history, and node switch
-- Future phase 3 features include better branding, landing page, audits, messaging service, and integration with cold wallets and mobile wallets.
+1. Have the Polkadot.js extension installed in your browser. 
+2. Follow [this guide](https://www.youtube.com/watch?v=sy7lvAqyzkY) to create a few of accounts if you don’t have them already. Make sure they are available on the Westend testnet.
+3. Get some testnet tokens via the [Westend Faucet](https://matrix.to/#/#westend_faucet:matrix.org) by following [this guide](https://wiki.polkadot.network/docs/learn-DOT#getting-tokens-on-the-westend-testnet) 
 
-# Tech stack (coming soon)
+Note: The faucet can send tokens only once per day. Use [the accounts page](https://polkadot.js.org/apps/#/accounts) on Polkadot.js Apps or a wallet of your choice in order to split the tokens between your accounts in case you need to pay fees.
 
-# Getting Started (coming soon)
 
-# References and Links
+## Tech stack
+TypeScript, Capi, Preact, Tailwind, Vite, DynamoDB
 
-- [UI3 Components Figma](https://www.figma.com/file/w7tmesabD9ylgQ0RgmB6tK/UI3-components?node-id=722%3A6917&t=H52yPh9xTNJcnb0C-0)
-- [Multisig/Proxies Figma](https://www.figma.com/file/A1Tm8cDoNapzj4dqG83LjP/0.1-%2F-Multisig-%2B-Proxies?node-id=0%3A1&t=XZvryFSud5b1I4tV-0)
-- [Capi Multisig Issues](https://github.com/paritytech/capi-multisig-app/issues)
-- [UI3 Github Repo](https://github.com/paritytech/ui3)
-- [Wiki Proxies](https://wiki.polkadot.network/docs/learn-proxies)
+## Run locally
+Install dependencies
+```
+pnpm install
+```
+Start the dev server
+```
+pnpm run start
+```
+Build for production
+```
+pnpm run build
+```
+## References and Links
+
+- [Wiki Multisig](https://wiki.polkadot.network/docs/learn-account-multisig)
+- [Wiki PureProxies](https://wiki.polkadot.network/docs/learn-proxies#anonymous-proxy-pure-proxy)
