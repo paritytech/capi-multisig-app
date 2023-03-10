@@ -9,21 +9,21 @@ export function MultisigSummary() {
     <div>
       <h1 class="text-xl leading-8">Summary</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
-      <pre class="bg-gray-100 p-4 rounded-lg shadow-md overflow-x-auto">
-        <div class="flex mb-2">
-          <span class="font-bold text-gray-800 mr-2">Multisig name:</span>
+      <pre class="bg-gray-100 p-4 rounded-lg shadow-md overflow-x-auto space-y-2">
+        <div class="flex items-center">
+          <span class="font-bold text-gray-800">Multisig name:</span>
           <span class="font-mono text-gray-900">
             {formData.init.value.name}
           </span>
         </div>
-        <div class="flex mb-2">
-          <span class="font-bold text-gray-800 mr-2">Multisig member:</span>
+        <div class="flex items-center">
+          <span class="font-bold text-gray-800">Multisig member:</span>
           <span class="font-mono text-gray-900">
             {formData.members.value.member}
           </span>
         </div>
-        <div class="flex mb-2">
-          <span class="font-bold text-gray-800 mr-2">Multisig fund:</span>
+        <div class="flex items-center">
+          <span class="font-bold text-gray-800">Multisig fund:</span>
           <span class="font-mono text-gray-900">
             {formData.fund.value.fund}
           </span>

@@ -10,12 +10,15 @@ import { createDefaultFund } from './MultisigFund'
 import type { MultisigFundEntity } from './MultisigFund'
 
 export const multisigSteps = ['init', 'members', 'fund', 'summary'] as const
+
 export type MultisigStep = (typeof multisigSteps)[number]
 
 export type MultisigEntities =
   | MultisigInitEntity
   | MultisigMemberEntity
   | MultisigFundEntity
+
+export type FormData = ReturnType<typeof createDefaultFormData>
 
 function createDefaultFormData() {
   return {
@@ -24,8 +27,6 @@ function createDefaultFormData() {
     [multisigSteps[2]]: createDefaultFund(),
   }
 }
-
-type FormData = ReturnType<typeof createDefaultFormData>
 
 function createWizardState() {
   const step = signal(0)
