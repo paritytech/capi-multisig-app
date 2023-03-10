@@ -41,10 +41,6 @@ export function MultisigFund() {
     goPrev()
   }
 
-  const onErrorBack = () => {
-    goPrev()
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1 class="text-xl leading-8">3. Fund the multisig</h1>
@@ -65,7 +61,7 @@ export function MultisigFund() {
       )}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
-        <Button variant="ghost" onClick={handleSubmit(onBack, onErrorBack)}>
+        <Button variant="ghost" onClick={handleSubmit(onBack)}>
           &lt; Back
         </Button>
         <Button type="submit">Sign &amp; fund</Button>

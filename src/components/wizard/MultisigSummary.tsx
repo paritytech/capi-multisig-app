@@ -1,6 +1,5 @@
 import { Button } from '../Button'
 import { useWizardNavigation, wizardState } from './Wizard'
-import { MultisigStep } from './Wizard'
 
 export function MultisigSummary() {
   const { formData } = wizardState
@@ -14,19 +13,19 @@ export function MultisigSummary() {
         <div class="flex mb-2">
           <span class="font-bold text-gray-800 mr-2">Multisig name:</span>
           <span class="font-mono text-gray-900">
-            {formData[MultisigStep.Init].value.name}
+            {formData.init.value.name}
           </span>
         </div>
         <div class="flex mb-2">
           <span class="font-bold text-gray-800 mr-2">Multisig member:</span>
           <span class="font-mono text-gray-900">
-            {formData[MultisigStep.Members].value.member}
+            {formData.members.value.member}
           </span>
         </div>
         <div class="flex mb-2">
           <span class="font-bold text-gray-800 mr-2">Multisig fund:</span>
           <span class="font-mono text-gray-900">
-            {formData[MultisigStep.Fund].value.fund}
+            {formData.fund.value.fund}
           </span>
         </div>
       </pre>

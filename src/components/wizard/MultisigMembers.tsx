@@ -43,9 +43,6 @@ export function MultisigMembers() {
     updateFormDataStep(formDataNew)
     goPrev()
   }
-  const onErrorBack = () => {
-    goPrev()
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -67,7 +64,7 @@ export function MultisigMembers() {
       )}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
-        <Button variant="ghost" onClick={handleSubmit(onBack, onErrorBack)}>
+        <Button variant="ghost" onClick={handleSubmit(onBack)}>
           &lt; Back
         </Button>
         <Button type="submit">Sign & create</Button>

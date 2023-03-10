@@ -1,7 +1,6 @@
 import { toChildArray } from 'preact'
 import type { ComponentChildren } from 'preact'
 import { signal, computed } from '@preact/signals'
-import type { Signal } from '@preact/signals'
 
 import { createDefaultMultisigInit } from './MultisigInit'
 import type { MultisigInitEntity } from './MultisigInit'
@@ -10,38 +9,23 @@ import type { MultisigMemberEntity } from './MultisigMembers'
 import { createDefaultFund } from './MultisigFund'
 import type { MultisigFundEntity } from './MultisigFund'
 
-export enum MultisigStep {
-  Init = 'init',
-  Members = 'member',
-  Fund = 'fund',
-  Summary = 'summary',
-}
-
-export const multisigSteps: MultisigStep[] = [
-  MultisigStep.Init,
-  MultisigStep.Members,
-  MultisigStep.Fund,
-  MultisigStep.Summary,
-]
-
-export interface FormData {
-  [MultisigStep.Init]: Signal<MultisigInitEntity>
-  [MultisigStep.Members]: Signal<MultisigMemberEntity>
-  [MultisigStep.Fund]: Signal<MultisigFundEntity>
-}
+export const multisigSteps = ['init', 'members', 'fund', 'summary'] as const
+export type MultisigStep = (typeof multisigSteps)[number]
 
 export type MultisigEntities =
   | MultisigInitEntity
   | MultisigMemberEntity
   | MultisigFundEntity
 
-function createDefaultFormData(): FormData {
+function createDefaultFormData() {
   return {
-    [MultisigStep.Init]: createDefaultMultisigInit(),
-    [MultisigStep.Members]: createDefaultMembers(),
-    [MultisigStep.Fund]: createDefaultFund(),
+    [multisigSteps[0]]: createDefaultMultisigInit(),
+    [multisigSteps[1]]: createDefaultMembers(),
+    [multisigSteps[2]]: createDefaultFund(),
   }
 }
+
+type FormData = ReturnType<typeof createDefaultFormData>
 
 function createWizardState() {
   const step = signal(0)
