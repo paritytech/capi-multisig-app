@@ -11,8 +11,6 @@ import type { MultisigFundEntity } from './MultisigFund'
 
 export const multisigSteps = ['init', 'members', 'fund', 'summary'] as const
 
-export type MultisigStep = (typeof multisigSteps)[number]
-
 export type MultisigEntities =
   | MultisigInitEntity
   | MultisigMemberEntity
