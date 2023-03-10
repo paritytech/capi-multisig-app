@@ -6,7 +6,7 @@ The Capi Multisig App simplifies the management of multisigs on Substrate networ
 
 In its first iteration, the Capi Multisig App connects to the Westend Testnet and provides functionality for creating a multisig setup which uses a `PureProxy` as vault (the account holding the funds).
 
-## Prerequisites for app users
+## Usage Prerequisites
 
 1. Have the Polkadot.js extension installed in your browser. 
 2. If you don't already have accounts, follow [this guide](https://www.youtube.com/watch?v=sy7lvAqyzkY). Ensure your accounts are marked as accessible to the Westend testnet.
