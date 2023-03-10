@@ -9,7 +9,7 @@ In its first iteration, the Capi Multisig App connects to the Westend Testnet an
 ## Prerequisites for app users
 
 1. Have the Polkadot.js extension installed in your browser. 
-2. Follow [this guide](https://www.youtube.com/watch?v=sy7lvAqyzkY) to create a few of accounts if you don’t have them already. Make sure they are available on the Westend testnet.
+2. If you don't already have accounts, follow [this guide](https://www.youtube.com/watch?v=sy7lvAqyzkY). Ensure your accounts are marked as accessible to the Westend testnet.
 3. Get some testnet tokens via the [Westend Faucet](https://matrix.to/#/#westend_faucet:matrix.org) by following [this guide](https://wiki.polkadot.network/docs/learn-DOT#getting-tokens-on-the-westend-testnet) 
 
 Note: The faucet can send tokens only once per day. Use [the accounts page](https://polkadot.js.org/apps/#/accounts) on Polkadot.js Apps or a wallet of your choice in order to split the tokens between your accounts in case you need to pay fees.
