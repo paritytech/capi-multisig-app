@@ -1,6 +1,6 @@
 # Capi Multisig App
 
-Multisig (multiple signatories) is a concept of having several entities sign off a transaction. This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations.
+"Multisig" (multiple signatories) is a term which describes an account that is governed by multiple actors, who operate this shared account by creating, approving and rejecting proposals. There are many use cases to which multisigs are applicable; some use cases include corporate governance, security, spend tracking/management, and the definition and upholding of contractual obligations.
 
 The Capi Multisig App simplifies the management of multisigs on Substrate networks.
 
