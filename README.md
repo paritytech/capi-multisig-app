@@ -2,7 +2,7 @@
 
 Multisig (multiple signatories) is a concept of having several entities sign off a transaction. This may be required for several reasons, such as corporate governance, security, spend tracking/management, contractual obligations.
 
-The Capi Multisig App is an application for managing multi-signature wallets and performing multi-signature transactions on blockchains in the Polkadot network.
+The Capi Multisig App simplifies the management of multisigs on Substrate networks.
 
 In its first iteration, the Capi Multisig App connects to the Westend Testnet and provides functionality for creating a multisig setup which uses a `PureProxy` as vault (the account holding the funds).
 
