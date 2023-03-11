@@ -1,23 +1,22 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { signal } from '@preact/signals'
-import type { Signal } from '@preact/signals'
-
-import { Button } from '../Button'
-import { useWizardNavigation, useWizardFormDataStep } from './Wizard'
+import { zodResolver } from "@hookform/resolvers/zod/dist/index.js"
+import { signal } from "@preact/signals"
+import type { Signal } from "@preact/signals"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { Button } from "../Button.js"
+import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
 
 const isValidAddress = () => true // TODO: update when function added
 export const multisigMemberSchema = z.object({
   member: z.string({}).refine(isValidAddress, {
-    message: 'Invalid address',
+    message: "Invalid address",
   }),
 })
 export type MultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
 export function createDefaultMembers(): Signal<MultisigMemberEntity> {
   return signal({
-    member: '',
+    member: "",
   })
 }
 
@@ -28,11 +27,10 @@ export function MultisigMembers() {
     formState: { errors },
   } = useForm<MultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
-    mode: 'onChange',
+    mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } =
-    useWizardFormDataStep<MultisigMemberEntity>()
+  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<MultisigMemberEntity>()
 
   const onSubmit = (formDataNew: MultisigMemberEntity) => {
     updateFormDataStep(formDataNew)
@@ -52,7 +50,7 @@ export function MultisigMembers() {
         Member: <span class="text-pink-600">*</span>
       </label>
       <input
-        {...register('member')}
+        {...register("member")}
         defaultValue={formDataStep.member}
         placeholder="Enter the address..."
         class="block w-full rounded-lg border border-gray-300 p-2 my-2"

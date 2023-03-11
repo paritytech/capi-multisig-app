@@ -1,15 +1,14 @@
-import { toChildArray } from 'preact'
-import type { ComponentChildren } from 'preact'
-import { signal, computed } from '@preact/signals'
+import { computed, signal } from "@preact/signals"
+import { toChildArray } from "preact"
+import type { ComponentChildren } from "preact"
+import { createDefaultFund } from "./MultisigFund.js"
+import type { MultisigFundEntity } from "./MultisigFund.js"
+import { createDefaultMultisigInit } from "./MultisigInit.js"
+import type { MultisigInitEntity } from "./MultisigInit.js"
+import { createDefaultMembers } from "./MultisigMembers.js"
+import type { MultisigMemberEntity } from "./MultisigMembers.js"
 
-import { createDefaultMultisigInit } from './MultisigInit'
-import type { MultisigInitEntity } from './MultisigInit'
-import { createDefaultMembers } from './MultisigMembers'
-import type { MultisigMemberEntity } from './MultisigMembers'
-import { createDefaultFund } from './MultisigFund'
-import type { MultisigFundEntity } from './MultisigFund'
-
-export const multisigSteps = ['init', 'members', 'fund', 'summary'] as const
+export const multisigSteps = ["init", "members", "fund", "summary"] as const
 
 export type MultisigEntities =
   | MultisigInitEntity

@@ -5,7 +5,7 @@ import {
   MultisigMembers,
   MultisigSummary,
   Wizard,
-} from "../components/wizard.js"
+} from "../components/wizard/index.js"
 import { Page } from "./templates/base.js"
 
 export function CreateMultisig() {

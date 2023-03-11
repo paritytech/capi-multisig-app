@@ -1,14 +1,13 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { signal } from '@preact/signals'
-import type { Signal } from '@preact/signals'
-
-import { Button } from '../Button'
-import { useWizardNavigation, useWizardFormDataStep } from './Wizard'
+import { zodResolver } from "@hookform/resolvers/zod/dist/index.js"
+import { signal } from "@preact/signals"
+import type { Signal } from "@preact/signals"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { Button } from "../Button.js"
+import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
 
 export const multisigFundSchema = z.object({
-  fund: z.number().min(1, { message: 'Fund must be greater than 0' }),
+  fund: z.number().min(1, { message: "Fund must be greater than 0" }),
 })
 export type MultisigFundEntity = z.infer<typeof multisigFundSchema>
 
@@ -25,11 +24,10 @@ export function MultisigFund() {
     formState: { errors },
   } = useForm<MultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
-    mode: 'onChange',
+    mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } =
-    useWizardFormDataStep<MultisigFundEntity>()
+  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<MultisigFundEntity>()
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
     updateFormDataStep(formDataNew)
@@ -49,7 +47,7 @@ export function MultisigFund() {
         Fund the multisig: <span class="text-pink-600">*</span>
       </label>
       <input
-        {...register('fund', { valueAsNumber: true })}
+        {...register("fund", { valueAsNumber: true })}
         type="number"
         defaultValue={formDataStep.fund.toString()}
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"

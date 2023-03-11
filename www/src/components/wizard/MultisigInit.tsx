@@ -1,20 +1,19 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import { signal } from '@preact/signals'
-import type { Signal } from '@preact/signals'
-
-import { Button } from '../Button'
-import { useWizardNavigation, useWizardFormDataStep } from './Wizard'
+import { zodResolver } from "@hookform/resolvers/zod/dist/index.js"
+import { signal } from "@preact/signals"
+import type { Signal } from "@preact/signals"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { Button } from "../Button.js"
+import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
 
 export const multisigInitSchema = z.object({
-  name: z.string().min(1, { message: 'Required a multisig name' }),
+  name: z.string().min(1, { message: "Required a multisig name" }),
 })
 export type MultisigInitEntity = z.infer<typeof multisigInitSchema>
 
 export function createDefaultMultisigInit(): Signal<MultisigInitEntity> {
   return signal({
-    name: '',
+    name: "",
   })
 }
 
@@ -25,11 +24,10 @@ export function MultisigInit() {
     formState: { errors },
   } = useForm<MultisigInitEntity>({
     resolver: zodResolver(multisigInitSchema),
-    mode: 'onChange',
+    mode: "onChange",
   })
   const { goNext } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } =
-    useWizardFormDataStep<MultisigInitEntity>()
+  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<MultisigInitEntity>()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
     updateFormDataStep(formDataNew)
@@ -44,7 +42,7 @@ export function MultisigInit() {
         Multisig Name: <span class="text-pink-600">*</span>
       </label>
       <input
-        {...register('name')}
+        {...register("name")}
         id="name"
         defaultValue={formDataStep.name}
         placeholder="Enter the name..."

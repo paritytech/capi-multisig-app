@@ -1,5 +1,5 @@
-import { Button } from '../Button'
-import { useWizardNavigation, wizardState } from './Wizard'
+import { Button } from "../Button.js"
+import { useWizardNavigation, wizardState } from "./Wizard.js"
 
 export function MultisigSummary() {
   const { formData } = wizardState

@@ -1,62 +1,41 @@
 lockfileVersion: 5.4
 
+overrides:
+  react: preact/compat
+  react-dom: preact/compat
+
 importers:
 
-<<<<<<< HEAD
-specifiers:
-  '@babel/core': '>=7.12.10 <8.0.0'
-  '@headlessui/react': ^1.7.11
-  '@hookform/resolvers': ^2.9.11
-  '@preact/preset-vite': ^2.5.0
-  '@preact/signals': ^1.1.3
-  '@tailwindcss/forms': ^0.5.3
-  '@tailwindcss/line-clamp': ^0.4.2
-  '@talisman-connect/wallets': ^1.1.3
-  '@typescript-eslint/eslint-plugin': ^5.54.0
-  '@typescript-eslint/parser': ^5.54.0
-  autoprefixer: ^10.4.13
-  capi: 0.1.0-beta.26
-  clsx: ^1.2.1
-  eslint: ^8.35.0
-  eslint-config-prettier: ^8.6.0
-  postcss: ^8.4.21
-  preact: ^10.12.1
-  prettier: ^2.8.4
-  prettier-plugin-tailwindcss: ^0.2.3
-  react-hook-form: ^7.43.3
-  react-router-dom: ^6.8.1
-  tailwind-merge: ^1.10.0
-  tailwindcss: ^3.2.7
-  typescript: ^4.9.5
-  vite: ^4.1.4
-  vite-tsconfig-paths: ^4.0.5
-  zod: ^3.20.6
-
-dependencies:
-  '@headlessui/react': 1.7.11
-  '@hookform/resolvers': 2.9.11_react-hook-form@7.43.3
-  '@preact/signals': 1.1.3_preact@10.12.1
-  '@talisman-connect/wallets': 1.1.3
-  capi: 0.1.0-beta.26
-  preact: 10.12.1
-  react-hook-form: 7.43.3
-  react-router-dom: 6.8.1
-  tailwind-merge: 1.10.0
-  vite-tsconfig-paths: 4.0.5_typescript@4.9.5
-  zod: 3.20.6
-=======
   .:
     specifiers:
+      '@headlessui/react': ^1.7.11
+      '@hookform/resolvers': ^2.9.11
+      '@preact/signals': ^1.1.3
+      '@talisman-connect/wallets': ^1.1.3
       '@typescript-eslint/eslint-plugin': ^5.54.1
       '@typescript-eslint/parser': ^5.54.1
       capi: 0.1.0-beta.26
       eslint: ^8.36.0
+      preact: ^10.12.1
+      react-hook-form: ^7.43.3
+      react-router-dom: ^6.8.1
       scale-codec: 0.11.0-beta.1
+      tailwind-merge: ^1.10.0
       typescript: ^4.9.5
-      zod: ^3.21.4
+      vite-tsconfig-paths: ^4.0.5
+      zod: ^3.20.6
     dependencies:
+      '@headlessui/react': 1.7.13
+      '@hookform/resolvers': 2.9.11_react-hook-form@7.43.5
+      '@preact/signals': 1.1.3_preact@10.13.1
+      '@talisman-connect/wallets': 1.1.3
       capi: 0.1.0-beta.26
+      preact: 10.13.1
+      react-hook-form: 7.43.5
+      react-router-dom: 6.8.2
       scale-codec: 0.11.0-beta.1
+      tailwind-merge: 1.10.0
+      vite-tsconfig-paths: 4.0.5_typescript@4.9.5
       zod: 3.21.4
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.54.1_4rfaf6mlw2mmutqjcopwvbftpu
@@ -66,7 +45,6 @@ dependencies:
 
   common:
     specifiers: {}
->>>>>>> ce6c5dc (lots of refactoring)
 
   server:
     specifiers:
@@ -97,6 +75,7 @@ dependencies:
     specifiers:
       '@babel/core': '>=7.12.10 <8.0.0'
       '@headlessui/react': ^1.7.11
+      '@hookform/resolvers': ^2.9.11
       '@preact/preset-vite': ^2.5.0
       '@preact/signals': ^1.1.3
       '@tailwindcss/forms': ^0.5.3
@@ -113,14 +92,17 @@ dependencies:
       preact: ^10.12.1
       prettier: ^2.8.4
       prettier-plugin-tailwindcss: ^0.2.4
+      react-hook-form: ^7.43.3
       react-router-dom: ^6.8.1
       server: workspace:../server
       tailwind-merge: ^1.10.0
       tailwindcss: ^3.2.7
       vite: ^4.1.4
       vite-tsconfig-paths: ^4.0.5
+      zod: link:@hookform/resolvers/zod
     dependencies:
       '@headlessui/react': 1.7.13
+      '@hookform/resolvers': 2.9.11_react-hook-form@7.43.5
       '@preact/signals': 1.1.3_preact@10.13.1
       '@talisman-connect/wallets': 1.1.3
       '@tanstack/react-query': 4.26.1
@@ -130,10 +112,12 @@ dependencies:
       common: link:../common
       preact: 10.13.1
       prettier-plugin-tailwindcss: 0.2.4_prettier@2.8.4
+      react-hook-form: 7.43.5
       react-router-dom: 6.8.2
       server: link:../server
       tailwind-merge: 1.10.0
       vite-tsconfig-paths: 4.0.5
+      zod: link:@hookform/resolvers/zod
     devDependencies:
       '@babel/core': 7.21.0
       '@preact/preset-vite': 2.5.0_dukgwir26pnc5sb3oveyn54x3a
@@ -1433,19 +1417,14 @@ packages:
       client-only: 0.0.1
     dev: false
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  /@hookform/resolvers/2.9.11_react-hook-form@7.43.3:
+  /@hookform/resolvers/2.9.11_react-hook-form@7.43.5:
     resolution: {integrity: sha512-bA3aZ79UgcHj7tFV7RlgThzwSSHZgvfbt2wprldRkYBcMopdMvHyO17Wwp/twcJasNFischFfS7oz8Katz8DdQ==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.43.3
+      react-hook-form: 7.43.5
     dev: false
 
-=======
->>>>>>> c1ad4af (restore eslint)
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
     engines: {node: '>=10.10.0'}
@@ -1465,18 +1444,7 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
-<<<<<<< HEAD
-=======
-  /@ioredis/commands/1.2.0:
-    resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}
-    dev: false
->>>>>>> ce6c5dc (lots of refactoring)
 
-=======
->>>>>>> 4e5e691 (hopefully fixes deployment)
-=======
-
->>>>>>> c1ad4af (restore eslint)
   /@jridgewell/gen-mapping/0.1.1:
     resolution: {integrity: sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w==}
     engines: {node: '>=6.0.0'}
@@ -3747,53 +3715,15 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  /react-hook-form/7.43.3:
-    resolution: {integrity: sha512-LV6Fixh+hirrl6dXbM78aB6n//82aKbsNbcofF3wc6nx1UJLu3Jj/gsg1E5C9iISnLX+du8VTUyBUz2aCy+H7w==}
+  /react-hook-form/7.43.5:
+    resolution: {integrity: sha512-YcaXhuFHoOPipu5pC7ckxrLrialiOcU91pKu8P+isAcXZyMgByUK9PkI9j5fENO4+6XU5PwWXRGMIFlk9u9UBQ==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
     dev: false
 
-  /react-router-dom/6.8.1:
-    resolution: {integrity: sha512-67EXNfkQgf34P7+PSb6VlBuaacGhkKn3kpE51+P6zYSG2kiRoumXEL6e27zTa9+PGF2MNXbgIUHTVlleLbIcHQ==}
-=======
-  /random-bytes/1.0.0:
-    resolution: {integrity: sha512-iv7LhNVO047HzYR3InF6pUcUsPQiHTM1Qal51DcGSuZFBil1aBBWG5eHPNek7bvILMaYJ/8RU1e8w1AMdHmLQQ==}
-    engines: {node: '>= 0.8'}
-    dev: false
-
-  /range-parser/1.2.1:
-    resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
-    engines: {node: '>= 0.6'}
-    dev: false
-
-  /raw-body/2.5.1:
-    resolution: {integrity: sha512-qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig==}
-    engines: {node: '>= 0.8'}
-    dependencies:
-      bytes: 3.1.2
-      http-errors: 2.0.0
-      iconv-lite: 0.4.24
-      unpipe: 1.0.0
-    dev: false
-
-  /raw-body/2.5.2:
-    resolution: {integrity: sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==}
-    engines: {node: '>= 0.8'}
-    dependencies:
-      bytes: 3.1.2
-      http-errors: 2.0.0
-      iconv-lite: 0.4.24
-      unpipe: 1.0.0
-    dev: false
-
-=======
->>>>>>> 4e5e691 (hopefully fixes deployment)
   /react-router-dom/6.8.2:
     resolution: {integrity: sha512-N/oAF1Shd7g4tWy+75IIufCGsHBqT74tnzHQhbiUTYILYF0Blk65cg+HPZqwC+6SqEyx033nKqU7by38v3lBZg==}
->>>>>>> ce6c5dc (lots of refactoring)
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
@@ -4061,6 +3991,19 @@ packages:
         optional: true
     dev: false
 
+  /tsconfck/2.0.3_typescript@4.9.5:
+    resolution: {integrity: sha512-o3DsPZO1+C98KqHMdAbWs30zpxD30kj8r9OLA4ML1yghx4khNDzaaShNalfluh8ZPPhzKe3qyVCP1HiZszSAsw==}
+    engines: {node: ^14.13.1 || ^16 || >=18}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.3.5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 4.9.5
+    dev: false
+
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
 
@@ -4126,7 +4069,6 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /undefsafe/2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
@@ -4205,6 +4147,17 @@ packages:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 2.0.3
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: false
+
+  /vite-tsconfig-paths/4.0.5_typescript@4.9.5:
+    resolution: {integrity: sha512-/L/eHwySFYjwxoYt1WRJniuK/jPv+WGwgRGBYx3leciR5wBeqntQpUE6Js6+TJemChc+ter7fDBKieyEWDx4yQ==}
+    dependencies:
+      debug: 4.3.4
+      globrex: 0.1.2
+      tsconfck: 2.0.3_typescript@4.9.5
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -4356,24 +4309,12 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
     dev: true
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c1ad4af (restore eslint)
 
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
 
-<<<<<<< HEAD
-  /zod/3.20.6:
-    resolution: {integrity: sha512-oyu0m54SGCtzh6EClBVqDDlAYRz4jrVtKwQ7ZnsEmMI9HnzuZFj8QFwAY1M5uniIYACdGvv0PBWPF2kO0aNofA==}
-    dev: false
-=======
->>>>>>> ce6c5dc (lots of refactoring)
-=======
   /zod/3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
->>>>>>> c1ad4af (restore eslint)
