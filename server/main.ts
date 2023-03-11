@@ -1,15 +1,17 @@
-import { createHTTPHandler } from "@trpc/server/adapters/standalone";
-import { PORT, router } from "./index.js";
-import { createServer } from "http";
+import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import { router } from "./index.js";
+import cors from "cors";
 
-const handler = createHTTPHandler({
+const server = createHTTPServer({
   router,
   createContext() {
-    // TODO: ddb utils here?
+    // TODO
     return {};
   },
+  middleware: cors(),
+  batching: { enabled: true },
 });
 
-const server = createServer(handler);
-
+const PORT = 3210;
 server.listen(PORT);
+console.log(`Listening on "http://localhost:${PORT}/"`);

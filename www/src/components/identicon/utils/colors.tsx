@@ -6,7 +6,8 @@ import { findScheme, SCHEMA } from "./scheme.js"
   https://github.com/polkadot-js/ui/tree/master/packages/react-identicon
 */
 
-const Blake2_512 = new hashers.Blake2Hasher(512 as any, false)
+// TODO: remove `as never` upon upgrading to latest version of Capi
+const Blake2_512 = new hashers.Blake2Hasher(512 as never, false)
 
 const zeroHash = Blake2_512.hash(new Uint8Array(32))
 
@@ -15,10 +16,7 @@ function addressToId(address: string): Uint8Array {
     prefix: number,
     pubKey: Uint8Array,
   ]
-
-  return Blake2_512.hash(pubKey).map(
-    (x, i) => (x + 256 - zeroHash[i]!) % 256,
-  )
+  return Blake2_512.hash(pubKey).map((x, i) => (x + 256 - zeroHash[i]!) % 256)
 }
 
 export function getColorsNew(address: string): string[] {
@@ -31,7 +29,7 @@ export function getColorsNew(address: string): string[] {
   const sat = Math.floor((id[29]! * 70) / 256 + 26) % 80
   const alignedSat = sat < 40 ? sat + 50 : sat < 70 ? sat + 30 : sat
   const scheme = findScheme(d)
-  const palette = Array.from(id).map((x, i): string => {
+  const palette = Array.from(id).map((x, i) => {
     const b = (x + (i % 28) * 58) % 256
 
     if (b === 0) {
@@ -41,14 +39,12 @@ export function getColorsNew(address: string): string[] {
     }
 
     const h = Math.floor(((b % 64) * 360) / 64)
-    const l = [40, 45, 50, 55][Math.floor(b / 64)]
+    const l = [40, 45, 50, 55][Math.floor(b / 64)!]!
 
     return `hsl(${h}, ${alignedSat}%, ${l}%)`
   })
 
-  return scheme.colors.map(
-    (_, i): string => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]!]!,
-  )
+  return scheme.colors.map((_, i) => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]!]!)
 }
 
 export function getColors(address: string): string[] {
@@ -60,7 +56,7 @@ export function getColors(address: string): string[] {
   const rot = (id[28]! % 6) * 3
   const sat = (Math.floor((id[29]! * 70) / 256 + 26) % 80) + 30
   const scheme = findScheme(d)
-  const palette = Array.from(id).map((x, i): string => {
+  const palette = Array.from(id).map((x, i) => {
     const b = (x + (i % 28) * 58) % 256
 
     if (b === 0) {
@@ -70,7 +66,7 @@ export function getColors(address: string): string[] {
     }
 
     const h = Math.floor(((b % 64) * 360) / 64)
-    const l = [53, 15, 35, 75][Math.floor(b / 64)]
+    const l = [53, 15, 35, 75][Math.floor(b / 64)!]!
 
     return `hsl(${h}, ${sat}%, ${l}%)`
   })

@@ -31,12 +31,12 @@ export const Identicon = ({
 
   const colors = address ? initialColors || getColors(address) : defaultColors
 
-  const copyToClipboard = useCallback(() => {
+  const copyToClipboard = useCallback(async () => {
     if (disableClipboardCopy) {
       return
     }
     if (navigator) {
-      navigator.clipboard.writeText(address)
+      await navigator.clipboard.writeText(address)
     }
   }, [address])
 

@@ -1,4 +1,5 @@
 amannn
+andreea
 asynciterable
 azuretools
 bradlc
@@ -31,6 +32,7 @@ rroot
 sastan
 tailwind
 tailwindcss
+trpc
 tsbuildinfo
 twind
 typesafe
