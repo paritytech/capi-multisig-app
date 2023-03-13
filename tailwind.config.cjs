@@ -22,7 +22,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        'inter': ['"Inter"'],
+        inter: ['"Inter"'],
       },
     },
   },

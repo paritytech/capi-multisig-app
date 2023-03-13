@@ -22,7 +22,12 @@ export function AccountSelect({
     <Listbox value={selectedAccount} onChange={setSelectedAccount}>
       {({ open }: { open: boolean }) => (
         <div className="relative w-full">
-          <Listbox.Button className="h-12 flex items-center w-full rounded-lg bg-jaguar text-select-text border border-select-border p-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-cyan-700 focus:border-cyan-700">
+          <Listbox.Button
+            className={classNames(
+              'h-12 flex items-center w-full rounded-lg bg-jaguar text-select-text border border-select-border p-3 text-left cursor-default',
+              'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
+            )}
+          >
             {selectedAccount ? (
               <span className="flex items-center gap-2">
                 <Identicon value={selectedAccount.address} size={24} />
