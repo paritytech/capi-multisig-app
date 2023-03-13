@@ -22,6 +22,7 @@ importers:
       tailwind-merge: ^1.10.0
       typescript: ^4.9.5
       vite-tsconfig-paths: ^4.0.5
+      zod: ^3.21.4
     dependencies:
       '@headlessui/react': 1.7.13
       '@preact/signals': 1.1.3_preact@10.13.1
@@ -33,6 +34,7 @@ importers:
       scale-codec: 0.11.0-beta.1
       tailwind-merge: 1.10.0
       vite-tsconfig-paths: 4.0.5_typescript@4.9.5
+      zod: 3.21.4
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.54.1_4rfaf6mlw2mmutqjcopwvbftpu
       '@typescript-eslint/parser': 5.54.1_vgl77cfdswitgr47lm5swmv43m
@@ -53,7 +55,6 @@ importers:
       dotenv: ^16.0.3
       nodemon: ^2.0.21
       typesafe-dynamodb: ^0.2.3
-      zod: ^3.21.4
     dependencies:
       '@aws-sdk/client-dynamodb': 3.289.0
       '@aws-sdk/lib-dynamodb': 3.289.0_4ytebpyoy7dqnlcznnz34q7l7y
@@ -63,7 +64,6 @@ importers:
       dotenv: 16.0.3
       nodemon: 2.0.21
       typesafe-dynamodb: 0.2.3
-      zod: 3.21.4
     devDependencies:
       '@types/cors': 2.8.13
 

@@ -10,8 +10,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.21",
-    "typesafe-dynamodb": "^0.2.3",
-    "zod": "^3.21.4"
+    "typesafe-dynamodb": "^0.2.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13"
