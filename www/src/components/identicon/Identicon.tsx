@@ -1,6 +1,12 @@
 import { clsx } from "clsx"
 import { useCallback } from "preact/hooks"
-import { Circle, getCircleXY, OUTER_CIRCLE, renderCircle, Z } from "./utils/circles.js"
+import {
+  Circle,
+  getCircleXY,
+  OUTER_CIRCLE,
+  renderCircle,
+  Z,
+} from "./utils/circles.js"
 import { getColors } from "./utils/colors.js"
 
 interface IdenticonProps {
@@ -27,7 +33,8 @@ export const Identicon = ({
 }: IdenticonProps) => {
   const xy = getCircleXY()
 
-  const defaultColors = initialColors || new Array<string>(xy.length).fill("#ddd")
+  const defaultColors = initialColors
+    || new Array<string>(xy.length).fill("#ddd")
 
   const colors = address ? initialColors || getColors(address) : defaultColors
 

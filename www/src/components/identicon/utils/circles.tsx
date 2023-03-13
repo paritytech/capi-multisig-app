@@ -17,7 +17,7 @@ export const Z = (S / 64) * 5
 export const OUTER_CIRCLE: Circle = {
   cx: C,
   cy: C,
-  fill: 'transparent',
+  fill: "transparent",
   r: C,
 }
 

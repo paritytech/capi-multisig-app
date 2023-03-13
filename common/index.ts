@@ -1,1 +1,1 @@
-export const HI = "World";
+export const HI = "World"

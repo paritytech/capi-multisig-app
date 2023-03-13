@@ -27,7 +27,9 @@ export function MultisigFund() {
     mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<MultisigFundEntity>()
+  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<
+    MultisigFundEntity
+  >()
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
     updateFormDataStep(formDataNew)

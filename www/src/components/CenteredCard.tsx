@@ -1,4 +1,4 @@
-import { ComponentChildren } from 'preact'
+import { ComponentChildren } from "preact"
 
 interface Props {
   children: ComponentChildren

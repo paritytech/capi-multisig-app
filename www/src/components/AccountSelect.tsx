@@ -50,7 +50,9 @@ export default function AccountSelect() {
                   {({ selected }: { selected: boolean }) => (
                     <>
                       <span
-                        className={`block truncate ${selected ? "font-bold" : "font-normal"}`}
+                        className={`block truncate ${
+                          selected ? "font-bold" : "font-normal"
+                        }`}
                       >
                         {acc.name}
                       </span>

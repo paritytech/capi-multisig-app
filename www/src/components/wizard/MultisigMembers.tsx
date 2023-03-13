@@ -30,7 +30,9 @@ export function MultisigMembers() {
     mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<MultisigMemberEntity>()
+  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<
+    MultisigMemberEntity
+  >()
 
   const onSubmit = (formDataNew: MultisigMemberEntity) => {
     updateFormDataStep(formDataNew)

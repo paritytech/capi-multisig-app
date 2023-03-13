@@ -44,7 +44,9 @@ export function getColorsNew(address: string): string[] {
     return `hsl(${h}, ${alignedSat}%, ${l}%)`
   })
 
-  return scheme.colors.map((_, i) => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]!]!)
+  return scheme.colors.map((_, i) =>
+    palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]!]!
+  )
 }
 
 export function getColors(address: string): string[] {
@@ -71,5 +73,7 @@ export function getColors(address: string): string[] {
     return `hsl(${h}, ${sat}%, ${l}%)`
   })
 
-  return scheme.colors.map((_, i): string => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]!]!)
+  return scheme.colors.map((_, i): string =>
+    palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]!]!
+  )
 }

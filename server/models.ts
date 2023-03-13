@@ -1,47 +1,47 @@
-export type Model = Setup | Account;
+export type Model = Setup | Account
 
 export interface Setup {
-  type: "setup";
+  type: "setup"
   /** The stash accountId */
-  id: string;
+  id: string
   /** The genesis hash of the setup's network */
-  genesisHash: string;
+  genesisHash: string
   /** A human-readable name for the setup */
-  name: string;
+  name: string
   /** member accountIds */
-  members: [user: string, proxy?: string][];
+  members: [user: string, proxy?: string][]
   /** The number of signatories a proposal need in order to be executed */
-  threshold: number;
+  threshold: number
   /** The underlying multisig accountId */
-  multisig: string;
+  multisig: string
   /** The underlying pure proxy accountId */
-  stash: string;
+  stash: string
   /** Previous actions of the setup */
-  history: HistoryItem[];
+  history: HistoryItem[]
 }
 
 export interface HistoryItem {
   /** The scale-encoded call data */
-  callData: string;
+  callData: string
   /** Time point of the first approval */
-  timePoint: [blockNumber: number, txIndex: number];
+  timePoint: [blockNumber: number, txIndex: number]
   /** All votes, the first of which is the initiator */
-  approvals: Approvals[];
+  approvals: Approvals[]
   /** Whether the proposal was cancelled */
-  cancelled?: string;
+  cancelled?: string
 }
 
 export interface Approvals {
   /** The block at which the approval was finalized */
-  blockHash: string;
+  blockHash: string
   /** The accountId of the voting user */
-  member: string;
+  member: string
 }
 
 export interface Account {
-  type: "account";
+  type: "account"
   /** hex-encoded accountId */
-  id: string;
+  id: string
   /** The setups of which the account is member */
-  setups: string[];
+  setups: string[]
 }

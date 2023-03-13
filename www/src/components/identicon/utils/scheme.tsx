@@ -48,7 +48,7 @@ export function findScheme(d: number): Scheme {
   })
 
   if (!schema) {
-    throw new Error('Unable to find schema')
+    throw new Error("Unable to find schema")
   }
 
   return schema

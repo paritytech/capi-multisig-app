@@ -27,7 +27,9 @@ export function MultisigInit() {
     mode: "onChange",
   })
   const { goNext } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<MultisigInitEntity>()
+  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<
+    MultisigInitEntity
+  >()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
     updateFormDataStep(formDataNew)
