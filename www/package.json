@@ -18,8 +18,7 @@
     "react-router-dom": "^6.8.1",
     "server": "workspace:../server",
     "tailwind-merge": "^1.10.0",
-    "vite-tsconfig-paths": "^4.0.5",
-    "zod": "link:@hookform/resolvers/zod"
+    "vite-tsconfig-paths": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": ">=7.12.10 <8.0.0",

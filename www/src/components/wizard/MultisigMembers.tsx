@@ -1,8 +1,8 @@
-import { zodResolver } from "@hookform/resolvers/zod/dist/index.js"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { signal } from "@preact/signals"
 import type { Signal } from "@preact/signals"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { z } from "zod"
 import { Button } from "../Button.js"
 import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
 
