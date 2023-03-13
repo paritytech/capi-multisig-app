@@ -17,7 +17,6 @@ module.exports = {
         select: {
           border: '#00000029',
           text: '#000000E3',
-          focus: '#E6007A',
           active: '#F2F5FF',
         },
       },
