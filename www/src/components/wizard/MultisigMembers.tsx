@@ -1,4 +1,4 @@
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { signal } from "@preact/signals"
 import type { Signal } from "@preact/signals"
 import { useForm } from "react-hook-form"

@@ -5,18 +5,21 @@ import { Dashboard } from "./pages/dashboard.js"
 import { PageError } from "./pages/error.js"
 import "./index.css"
 
-render(<Main />, document.getElementById("app")!)
-
 function Main() {
   return <RouterProvider router={router} />
 }
 
-const router = createBrowserRouter([{
-  path: "/",
-  element: <Dashboard />,
-  errorElement: <PageError />,
-}, {
-  path: "/create-multisig",
-  element: <CreateMultisig />,
-  errorElement: <PageError />,
-}])
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Dashboard />,
+    errorElement: <PageError />,
+  },
+  {
+    path: "/create-multisig",
+    element: <CreateMultisig />,
+    errorElement: <PageError />,
+  },
+])
+
+render(<Main />, document.getElementById("app")!)
