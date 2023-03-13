@@ -2,9 +2,6 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
-        'inter': ['"Inter"'],
-      },
       colors: {
         button: {
           DEFAULT: '#321D47',
@@ -23,6 +20,9 @@ module.exports = {
           focus: '#E6007A',
           active: '#F2F5FF',
         },
+      },
+      fontFamily: {
+        'inter': ['"Inter"'],
       },
     },
   },
