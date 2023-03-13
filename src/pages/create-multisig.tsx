@@ -1,13 +1,23 @@
 import { Page } from './templates/base'
-import { defaultAccount } from '../signals/accounts'
 import { CenteredCard } from '../components/CenteredCard'
+import {
+  Wizard,
+  MultisigInit,
+  MultisigMembers,
+  MultisigFund,
+  MultisigSummary,
+} from '../components/wizard'
 
 export function CreateMultisig() {
   return (
     <Page>
       <CenteredCard>
-        <h1>Create multisig page</h1>
-        <p>Selected account: {defaultAccount.value?.name}</p>
+        <Wizard>
+          <MultisigInit />
+          <MultisigMembers />
+          <MultisigFund />
+          <MultisigSummary />
+        </Wizard>
       </CenteredCard>
     </Page>
   )
