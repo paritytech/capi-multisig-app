@@ -1,3 +1,5 @@
 export function shortAddress(address: string) {
-  return address.slice(0, 12) + '..' + address.slice(address.length - 12)
+  const prefix = address.slice(0, 12)
+  const suffix = address.slice(-12)
+  return `${prefix}..${suffix}`
 }
