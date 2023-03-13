@@ -25,12 +25,12 @@ export function AccountSelect({
           <Listbox.Button className="h-12 flex items-center w-full rounded-lg bg-jaguar text-select-text border border-select-border p-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-select-focus focus:border-select-focus">
             {selectedAccount ? (
               <span className="flex items-center gap-2">
-                <Identicon value={selectedAccount.address} size={32} />
-                <span className="font-bold">{selectedAccount.name}</span>
+                <Identicon value={selectedAccount.address} size={24} />
+                <span className="font-semibold">{selectedAccount.name}</span>
               </span>
             ) : (
               <span className="flex items-center gap-2">
-                <VoidIdenticon className="h-8 w-8" />
+                <VoidIdenticon className="h-6 w-6" />
                 <p className="text-gray-900">Select Account</p>
               </span>
             )}
@@ -75,7 +75,7 @@ export function AccountSelect({
                       >
                         <Identicon value={account.address} size={32} />
                         <p className="leading-4">
-                          <span className="font-bold">{account.name}</span>
+                          <span className="font-semibold">{account.name}</span>
                         </p>
                         <p className="leading-4">
                           <span>{shortAddress(account.address)}</span>
