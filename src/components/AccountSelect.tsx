@@ -29,9 +29,11 @@ export function AccountSelect({
             )}
           >
             {selectedAccount ? (
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 overflow-hidden">
                 <Identicon value={selectedAccount.address} size={24} />
-                <span className="font-semibold">{selectedAccount.name}</span>
+                <span className="font-semibold overflow-hidden text-ellipsis">
+                  {selectedAccount.name}
+                </span>
               </span>
             ) : (
               <span className="flex items-center gap-2">
@@ -75,14 +77,14 @@ export function AccountSelect({
                     {({ selected }: { selected: boolean }) => (
                       <div
                         className={classNames(
-                          'flex flex-row gap-2 items-center p-3 rounded-md hover:bg-select-active cursor-pointer',
+                          'flex flex-row gap-2 items-center p-3 rounded-md hover:bg-select-active cursor-pointer overflow-hidden text-ellipsis',
                         )}
                       >
                         <Identicon value={account.address} size={24} />
-                        <p className="leading-4">
+                        <p className="leading-4 overflow-hidden text-ellipsis">
                           <span className="font-semibold">{account.name}</span>
                         </p>
-                        <p className="leading-4">
+                        <p className="leading-4 overflow-hidden text-ellipsis">
                           <span>{shortAddress(account.address)}</span>
                         </p>
                         {selected && (
