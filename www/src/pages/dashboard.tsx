@@ -7,13 +7,13 @@ import { Page } from "./templates/base.js"
 
 export function Dashboard() {
   const hello = trpc.something.useQuery({ greeting: "Hello", name: "Client" })
+  !hello.data ? console.log("Loading data...") : console.log(hello.data);
+
   return (
     <Page>
       <CenteredCard>
         <Link to="/create-multisig">
           <div className="flex flex-col gap-4 wrap">
-            {!hello.data && <div>Loading...</div>}
-            <p>{hello.data}</p>
             <Button iconLeft={<IconPlus />}>New multisig</Button>
           </div>
         </Link>
