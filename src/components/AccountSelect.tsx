@@ -3,7 +3,7 @@ import { WalletAccount } from '@talisman-connect/wallets'
 import { Fragment } from 'preact/jsx-runtime'
 import classNames from 'clsx'
 import { Identicon } from './identicon/Identicon'
-import { shortAddress } from '../util/shortAddress'
+import { shortAddress, shortAccountName } from '../util/short'
 import { IconChevronDown } from './icons/IconChevronDown'
 import { IconChevronUp } from './icons/IconChevronUp'
 import { IconCheck } from './icons/IconCheck'
@@ -24,22 +24,23 @@ export function AccountSelect({
         <div className="relative w-full">
           <Listbox.Button
             className={classNames(
-              'h-12 flex items-center w-full rounded-lg bg-jaguar text-select-text border border-select-border p-3 text-left cursor-default',
+              'h-12 w-60 flex items-center gap-2 p-3 cursor-default',
+              'rounded-lg bg-jaguar text-select-text border border-select-border ',
               'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
             )}
           >
-            {selectedAccount ? (
-              <span className="flex items-center gap-2 overflow-hidden">
+            {selectedAccount && selectedAccount.name ? (
+              <>
                 <Identicon value={selectedAccount.address} size={24} />
                 <span className="font-semibold overflow-hidden text-ellipsis">
-                  {selectedAccount.name}
+                  {shortAccountName(selectedAccount.name)}
                 </span>
-              </span>
+              </>
             ) : (
-              <span className="flex items-center gap-2">
+              <>
                 <VoidIdenticon className="h-6 w-6" />
-                <p className="text-gray-900">Select Account</p>
-              </span>
+                <span className="text-gray-900">Select Account</span>
+              </>
             )}
 
             <span className="ml-auto text-dimmed">
@@ -58,7 +59,13 @@ export function AccountSelect({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute right-0 min-w-[400px] z-10 mt-2 w-full text-select-text bg-white border border-select-border shadow-lg max-h-56 rounded-md py-4 overflow-auto focus:outline-none sm:text-sm">
+            <Listbox.Options
+              className={classNames(
+                'absolute right-0 w-[400px] z-10 mt-2 py-4',
+                'text-select-text bg-white border border-select-border',
+                'shadow-lg rounded-md overflow-auto focus:outline-none',
+              )}
+            >
               {accounts.length ? (
                 accounts.map((account) => (
                   <Listbox.Option
@@ -77,20 +84,31 @@ export function AccountSelect({
                     {({ selected }: { selected: boolean }) => (
                       <div
                         className={classNames(
-                          'flex flex-row gap-2 items-center p-3 rounded-md hover:bg-select-active cursor-pointer overflow-hidden text-ellipsis',
+                          'flex flex-row gap-2 items-center p-3',
+                          'rounded-md hover:bg-select-active cursor-pointer overflow-hidden text-ellipsis',
                         )}
                       >
                         <Identicon value={account.address} size={24} />
                         <p className="leading-4 overflow-hidden text-ellipsis">
-                          <span className="font-semibold">{account.name}</span>
+                          <span className="font-semibold">
+                            {shortAccountName(account.name)}
+                          </span>
                         </p>
-                        <p className="leading-4 overflow-hidden text-ellipsis">
-                          <span>{shortAddress(account.address)}</span>
+                        <p
+                          className={classNames(
+                            'ml-auto leading-4 overflow-hidden text-ellipsis',
+                            { 'mr-8': !selected },
+                          )}
+                        >
+                          <span>
+                            {shortAddress(
+                              account.address,
+                              account.name?.length,
+                            )}
+                          </span>
                         </p>
                         {selected && (
-                          <div className="ml-auto">
-                            <IconCheck className="h-6 w-6 text-dimmed" />
-                          </div>
+                          <IconCheck className="h-6 w-6 text-dimmed" />
                         )}
                       </div>
                     )}
