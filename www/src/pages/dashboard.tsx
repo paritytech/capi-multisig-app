@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment */
 import { Link } from "react-router-dom"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
