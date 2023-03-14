@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "watch",
+      "dependsOn": ["watch:compile", "watch:server", "watch:www"],
+      "problemMatcher": []
+    },
+    {
+      "label": "watch:compile",
+      "type": "npm",
+      "script": "watch:compile",
+      "problemMatcher": ["$tsc"],
+      "isBackground": true,
+      "presentation": {
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "watch:server",
+      "type": "npm",
+      "script": "watch:server",
+      "problemMatcher": ["$tsc"],
+      "isBackground": true,
+      "presentation": {
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "watch:www",
+      "type": "npm",
+      "script": "watch:www",
+      "problemMatcher": "$tsc",
+      "isBackground": true,
+      "presentation": {
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    }
+  ]
+}
