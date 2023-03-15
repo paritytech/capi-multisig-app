@@ -1,10 +1,10 @@
 {
   "recommendations": [
     "EditorConfig.EditorConfig",
-    "esbenp.prettier-vscode",
-    "streetsidesoftware.code-spell-checker",
-    "csstools.postcss",
     "bradlc.vscode-tailwindcss",
-    "dbaeumer.vscode-eslint"
+    "csstools.postcss",
+    "dprint.dprint",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
