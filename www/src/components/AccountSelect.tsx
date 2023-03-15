@@ -89,14 +89,14 @@ export function AccountSelect({
                         )}
                       >
                         <Identicon value={account.address} size={24} />
-                        <p className="leading-4 overflow-hidden text-ellipsis">
+                        <p className="overflow-hidden text-ellipsis">
                           <span className="font-semibold">
                             {shortAccountName(account.name)}
                           </span>
                         </p>
                         <p
                           className={clsx(
-                            'ml-auto leading-4 overflow-hidden text-ellipsis',
+                            'ml-auto overflow-hidden text-ellipsis',
                             { 'mr-8': !selected },
                           )}
                         >
