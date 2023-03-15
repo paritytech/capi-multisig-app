@@ -4,9 +4,9 @@ import type { ComponentChildren } from "preact"
 import { createDefaultFund } from "./MultisigFund.js"
 import type { MultisigFundEntity } from "./MultisigFund.js"
 import { createDefaultMultisigInit } from "./MultisigInit.js"
-import type { MultisigInitEntity } from "./MultisigInit.js"
 import { createDefaultMembers } from "./MultisigMembers.js"
 import type { MultisigMemberEntity } from "./MultisigMembers.js"
+import type { MultisigInitEntity } from "./schema.js"
 
 export const multisigSteps = ["init", "members", "fund", "summary"] as const
 

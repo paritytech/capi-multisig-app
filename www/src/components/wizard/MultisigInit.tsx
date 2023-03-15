@@ -2,18 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { signal } from "@preact/signals"
 import type { Signal } from "@preact/signals"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { defaultAccount } from "../../signals/accounts.js"
 import { Button } from "../Button.js"
+import { MultisigInitEntity, multisigInitSchema } from "./schema.js"
 import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
-
-export const multisigInitSchema = z.object({
-  name: z.string().min(1, { message: "Required a multisig name" }),
-})
-export type MultisigInitEntity = z.infer<typeof multisigInitSchema>
 
 export function createDefaultMultisigInit(): Signal<MultisigInitEntity> {
   return signal({
     name: "",
+    members: 2,
+    treshold: 2,
   })
 }
 
@@ -41,20 +39,68 @@ export function MultisigInit() {
       <h1 class="text-xl leading-8">1. Multisig setup</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
       <label class="leading-6">
-        Multisig Name: <span class="text-pink-600">*</span>
+        Multisig Name <span class="text-pink-600">*</span>
       </label>
       <input
         {...register("name")}
         id="name"
         defaultValue={formDataStep.name}
         placeholder="Enter the name..."
-        class="block rounded-lg border border-gray-300 p-2 my-2 w-1/2"
+        class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
       />
       {errors.name && (
         <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
           {errors.name.message}
         </div>
       )}
+      <label class="leading-6">
+        Creator
+      </label>
+      <div className="mb-4">
+        {`${defaultAccount.value?.name}  ${defaultAccount.value?.address}`}
+      </div>
+      <div className="flex">
+        <div>
+          <label class="leading-6">
+            Members
+          </label>
+          <input
+            {...register("members", { valueAsNumber: true })}
+            id="members"
+            type="number"
+            min={0}
+            defaultValue={formDataStep.members.toString()}
+            class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
+          />
+          {errors.members && (
+            <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+              {errors.members.message}
+            </div>
+          )}
+        </div>
+        <div>
+          <label class="leading-6">
+            Treshold
+          </label>
+          <input
+            {...register("treshold", {
+              valueAsNumber: true,
+              validate: (t) => t < formDataStep.members,
+            })}
+            id="treshold"
+            type="number"
+            min={0}
+            defaultValue={formDataStep.treshold.toString()}
+            class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
+          />
+          {errors.treshold && (
+            <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+              {errors.treshold.message}
+            </div>
+          )}
+        </div>
+      </div>
+
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-end">
         <Button variant="ghost" type="submit">
