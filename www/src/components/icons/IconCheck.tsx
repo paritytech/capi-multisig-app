@@ -1,6 +1,6 @@
 import type { JSX } from 'preact/jsx-runtime'
 
-export const IconChevronUpDown = (
+export const IconCheck = (
   props: JSX.IntrinsicAttributes & JSX.SVGAttributes<SVGSVGElement>,
 ) => (
   <svg
@@ -14,7 +14,7 @@ export const IconChevronUpDown = (
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+      d="M4.5 12.75l6 6 9-13.5"
     />
   </svg>
 )

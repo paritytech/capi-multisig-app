@@ -1,69 +1,128 @@
-import { Listbox, Transition } from "@headlessui/react"
-import { WalletAccount } from "@talisman-connect/wallets"
-import { Fragment } from "preact/jsx-runtime"
-import { accounts, defaultAccount } from "../signals/index.js"
-import { IconChevronUpDown } from "./icons/IconChevronUpDown.js"
+import { Listbox, Transition } from '@headlessui/react'
+import { WalletAccount } from '@talisman-connect/wallets'
+import { Fragment } from 'preact/jsx-runtime'
+import { clsx } from 'clsx'
+import { Identicon } from './identicon/Identicon.js'
+import { shortAddress, shortAccountName } from '../util/short.js'
+import { IconChevronDown } from './icons/IconChevronDown.js'
+import { IconChevronUp } from './icons/IconChevronUp.js'
+import { IconCheck } from './icons/IconCheck.js'
+import { VoidIdenticon } from './identicon/VoidIdenticon.js'
 
-const placeholder = {
-  name: "No account found",
-  address: "-",
-}
-
-export default function AccountSelect() {
+export function AccountSelect({
+  selectedAccount,
+  accounts,
+  setSelectedAccount,
+}: {
+  accounts: WalletAccount[]
+  selectedAccount?: WalletAccount
+  setSelectedAccount: (account: WalletAccount) => void
+}) {
   return (
-    <div className="w-72 mr-4">
-      <Listbox
-        value={defaultAccount.value ?? (placeholder as WalletAccount)}
-        onChange={(a) => {
-          defaultAccount.value = a
-        }}
-        as={Fragment}
-      >
-        <div className="relative mt-1">
-          <Listbox.Button className="listbox-button">
-            <span className="block truncate">
-              {defaultAccount.value?.name ?? placeholder.name}
-            </span>
-            <span
-              className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
-              aria-hidden="true"
-            >
-              <IconChevronUpDown className="h-5 w-5 text-gray-400" />
+    <Listbox value={selectedAccount} onChange={setSelectedAccount}>
+      {({ open }: { open: boolean }) => (
+        <div className="relative w-full">
+          <Listbox.Button
+            className={clsx(
+              'h-12 w-60 flex items-center gap-2 p-3 cursor-default',
+              'rounded-lg bg-jaguar text-select-text border border-select-border ',
+              'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
+            )}
+          >
+            {selectedAccount && selectedAccount.name ? (
+              <>
+                <Identicon value={selectedAccount.address} size={24} />
+                <span className="font-semibold overflow-hidden text-ellipsis">
+                  {shortAccountName(selectedAccount.name)}
+                </span>
+              </>
+            ) : (
+              <>
+                <VoidIdenticon className="h-6 w-6" />
+                <span className="text-gray-900">Select Account</span>
+              </>
+            )}
+
+            <span className="ml-auto text-dimmed">
+              {open ? (
+                <IconChevronUp className="w-6 h-6" />
+              ) : (
+                <IconChevronDown className="w-6 h-6" />
+              )}
             </span>
           </Listbox.Button>
+
           <Transition
+            show={open}
             as={Fragment}
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="listbox-options">
-              {accounts.value.map((acc) => (
-                <Listbox.Option
-                  key={acc.address}
-                  className={({ active }: { active: boolean }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-900"
-                    }`}
-                  value={acc}
-                >
-                  {({ selected }: { selected: boolean }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? "font-bold" : "font-normal"
-                        }`}
+            <Listbox.Options
+              className={clsx(
+                'absolute right-0 w-[400px] z-10 mt-2 py-4',
+                'text-select-text bg-white border border-select-border',
+                'shadow-lg rounded-md overflow-auto focus:outline-none',
+              )}
+            >
+              {accounts.length ? (
+                accounts.map((account) => (
+                  <Listbox.Option
+                    key={account.name}
+                    className={({
+                      active,
+                      selected,
+                    }: {
+                      active: boolean
+                      selected: boolean
+                    }) =>
+                      clsx({ 'bg-select-active': active || selected })
+                    }
+                    value={account}
+                  >
+                    {({ selected }: { selected: boolean }) => (
+                      <div
+                        className={clsx(
+                          'flex flex-row gap-2 items-center p-3',
+                          'rounded-md hover:bg-select-active cursor-pointer overflow-hidden text-ellipsis',
+                        )}
                       >
-                        {acc.name}
-                      </span>
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
+                        <Identicon value={account.address} size={24} />
+                        <p className="overflow-hidden text-ellipsis">
+                          <span className="font-semibold">
+                            {shortAccountName(account.name)}
+                          </span>
+                        </p>
+                        <p
+                          className={clsx(
+                            'ml-auto overflow-hidden text-ellipsis',
+                            { 'mr-8': !selected },
+                          )}
+                        >
+                          <span>
+                            {shortAddress(
+                              account.address,
+                              account.name?.length,
+                            )}
+                          </span>
+                        </p>
+                        {selected && (
+                          <IconCheck className="h-6 w-6 text-dimmed" />
+                        )}
+                      </div>
+                    )}
+                  </Listbox.Option>
+                ))
+              ) : (
+                <div className="h-20 flex items-center justify-center">
+                  No accounts.
+                </div>
+              )}
             </Listbox.Options>
           </Transition>
         </div>
-      </Listbox>
-    </div>
+      )}
+    </Listbox>
   )
 }
