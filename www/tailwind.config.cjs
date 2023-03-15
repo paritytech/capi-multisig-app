@@ -19,6 +19,10 @@ module.exports = {
           text: '#000000E3',
           active: '#F2F5FF',
         },
+        notification: {
+          success: "#56F3CE",
+          error: "#FE8D81",
+        },
       },
       fontFamily: {
         inter: ['"Inter"'],
