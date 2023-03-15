@@ -3,20 +3,22 @@ import { signal } from "@preact/signals"
 import type { Signal } from "@preact/signals"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { accounts } from "../../signals/accounts.js"
 import { Button } from "../Button.js"
-import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
+import {
+  useWizardFormDataStep,
+  useWizardNavigation,
+  wizardState,
+} from "./Wizard.js"
 
-const isValidAddress = () => true // TODO: update when function added
 export const multisigMemberSchema = z.object({
-  member: z.string({}).refine(isValidAddress, {
-    message: "Invalid address",
-  }),
+  members: z.array(z.string()),
 })
 export type MultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
 export function createDefaultMembers(): Signal<MultisigMemberEntity> {
   return signal({
-    member: "",
+    members: [],
   })
 }
 
@@ -30,7 +32,7 @@ export function MultisigMembers() {
     mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<
+  const { updateFormDataStep } = useWizardFormDataStep<
     MultisigMemberEntity
   >()
 
@@ -43,23 +45,32 @@ export function MultisigMembers() {
     updateFormDataStep(formDataNew)
     goPrev()
   }
+  const memberCount = wizardState.formData.init.peek().memberCount
+  const initialAccounts = accounts.peek().slice(0, memberCount)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1 class="text-xl leading-8">2. Members</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
       <label class="leading-6">
-        Member: <span class="text-pink-600">*</span>
+        Members: <span class="text-pink-600">*</span>
       </label>
-      <input
-        {...register("member")}
-        defaultValue={formDataStep.member}
-        placeholder="Enter the address..."
-        class="block w-full rounded-lg border border-gray-300 p-2 my-2"
-      />
-      {errors.member && (
+      {Array.from({ length: memberCount }, (_, i) => i).map((index) => {
+        return (
+          <>
+            <input
+              {...register(`members.${index}`)}
+              defaultValue={initialAccounts[index]?.address}
+              placeholder="Enter the address..."
+              class="block w-full rounded-lg border border-gray-300 p-2 my-2"
+            />
+          </>
+        )
+      })}
+
+      {errors.members && (
         <div class="field-error">
-          {errors.member.message}
+          {errors.members.message}
         </div>
       )}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
