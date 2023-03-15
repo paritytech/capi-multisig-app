@@ -10,7 +10,7 @@ import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
 export function createDefaultMultisigInit(): Signal<MultisigInitEntity> {
   return signal({
     name: "",
-    members: 2,
+    memberCount: 2,
     treshold: 2,
   })
 }
@@ -65,16 +65,16 @@ export function MultisigInit() {
             Members
           </label>
           <input
-            {...register("members", { valueAsNumber: true })}
+            {...register("memberCount", { valueAsNumber: true })}
             id="members"
             type="number"
             min={0}
-            defaultValue={formDataStep.members.toString()}
+            defaultValue={formDataStep.memberCount.toString()}
             class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
           />
-          {errors.members && (
+          {errors.memberCount && (
             <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
-              {errors.members.message}
+              {errors.memberCount.message}
             </div>
           )}
         </div>
@@ -85,7 +85,7 @@ export function MultisigInit() {
           <input
             {...register("treshold", {
               valueAsNumber: true,
-              validate: (t) => t < formDataStep.members,
+              validate: (t) => t < formDataStep.memberCount,
             })}
             id="treshold"
             type="number"
