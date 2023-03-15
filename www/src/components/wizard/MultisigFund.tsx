@@ -55,7 +55,7 @@ export function MultisigFund() {
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
       />
       {errors.fund && (
-        <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+        <div class="field-error">
           {errors.fund.message}
         </div>
       )}

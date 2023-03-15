@@ -49,7 +49,7 @@ export function MultisigInit() {
         class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
       />
       {errors.name && (
-        <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+        <div class="field-error">
           {errors.name.message}
         </div>
       )}
@@ -73,7 +73,7 @@ export function MultisigInit() {
             class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
           />
           {errors.memberCount && (
-            <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+            <div class="field-error">
               {errors.memberCount.message}
             </div>
           )}
@@ -94,7 +94,7 @@ export function MultisigInit() {
             class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
           />
           {errors.treshold && (
-            <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+            <div class="field-error">
               {errors.treshold.message}
             </div>
           )}

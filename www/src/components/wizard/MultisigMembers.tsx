@@ -58,7 +58,7 @@ export function MultisigMembers() {
         class="block w-full rounded-lg border border-gray-300 p-2 my-2"
       />
       {errors.member && (
-        <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
+        <div class="field-error">
           {errors.member.message}
         </div>
       )}
