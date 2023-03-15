@@ -7,7 +7,7 @@ import { Page } from "./templates/base.js"
 
 export function Dashboard() {
   const hello = trpc.something.useQuery({ greeting: "Hello", name: "Client" })
-  !hello.data ? console.log("Loading data...") : console.log(hello.data);
+  !hello.data ? console.log("Loading data...") : console.log(hello.data)
 
   return (
     <Page>
