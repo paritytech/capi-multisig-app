@@ -57,6 +57,11 @@ export function MultisigMembers() {
         placeholder="Enter the address..."
         class="block w-full rounded-lg border border-gray-300 p-2 my-2"
       />
+
+      {/* <AddressInput
+        {...register("member")}
+        placeholder="Enter the address..."
+      /> */}
       {errors.member && (
         <div class="bg-red-100 text-red-700 p-2 rounded mt-2 border border-red-300">
           {errors.member.message}
