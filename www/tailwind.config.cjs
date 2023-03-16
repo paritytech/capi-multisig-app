@@ -27,6 +27,9 @@ module.exports = {
       fontFamily: {
         inter: ['"Inter"'],
       },
+      boxShadow: {
+        notification: "0px 7px 3px rgba(18, 17, 39, 0.01), 0px 4px 2px rgba(18, 17, 39, 0.05), 0px 2px 2px rgba(18, 17, 39, 0.09), 0px 0px 1px rgba(18, 17, 39, 0.1), 0px 0px 0px rgba(18, 17, 39, 0.1)",
+      }
     },
   },
   plugins: [

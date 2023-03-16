@@ -1,6 +1,6 @@
 import { ComponentChildren } from "preact"
 import polkadotLogo from "../../assets/polkadot.svg"
-import { Notifications } from "../../components/notification/Notification.js"
+import { Notifications } from "../../components/Notifications.js"
 import { TopBar } from "../../components/TopBar.js"
 
 type Props = {
