@@ -18,7 +18,6 @@ module.exports = {
           focus: '#E6007A',
           text: '#111827',
           border: '#00000029',
-          bg: 'rgba(0, 0, 0, 0.03)',
         },
         select: {
           border: '#00000029',
