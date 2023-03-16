@@ -11,10 +11,6 @@ const tabs: Tab[] = [
 ]
 
 export function TopBar() {
-  const selectedAccount = accounts.value.find(
-    (acc) => acc.address === defaultAccount.value?.address,
-  )
-
   const setSelectedAccount = useCallback((account: WalletAccount) => {
     defaultAccount.value = account
   }, [])
@@ -27,7 +23,8 @@ export function TopBar() {
       <div className="w-[240px] my-2">
         <AccountSelect
           accounts={accounts.value}
-          {...{ selectedAccount, setSelectedAccount }}
+          selectedAccount={defaultAccount.value}
+          setSelectedAccount={setSelectedAccount}
         />
       </div>
     </header>

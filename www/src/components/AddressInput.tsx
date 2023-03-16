@@ -3,6 +3,7 @@ import type { JSX } from 'preact/jsx-runtime'
 import { Identicon } from './identicon/Identicon.js'
 import { isValidAddress } from '../util/isValidAddress.js'
 import { VoidIdenticon } from './identicon/VoidIdenticon.js'
+import { ForwardedRef, forwardRef } from 'preact/compat'
 
 interface Props {
   id?: string
@@ -12,13 +13,13 @@ interface Props {
   onChange: (e: JSX.TargetedEvent<HTMLInputElement, Event>) => void
 }
 
-export function AddressInput({
+export const AddressInput = forwardRef(({
   id,
   name,
   placeholder,
   value,
   ...props
-}: Props) {
+}: Omit<JSX.HTMLAttributes<HTMLInputElement>, 'value'> & Props, ref: ForwardedRef<HTMLInputElement>) => {
   const isValid = value && isValidAddress(value)
 
   return (
@@ -32,6 +33,7 @@ export function AddressInput({
       </div>
 
       <input
+        ref={ref}
         type="text"
         name={name}
         id={id}
@@ -43,4 +45,4 @@ export function AddressInput({
       />
     </div>
   )
-}
+})

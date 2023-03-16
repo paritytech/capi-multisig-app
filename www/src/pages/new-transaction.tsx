@@ -1,7 +1,7 @@
 import type { WalletAccount } from "@talisman-connect/wallets"
 import { useCallback } from "preact/hooks"
 import { z } from "zod"
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { AccountSelect } from "../components/AccountSelect.js"
 import { CenteredCard } from "../components/CenteredCard.js"
@@ -9,6 +9,7 @@ import { Page } from "./templates/base.js"
 import { accounts, defaultAccount } from '../signals/index.js'
 import { useSignal } from "@preact/signals"
 import { isValidAddress } from "../util/isValidAddress.js";
+import { AddressInput } from "../components/AddressInput.js";
 
 export const newTransactionSchema = z.object({
   amount: z.number({ required_error: "Amount is required", invalid_type_error: "Amount must be provided", }),
@@ -30,6 +31,7 @@ export function NewTransaction() {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<NewTransaction>({
     resolver: zodResolver(newTransactionSchema),
   });
@@ -61,16 +63,25 @@ export function NewTransaction() {
             accounts={accounts.value}
           />
           <p>To:</p>
-          <input
-            {...register("to")}
-            type="text"
-            class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
+          <Controller
+            control={control}
+            name="to"
+            rules={{ required: true }}
+            render={({
+              field
+            }) => (
+              <AddressInput
+                {...field}
+                placeholder="Address"
+              />
+            )}
           />
           {errors.to && (
             <p className="text-xs text-red-500">
               {errors.to?.message}
             </p>
           )}
+          {/* TODO styles */}
           <button
             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
             type="submit"
