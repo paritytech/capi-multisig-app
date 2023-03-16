@@ -5,21 +5,13 @@ import { isValidAddress } from '../util/isValidAddress.js'
 import { VoidIdenticon } from './identicon/VoidIdenticon.js'
 import { ForwardedRef, forwardRef } from 'preact/compat'
 
-interface Props {
-  id?: string
-  name?: string
-  placeholder: string
-  value?: string
-  onChange: (e: JSX.TargetedEvent<HTMLInputElement, Event>) => void
-}
-
 export const AddressInput = forwardRef(({
-  id,
-  name,
-  placeholder,
   value,
   ...props
-}: Omit<JSX.HTMLAttributes<HTMLInputElement>, 'value'> & Props, ref: ForwardedRef<HTMLInputElement>) => {
+}:
+  Omit<JSX.HTMLAttributes<HTMLInputElement>, 'value'> & { value?: string },
+  ref: ForwardedRef<HTMLInputElement>
+) => {
   const isValid = value && isValidAddress(value)
 
   return (
@@ -34,13 +26,12 @@ export const AddressInput = forwardRef(({
 
       <input
         ref={ref}
+        value={value}
         type="text"
-        name={name}
-        id={id}
         className={clsx(
-          'pl-10 bg-input-bg block w-full rounded-lg border-input-border focus:ring-1 focus:ring-input-focus focus:border-input-focus',
+          'pl-10 h-12 block w-full rounded-lg border-input-border',
+          'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
         )}
-        placeholder={placeholder}
         {...props}
       />
     </div>

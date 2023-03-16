@@ -19,7 +19,6 @@ export const newTransactionSchema = z.object({
 })
 export type NewTransaction = z.infer<typeof newTransactionSchema>
 
-
 export function NewTransaction() {
   const selectedAccount = useSignal(defaultAccount.value);
 
