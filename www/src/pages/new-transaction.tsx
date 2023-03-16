@@ -8,10 +8,13 @@ import { CenteredCard } from "../components/CenteredCard.js"
 import { Page } from "./templates/base.js"
 import { accounts, defaultAccount } from '../signals/index.js'
 import { useSignal } from "@preact/signals"
-
+import { isValidAddress } from "../util/isValidAddress.js";
 
 export const newTransactionSchema = z.object({
-  amount: z.number(),
+  amount: z.number({ required_error: "Amount is required", invalid_type_error: "Amount must be provided", }),
+  to: z.string().refine((value) => isValidAddress(value), {
+    message: "Provided address is invalid. Please insure you have typed correctly.",
+  })
 })
 export type NewTransaction = z.infer<typeof newTransactionSchema>
 
@@ -47,7 +50,7 @@ export function NewTransaction() {
             class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
           />
           {errors.amount && (
-            <p className="text-xs italic text-red-500 mt-2">
+            <p className="text-xs text-red-500">
               {errors.amount?.message}
             </p>
           )}
@@ -58,6 +61,16 @@ export function NewTransaction() {
             accounts={accounts.value}
           />
           <p>To:</p>
+          <input
+            {...register("to")}
+            type="text"
+            class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
+          />
+          {errors.to && (
+            <p className="text-xs text-red-500">
+              {errors.to?.message}
+            </p>
+          )}
           <button
             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
             type="submit"
