@@ -80,6 +80,7 @@ export function NewTransaction() {
               {errors.to?.message}
             </p>
           )}
+          <AddressInput value="1212" onChange={console.log} />
           {/* TODO styles */}
           <button
             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
