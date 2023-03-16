@@ -20,7 +20,7 @@ function Sidebar() {
 
 export function Page({ children }: Props) {
   return (
-    <div className="min-h-full flex w-full">
+    <div className="min-h-full flex w-full font-inter">
       <Notifications />
       <Sidebar />
       <div className="bg-gray-100 w-full">
