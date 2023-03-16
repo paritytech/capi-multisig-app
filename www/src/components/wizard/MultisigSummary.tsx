@@ -1,8 +1,8 @@
 import { Button } from "../Button.js"
-import { useWizardNavigation, wizardState } from "./Wizard.js"
+import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
 export function MultisigSummary() {
-  const { formData } = wizardState
+  const { formData } = useWizardFormData()
   const { goPrev } = useWizardNavigation()
 
   return (
@@ -13,19 +13,19 @@ export function MultisigSummary() {
         <div class="flex items-center">
           <span class="font-bold text-gray-800">Multisig name:</span>
           <span class="font-mono text-gray-900">
-            {formData.init.value.name}
+            {formData.name}
           </span>
         </div>
         <div class=" items-center">
           <span class="font-bold text-gray-800">Multisig members:</span>
           <ul class="font-mono text-gray-900">
-            {formData.members.value.members.map((value)=><li key={value}>{value}</li>)}
+            {formData.members.map((value, i)=><li key={i}>{value}</li>)}
           </ul>
         </div>
         <div class="flex items-center">
           <span class="font-bold text-gray-800">Multisig fund:</span>
           <span class="font-mono text-gray-900">
-            {formData.fund.value.fund}
+            {formData.fund}
           </span>
         </div>
       </pre>

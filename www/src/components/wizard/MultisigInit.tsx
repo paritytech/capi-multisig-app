@@ -1,19 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { signal } from "@preact/signals"
-import type { Signal } from "@preact/signals"
 import { useForm } from "react-hook-form"
-import { defaultAccount } from "../../signals/accounts.js"
+import { accounts, defaultAccount } from "../../signals/accounts.js"
 import { Button } from "../Button.js"
 import { MultisigInitEntity, multisigInitSchema } from "./schema.js"
-import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
+import {
+  useWizardFormData,
+  useWizardNavigation,
+  wizardState,
+} from "./Wizard.js"
 
-export function createDefaultMultisigInit(): Signal<MultisigInitEntity> {
-  return signal({
-    name: "",
-    memberCount: 2,
-    treshold: 2,
-  })
-}
+// TODO: Remove -> Example of working wizardState outside of a preact component
+console.log("wizardState", wizardState)
 
 export function MultisigInit() {
   const {
@@ -25,12 +22,24 @@ export function MultisigInit() {
     mode: "onChange",
   })
   const { goNext } = useWizardNavigation()
-  const { formDataStep, updateFormDataStep } = useWizardFormDataStep<
-    MultisigInitEntity
-  >()
+  const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
-    updateFormDataStep(formDataNew)
+    // TODO:
+    // Improve prefilling of members for the next step.
+    // Handle case on Back button from Members without prefilling again
+    let members = accounts.value.slice(0, formDataNew.memberCount).map((a) =>
+      a.address
+    )
+
+    if (members.length < formDataNew.memberCount) {
+      members = [
+        ...members,
+        ...Array(formDataNew.memberCount - members.length),
+      ]
+    }
+
+    updateFormData({ ...formDataNew, members })
     goNext()
   }
 
@@ -44,7 +53,7 @@ export function MultisigInit() {
       <input
         {...register("name")}
         id="name"
-        defaultValue={formDataStep.name}
+        defaultValue={formData.name}
         placeholder="Enter the name..."
         class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
       />
@@ -69,7 +78,7 @@ export function MultisigInit() {
             id="members"
             type="number"
             min={0}
-            defaultValue={formDataStep.memberCount.toString()}
+            defaultValue={formData.memberCount.toString()}
             class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
           />
           {errors.memberCount && (
@@ -85,12 +94,12 @@ export function MultisigInit() {
           <input
             {...register("treshold", {
               valueAsNumber: true,
-              validate: (t) => t < formDataStep.memberCount,
+              validate: (t) => t < formData.memberCount,
             })}
             id="treshold"
             type="number"
             min={0}
-            defaultValue={formDataStep.treshold.toString()}
+            defaultValue={formData.treshold.toString()}
             class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
           />
           {errors.treshold && (
