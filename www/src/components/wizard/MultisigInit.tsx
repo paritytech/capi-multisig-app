@@ -2,15 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { useForm } from "react-hook-form"
 import { accounts, defaultAccount } from "../../signals/accounts.js"
 import { Button } from "../Button.js"
-import { MultisigInitEntity, multisigInitSchema } from "./schema.js"
-import {
-  useWizardFormData,
-  useWizardNavigation,
-  wizardState,
-} from "./Wizard.js"
-
-// TODO: Remove -> Example of working wizardState outside of a preact component
-console.log("wizardState", wizardState)
+import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
+import type { FormData } from "./schemas.js"
+import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
 export function MultisigInit() {
   const {
@@ -25,20 +19,7 @@ export function MultisigInit() {
   const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
-    // TODO:
-    // Improve prefilling of members for the next step.
-    // Handle case on Back button from Members without prefilling again
-    let members = accounts.value.slice(0, formDataNew.memberCount).map((a) =>
-      a.address
-    )
-
-    if (members.length < formDataNew.memberCount) {
-      members = [
-        ...members,
-        ...Array(formDataNew.memberCount - members.length),
-      ]
-    }
-
+    const members = setMembers(formDataNew, formData)
     updateFormData({ ...formDataNew, members })
     goNext()
   }
@@ -89,22 +70,22 @@ export function MultisigInit() {
         </div>
         <div>
           <label class="leading-6">
-            Treshold
+            Threshold
           </label>
           <input
-            {...register("treshold", {
+            {...register("threshold", {
               valueAsNumber: true,
               validate: (t) => t < formData.memberCount,
             })}
-            id="treshold"
+            id="threshold"
             type="number"
             min={0}
-            defaultValue={formData.treshold.toString()}
+            defaultValue={formData.threshold.toString()}
             class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
           />
-          {errors.treshold && (
+          {errors.threshold && (
             <div class="field-error">
-              {errors.treshold.message}
+              {errors.threshold.message}
             </div>
           )}
         </div>
@@ -118,4 +99,43 @@ export function MultisigInit() {
       </div>
     </form>
   )
+}
+
+function setMembers(formDataNew: MultisigInitEntity, formData: FormData) {
+  const isMembersNotInitialized = formData.members.length === 0
+  const isMemberCountChanged = formDataNew.memberCount !== formData.memberCount
+  const isMemberCountDecreased = formDataNew.memberCount < formData.memberCount
+  const isMemberCountIncreased = formDataNew.memberCount > formData.memberCount
+
+  if (isMembersNotInitialized) {
+    const membersFromAccount = accounts.value.slice(0, formDataNew.memberCount)
+      .map((account) => account.address)
+
+    const isAccountLessThanMembers =
+      membersFromAccount.length < formDataNew.memberCount
+
+    if (isAccountLessThanMembers) {
+      return [
+        ...membersFromAccount,
+        ...Array(formDataNew.memberCount - membersFromAccount.length),
+      ]
+    }
+
+    return membersFromAccount
+  }
+
+  if (isMemberCountChanged) {
+    if (isMemberCountDecreased) {
+      return formData.members.slice(0, formDataNew.memberCount)
+    }
+
+    if (isMemberCountIncreased) {
+      return [
+        ...formData.members,
+        ...Array(formDataNew.memberCount - formData.members.length),
+      ]
+    }
+  }
+
+  return formData.members
 }

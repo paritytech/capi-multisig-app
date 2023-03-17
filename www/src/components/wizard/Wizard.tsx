@@ -1,13 +1,20 @@
 import { signal } from "@preact/signals"
+import type { Signal } from "@preact/signals"
 import { toChildArray } from "preact"
 import type { ComponentChildren } from "preact"
+import type { FormData } from "./schemas.js"
 
-export const wizardState = {
+type WizardState = {
+  step: Signal<number>
+  formData: Signal<FormData>
+}
+
+export const wizardState: WizardState = {
   step: signal(0),
   formData: signal({
     name: "",
     memberCount: 2,
-    treshold: 2,
+    threshold: 2,
     members: [],
     fund: 1,
   }),
@@ -32,7 +39,7 @@ export function useWizardNavigation() {
 export function useWizardFormData() {
   const { formData } = wizardState
 
-  const updateFormData = (formDataNew: any) => {
+  const updateFormData = (formDataNew: Partial<FormData>) => {
     Object.assign(formData.value, formDataNew)
   }
 
