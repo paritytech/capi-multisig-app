@@ -21,8 +21,7 @@ export const Button = ({
     full?: boolean
     iconLeft?: ComponentChildren
     iconRight?: ComponentChildren
-  }) =>
-{
+  }) => {
   const iconClassName = clsx(
     "flex items-center ",
     {
@@ -42,7 +41,7 @@ export const Button = ({
           "py-3 px-8": size === "md",
         },
         {
-          "min-w-[300px] py-7 px-16 text-2xl": size === "xl",
+          "min-w-[300px] h-20 font-bold py-5 px-16 text-2xl": size === "xl",
         },
         full ? "w-full" : "w-fit",
         {
