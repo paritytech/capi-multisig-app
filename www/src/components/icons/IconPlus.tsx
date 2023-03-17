@@ -4,8 +4,6 @@ export const IconPlus = (
   props: JSX.IntrinsicAttributes & JSX.SVGAttributes<SVGSVGElement>,
 ) => (
   <svg
-    width="37"
-    height="36"
     viewBox="0 0 37 36"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"

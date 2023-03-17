@@ -3,6 +3,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        border: '#00000029',
+        menu: {
+          active: '#E6007A',
+          bg: "#F3F3F6",
+        },
         button: {
           DEFAULT: '#321D47',
           secondary: '#DAE0F2',

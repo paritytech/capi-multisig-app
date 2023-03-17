@@ -20,7 +20,7 @@ export function TopBar() {
   }, [])
 
   return (
-    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-white">
+    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-white border-b border-border">
       <div className="self-end mx-auto">
         <Tabs tabs={tabs} />
       </div>
