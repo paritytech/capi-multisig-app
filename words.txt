@@ -34,8 +34,6 @@ sastan
 tailwind
 tailwindcss
 tanstack
-treshold
-tresholds
 trpc
 tsbuildinfo
 twind
