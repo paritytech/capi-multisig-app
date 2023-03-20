@@ -8,8 +8,8 @@ export function MultisigMembers() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     getValues,
+    formState: { errors },
   } = useForm<MultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
     mode: "onChange",

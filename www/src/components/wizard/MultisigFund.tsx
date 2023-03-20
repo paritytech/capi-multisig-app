@@ -8,8 +8,8 @@ export function MultisigFund() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     getValues,
+    formState: { errors },
   } = useForm<MultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
