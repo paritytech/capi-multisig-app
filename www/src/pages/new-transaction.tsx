@@ -10,6 +10,7 @@ import { accounts, defaultAccount } from '../signals/index.js'
 import { useSignal } from "@preact/signals"
 import { isValidAddress } from "../util/isValidAddress.js";
 import { AddressInput } from "../components/AddressInput.js";
+import { Button } from "../components/Button.js";
 
 export const newTransactionSchema = z.object({
   amount: z.number({ required_error: "Amount is required", invalid_type_error: "Amount must be provided", }),
@@ -29,7 +30,7 @@ export function NewTransaction() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     control,
   } = useForm<NewTransaction>({
     resolver: zodResolver(newTransactionSchema),
@@ -80,14 +81,9 @@ export function NewTransaction() {
               {errors.to?.message}
             </p>
           )}
-          <AddressInput value="1212" onChange={console.log} />
-          {/* TODO styles */}
-          <button
-            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Start
-          </button>
+          <Button type="submit" disabled={!isValid}>
+            Create
+          </Button>
         </form>
       </CenteredCard>
     </Page>
