@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { useForm } from "react-hook-form"
 import { Button } from "../Button.js"
+import { InputError } from "../InputError.js"
 import { MultisigFundEntity, multisigFundSchema } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
@@ -46,11 +47,7 @@ export function MultisigFund() {
         defaultValue={formData.fund.toString()}
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
       />
-      {errors.fund && (
-        <div class="field-error">
-          {errors.fund.message}
-        </div>
-      )}
+      {errors.fund && <InputError msg={errors.fund.message} />}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
         <Button variant="ghost" onClick={handleSubmit(onBack, onErrorBack)}>

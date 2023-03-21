@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import type { WalletAccount } from "@talisman-connect/wallets"
 import { Controller, useForm } from "react-hook-form"
 import { accounts, defaultAccount } from "../../signals/accounts.js"
 import { Button } from "../Button.js"
-import { NumberInput } from "../NumberInput.js"
+import { InputError } from "../InputError.js"
+import { InputNumber } from "../InputNumber.js"
 import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
 import type { FormData } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
@@ -21,7 +23,13 @@ export function MultisigInit() {
   const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
-    const members = setMembers(formDataNew, formData)
+    const members = setMembers(
+      formDataNew.memberCount,
+      formData.memberCount,
+      formData.members,
+      accounts.value,
+    )
+
     updateFormData({ ...formDataNew, members })
     goNext()
   }
@@ -40,36 +48,32 @@ export function MultisigInit() {
         placeholder="Enter the name..."
         class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
       />
-      {errors.name && (
-        <div class="field-error">
-          {errors.name.message}
-        </div>
-      )}
+      {errors.name && <InputError msg={errors.name.message} />}
       <label>
         Creator
       </label>
       <div class="mb-4">
         {`${defaultAccount.value?.name}  ${defaultAccount.value?.address}`}
       </div>
-      <div class="flex">
-        <div class="mr-8">
-          <label class="block leading-6 mb-2">
+      <div class="flex gap-8">
+        <div class="max-w-[138px]">
+          <label class="block mb-2">
             Members:<span class="text-pink-600">*</span>
           </label>
           <Controller
             control={control}
             name="memberCount"
             defaultValue={formData.memberCount}
-            render={({ field }) => <NumberInput {...field} />}
+            render={({ field }) => <InputNumber {...field} />}
           />
           {errors.memberCount && (
-            <div class="field-error w-36">
-              {errors.memberCount.message}
-            </div>
+            <InputError
+              msg={errors.memberCount.message}
+            />
           )}
         </div>
-        <div>
-          <label class="block leading-6 mb-2 ">
+        <div class="max-w-[138px]">
+          <label class="block mb-2">
             Threshold:<span class="text-pink-600">*</span>
           </label>
           <Controller
@@ -77,14 +81,9 @@ export function MultisigInit() {
             name="threshold"
             defaultValue={formData.threshold}
             rules={{ validate: (t) => t < formData.memberCount }}
-            render={({ field }) => <NumberInput {...field} />}
+            render={({ field }) => <InputNumber {...field} />}
           />
-
-          {errors.threshold && (
-            <div class="field-error w-36">
-              {errors.threshold.message}
-            </div>
-          )}
+          {errors.threshold && <InputError msg={errors.threshold.message} />}
         </div>
       </div>
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
@@ -97,22 +96,26 @@ export function MultisigInit() {
   )
 }
 
-function setMembers(formDataNew: MultisigInitEntity, formData: FormData) {
-  const isMembersNotInitialized = formData.members.length === 0
-  const isMemberCountChanged = formDataNew.memberCount !== formData.memberCount
-  const isMemberCountDecreased = formDataNew.memberCount < formData.memberCount
-  const isMemberCountIncreased = formDataNew.memberCount > formData.memberCount
+function setMembers(
+  newMemberCount: number,
+  oldMemberCount: number,
+  members: FormData["members"],
+  accounts: WalletAccount[],
+) {
+  const isMembersNotInitialized = members.length === 0
+  const isMemberCountChanged = newMemberCount !== oldMemberCount
+  const isMemberCountDecreased = newMemberCount < oldMemberCount
+  const isMemberCountIncreased = newMemberCount > oldMemberCount
 
   if (isMembersNotInitialized) {
-    const membersFromAccount = accounts.value.slice(0, formDataNew.memberCount)
+    const membersFromAccount = accounts.slice(0, newMemberCount)
       .map((account) => account.address)
 
-    const isAccountLessThanMembers =
-      membersFromAccount.length < formDataNew.memberCount
+    const isAccountLessThanMembers = membersFromAccount.length < newMemberCount
 
     if (isAccountLessThanMembers) {
       const offsetArray = Array(
-        formDataNew.memberCount - membersFromAccount.length,
+        newMemberCount - membersFromAccount.length,
       )
       return [...membersFromAccount, ...offsetArray]
     }
@@ -122,16 +125,16 @@ function setMembers(formDataNew: MultisigInitEntity, formData: FormData) {
 
   if (isMemberCountChanged) {
     if (isMemberCountDecreased) {
-      return formData.members.slice(0, formDataNew.memberCount)
+      return members.slice(0, newMemberCount)
     }
 
     if (isMemberCountIncreased) {
       const offsetArray = Array(
-        formDataNew.memberCount - formData.members.length,
+        newMemberCount - members.length,
       )
-      return [...formData.members, ...offsetArray]
+      return [...members, ...offsetArray]
     }
   }
 
-  return formData.members
+  return members
 }

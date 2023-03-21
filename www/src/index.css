@@ -77,5 +77,5 @@ body {
   @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm;
 }
 .field-error {
-  @apply text-red-600 rounded text-xs mt-2 mb-2;
+  @apply text-red-600 text-xs mt-2 mb-2;
 }

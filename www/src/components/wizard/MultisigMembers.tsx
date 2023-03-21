@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { useForm } from "react-hook-form"
 import { Button } from "../Button.js"
+import { InputError } from "../InputError.js"
 import { MultisigMemberEntity, multisigMemberSchema } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
@@ -50,11 +51,7 @@ export function MultisigMembers() {
               placeholder="Enter the address..."
               class="block w-full rounded-lg border border-gray-300 p-2 my-2"
             />
-            {errors.members && (
-              <div class="field-error">
-                {errors.members[i]?.message}
-              </div>
-            )}
+            {errors.members && <InputError msg={errors.members.message} />}
           </>
         )
       })}
