@@ -51,7 +51,7 @@ export function MultisigMembers() {
               placeholder="Enter the address..."
               class="block w-full rounded-lg border border-gray-300 p-2 my-2"
             />
-            {errors.members && <InputError msg={errors.members.message} />}
+            {errors.members && <InputError msg={errors.members[i]?.message} />}
           </>
         )
       })}
