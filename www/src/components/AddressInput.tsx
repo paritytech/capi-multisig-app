@@ -5,9 +5,8 @@ import { isValidAddress } from '../util/isValidAddress.js'
 import { VoidIdenticon } from './identicon/VoidIdenticon.js'
 import { ForwardedRef, forwardRef } from 'preact/compat'
 
-interface Props {
+interface Props extends JSX.HTMLAttributes<HTMLInputElement> {
   value?: string
-  props: JSX.HTMLAttributes<HTMLInputElement>
 }
 
 export const AddressInput = forwardRef(({
