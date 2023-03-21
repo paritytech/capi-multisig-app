@@ -15,7 +15,7 @@ export function Dashboard() {
   return (
     <Page>
       <CenteredCard>
-        <div className="w-[640px] flex flex-col gap-6 divide-y divide-divider">
+        <div className="flex flex-col gap-6 divide-y divide-divider">
           <h2 className="text-black text-xl ">Create a multisig</h2>
           <div className="">
             <div className="mt-32 flex justify-center">
@@ -23,7 +23,7 @@ export function Dashboard() {
                 <Button iconLeft={<IconPlus />} size="xl">New multisig</Button>
               </Link>
             </div>
-            <div className="mt-14 left-8 flex gap-2 items-center">
+            <div className="mt-14 flex flex-wrap gap-2 items-center">
               <p className="leading-8">Create a Multisig with address</p>
               {defaultAccount.value?.address &&
                 <Identicon size={24} value={defaultAccount.value?.address} />
