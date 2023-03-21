@@ -3,20 +3,6 @@ import { clsx } from "clsx"
 import { useCallback, useEffect } from "preact/hooks"
 import { IconClose } from "./icons/IconClose.js"
 
-// TODO: Preview - Remove before merge
-const exampleNotifications: Notification[] = [
-  {
-    id: "1",
-    type: "success",
-    message: "Executed transaction Ox34ea34ea...1f0f1f0f",
-  },
-  {
-    id: "2",
-    type: "error",
-    message: "Failed transaction Ox34ea34ea...1f0f1f0f",
-  },
-]
-
 export type Notification = {
   id: string
   type: "success" | "error"
@@ -28,9 +14,7 @@ export type NotificationsState = {
 }
 
 export const notificationsState: NotificationsState = {
-  // TODO: Preview - Remove before merge
-  notifications: signal([...exampleNotifications]),
-  // notifications: signal([]),
+  notifications: signal([]),
 }
 
 export function useNotifications() {
