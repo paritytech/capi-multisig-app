@@ -2,6 +2,7 @@ import { clsx } from "clsx"
 import { ComponentChildren } from "preact"
 import polkadotLogo from "../../assets/polkadot.svg"
 import { IconMenuMultisig } from "../../components/icons/IconMenuMultisig.js"
+import { Notifications } from "../../components/Notifications.js"
 import { TopBar } from "../../components/TopBar.js"
 
 type Props = {
@@ -36,6 +37,7 @@ function Sidebar() {
 export function Page({ children }: Props) {
   return (
     <div className="min-h-full flex w-full font-inter">
+      <Notifications />
       <Sidebar />
       <div className="bg-gray-100 w-full">
         <TopBar />
