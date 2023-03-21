@@ -19,7 +19,12 @@ export function AccountSelect({
   setSelectedAccount: (account: WalletAccount) => void
 }) {
   return (
-    <Listbox value={selectedAccount} onChange={setSelectedAccount}>
+    /*
+      "null" was added here to avoid passing undefined which triggers an error
+      "A component is changing from uncontrolled to controlled"
+      https://github.com/tailwindlabs/headlessui/issues/1983
+    */
+    <Listbox value={selectedAccount || null} onChange={setSelectedAccount}>
       {({ open }: { open: boolean }) => (
         <div className="relative w-full">
           <Listbox.Button
