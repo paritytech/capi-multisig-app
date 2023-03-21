@@ -17,13 +17,13 @@ const exampleNotifications: Notification[] = [
   },
 ]
 
-type Notification = {
+export type Notification = {
   id: string
   type: "success" | "error"
   message: string
 }
 
-type NotificationsState = {
+export type NotificationsState = {
   notifications: Signal<Notification[]>
 }
 
@@ -33,11 +33,10 @@ export const notificationsState: NotificationsState = {
   // notifications: signal([]),
 }
 
-function useNotifications() {
+export function useNotifications() {
   const { notifications } = notificationsState
 
-  const addNotification = ({ id, type, message }: Notification) => {
-    const newNotification = { id, type, message }
+  const addNotification = (newNotification: Notification) => {
     notifications.value = [...notifications.value, newNotification]
   }
 
@@ -122,7 +121,7 @@ function NotificationItem({ notification, onClose }: PropsNotificationItem) {
         <span>{notification.message}</span>
         <button
           type="button"
-          class="focus:outline-none"
+          class="focus:outline-none hover:opacity-60"
           onClick={handleClose}
         >
           <IconClose />
