@@ -5,11 +5,16 @@ import { isValidAddress } from '../util/isValidAddress.js'
 import { VoidIdenticon } from './identicon/VoidIdenticon.js'
 import { ForwardedRef, forwardRef } from 'preact/compat'
 
+interface Props {
+  value?: string
+  props: JSX.HTMLAttributes<HTMLInputElement>
+}
+
 export const AddressInput = forwardRef(({
   value,
   ...props
 }:
-  Omit<JSX.HTMLAttributes<HTMLInputElement>, 'value'> & { value?: string },
+  Props,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const isValid = value && isValidAddress(value)
