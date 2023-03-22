@@ -9,6 +9,11 @@ import { IconChevronUp } from './icons/IconChevronUp.js'
 import { IconCheck } from './icons/IconCheck.js'
 import { VoidIdenticon } from './identicon/VoidIdenticon.js'
 
+const placeholder = {
+  name: 'No account found',
+  address: '-',
+} as WalletAccount
+
 export function AccountSelect({
   selectedAccount,
   accounts,
@@ -19,7 +24,7 @@ export function AccountSelect({
   setSelectedAccount: (account: WalletAccount) => void
 }) {
   return (
-    <Listbox value={selectedAccount} onChange={setSelectedAccount}>
+    <Listbox value={selectedAccount ?? placeholder} onChange={setSelectedAccount}>
       {({ open }: { open: boolean }) => (
         <div className="relative w-full">
           <Listbox.Button
