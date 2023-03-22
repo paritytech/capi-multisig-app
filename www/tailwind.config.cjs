@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         border: '#00000029',
         divider: '#D1D1DB',
+        error: '#E31902',
         link: {
           DEFAULT: '#E6007A',
         },
@@ -25,6 +26,11 @@ module.exports = {
           DEFAULT: '#E6007A',
           text: '#111827',
           dimmed: '#6C6B80',
+        },
+        input: {
+          focus: '#E6007A',
+          text: '#111827',
+          border: '#00000029',
         },
         select: {
           border: '#00000029',
