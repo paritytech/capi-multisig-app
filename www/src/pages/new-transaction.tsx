@@ -44,7 +44,7 @@ export function NewTransaction() {
             )}
           />
           {errors.to && (
-            <p className="text-xs text-red-500">
+            <p className="text-xs text-error">
               {errors.to?.message}
             </p>
           )}

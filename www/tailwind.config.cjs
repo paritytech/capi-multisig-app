@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        error: '#E31902',
         button: {
           DEFAULT: '#321D47',
           secondary: '#DAE0F2',

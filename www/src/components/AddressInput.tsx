@@ -34,6 +34,7 @@ export const AddressInput = forwardRef(({
         type="text"
         className={clsx(
           'pl-10 h-12 block w-full rounded-lg border-input-border',
+          { "border-2 border-error": !isValid && value },
           'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
         )}
         {...props}
