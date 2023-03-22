@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        error: '#E31902',
         button: {
           DEFAULT: '#321D47',
           secondary: '#DAE0F2',
@@ -13,6 +14,11 @@ module.exports = {
           DEFAULT: '#E6007A',
           text: '#111827',
           dimmed: '#6C6B80',
+        },
+        input: {
+          focus: '#E6007A',
+          text: '#111827',
+          border: '#00000029',
         },
         select: {
           border: '#00000029',
