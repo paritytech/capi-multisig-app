@@ -20,7 +20,7 @@ export function TopBar() {
       <div className="self-end mx-auto">
         <Tabs tabs={tabs} />
       </div>
-      <div className="w-[240px] my-2">
+      <div className="w-60 my-2">
         <AccountSelect
           accounts={accounts.value}
           selectedAccount={defaultAccount.value}
