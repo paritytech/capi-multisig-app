@@ -2,23 +2,32 @@ import type { VNode } from "preact"
 import { toChildArray } from "preact"
 
 type TableProps = {
+  unit?: string
   children: VNode<ItemProps>[] | VNode<ItemProps>
 }
 
-export function Table({ children }: TableProps) {
-  const totalFee = (toChildArray(children) as VNode<ItemProps>[]).reduce(
+export function Table({ unit, children }: TableProps) {
+  let items = toChildArray(children) as VNode<ItemProps>[]
+  const totalFee = items.reduce(
     (total: number, { props: { fee } }) => total + fee,
     0,
   )
 
+  if (unit) {
+    items = items.map((child) => ({
+      ...child,
+      props: { ...child.props, unit },
+    }))
+  }
+
   return (
     <div class="bg-table-bg leading-6 text-sm text-table-text border border-table-border rounded py-5">
       <dl>
-        <>{children}</>
+        <>{items}</>
         <hr class="divide-y mx-6 pb-4" />
         <div class="px-6 flex justify-between font-bold">
           <dt>Total</dt>
-          <dd>{totalFee} DOT</dd>
+          <dd>{totalFee} {unit}</dd>
         </div>
       </dl>
     </div>
@@ -28,7 +37,7 @@ export function Table({ children }: TableProps) {
 type ItemProps = {
   name: string
   fee: number
-  unit: string
+  unit?: string
 }
 
 function Item({ name, fee, unit }: ItemProps) {

@@ -14,10 +14,10 @@ export function Dashboard() {
     <Page>
       <CenteredCard>
         {/* TODO: Preview example - remove before merge  */}
-        <Table>
-          <Table.Item name="Deposit base" fee={20.088} unit="DOT" />
-          <Table.Item name="Threshold" fee={0.064} unit="DOT" />
-          <Table.Item name="Vault pure proxy" fee={20} unit="DOT" />
+        <Table unit="DOT">
+          <Table.Item name="Deposit base" fee={20.088} />
+          <Table.Item name="Threshold" fee={0.064} />
+          <Table.Item name="Vault pure proxy" fee={20} />
         </Table>
         <Link to="/create-multisig" className="block mt-4">
           <div className="flex flex-col gap-4 wrap">
