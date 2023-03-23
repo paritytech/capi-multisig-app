@@ -1,5 +1,5 @@
-// import { System } from "@capi/polkadot"
-import { ChainRune, WsConnection } from "capi"
+import { System } from "@capi/polkadot"
+import { alice, ChainRune, WsConnection } from "capi"
 import { useEffect } from "preact/hooks"
 
 export function Capi() {
@@ -14,7 +14,16 @@ export function Capi() {
         .entryPage(10, null)
         .run()
 
-      console.log(accountInfo)
+      console.log("capi: ", accountInfo)
+
+      console.log("codegen: ", await System.Account.entryPage(10, null).run())
+
+      try {
+        const result = await System.Account.value(alice.publicKey).run()
+        console.log(result)
+      } catch (error) {
+        console.error(error)
+      }
     }
 
     fetchBalance()
