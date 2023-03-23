@@ -1,5 +1,7 @@
+import { clsx } from "clsx"
 import { ComponentChildren } from "preact"
 import polkadotLogo from "../../assets/polkadot.svg"
+import { IconMenuMultisig } from "../../components/icons/IconMenuMultisig.js"
 import { Notifications } from "../../components/Notifications.js"
 import { TopBar } from "../../components/TopBar.js"
 
@@ -9,12 +11,26 @@ type Props = {
 
 function Sidebar() {
   return (
-    <div className="basis-1/4 xl:basis-1/5 bg-white">
-      <div className="w-32 ml-5 mt-5">
-        <img src={polkadotLogo} alt="Polkadot logo" />
-        <span className="text-xs uppercase ml-8 relative -top-1">WESTEND</span>
+    <div className="bg-white border-r border-border">
+      <div className="w-64 p-4">
+        <img src={polkadotLogo} alt="Polkadot logo" className="h-8" />
       </div>
-    </div>
+      <nav className="px-2 space-y-1">
+        <a
+          href="/"
+          className={clsx(
+            'bg-menu-bg text-menu-active',
+            'group flex items-center rounded-md p-2 text-base font-medium'
+          )}
+        >
+          <IconMenuMultisig
+            className='mr-3 h-6 w-6 flex-shrink-0'
+            aria-hidden="true"
+          />
+          Multisig
+        </a>
+      </nav>
+    </div >
   )
 }
 

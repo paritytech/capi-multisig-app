@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "../Button.js"
 import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
+import { IconChevronRight } from "../icons/IconChevronRight.js"
 
 export const multisigInitSchema = z.object({
   name: z.string().min(1, { message: "Required a multisig name" }),
@@ -57,8 +58,8 @@ export function MultisigInit() {
       )}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-end">
-        <Button variant="ghost" type="submit">
-          Next &gt;
+        <Button variant="ghost" type="submit" iconRight={<IconChevronRight />}>
+          Next
         </Button>
       </div>
     </form>
