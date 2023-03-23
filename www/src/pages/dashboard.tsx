@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { Button } from "../components/Button.js"
+import { Capi } from "../components/Capi.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
@@ -9,11 +10,12 @@ import { shortAddress } from "../util/short.js"
 import { Page } from "./templates/base.js"
 
 export function Dashboard() {
-  const hello = trpc.something.useQuery({ greeting: "Hello", name: "Client" })
-  !hello.data ? console.log("Loading data...") : console.log(hello.data)
+  // const hello = trpc.something.useQuery({ greeting: "Hello", name: "Client" })
+  // !hello.data ? console.log("Loading data...") : console.log(hello.data)
 
   return (
     <Page>
+      <Capi />
       <CenteredCard>
         <div className="flex flex-col gap-6 divide-y divide-divider">
           <h2 className="text-black text-xl ">Create a multisig</h2>

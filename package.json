@@ -7,10 +7,12 @@
     "www"
   ],
   "dependencies": {
+    "@capi/polkadot": "https://capi.dev/@v0.1.0-beta.28/frame/wss/rpc.polkadot.io/@latest/pkg.tar",
+    "@capi/westend": "https://capi.dev/@v0.1.0-beta.28/frame/wss/westend-rpc.polkadot.io/@latest/pkg.tar",
     "@headlessui/react": "^1.7.11",
     "@preact/signals": "^1.1.3",
     "@talisman-connect/wallets": "^1.1.3",
-    "capi": "0.1.0-beta.26",
+    "capi": "link:../capi/target/npm",
     "preact": "^10.12.1",
     "react-hook-form": "^7.43.3",
     "react-router-dom": "^6.8.1",
