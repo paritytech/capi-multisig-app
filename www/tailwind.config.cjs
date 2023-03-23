@@ -41,6 +41,11 @@ module.exports = {
           success: "#56F3CE",
           error: "#FE8D81",
         },
+        table: {
+          text: "rgba(18, 17, 39, 0.7)",
+          bg: "#F9F9FB;",
+          border: "#D1D1DB",
+        }
       },
       fontFamily: {
         inter: ['"Inter"'],
