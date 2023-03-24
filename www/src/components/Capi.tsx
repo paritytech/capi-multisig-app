@@ -1,33 +1,45 @@
-import { System } from "@capi/polkadot"
-import { alice, ChainRune, WsConnection } from "capi"
+// import { System } from "@capi/polkadot"
+import { System } from "@capi/polkadot_westend"
+import { ChainRune, ss58, WsConnection } from "capi"
 import { useEffect } from "preact/hooks"
 
 export function Capi() {
   useEffect(() => {
     const fetchBalance = async () => {
-      // https://github.com/paritytech/capi/blob/main/examples/balance.ts
-      const chain = ChainRune.from(WsConnection, "wss://rpc.polkadot.io")
+      const address = "5CDPWdQ3DpF6eBjU8becHPnCwMY5UbxFDhfaorv9wcu8it2L"
+      const addressPubKey = ss58.decode(address)[1]
 
-      const accountInfo = await chain
+      // ----- Capi balance
+      const chain = ChainRune.from(
+        WsConnection,
+        "wss://westend-rpc.polkadot.io",
+      ) // wss://rpc.polkadot.io
+
+      const balanceCapi = await chain
         .pallet("System")
         .storage("Account")
-        .entryPage(10, null)
+        .value(addressPubKey)
         .run()
 
-      console.log("capi: ", accountInfo)
+      console.log("Balance from Capi: ", formatToDot(balanceCapi.data.free))
 
-      console.log("codegen: ", await System.Account.entryPage(10, null).run())
+      // ----- Capi codegen balance
+      const balanceCapiCodegen: any = await System.Account.value(
+        addressPubKey,
+      ).run()
 
-      try {
-        const result = await System.Account.value(alice.publicKey).run()
-        console.log(result)
-      } catch (error) {
-        console.error(error)
-      }
+      console.log(
+        "Balance from Capi codegen: ",
+        formatToDot(balanceCapiCodegen.data.free),
+      )
     }
 
     fetchBalance()
   }, [])
 
   return <h1 class="text-xl">Capi balance (console.log)</h1>
+}
+
+function formatToDot(balance: number) {
+  return `${balance.toString().slice(0, -10)}.${balance.toString().slice(-10)}`
 }
