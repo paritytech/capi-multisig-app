@@ -11,6 +11,8 @@ import { useSignal } from "@preact/signals"
 import { isValidAddress } from "../util/isValidAddress.js";
 import { AddressInput } from "../components/AddressInput.js";
 import { Button } from "../components/Button.js";
+import { Identicon } from "../components/identicon/Identicon.js";
+import { Table } from "../components/Table.js";
 
 export const newTransactionSchema = z.object({
   amount: z.number({ required_error: "Amount is required", invalid_type_error: "Amount must be provided", }),
@@ -41,51 +43,78 @@ export function NewTransaction() {
   return (
     <Page>
       <CenteredCard>
-        <form class="flex flex-col gap-2 w-full" onSubmit={handleSubmit(onSubmit)}>
-          <h2>New transaction</h2>
-          <p>Initiated by:</p>
-          <p>TODO</p>
-          <p>Send</p>
-          <input
-            {...register("amount", { valueAsNumber: true })}
-            type="number"
-            class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
-          />
-          {errors.amount && (
-            <p className="text-xs text-red-500">
-              {errors.amount?.message}
-            </p>
-          )}
-          <p>From:</p>
-          <AccountSelect
-            selectedAccount={selectedAccount.value}
-            setSelectedAccount={setSelectedAccount}
-            accounts={accounts.value}
-          />
-          <p>To:</p>
-          <Controller
-            control={control}
-            name="to"
-            rules={{ required: true }}
-            render={({
-              field
-            }) => (
-              <AddressInput
-                {...field}
-                placeholder="Address"
-              />
-            )}
-          />
-          {errors.to && (
-            <p className="text-xs text-red-500">
-              {errors.to?.message}
-            </p>
-          )}
-          <Button type="submit" disabled={!isValid}>
-            Create
-          </Button>
-        </form>
-      </CenteredCard>
-    </Page>
+        <div className="flex flex-col gap-6 divide-y divide-divider">
+          <h2 className="text-black text-xl ">New transaction</h2>
+          <form
+            class="flex flex-col gap-4 w-full divide-y divide-divider"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div class="flex flex-col gap-4">
+              <div className="space-y-2">
+                <p className="mt-4 text-[#321D47]">Initiated by:</p>
+                <div className="flex gap-2">
+                  <Identicon value={selectedAccount.value?.address!} size={24} />
+                  <span className="font-bold">{selectedAccount.value?.name!}</span>
+                  <span className="">{selectedAccount.value?.address!}</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p>Send</p>
+                <input
+                  {...register("amount", { valueAsNumber: true })}
+                  type="number"
+                  class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
+                />
+                {errors.amount && (
+                  <p className="text-xs text-red-500">
+                    {errors.amount?.message}
+                  </p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <p>From:</p>
+                <AccountSelect
+                  selectedAccount={selectedAccount.value}
+                  setSelectedAccount={setSelectedAccount}
+                  accounts={accounts.value}
+                />
+              </div>
+              <div className="space-y-2">
+                <p>To:</p>
+                <Controller
+                  control={control}
+                  name="to"
+                  rules={{ required: true }}
+                  render={({
+                    field
+                  }) => (
+                    <AddressInput
+                      {...field}
+                      placeholder="Address"
+                    />
+                  )}
+                />
+                {errors.to && (
+                  <p className="text-xs text-red-500">
+                    {errors.to?.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div class="pt-4">
+              <Table unit="DOT">
+                <Table.Item name="Send" fee={0} />
+              </Table>
+            </div>
+            <div class="pt-4 flex justify-end">
+              <Button type="submit" disabled={!isValid}>
+                Create
+              </Button>
+            </div>
+          </form>
+        </div>
+
+      </CenteredCard >
+    </Page >
   )
 }
