@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "../Button.js"
 import { useWizardFormDataStep, useWizardNavigation } from "./Wizard.js"
+import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 
 const isValidAddress = () => true // TODO: update when function added
 export const multisigMemberSchema = z.object({
@@ -64,8 +65,8 @@ export function MultisigMembers() {
       )}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
-        <Button variant="ghost" onClick={handleSubmit(onBack)}>
-          &lt; Back
+        <Button variant="ghost" onClick={handleSubmit(onBack)} iconLeft={<IconChevronLeft />}>
+          Back
         </Button>
         <Button type="submit">Sign & create</Button>
       </div>

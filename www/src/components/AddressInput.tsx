@@ -5,14 +5,19 @@ import { isValidAddress } from '../util/isValidAddress.js'
 import { VoidIdenticon } from './identicon/VoidIdenticon.js'
 import { ForwardedRef, forwardRef } from 'preact/compat'
 
+interface Props extends JSX.HTMLAttributes<HTMLInputElement> {
+  value?: string
+}
+
 export const AddressInput = forwardRef(({
   value,
   ...props
 }:
-  Omit<JSX.HTMLAttributes<HTMLInputElement>, 'value'> & { value?: string },
+  Props,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const isValid = value && isValidAddress(value)
+  const hasError = value && !isValidAddress(value)
 
   return (
     <div className="relative rounded-lg shadow-sm">
@@ -29,7 +34,8 @@ export const AddressInput = forwardRef(({
         value={value}
         type="text"
         className={clsx(
-          'pl-10 h-12 block w-full rounded-lg border-input-border',
+          'pl-10 h-12 block w-full rounded-lg',
+          hasError ? 'border-2 border-error' : 'border-input-border',
           'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
         )}
         {...props}

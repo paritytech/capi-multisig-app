@@ -16,10 +16,12 @@ export function TopBar() {
   }, [])
 
   return (
-    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-white">
-      <div className="self-end mx-auto">
+    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-white border-b border-border">
+      <div className="self-end mx-auto flex items-center">
         <Tabs tabs={tabs} />
+        <div className="py-2 px-7 bg-menu-bg text-gray-500 rounded-full">Soon</div>
       </div>
+
       <div className="w-60 my-2">
         <AccountSelect
           accounts={accounts.value}
