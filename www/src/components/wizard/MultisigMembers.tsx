@@ -9,7 +9,6 @@ export function MultisigMembers() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<MultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
@@ -21,17 +20,6 @@ export function MultisigMembers() {
   const onSubmit = (formDataNew: MultisigMemberEntity) => {
     updateFormData(formDataNew)
     goNext()
-  }
-
-  const onBack = (formDataNew: MultisigMemberEntity) => {
-    updateFormData(formDataNew)
-    goPrev()
-  }
-
-  const onErrorBack = () => {
-    const formDataWithErrors = getValues()
-    updateFormData(formDataWithErrors)
-    goPrev()
   }
 
   return (
@@ -58,7 +46,7 @@ export function MultisigMembers() {
 
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
-        <Button variant="ghost" onClick={handleSubmit(onBack, onErrorBack)}>
+        <Button variant="ghost" onClick={goPrev}>
           &lt; Back
         </Button>
         <Button type="submit">Sign & create</Button>
