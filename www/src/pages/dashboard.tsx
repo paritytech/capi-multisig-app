@@ -4,6 +4,7 @@ import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
+import { Input } from "../components/Input.js"
 import { defaultAccount } from "../signals/accounts.js"
 import { getBalance } from "../util/capi.js"
 import { shortAddress } from "../util/short.js"
@@ -21,6 +22,15 @@ export function Dashboard() {
   return (
     <Page>
       <CenteredCard>
+        <Input
+          label="Multisig Name"
+          name="name"
+          placeholder="Enter the name..."
+          value={inputValue}
+          onChange={handleInputChange}
+          error={inputError}
+        />
+
         <div className="flex flex-col gap-6 divide-y divide-divider">
           <h2 className="text-black text-xl ">Create a multisig</h2>
           <div className="">
