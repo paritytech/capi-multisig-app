@@ -21,10 +21,10 @@ export function MultisigInit() {
   const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
-    const initialAccounts = accounts.peek()
+    const initialAccounts = accounts.peek().map((acc) => acc.address)
     const members = Array.from(
       { length: formDataNew.memberCount },
-      (_, i) => initialAccounts[i]?.address ?? "",
+      (_, i) => formData.members[i] ?? initialAccounts[i] ?? "",
     )
     updateFormData({ ...formDataNew, members })
     goNext()
@@ -60,9 +60,11 @@ export function MultisigInit() {
             defaultValue={formData.memberCount}
             render={({ field }) => <InputNumber {...field} />}
           />
-          {errors.memberCount && <InputError
-            msg={errors.memberCount.message}
-          />}
+          {errors.memberCount && (
+            <InputError
+              msg={errors.memberCount.message}
+            />
+          )}
         </div>
         <div class="max-w-[138px]">
           <label class="block mb-2">
