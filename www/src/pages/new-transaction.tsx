@@ -34,11 +34,14 @@ export function NewTransaction() {
     handleSubmit,
     formState: { errors, isValid },
     control,
+    watch
   } = useForm<NewTransaction>({
     resolver: zodResolver(newTransactionSchema),
   });
 
   const onSubmit: SubmitHandler<NewTransaction> = (data) => console.log(data);
+
+  const watchAmount = watch("amount", 0);
 
   return (
     <Page>
@@ -103,7 +106,9 @@ export function NewTransaction() {
             </div>
             <div class="pt-4">
               <Table unit="DOT">
-                <Table.Item name="Send" fee={0} />
+                <Table.Item name="Send" fee={watchAmount || 0} />
+                {/* TODO Fee*/}
+                <Table.Item name="Fee" fee={10} />
               </Table>
             </div>
             <div class="pt-4 flex justify-end">
