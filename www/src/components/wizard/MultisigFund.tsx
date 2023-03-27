@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { useForm } from "react-hook-form"
 import { Button } from "../Button.js"
+import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { InputError } from "../InputError.js"
 import { MultisigFundEntity, multisigFundSchema } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
@@ -50,8 +51,12 @@ export function MultisigFund() {
       {errors.fund && <InputError msg={errors.fund.message} />}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
-        <Button variant="ghost" onClick={handleSubmit(onBack, onErrorBack)}>
-          &lt; Back
+        <Button
+          variant="ghost"
+          onClick={handleSubmit(onBack, onErrorBack)}
+          iconLeft={<IconChevronLeft />}
+        >
+          Back
         </Button>
         <Button type="submit">Sign &amp; fund</Button>
       </div>

@@ -1,4 +1,5 @@
 import { Button } from "../Button.js"
+import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
 export function MultisigSummary() {
@@ -31,8 +32,13 @@ export function MultisigSummary() {
       </pre>
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-start">
-        <Button variant="ghost" type="submit" onClick={goPrev}>
-          &lt; Back
+        <Button
+          variant="ghost"
+          type="submit"
+          onClick={goPrev}
+          iconLeft={<IconChevronLeft />}
+        >
+          Back
         </Button>
       </div>
     </div>

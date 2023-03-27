@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
 import { accounts, defaultAccount } from "../../signals/accounts.js"
 import { Button } from "../Button.js"
+import { IconChevronRight } from "../icons/IconChevronRight.js"
 import { InputError } from "../InputError.js"
 import { InputNumber } from "../InputNumber.js"
 import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
@@ -82,8 +83,8 @@ export function MultisigInit() {
       </div>
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-end">
-        <Button variant="ghost" type="submit">
-          Next &gt;
+        <Button variant="ghost" type="submit" iconRight={<IconChevronRight />}>
+          Next
         </Button>
       </div>
     </form>

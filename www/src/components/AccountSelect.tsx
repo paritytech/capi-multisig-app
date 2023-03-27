@@ -9,6 +9,11 @@ import { IconChevronUp } from './icons/IconChevronUp.js'
 import { IconCheck } from './icons/IconCheck.js'
 import { VoidIdenticon } from './identicon/VoidIdenticon.js'
 
+const placeholder = {
+  name: 'No account found',
+  address: '-',
+} as WalletAccount
+
 export function AccountSelect({
   selectedAccount,
   accounts,
@@ -19,12 +24,12 @@ export function AccountSelect({
   setSelectedAccount: (account: WalletAccount) => void
 }) {
   return (
-    <Listbox value={selectedAccount} onChange={setSelectedAccount}>
+    <Listbox value={selectedAccount ?? placeholder} onChange={setSelectedAccount}>
       {({ open }: { open: boolean }) => (
         <div className="relative w-full">
           <Listbox.Button
             className={clsx(
-              'h-12 w-60 flex items-center gap-2 p-3 cursor-default',
+              'h-12 w-full flex items-center gap-2 p-3 cursor-default',
               'rounded-lg bg-jaguar text-select-text border border-select-border ',
               'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
             )}
@@ -61,7 +66,7 @@ export function AccountSelect({
           >
             <Listbox.Options
               className={clsx(
-                'absolute right-0 w-[400px] z-10 mt-2 py-4',
+                'absolute right-0 min-w-[400px] w-full z-10 mt-2 py-4',
                 'text-select-text bg-white border border-select-border',
                 'shadow-lg rounded-md overflow-auto focus:outline-none',
               )}
