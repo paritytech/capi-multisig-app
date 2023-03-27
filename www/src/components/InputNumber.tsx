@@ -14,10 +14,13 @@ export const InputNumber = forwardRef(
     { onChange, value, ...props }: Props,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
-    const handleOnChange = (e: Event) => {
-      const target = e.target as HTMLInputElement
-      const value = parseInt(target.value)
-      onChange(value)
+    const handleOnChange: JSX.GenericEventHandler<HTMLInputElement> = (
+      { target },
+    ) => {
+      if (target instanceof HTMLInputElement) {
+        const value = parseInt(target.value)
+        onChange(value)
+      }
     }
 
     const increase = () => {
