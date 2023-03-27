@@ -8,11 +8,5 @@ export async function getBalance(address: string) {
     addressPubKey,
   ).run()
 
-  const balanceFree = balance ? balance.data.free : 0
-
-  return balanceFree
-}
-
-export function formatBalance(balance: number | bigint) {
-  return `${balance.toString().slice(0, -10)}.${balance.toString().slice(-10)}`
+  return balance ? balance.data.free : 0
 }

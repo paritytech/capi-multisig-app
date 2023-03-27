@@ -6,7 +6,7 @@ import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
 import { defaultAccount } from "../signals/accounts.js"
 // import { trpc } from "../trpc.js"
-import { formatBalance, getBalance } from "../util/capi.js"
+import { getBalance } from "../util/capi.js"
 import { shortAddress } from "../util/short.js"
 import { Page } from "./templates/base.js"
 
@@ -17,12 +17,11 @@ export function Dashboard() {
   // TODO: Preview -> remove before merge
   useEffect(() => {
     ;(async () => {
-      const balanceRaw = await getBalance(
-        "5CDPWdQ3DpF6eBjU8becHPnCwMY5UbxFDhfaorv9wcu8it2L",
-      )
       console.log(
-        "Capi balance:",
-        formatBalance(balanceRaw),
+        "Capi westend balance:",
+        await getBalance(
+          "5CDPWdQ3DpF6eBjU8becHPnCwMY5UbxFDhfaorv9wcu8it2L",
+        ),
       )
     })()
   }, [])

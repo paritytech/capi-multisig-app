@@ -11,7 +11,6 @@
     "@preact/signals": "^1.1.3",
     "@talisman-connect/wallets": "^1.1.3",
     "capi": "link:../capi/target/npm",
-    "@capi/polkadot": "https://capi.dev/@v0.1.0-beta.29/frame/wss/rpc.polkadot.io/@latest/pkg.tar",
     "@capi/polkadot_westend": "https://capi.dev/@v0.1.0-beta.29/frame/wss/westend-rpc.polkadot.io/@latest/pkg.tar",
     "preact": "^10.12.1",
     "react-hook-form": "^7.43.3",
