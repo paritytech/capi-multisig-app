@@ -40,12 +40,12 @@ export function useWizardFormData() {
   const { formData } = wizardState
 
   const updateFormData = (formDataNew: Partial<FormData>) => {
-    Object.assign(formData.value, formDataNew)
+    formData.value = { ...formData.value, ...formDataNew }
   }
 
   return {
     updateFormData,
-    formData: formData.value,
+    formData,
   }
 }
 

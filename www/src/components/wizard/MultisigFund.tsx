@@ -45,7 +45,7 @@ export function MultisigFund() {
       <input
         {...register("fund", { valueAsNumber: true })}
         type="number"
-        defaultValue={formData.fund.toString()}
+        defaultValue={formData.value.fund.toString()}
         class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
       />
       {errors.fund && <InputError msg={errors.fund.message} />}

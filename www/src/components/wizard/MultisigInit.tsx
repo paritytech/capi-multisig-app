@@ -22,10 +22,10 @@ export function MultisigInit() {
   const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
-    const initialAccounts = accounts.peek().map((acc) => acc.address)
+    const initialAccounts = accounts.peek()
     const members = Array.from(
       { length: formDataNew.memberCount },
-      (_, i) => formData.members[i] ?? initialAccounts[i] ?? "",
+      (_, i) => formData.value.members[i] ?? initialAccounts[i],
     )
     updateFormData({ ...formDataNew, members })
     goNext()
@@ -41,7 +41,7 @@ export function MultisigInit() {
       <input
         {...register("name")}
         id="name"
-        defaultValue={formData.name}
+        defaultValue={formData.value.name}
         placeholder="Enter the name..."
         class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
       />
@@ -58,7 +58,7 @@ export function MultisigInit() {
           <Controller
             control={control}
             name="memberCount"
-            defaultValue={formData.memberCount}
+            defaultValue={formData.value.memberCount}
             render={({ field }) => <InputNumber {...field} />}
           />
           {errors.memberCount && (
@@ -74,8 +74,8 @@ export function MultisigInit() {
           <Controller
             control={control}
             name="threshold"
-            defaultValue={formData.threshold}
-            rules={{ validate: (t) => t < formData.memberCount }}
+            defaultValue={formData.value.threshold}
+            rules={{ validate: (t) => t < formData.value.memberCount }}
             render={({ field }) => <InputNumber {...field} />}
           />
           {errors.threshold && <InputError msg={errors.threshold.message} />}

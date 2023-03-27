@@ -37,9 +37,11 @@ export type MultisigInitEntity = z.infer<typeof multisigInitSchema>
 
 export const multisigMemberSchema = z.object({
   members: z.array(
-    z.string({}).refine(isValidAddress, {
-      message: "Invalid address",
-    }),
+    z.object({
+      address: z.string(),
+      name: z.string().optional(),
+      source: z.string(),
+    }).optional(),
   ),
 })
 

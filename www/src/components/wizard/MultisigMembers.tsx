@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
+import { accounts } from "../../signals/accounts.js"
+import { AccountSelect } from "../AccountSelect.js"
 import { Button } from "../Button.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { InputError } from "../InputError.js"
@@ -8,9 +10,9 @@ import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
 export function MultisigMembers() {
   const {
-    register,
     handleSubmit,
     getValues,
+    control,
     formState: { errors },
   } = useForm<MultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
@@ -39,21 +41,27 @@ export function MultisigMembers() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1 class="text-xl leading-8">2. Members</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
-      <label class="leading-6">
+      <label class="leading-6 mb-4">
         Members: <span class="text-pink-600">*</span>
       </label>
 
-      {formData.members.map((member, i) => {
+      {formData.value.members.map((member, i) => {
         return (
-          <>
-            <input
-              {...register(`members.${i}`)}
+          <div class="mb-3">
+            <Controller
+              control={control}
+              name={`members.${i}`}
               defaultValue={member}
-              placeholder="Enter the address..."
-              class="block w-full rounded-lg border border-gray-300 p-2 my-2"
+              render={({ field }) => (
+                <AccountSelect
+                  {...field}
+                  accounts={accounts.value}
+                />
+              )}
             />
+
             {errors.members && <InputError msg={errors.members[i]?.message} />}
-          </>
+          </div>
         )
       })}
 

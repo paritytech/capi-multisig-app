@@ -14,19 +14,19 @@ export function MultisigSummary() {
         <div class="flex items-center">
           <span class="font-bold text-gray-800">Multisig name:</span>
           <span class="font-mono text-gray-900">
-            {formData.name}
+            {formData.value.name}
           </span>
         </div>
         <div class=" items-center">
           <span class="font-bold text-gray-800">Multisig members:</span>
           <ul class="font-mono text-gray-900">
-            {formData.members.map((value, i)=><li key={i}>{value}</li>)}
+            {formData.value.members.map((v, i)=><li key={i}>{v?.address}</li>)}
           </ul>
         </div>
         <div class="flex items-center">
           <span class="font-bold text-gray-800">Multisig fund:</span>
           <span class="font-mono text-gray-900">
-            {formData.fund}
+            {formData.value.fund}
           </span>
         </div>
       </pre>
