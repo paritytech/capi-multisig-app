@@ -9,6 +9,7 @@ export function MultisigFund() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<MultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
@@ -20,6 +21,17 @@ export function MultisigFund() {
   const onSubmit = (formDataNew: MultisigFundEntity) => {
     updateFormData(formDataNew)
     goNext()
+  }
+
+  const onBack = (formDataNew: MultisigFundEntity) => {
+    updateFormData(formDataNew)
+    goPrev()
+  }
+
+  const onErrorBack = () => {
+    const formDataWithErrors = getValues()
+    updateFormData(formDataWithErrors)
+    goPrev()
   }
 
   return (
@@ -38,7 +50,7 @@ export function MultisigFund() {
       {errors.fund && <InputError msg={errors.fund.message} />}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
-        <Button variant="ghost" onClick={goPrev}>
+        <Button variant="ghost" onClick={handleSubmit(onBack, onErrorBack)}>
           &lt; Back
         </Button>
         <Button type="submit">Sign &amp; fund</Button>
