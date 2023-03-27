@@ -4,12 +4,15 @@ export const IconMinus = (
   props: JSX.IntrinsicAttributes & JSX.SVGAttributes<SVGSVGElement>,
 ) => (
   <svg
-    width="14"
-    height="2"
     fill="none"
+    stroke="currentColor"
+    stroke-width="3"
+    viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
+    aria-hidden="true"
+    class={props.class}
   >
-    <path d="M14 2H0V0h14v2Z" fill="#000" fill-opacity=".89" />
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15">
+    </path>
   </svg>
 )

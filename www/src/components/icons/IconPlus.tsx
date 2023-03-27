@@ -4,11 +4,19 @@ export const IconPlus = (
   props: JSX.IntrinsicAttributes & JSX.SVGAttributes<SVGSVGElement>,
 ) => (
   <svg
-    viewBox="0 0 37 36"
-    fill="currentColor"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="3"
+    viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
+    aria-hidden="true"
+    class={props.class}
   >
-    <path d="M14 8H8v6H6V8H0V6h6V0h2v6h6v2Z" fill="#000" fill-opacity=".89" />
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M12 4.5v15m7.5-7.5h-15"
+    >
+    </path>
   </svg>
 )

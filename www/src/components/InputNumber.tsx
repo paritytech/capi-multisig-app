@@ -40,7 +40,7 @@ export const InputNumber = forwardRef(
           class="flex items-center px-4 py-2 rounded-l-lg focus:outline-none border border-r-0"
           onClick={decrease}
         >
-          <IconMinus />
+          <IconMinus class="w-4 h-4 text-black" />
         </button>
         <input
           type="number"
@@ -56,7 +56,7 @@ export const InputNumber = forwardRef(
           class="flex items-center px-4 py-2 rounded-r-lg focus:outline-none border border-l-0"
           onClick={increase}
         >
-          <IconPlus />
+          <IconPlus class="w-4 h-4 text-black" />
         </button>
       </div>
     )
