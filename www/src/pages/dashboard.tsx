@@ -7,6 +7,8 @@ import { Identicon } from "../components/identicon/Identicon.js"
 import { Input } from "../components/Input.js"
 import { defaultAccount } from "../signals/accounts.js"
 import { getBalance } from "../util/capi.js"
+// import { trpc } from "../trpc.js"
+import { Controller, useForm } from "react-hook-form"
 import { shortAddress } from "../util/short.js"
 import { Page } from "./templates/base.js"
 
@@ -19,16 +21,27 @@ effect(async () => {
 })
 
 export function Dashboard() {
+  // const hello = trpc.something.useQuery({ greeting: "Hello", name: "Client" })
+  // !hello.data ? console.log("Loading data...") : console.log(hello.data)
+
+  // TODO: Preview -> remove before the merge
+  const { control } = useForm({ mode: "onChange" })
+
   return (
     <Page>
       <CenteredCard>
-        <Input
-          label="Multisig Name"
+        <Controller
+          control={control}
           name="name"
-          placeholder="Enter the name..."
-          value={inputValue}
-          onChange={handleInputChange}
-          error={inputError}
+          rules={{ required: "Required a name" }}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              label="Input example"
+              placeholder="Enter the name..."
+              error={fieldState.error?.message}
+            />
+          )}
         />
 
         <div className="flex flex-col gap-6 divide-y divide-divider">
