@@ -4,15 +4,21 @@ import type { ForwardedRef } from "preact/compat"
 import type { JSX } from "preact/jsx-runtime"
 import { IconInfo } from "./icons/IconInfo.js"
 
-type Props = JSX.HTMLAttributes<HTMLInputElement> & { error?: string }
+type Props = JSX.HTMLAttributes<HTMLInputElement> & {
+  error?: string
+  labelRequired?: boolean
+}
 
 export const Input = forwardRef(
-  ({ label, error, ...props }: Props, ref: ForwardedRef<HTMLInputElement>) => {
+  (
+    { label, labelRequired, error, ...props }: Props,
+    ref: ForwardedRef<HTMLInputElement>,
+  ) => {
     return (
       <div class="flex flex-col mb-4">
         <label class="mb-2">
           {label}
-          <span class="text-error">*</span>
+          {labelRequired && <span class="text-error">*</span>}
         </label>
         <input
           class={clsx(
@@ -24,7 +30,7 @@ export const Input = forwardRef(
         />
         {error && (
           <div class="text-input-error text-sm mt-1 flex items-center">
-            <IconInfo class="inline-block mr-1" />
+            <IconInfo class="mr-1" />
             <span>{error}</span>
           </div>
         )}

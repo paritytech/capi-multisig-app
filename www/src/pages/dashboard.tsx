@@ -38,6 +38,7 @@ export function Dashboard() {
             <Input
               {...field}
               label="Input example"
+              labelRequired
               placeholder="Enter the name..."
               error={fieldState.error?.message}
             />
