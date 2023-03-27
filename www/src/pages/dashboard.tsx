@@ -1,31 +1,23 @@
-import { useEffect } from "preact/hooks"
+import { effect } from "@preact/signals"
 import { Link } from "react-router-dom"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
 import { defaultAccount } from "../signals/accounts.js"
-// import { trpc } from "../trpc.js"
 import { getBalance } from "../util/capi.js"
 import { shortAddress } from "../util/short.js"
 import { Page } from "./templates/base.js"
 
+effect(async () => {
+  if (!defaultAccount.value) return
+  const balance = await getBalance(
+    defaultAccount.value.address,
+  )
+  console.log(balance)
+})
+
 export function Dashboard() {
-  // const hello = trpc.something.useQuery({ greeting: "Hello", name: "Client" })
-  // !hello.data ? console.log("Loading data...") : console.log(hello.data)
-
-  // TODO: Preview -> remove before merge
-  useEffect(() => {
-    ;(async () => {
-      console.log(
-        "Capi westend balance:",
-        await getBalance(
-          "5CDPWdQ3DpF6eBjU8becHPnCwMY5UbxFDhfaorv9wcu8it2L",
-        ),
-      )
-    })()
-  }, [])
-
   return (
     <Page>
       <CenteredCard>
