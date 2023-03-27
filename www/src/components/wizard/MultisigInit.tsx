@@ -1,12 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import type { WalletAccount } from "@talisman-connect/wallets"
 import { Controller, useForm } from "react-hook-form"
 import { accounts, defaultAccount } from "../../signals/accounts.js"
 import { Button } from "../Button.js"
 import { InputError } from "../InputError.js"
 import { InputNumber } from "../InputNumber.js"
 import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
-import type { FormData } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
 export function MultisigInit() {
@@ -23,13 +21,11 @@ export function MultisigInit() {
   const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
-    const members = setMembers(
-      formDataNew.memberCount,
-      formData.memberCount,
-      formData.members,
-      accounts.value,
+    const initialAccounts = accounts.peek()
+    const members = Array.from(
+      { length: formDataNew.memberCount },
+      (_, i) => initialAccounts[i]?.address ?? "",
     )
-
     updateFormData({ ...formDataNew, members })
     goNext()
   }
@@ -49,9 +45,7 @@ export function MultisigInit() {
         class="block rounded-lg border border-gray-300 p-2 mt-2 mb-4 w-1/2"
       />
       {errors.name && <InputError msg={errors.name.message} />}
-      <label>
-        Creator
-      </label>
+      <label>Creator</label>
       <div class="mb-4">
         {`${defaultAccount.value?.name}  ${defaultAccount.value?.address}`}
       </div>
@@ -66,11 +60,9 @@ export function MultisigInit() {
             defaultValue={formData.memberCount}
             render={({ field }) => <InputNumber {...field} />}
           />
-          {errors.memberCount && (
-            <InputError
-              msg={errors.memberCount.message}
-            />
-          )}
+          {errors.memberCount && <InputError
+            msg={errors.memberCount.message}
+          />}
         </div>
         <div class="max-w-[138px]">
           <label class="block mb-2">
@@ -94,47 +86,4 @@ export function MultisigInit() {
       </div>
     </form>
   )
-}
-
-function setMembers(
-  newMemberCount: number,
-  oldMemberCount: number,
-  members: FormData["members"],
-  accounts: WalletAccount[],
-) {
-  const isMembersNotInitialized = members.length === 0
-  const isMemberCountChanged = newMemberCount !== oldMemberCount
-  const isMemberCountDecreased = newMemberCount < oldMemberCount
-  const isMemberCountIncreased = newMemberCount > oldMemberCount
-
-  if (isMembersNotInitialized) {
-    const membersFromAccount = accounts.slice(0, newMemberCount)
-      .map((account) => account.address)
-
-    const isAccountLessThanMembers = membersFromAccount.length < newMemberCount
-
-    if (isAccountLessThanMembers) {
-      const offsetArray = Array(
-        newMemberCount - membersFromAccount.length,
-      )
-      return [...membersFromAccount, ...offsetArray]
-    }
-
-    return membersFromAccount
-  }
-
-  if (isMemberCountChanged) {
-    if (isMemberCountDecreased) {
-      return members.slice(0, newMemberCount)
-    }
-
-    if (isMemberCountIncreased) {
-      const offsetArray = Array(
-        newMemberCount - members.length,
-      )
-      return [...members, ...offsetArray]
-    }
-  }
-
-  return members
 }
