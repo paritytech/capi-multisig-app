@@ -6,8 +6,7 @@ import { findScheme, SCHEMA } from "./scheme.js"
   https://github.com/polkadot-js/ui/tree/master/packages/react-identicon
 */
 
-// TODO: remove `as never` upon upgrading to latest version of Capi
-const Blake2_512 = new Blake2Hasher(512 as never, false)
+const Blake2_512 = new Blake2Hasher(512, false)
 
 const zeroHash = Blake2_512.hash(new Uint8Array(32))
 
