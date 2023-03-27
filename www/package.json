@@ -37,7 +37,7 @@
     "react-dom": "preact/compat"
   },
   "scripts": {
-    "watch": "vite --force",
+    "watch": "vite",
     "build": "vite build",
     "preview": "vite preview"
   }
