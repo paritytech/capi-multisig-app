@@ -1,4 +1,4 @@
-import { hashers, ss58 } from "capi"
+import { Blake2Hasher, ss58 } from "capi"
 import { findScheme, SCHEMA } from "./scheme.js"
 
 /*
@@ -7,7 +7,7 @@ import { findScheme, SCHEMA } from "./scheme.js"
 */
 
 // TODO: remove `as never` upon upgrading to latest version of Capi
-const Blake2_512 = new hashers.Blake2Hasher(512 as never, false)
+const Blake2_512 = new Blake2Hasher(512 as never, false)
 
 const zeroHash = Blake2_512.hash(new Uint8Array(32))
 

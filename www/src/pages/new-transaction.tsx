@@ -1,5 +1,5 @@
 import type { WalletAccount } from "@talisman-connect/wallets"
-import { useCallback } from "preact/hooks"
+import { useCallback, useEffect } from "preact/hooks"
 import { z } from "zod"
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
@@ -13,6 +13,9 @@ import { AddressInput } from "../components/AddressInput.js";
 import { Button } from "../components/Button.js";
 import { Identicon } from "../components/identicon/Identicon.js";
 import { Table } from "../components/Table.js";
+import { Balances } from "@capi/westend"
+import { MultiAddress } from "@capi/westend/types/sp_runtime/multiaddress.js"
+import { ss58, } from 'capi'
 
 export const newTransactionSchema = z.object({
   amount: z.number({ required_error: "Amount is required", invalid_type_error: "Amount must be provided", }),
@@ -39,9 +42,28 @@ export function NewTransaction() {
     resolver: zodResolver(newTransactionSchema),
   });
 
+  const watchAmount = watch("amount", 0);
+  console.log('watchAmount: ', watchAmount);
   const onSubmit: SubmitHandler<NewTransaction> = (data) => console.log(data);
 
-  const watchAmount = watch("amount", 0);
+  useEffect(() => {
+    const [_prefix, address] = ss58.decode(defaultAccount.value?.address!);
+
+    const getFee = async () => {
+      const fee = await Balances
+        .transfer({
+          // TODO properly convert
+          value: BigInt(watchAmount * 10000000000),
+          dest: MultiAddress.Id(address)
+        })
+        .feeEstimate()
+        .run()
+
+      // TODO properly convert
+      console.log('amount', BigInt(watchAmount * 10000000000), 'fee: ', fee)
+    }
+    getFee();
+  }, [watchAmount])
 
   return (
     <Page>
@@ -105,7 +127,7 @@ export function NewTransaction() {
               </div>
             </div>
             <div class="pt-4">
-              <Table unit="DOT">
+              <Table unit="WND">
                 <Table.Item name="Send" fee={watchAmount || 0} />
                 {/* TODO Fee*/}
                 <Table.Item name="Fee" fee={10} />
