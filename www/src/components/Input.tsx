@@ -2,7 +2,7 @@ import { clsx } from "clsx"
 import { forwardRef } from "preact/compat"
 import type { ForwardedRef } from "preact/compat"
 import type { JSX } from "preact/jsx-runtime"
-import { IconInfo } from "./icons/IconInfo"
+import { IconInfo } from "./icons/IconInfo.js"
 
 type Props = JSX.HTMLAttributes<HTMLInputElement> & { error?: string }
 
