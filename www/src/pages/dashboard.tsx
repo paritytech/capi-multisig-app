@@ -1,6 +1,6 @@
+import { useEffect } from "preact/hooks"
 import { Link } from "react-router-dom"
 import { Button } from "../components/Button.js"
-import { Capi } from "../components/Capi.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
@@ -12,6 +12,19 @@ import { Page } from "./templates/base.js"
 export function Dashboard() {
   // const hello = trpc.something.useQuery({ greeting: "Hello", name: "Client" })
   // !hello.data ? console.log("Loading data...") : console.log(hello.data)
+
+  // TODO: Preview -> remove before merge
+  useEffect(() => {
+    ;(async () => {
+      const balanceRaw = await getBalance(
+        "5CDPWdQ3DpF6eBjU8becHPnCwMY5UbxFDhfaorv9wcu8it2L",
+      )
+      console.log(
+        "Capi balance:",
+        formatBalance(balanceRaw),
+      )
+    })()
+  }, [])
 
   return (
     <Page>
@@ -27,10 +40,12 @@ export function Dashboard() {
             <div className="mt-14 flex flex-wrap gap-2 items-center">
               <p className="leading-8">Create a Multisig with address</p>
               {defaultAccount.value?.address
-                && <Identicon
-                  size={24}
-                  value={defaultAccount.value?.address}
-                />}
+                && (
+                  <Identicon
+                    size={24}
+                    value={defaultAccount.value?.address}
+                  />
+                )}
               {defaultAccount.value?.name
                 && (
                   <span className="font-bold">
