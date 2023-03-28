@@ -1,8 +1,9 @@
 import { Balances, chain, System } from "@capi/polkadot_westend"
+// import { Balances, chain, System } from "@capi/polkadot"
 import { MultiAddress } from "@capi/polkadot_westend/types/sp_runtime/multiaddress.js"
 import { effect } from "@preact/signals"
-// import { getWallets, getWalletBySource } from "@talisman-connect/wallets"
 import { Rune, ss58 } from "capi"
+import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { MultisigRune } from "capi/patterns/multisig"
 import { signature } from "capi/patterns/signature/polkadot"
 import { Link } from "react-router-dom"
@@ -23,24 +24,22 @@ effect(async () => {
   if (!defaultAccount.value) return
   if (!accounts.value.length) return
 
-  // console.log("defaultAccount: ", defaultAccount.value)
-  // console.log("accounts: ", accounts.value)
-  // console.log("defaultExtension: ", defaultExtension.value)
+  const alexa = accounts.value[0]
+  const billy = accounts.value[1]
+  const carol = accounts.value[2]
 
   const accountsPubKey = accounts.value.map(({ address }) =>
     ss58.decode(address)[1]
   )
-  const alexa = accountsPubKey[0]!
-  const billy = accountsPubKey[1]!
-  const carol = accountsPubKey[2]!
+  const alexaPubKey = accountsPubKey[0]!
+  const billyPubKey = accountsPubKey[1]!
+  const carolPubKey = accountsPubKey[2]!
 
   // Create a multisig
-  const multisig = Rune
-    .constant({
-      signatories: [alexa, billy, carol],
-      threshold: 2,
-    })
-    .into(MultisigRune, chain as any)
+  const multisig = Rune.constant({
+    signatories: [alexaPubKey, billyPubKey, carolPubKey],
+    threshold: 2,
+  }).into(MultisigRune, chain)
 
   const multisigAddress = await multisig.address.run()
 
@@ -49,30 +48,28 @@ effect(async () => {
     ss58.encode(42, multisigAddress.value),
   )
 
-  const alexaAddressCapi = await MultiAddress.Id(alexa).run()
+  const billyCapiAddr = await MultiAddress.Id(billyPubKey).run()
 
-  // console.log("alexaAddressCapi", alexaAddressCapi)
-  // console.log("accounts.value[0]", accounts.value[0])
+  const sender = pjsSender(chain, alexa.signer)
 
-  // // Fund the multisig
-  await Balances
-    .transfer({
-      value: 2_000_000n,
-      dest: multisig.address,
-    })
+  // Fund the multisig
+  await Balances.transfer({
+    value: 2_000_000n,
+    dest: billyCapiAddr,
+  })
+    .signed(signature({ sender: sender(alexa.address) }))
     // .signed(signature({ sender: alexa }))
-    .signed(signature({
-      sender: {
-        address: alexaAddressCapi,
-        sign: accounts.value[0].signer.signRaw, // signPayload , signRaw
-      },
-    }))
+    // .signed(signature({
+    //   sender: {
+    //     address: alexaAddressCapi,
+    //     sign: accounts.value[0].signer.signPayload, // signPayload , signRaw
+    //   },
+    // }))
+    //
     .sent()
     .dbgStatus("Existential deposit:")
     .finalized()
     .run()
-
-  // https://github.com/paritytech/capi/blob/main/examples/multisig_transfer.ts
 })
 
 // effect(async () => {
@@ -93,26 +90,22 @@ export function Dashboard() {
           <div className="">
             <div className="mt-32 flex justify-center">
               <Link to="/create-multisig">
-                <Button iconLeft={<IconPlus />} size="xl">New multisig</Button>
+                <Button iconLeft={<IconPlus />} size="xl">
+                  New multisig
+                </Button>
               </Link>
             </div>
             <div className="mt-14 flex flex-wrap gap-2 items-center">
               <p className="leading-8">Create a Multisig with address</p>
-              {defaultAccount.value?.address
-                && (
-                  <Identicon
-                    size={24}
-                    value={defaultAccount.value?.address}
-                  />
-                )}
-              {defaultAccount.value?.name
-                && (
-                  <span className="font-bold">
-                    {defaultAccount.value?.name}
-                  </span>
-                )}
-              {defaultAccount.value?.address
-                && <span>{shortAddress(defaultAccount.value?.address)}</span>}
+              {defaultAccount.value?.address && (
+                <Identicon size={24} value={defaultAccount.value?.address} />
+              )}
+              {defaultAccount.value?.name && (
+                <span className="font-bold">{defaultAccount.value?.name}</span>
+              )}
+              {defaultAccount.value?.address && (
+                <span>{shortAddress(defaultAccount.value?.address)}</span>
+              )}
             </div>
             <p className="leading-8">
               Multi-signature wallets require authorization of transactions
