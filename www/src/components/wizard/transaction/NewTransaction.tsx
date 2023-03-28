@@ -60,7 +60,6 @@ export function NewTransaction() {
   }, [watchAmount])
 
   return (
-
     <div className="flex flex-col gap-6 divide-y divide-divider">
       <h2 className="text-black text-xl ">New transaction</h2>
       <form
