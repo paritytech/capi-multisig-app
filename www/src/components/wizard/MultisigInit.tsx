@@ -25,6 +25,7 @@ export function MultisigInit() {
   } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
+    if (!members) return
     const initialAccounts = accounts.peek()
     const newMembers = Array.from(
       { length: formDataNew.memberCount },

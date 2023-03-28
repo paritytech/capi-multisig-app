@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { isValidAddress } from "../../util/isValidAddress.js"
 
 export type FormData =
   & MultisigInitEntity
@@ -40,8 +41,19 @@ export const multisigMemberSchema = z.object({
       address: z.string(),
       name: z.string().optional(),
       source: z.string(),
-    }).optional(),
-  ),
+    }).optional().refine((a) => isValidAddress(a?.address), {
+      message: "Invalid address",
+    }),
+  ).superRefine((val, ctx) => {
+    const addresses = val.map((a) => a?.address)
+    if (addresses.length !== new Set(addresses).size) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `No duplicates allowed, please choose a different account.`,
+        fatal: true,
+      })
+    }
+  }),
 })
 
 export type MultisigMemberEntity = z.infer<typeof multisigMemberSchema>

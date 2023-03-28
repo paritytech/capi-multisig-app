@@ -1,6 +1,8 @@
 import { Listbox, Transition } from "@headlessui/react"
 import { WalletAccount } from "@talisman-connect/wallets"
 import { clsx } from "clsx"
+import { forwardRef } from "preact/compat"
+import type { ForwardedRef } from "preact/compat"
 import { Fragment } from "preact/jsx-runtime"
 import { shortAccountName, shortAddress } from "../util/short.js"
 import { IconCheck } from "./icons/IconCheck.js"
@@ -21,13 +23,15 @@ export const placeholder = {
   source: "",
 } as WalletAccount
 
-export function AccountSelect(
+export const AccountSelect = forwardRef((
   { onChange, value, accounts }: Props,
-) {
+  ref: ForwardedRef<HTMLInputElement>,
+) => {
   return (
     <Listbox
       value={value ?? placeholder}
       onChange={onChange}
+      ref={ref}
     >
       {({ open }: { open: boolean }) => (
         <div className="relative w-full">
@@ -134,4 +138,4 @@ export function AccountSelect(
       )}
     </Listbox>
   )
-}
+})

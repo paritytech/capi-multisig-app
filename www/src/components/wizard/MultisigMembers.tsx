@@ -64,7 +64,7 @@ export function MultisigMembers() {
           </div>
         )
       })}
-
+      {errors.members && <InputError msg={errors.members.message} />}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
         <Button
