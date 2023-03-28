@@ -1,7 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react"
 import { WalletAccount } from "@talisman-connect/wallets"
 import { clsx } from "clsx"
-import { Fragment, JSX } from "preact/jsx-runtime"
+import { Fragment } from "preact/jsx-runtime"
 import { shortAccountName, shortAddress } from "../util/short.js"
 import { IconCheck } from "./icons/IconCheck.js"
 import { IconChevronDown } from "./icons/IconChevronDown.js"

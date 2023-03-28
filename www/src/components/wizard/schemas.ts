@@ -1,4 +1,3 @@
-import { ss58 } from "capi"
 import { z } from "zod"
 
 export type FormData =
@@ -52,12 +51,3 @@ export const multisigFundSchema = z.object({
 })
 
 export type MultisigFundEntity = z.infer<typeof multisigFundSchema>
-
-// TODO: Remove when PR: feat(ui): Address Input #82 is merged
-function isValidAddress(address: string) {
-  try {
-    return !!ss58.encode(...ss58.decode(address))
-  } catch (_error) {
-    return false
-  }
-}
