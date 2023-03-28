@@ -41,13 +41,13 @@ export function MultisigMembers() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1 class="text-xl leading-8">2. Members</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
-      <label class="leading-6 mb-4">
-        Members: <span class="text-pink-600">*</span>
-      </label>
 
       {formData.value.members.map((member, i) => {
         return (
           <div class="mb-3">
+            <label class="leading-6 mb-2 block">
+              Member {i + 1}
+            </label>
             <Controller
               control={control}
               name={`members.${i}`}
