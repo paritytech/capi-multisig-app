@@ -9,6 +9,7 @@ module.exports = {
         border: '#00000029',
         divider: '#D1D1DB',
         error: '#E31902',
+        text: '#321D47',
         link: {
           DEFAULT: '#E6007A',
         },
@@ -31,7 +32,8 @@ module.exports = {
           focus: '#E6007A',
           text: '#111827',
           border: '#00000029',
-          bg: 'rgba(0, 0, 0, 0.03)',
+          bg: "#f7f7f7",
+          error: "#E31902"
         },
         select: {
           border: '#00000029',
@@ -47,10 +49,6 @@ module.exports = {
           bg: "#F9F9FB;",
           border: "#D1D1DB",
         },
-        input: {
-          bg: "#f7f7f7",
-          error: "#E31902"
-        }
       },
       fontFamily: {
         inter: ['"Inter"'],

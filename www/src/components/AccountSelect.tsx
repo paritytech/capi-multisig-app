@@ -30,7 +30,7 @@ export function AccountSelect({
           <Listbox.Button
             className={clsx(
               'h-12 w-full flex items-center gap-2 p-3 cursor-default',
-              'rounded-lg bg-jaguar text-select-text border border-select-border ',
+              'rounded-lg bg-jaguar text-select-text border border-select-border',
               'focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700',
             )}
           >
