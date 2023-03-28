@@ -1,9 +1,10 @@
 import { Balances, chain, System } from "@capi/polkadot_westend"
-// import { MultiAddress } from "@capi/polkadot_westend/types/sp_runtime/multiaddress.js"
+import { MultiAddress } from "@capi/polkadot_westend/types/sp_runtime/multiaddress.js"
 import { effect } from "@preact/signals"
+// import { getWallets, getWalletBySource } from "@talisman-connect/wallets"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
-// import { signature } from "capi/patterns/signature/polkadot.js" // ?
+import { signature } from "capi/patterns/signature/polkadot"
 import { Link } from "react-router-dom"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
@@ -22,9 +23,9 @@ effect(async () => {
   if (!defaultAccount.value) return
   if (!accounts.value.length) return
 
-  console.log("defaultAccount: ", defaultAccount.value)
-  console.log("accounts: ", accounts.value)
-  console.log("defaultExtension: ", defaultExtension.value)
+  // console.log("defaultAccount: ", defaultAccount.value)
+  // console.log("accounts: ", accounts.value)
+  // console.log("defaultExtension: ", defaultExtension.value)
 
   const accountsPubKey = accounts.value.map(({ address }) =>
     ss58.decode(address)[1]
@@ -42,28 +43,34 @@ effect(async () => {
     .into(MultisigRune, chain as any)
 
   const multisigAddress = await multisig.address.run()
+
   console.log(
     "Created multisig address: ",
     ss58.encode(42, multisigAddress.value),
   )
 
+  const alexaAddressCapi = await MultiAddress.Id(alexa).run()
+
+  // console.log("alexaAddressCapi", alexaAddressCapi)
+  // console.log("accounts.value[0]", accounts.value[0])
+
   // // Fund the multisig
-  // await Balances
-  //   .transfer({
-  //     value: 2_000_000n,
-  //     dest: multisig.address,
-  //   })
-  //   .signed(signature({ sender: alexa }))
-  //   .signed({
-  //     sender: {
-  //       address: ss58.decode(defaultAccount.value.address)[1],
-  //       sign: defaultAccount.value.signer,
-  //     },
-  //   })
-  //   .sent()
-  //   .dbgStatus("Existential deposit:")
-  //   .finalized()
-  //   .run()
+  await Balances
+    .transfer({
+      value: 2_000_000n,
+      dest: multisig.address,
+    })
+    // .signed(signature({ sender: alexa }))
+    .signed(signature({
+      sender: {
+        address: alexaAddressCapi,
+        sign: accounts.value[0].signer.signRaw, // signPayload , signRaw
+      },
+    }))
+    .sent()
+    .dbgStatus("Existential deposit:")
+    .finalized()
+    .run()
 
   // https://github.com/paritytech/capi/blob/main/examples/multisig_transfer.ts
 })
