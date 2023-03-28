@@ -23,7 +23,7 @@ export const Input = forwardRef(
         <input
           class={clsx(
             "bg-input-bg rounded-lg border p-3 focus:outline-none",
-            error ? "border-2 border-red-500" : "border-inherit ",
+            error ? "border-2 border-error" : "border-inherit ",
           )}
           {...props}
           ref={ref}
