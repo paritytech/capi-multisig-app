@@ -1,21 +1,81 @@
+import { Balances, chain, System } from "@capi/polkadot_westend"
+// import { MultiAddress } from "@capi/polkadot_westend/types/sp_runtime/multiaddress.js"
 import { effect } from "@preact/signals"
+import { Rune, ss58 } from "capi"
+import { MultisigRune } from "capi/patterns/multisig"
+// import { signature } from "capi/patterns/signature/polkadot.js" // ?
 import { Link } from "react-router-dom"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
-import { defaultAccount } from "../signals/accounts.js"
-import { getBalance } from "../util/capi.js"
+import {
+  accounts,
+  defaultAccount,
+  defaultExtension,
+} from "../signals/accounts.js"
+// import { getBalance } from "../util/capi.js"
 import { shortAddress } from "../util/short.js"
 import { Page } from "./templates/base.js"
 
 effect(async () => {
   if (!defaultAccount.value) return
-  const balance = await getBalance(
-    defaultAccount.value.address,
+  if (!accounts.value.length) return
+
+  console.log("defaultAccount: ", defaultAccount.value)
+  console.log("accounts: ", accounts.value)
+  console.log("defaultExtension: ", defaultExtension.value)
+
+  const accountsPubKey = accounts.value.map(({ address }) =>
+    ss58.decode(address)[1]
   )
-  console.log(balance)
+  const alexa = accountsPubKey[0]!
+  const billy = accountsPubKey[1]!
+  const carol = accountsPubKey[2]!
+
+  // Create a multisig
+  const multisig = Rune
+    .constant({
+      signatories: [alexa, billy, carol],
+      threshold: 2,
+    })
+    .into(MultisigRune, chain as any)
+
+  const multisigAddress = await multisig.address.run()
+  console.log(
+    "Created multisig address: ",
+    ss58.encode(42, multisigAddress.value),
+  )
+
+  // // Fund the multisig
+  // await Balances
+  //   .transfer({
+  //     value: 2_000_000n,
+  //     dest: multisig.address,
+  //   })
+  //   .signed(signature({ sender: alexa }))
+  //   .signed({
+  //     sender: {
+  //       address: ss58.decode(defaultAccount.value.address)[1],
+  //       sign: defaultAccount.value.signer,
+  //     },
+  //   })
+  //   .sent()
+  //   .dbgStatus("Existential deposit:")
+  //   .finalized()
+  //   .run()
+
+  // https://github.com/paritytech/capi/blob/main/examples/multisig_transfer.ts
 })
+
+// effect(async () => {
+//   if (!defaultAccount.value) return
+//   const balance = await getBalance(
+//     defaultAccount.value.address,
+//   )
+//   console.log(balance)
+// })
+// console.log("signature", signature)
 
 export function Dashboard() {
   return (
