@@ -1,14 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { Button } from "../Button.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
-import { InputError } from "../InputError.js"
+import { Input } from "../Input.js"
 import { MultisigFundEntity, multisigFundSchema } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
 export function MultisigFund() {
   const {
-    register,
+    control,
     handleSubmit,
     getValues,
     formState: { errors },
@@ -17,7 +17,7 @@ export function MultisigFund() {
     mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formData, updateFormData } = useWizardFormData()
+  const { formData: { value: { fund } }, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
     updateFormData(formDataNew)
@@ -39,16 +39,29 @@ export function MultisigFund() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1 class="text-xl leading-8">3. Fund the multisig</h1>
       <hr class="border-t border-gray-300 mt-6 mb-4" />
-      <label class="leading-6">
-        Fund the multisig: <span class="text-pink-600">*</span>
-      </label>
-      <input
-        {...register("fund", { valueAsNumber: true })}
-        type="number"
-        defaultValue={formData.value.fund.toString()}
-        class="block rounded-lg border border-gray-300 p-2 my-2 w-1/3"
+      <Controller
+        control={control}
+        name="fund"
+        defaultValue={fund}
+        render={({ field }) => (
+          <Input
+            {...field}
+            placeholder="0 DOT"
+            className="w-48"
+            error={errors.fund && errors.fund.message}
+            label="Fund the Multisig"
+            type="number"
+            onChange={(
+              { target },
+            ) => {
+              if (target instanceof HTMLInputElement) {
+                const { valueAsNumber } = target
+                field.onChange(Number.isNaN(valueAsNumber) ? 0 : valueAsNumber)
+              }
+            }}
+          />
+        )}
       />
-      {errors.fund && <InputError msg={errors.fund.message} />}
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
         <Button

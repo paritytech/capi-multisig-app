@@ -7,22 +7,17 @@ export type FormData =
   & MultisigFundEntity
 
 export const multisigInitSchema = z.object({
-  name: z.string().min(1, {
-    message: "Please enter a name for the multisig setup",
-  }),
-  memberCount: z.number().gt(1, {
-    message: "A multisig should have minimum 2 members",
-  }),
-  threshold: z.number().gt(
-    1,
-    "The minimum supported threshold is 2",
+  name: z.string().min(1, "Please enter a name for the multisig setup"),
+  memberCount: z.number().gte(2, "The minimum is 2"),
+  threshold: z.number().gte(
+    2,
+    "The minimum is 2",
   ),
 }).refine(
   (data) => data.memberCount >= data.threshold,
   {
     path: ["threshold"],
-    message:
-      "The threshold should should not be greater than the number of members",
+    message: "Value too high.",
   },
 ).refine(
   (data) => data.memberCount >= data.threshold,
