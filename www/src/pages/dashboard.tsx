@@ -1,11 +1,21 @@
+import { effect } from "@preact/signals"
 import { Link } from "react-router-dom"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
 import { defaultAccount } from "../signals/accounts.js"
+import { getBalance } from "../util/capi.js"
 import { shortAddress } from "../util/short.js"
 import { Page } from "./templates/base.js"
+
+effect(async () => {
+  if (!defaultAccount.value) return
+  const balance = await getBalance(
+    defaultAccount.value.address,
+  )
+  console.log(balance)
+})
 
 export function Dashboard() {
   return (
