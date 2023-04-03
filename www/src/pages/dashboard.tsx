@@ -4,7 +4,7 @@ import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
 import { Identicon } from "../components/identicon/Identicon.js"
 import { defaultAccount } from "../signals/accounts.js"
-import { shortAddress } from "../util/short.js"
+import { shortAddress } from "../util/address.js"
 import { Page } from "./templates/base.js"
 
 export function Dashboard() {

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { isValidAddress } from "../../util/isValidAddress.js"
+import { isValidAddress } from "../../util/address.js"
 
 export type FormData =
   & MultisigInitEntity

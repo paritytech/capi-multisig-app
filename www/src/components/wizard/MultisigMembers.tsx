@@ -1,6 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
 import { accounts } from "../../signals/accounts.js"
+import { formatBalance } from "../../util/balance.js"
+import {
+  existentialDeposit,
+  proxyDepositBase,
+  proxyDepositFactor,
+} from "../../util/chain-constants.js"
 import { AccountSelect } from "../AccountSelect.js"
 import { Button } from "../Button.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
@@ -65,6 +71,20 @@ export function MultisigMembers() {
         )
       })}
       {errors.members && <InputError msg={errors.members.message} />}
+      <div className="">
+        <div className="flex justify-between">
+          <div>Existential deposit Vault</div>
+          <div>{formatBalance(existentialDeposit)}</div>
+        </div>
+        <div className="flex justify-between">
+          <div>Existential deposit Multisig</div>
+          <div>{formatBalance(existentialDeposit)}</div>
+        </div>
+        <div className="flex justify-between">
+          <div>Proxy fee</div>
+          <div>{formatBalance(proxyDepositBase + proxyDepositFactor)}</div>
+        </div>
+      </div>
       <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div class="flex justify-between">
         <Button
