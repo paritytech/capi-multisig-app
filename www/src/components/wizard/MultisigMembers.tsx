@@ -9,10 +9,29 @@ import {
 } from "../../util/chain-constants.js"
 import { AccountSelect } from "../AccountSelect.js"
 import { Button } from "../Button.js"
+import { FeesTable } from "../FeesTable.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { InputError } from "../InputError.js"
 import { MultisigMemberEntity, multisigMemberSchema } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
+
+const multisigCreationFees = [
+  {
+    name: "Existential deposit Vault",
+    value: existentialDeposit,
+    displayValue: formatBalance(existentialDeposit),
+  },
+  {
+    name: "Existential deposit Multisig",
+    value: existentialDeposit,
+    displayValue: formatBalance(existentialDeposit),
+  },
+  {
+    name: "Proxy fee",
+    value: proxyDepositBase + proxyDepositFactor,
+    displayValue: formatBalance(proxyDepositBase + proxyDepositFactor),
+  },
+]
 
 export function MultisigMembers() {
   const {
@@ -71,20 +90,7 @@ export function MultisigMembers() {
         )
       })}
       {errors.members && <InputError msg={errors.members.message} />}
-      <div className="">
-        <div className="flex justify-between">
-          <div>Existential deposit Vault</div>
-          <div>{formatBalance(existentialDeposit)}</div>
-        </div>
-        <div className="flex justify-between">
-          <div>Existential deposit Multisig</div>
-          <div>{formatBalance(existentialDeposit)}</div>
-        </div>
-        <div className="flex justify-between">
-          <div>Proxy fee</div>
-          <div>{formatBalance(proxyDepositBase + proxyDepositFactor)}</div>
-        </div>
-      </div>
+      <FeesTable fees={multisigCreationFees} />
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div className="flex justify-between">
         <Button
