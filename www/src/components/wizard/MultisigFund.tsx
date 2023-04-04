@@ -37,8 +37,8 @@ export function MultisigFund() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 class="text-xl leading-8">3. Fund the multisig</h1>
-      <hr class="border-t border-gray-300 mt-6 mb-4" />
+      <h1 className="text-xl leading-8">3. Fund the multisig</h1>
+      <hr className="border-t border-gray-300 mt-6 mb-4" />
       <Controller
         control={control}
         name="fund"
@@ -62,8 +62,8 @@ export function MultisigFund() {
           />
         )}
       />
-      <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
-      <div class="flex justify-between">
+      <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
+      <div className="flex justify-between">
         <Button
           variant="ghost"
           onClick={handleSubmit(onBack, onErrorBack)}

@@ -36,8 +36,8 @@ export function MultisigInit() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 class="text-xl leading-8">1. Multisig setup</h1>
-      <hr class="border-t border-gray-300 mt-6 mb-4" />
+      <h1 className="text-xl leading-8">1. Multisig setup</h1>
+      <hr className="border-t border-gray-300 mt-6 mb-4" />
       <Controller
         control={control}
         name="name"
@@ -54,10 +54,10 @@ export function MultisigInit() {
         )}
       />
       <label>Creator</label>
-      <div class="mb-4">
+      <div className="mb-4">
         {`${defaultAccount.value?.name}  ${defaultAccount.value?.address}`}
       </div>
-      <div class="flex gap-8 justify-start">
+      <div className="flex gap-8 justify-start">
         <Controller
           control={control}
           name="memberCount"
@@ -86,8 +86,8 @@ export function MultisigInit() {
           )}
         />
       </div>
-      <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
-      <div class="flex justify-end">
+      <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
+      <div className="flex justify-end">
         <Button variant="ghost" type="submit" iconRight={<IconChevronRight />}>
           Next
         </Button>

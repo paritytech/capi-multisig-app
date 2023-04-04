@@ -17,7 +17,7 @@ export function Dashboard() {
             <div className="mt-32 flex justify-center">
               <Link to="/create-multisig">
                 <Button
-                  iconLeft={<IconPlus class="w-6 h-6" />}
+                  iconLeft={<IconPlus className="w-6 h-6" />}
                   size="xl"
                 >
                   New multisig

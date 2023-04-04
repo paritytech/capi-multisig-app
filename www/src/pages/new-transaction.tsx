@@ -29,7 +29,7 @@ export function NewTransaction() {
     <Page>
       <CenteredCard>
         <form
-          class="flex flex-col gap-2 w-full"
+          className="flex flex-col gap-2 w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <p>To:</p>

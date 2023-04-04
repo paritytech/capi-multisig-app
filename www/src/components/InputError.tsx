@@ -1,6 +1,6 @@
 export function InputError({ msg = "" }: { msg: string | undefined }) {
   return (
-    <div class="field-error">
+    <div className="field-error">
       {msg}
     </div>
   )

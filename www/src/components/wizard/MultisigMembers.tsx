@@ -45,13 +45,13 @@ export function MultisigMembers() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 class="text-xl leading-8">2. Members</h1>
-      <hr class="border-t border-gray-300 mt-6 mb-4" />
+      <h1 className="text-xl leading-8">2. Members</h1>
+      <hr className="border-t border-gray-300 mt-6 mb-4" />
 
       {formData.value.members.map((member, i) => {
         return (
-          <div class="mb-3">
-            <label class="leading-6 mb-2 block">
+          <div className="mb-3">
+            <label className="leading-6 mb-2 block">
               Member {i + 1}
             </label>
             <Controller
@@ -85,8 +85,8 @@ export function MultisigMembers() {
           <div>{formatBalance(proxyDepositBase + proxyDepositFactor)}</div>
         </div>
       </div>
-      <hr class="divide-x-0 divide-gray-300 mt-4 mb-2" />
-      <div class="flex justify-between">
+      <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
+      <div className="flex justify-between">
         <Button
           variant="ghost"
           onClick={handleSubmit(onBack, onErrorBack)}

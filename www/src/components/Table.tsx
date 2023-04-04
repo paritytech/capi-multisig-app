@@ -21,11 +21,11 @@ export function Table({ unit, children }: TableProps) {
   }
 
   return (
-    <div class="bg-table-bg leading-6 text-sm text-table-text border border-table-border rounded py-5">
+    <div className="bg-table-bg leading-6 text-sm text-table-text border border-table-border rounded py-5">
       <dl>
         <>{items}</>
-        <hr class="divide-y mx-6 pb-4" />
-        <div class="px-6 flex justify-between font-bold">
+        <hr className="divide-y mx-6 pb-4" />
+        <div className="px-6 flex justify-between font-bold">
           <dt>Total</dt>
           <dd>{totalFee} {unit}</dd>
         </div>
@@ -42,7 +42,7 @@ type ItemProps = {
 
 function Item({ name, fee, unit }: ItemProps) {
   return (
-    <div class="pb-4 px-6 flex justify-between">
+    <div className="pb-4 px-6 flex justify-between">
       <dt>{name}</dt>
       <dd>{fee} {unit}</dd>
     </div>

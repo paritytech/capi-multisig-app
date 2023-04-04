@@ -39,13 +39,13 @@ export const InputNumber = forwardRef(
 
     return (
       <div
-        class={clsx(
-          "mb-4 relative",
+        className={clsx(
+          "mb-4 flex flex-col",
         )}
       >
-        <label class="mb-2">
+        <label className="mb-2">
           {label}
-          {required && <span class="text-error">*</span>}
+          {required && <span className="text-error">*</span>}
         </label>
         <div
           className={clsx(
@@ -54,13 +54,13 @@ export const InputNumber = forwardRef(
         >
           <button
             type="button"
-            class={clsx(
+            className={clsx(
               "flex items-center px-4 py-2 rounded-l-lg focus:outline-none border border-r-0",
               error ? "border-2 border-error" : "border-inherit ",
             )}
             onClick={decrease}
           >
-            <IconMinus class="w-4 h-4 text-black" />
+            <IconMinus className="w-4 h-4 text-black" />
           </button>
           <input
             type="number"
@@ -76,19 +76,19 @@ export const InputNumber = forwardRef(
           />
           <button
             type="button"
-            class={clsx(
+            className={clsx(
               "flex items-center px-4 py-2 rounded-r-lg focus:outline-none border border-l-0",
               error ? "border-2 border-error" : "border-inherit ",
             )}
             onClick={increase}
           >
-            <IconPlus class="w-4 h-4 text-black" />
+            <IconPlus className="w-4 h-4 text-black" />
           </button>
         </div>
 
         {error && (
           <div className="text-input-error text-sm mt-1 flex items-center ">
-            <IconInfo class="mr-1" />
+            <IconInfo className="mr-1" />
             <span>{error}</span>
           </div>
         )}
