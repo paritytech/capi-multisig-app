@@ -16,6 +16,7 @@
     "prettier-plugin-tailwindcss": "^0.2.4",
     "react-hook-form": "^7.43.3",
     "react-router-dom": "^6.8.1",
+    "react-tooltip": "^5.10.5",
     "server": "workspace:../server",
     "tailwind-merge": "^1.10.0",
     "vite-tsconfig-paths": "^4.0.5"

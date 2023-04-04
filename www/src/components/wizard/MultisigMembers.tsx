@@ -9,27 +9,31 @@ import {
 } from "../../util/chain-constants.js"
 import { AccountSelect } from "../AccountSelect.js"
 import { Button } from "../Button.js"
-import { FeesTable } from "../FeesTable.js"
+import { Fee, FeesTable } from "../FeesTable.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { InputError } from "../InputError.js"
 import { MultisigMemberEntity, multisigMemberSchema } from "./schemas.js"
 import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
 
-const multisigCreationFees = [
+const multisigCreationFees: Fee[] = [
   {
-    name: "Existential deposit Vault",
+    name: "Existential deposit PureProxy",
     value: existentialDeposit,
     displayValue: formatBalance(existentialDeposit),
+    info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Existential deposit Multisig",
     value: existentialDeposit,
     displayValue: formatBalance(existentialDeposit),
+    info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Proxy fee",
     value: proxyDepositBase + proxyDepositFactor,
     displayValue: formatBalance(proxyDepositBase + proxyDepositFactor),
+    info:
+      "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
 ]
 
