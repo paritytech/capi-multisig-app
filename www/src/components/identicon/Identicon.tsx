@@ -52,8 +52,7 @@ export const Identicon = ({
       onClick={copyToClipboard}
       className={clsx({
         "cursor-copy": !(disableCursorCopy || disableClipboardCopy),
-        className,
-      })}
+      }, className)}
     >
       <svg
         height={size}

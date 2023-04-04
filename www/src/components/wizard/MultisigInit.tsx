@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
 import { accounts, defaultAccount } from "../../signals/accounts.js"
+import { AccountId } from "../AccountId.js"
 import { Button } from "../Button.js"
 import { IconChevronRight } from "../icons/IconChevronRight.js"
 import { Input } from "../Input.js"
@@ -53,9 +54,9 @@ export function MultisigInit() {
           />
         )}
       />
-      <label>Creator</label>
+      <label className="mb-2 inline-block">Creator</label>
       <div className="mb-4">
-        {`${defaultAccount.value?.name}  ${defaultAccount.value?.address}`}
+        <AccountId account={defaultAccount.value} />
       </div>
       <div className="flex gap-8 justify-start">
         <Controller
