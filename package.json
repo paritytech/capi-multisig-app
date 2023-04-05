@@ -22,8 +22,7 @@
   },
   "resolutions": {
     "react": "preact/compat",
-    "react-dom": "preact/compat",
-    "@capi/polkadot_westend": "@capi/polkadot_westend"
+    "react-dom": "preact/compat"
   },
   "devDependencies": {
     "typescript": "^4.9.5"
