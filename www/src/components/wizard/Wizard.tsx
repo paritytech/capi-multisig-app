@@ -1,41 +1,24 @@
-import { computed, signal } from "@preact/signals"
+import { signal } from "@preact/signals"
+import type { Signal } from "@preact/signals"
 import { toChildArray } from "preact"
 import type { ComponentChildren } from "preact"
-import { createDefaultFund } from "./MultisigFund.js"
-import type { MultisigFundEntity } from "./MultisigFund.js"
-import { createDefaultMultisigInit } from "./MultisigInit.js"
-import type { MultisigInitEntity } from "./MultisigInit.js"
-import { createDefaultMembers } from "./MultisigMembers.js"
-import type { MultisigMemberEntity } from "./MultisigMembers.js"
+import type { FormData } from "./schemas.js"
 
-export const multisigSteps = ["init", "members", "fund", "summary"] as const
-
-export type MultisigEntities =
-  | MultisigInitEntity
-  | MultisigMemberEntity
-  | MultisigFundEntity
-
-export type FormData = ReturnType<typeof createDefaultFormData>
-
-function createDefaultFormData() {
-  return {
-    [multisigSteps[0]]: createDefaultMultisigInit(),
-    [multisigSteps[1]]: createDefaultMembers(),
-    [multisigSteps[2]]: createDefaultFund(),
-  }
+type WizardState = {
+  step: Signal<number>
+  formData: Signal<FormData>
 }
 
-function createWizardState() {
-  const step = signal(0)
-  const formData = computed(() => createDefaultFormData())
-
-  return {
-    step,
-    formData: formData.value,
-  }
+export const wizardState: WizardState = {
+  step: signal(0),
+  formData: signal({
+    name: "",
+    memberCount: 2,
+    threshold: 2,
+    members: [],
+    fund: 1,
+  }),
 }
-
-export const wizardState = createWizardState()
 
 export function useWizardNavigation() {
   const { step } = wizardState
@@ -53,18 +36,16 @@ export function useWizardNavigation() {
   }
 }
 
-export function useWizardFormDataStep<T extends MultisigEntities>() {
-  const { formData, step } = wizardState
-  const stepIdx = multisigSteps[step.value] as keyof FormData
-  const formDataStep = formData[stepIdx]
+export function useWizardFormData() {
+  const { formData } = wizardState
 
-  const updateFormDataStep = (formDataNew: T) => {
-    formDataStep.value = formDataNew
+  const updateFormData = (formDataNew: Partial<FormData>) => {
+    formData.value = { ...formData.value, ...formDataNew }
   }
 
   return {
-    updateFormDataStep,
-    formDataStep: formDataStep.value as T,
+    updateFormData,
+    formData,
   }
 }
 

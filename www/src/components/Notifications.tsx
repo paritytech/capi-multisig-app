@@ -64,8 +64,8 @@ export function Notifications() {
   })
 
   return (
-    <div class="pointer-events-none fixed inset-0 mx-4 my-1 z-50">
-      <div class="flex w-full flex-col space-y-2 items-end">
+    <div className="pointer-events-none fixed inset-0 mx-4 my-1 z-50">
+      <div className="flex w-full flex-col space-y-2 items-end">
         {notifications.value.map((notification) => (
           <NotificationItem
             key={notification.id}
@@ -91,7 +91,7 @@ function NotificationItem({ notification, onClose }: PropsNotificationItem) {
 
   return (
     <div
-      class={clsx(
+      className={clsx(
         "pointer-events-auto w-full max-w-[400px] overflow-hidden rounded-sm shadow-notification",
         {
           "bg-notification-success": notification.type === "success",
@@ -101,11 +101,11 @@ function NotificationItem({ notification, onClose }: PropsNotificationItem) {
         },
       )}
     >
-      <div class="flex p-4 justify-between">
+      <div className="flex p-4 justify-between">
         <span>{notification.message}</span>
         <button
           type="button"
-          class="focus:outline-none hover:opacity-60"
+          className="focus:outline-none hover:opacity-60"
           onClick={handleClose}
         >
           <IconClose />

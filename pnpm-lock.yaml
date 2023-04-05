@@ -86,6 +86,7 @@ importers:
       prettier-plugin-tailwindcss: ^0.2.4
       react-hook-form: ^7.43.3
       react-router-dom: ^6.8.1
+      react-tooltip: ^5.10.5
       server: workspace:../server
       tailwind-merge: ^1.10.0
       tailwindcss: ^3.2.7
@@ -105,6 +106,7 @@ importers:
       prettier-plugin-tailwindcss: 0.2.4_prettier@2.8.4
       react-hook-form: 7.43.5
       react-router-dom: 6.9.0
+      react-tooltip: 5.10.5
       server: link:../server
       tailwind-merge: 1.10.0
       vite-tsconfig-paths: 4.0.5
@@ -1370,6 +1372,16 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@floating-ui/core/1.2.5:
+    resolution: {integrity: sha512-qrcbyfnRVziRlB6IYwjCopYhO7Vud750JlJyuljruIXcPxr22y8zdckcJGsuOdnQ639uVD1tTXddrcH3t3QYIQ==}
+    dev: false
+
+  /@floating-ui/dom/1.2.5:
+    resolution: {integrity: sha512-+sAUfpQ3Frz+VCbPCqj+cZzvEESy3fjSeT/pDWkYCWOBXYNNKZfuVsHuv8/JO2zze8+Eb/Q7a6hZVgzS81fLbQ==}
+    dependencies:
+      '@floating-ui/core': 1.2.5
+    dev: false
 
   /@headlessui/react/1.7.13:
     resolution: {integrity: sha512-9n+EQKRtD9266xIHXdY5MfiXPDfYwl7zBM7KOx2Ae3Gdgxy8QML1FkCMjq6AsOf0l6N9uvI4HcFtuFlenaldKg==}
@@ -2896,6 +2908,10 @@ packages:
 
   /class-is/1.1.0:
     resolution: {integrity: sha512-rhjH9AG1fvabIDoGRVH587413LPjTZgmDF9fOFCbFJQV4yuocX1mHxxvXI4g3cGwbVY9wAYIoKlg1N79frJKQw==}
+    dev: false
+
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
     dev: false
 
   /cli-table3/0.6.3:
@@ -4499,6 +4515,16 @@ packages:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.4.0
+    dev: false
+
+  /react-tooltip/5.10.5:
+    resolution: {integrity: sha512-3bi4UtoPSdaQh0R17B3vMPhNFiATpAbXIV8AqlHqrrIdqo33OJyxuPHtgborw3KXVQ5a6iyyAmCY8ztjUB4CrA==}
+    peerDependencies:
+      react: '>=16.14.0'
+      react-dom: '>=16.14.0'
+    dependencies:
+      '@floating-ui/dom': 1.2.5
+      classnames: 2.3.2
     dev: false
 
   /read-cache/1.0.0:

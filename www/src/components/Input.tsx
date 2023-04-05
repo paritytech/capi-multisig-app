@@ -6,31 +6,32 @@ import { IconInfo } from "./icons/IconInfo.js"
 
 type Props = JSX.HTMLAttributes<HTMLInputElement> & {
   error?: string
-  labelRequired?: boolean
+  required?: boolean
 }
 
 export const Input = forwardRef(
   (
-    { label, labelRequired, error, ...props }: Props,
+    { label, required, className, error, ...props }: Props,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
     return (
-      <div class="flex flex-col mb-4">
-        <label class="mb-2">
+      <div className="flex flex-col mb-4">
+        <label className="mb-2">
           {label}
-          {labelRequired && <span class="text-error">*</span>}
+          {required && <span className="text-error">*</span>}
         </label>
         <input
-          class={clsx(
+          className={clsx(
             "bg-input-bg rounded-lg border p-3 focus:outline-none",
             error ? "border-2 border-error" : "border-inherit ",
+            className,
           )}
           {...props}
           ref={ref}
         />
         {error && (
-          <div class="text-input-error text-sm mt-1 flex items-center">
-            <IconInfo class="mr-1" />
+          <div className="text-input-error text-sm mt-1 flex items-center">
+            <IconInfo className="mr-1" />
             <span>{error}</span>
           </div>
         )}
