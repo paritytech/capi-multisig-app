@@ -1,4 +1,4 @@
-import { System } from "@capi/polkadot_westend"
+import { System } from "@capi/westend"
 import { ss58 } from "capi"
 
 type Token = "DOT" | "KSM" | "WND"

@@ -1,4 +1,4 @@
-import { chain } from "@capi/polkadot_westend"
+import { chain } from "@capi/westend"
 
 async function getExistentialDeposit() {
   return await chain
