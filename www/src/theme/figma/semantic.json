@@ -1,84 +1,4 @@
 {
-  "padding": {
-    "36": {
-      "leftRight": {
-        "value": "{4}",
-        "type": "spacing"
-      },
-      "topBottom": {
-        "value": "{2}",
-        "type": "spacing"
-      }
-    },
-    "40": {
-      "leftRight": {
-        "value": "{5}",
-        "type": "spacing"
-      },
-      "topBottom": {
-        "value": "{2,5}",
-        "type": "spacing"
-      }
-    },
-    "48": {
-      "leftRight": {
-        "value": "{6}",
-        "type": "spacing"
-      },
-      "topBottom": {
-        "value": "{3}",
-        "type": "spacing"
-      }
-    },
-    "76": {
-      "leftRight": {
-        "value": "{8}",
-        "type": "spacing"
-      },
-      "topBottom": {
-        "value": "{5}",
-        "type": "spacing"
-      }
-    },
-    "min": {
-      "leftRight": {
-        "value": "{2}",
-        "type": "spacing"
-      },
-      "topBottom": {
-        "value": "{1}",
-        "type": "spacing"
-      }
-    }
-  },
-  "gap": {
-    "medium": {
-      "value": "{2}",
-      "type": "spacing"
-    },
-    "small": {
-      "value": "0.35 rem",
-      "type": "spacing"
-    },
-    "large": {
-      "value": "{3}",
-      "type": "spacing"
-    }
-  },
-  "icon": {
-    "20": {
-      "value": "20px",
-      "type": "sizing"
-    },
-    "24": {
-      "value": "24px",
-      "type": "sizing"
-    },
-    "36": {
-      "value": "36px",
-      "type": "sizing"
-    }
-  },
   "desktop": {
     "h1": {
       "value": {
@@ -416,17 +336,6 @@
   "default": {
     "value": "{borderRadius.lg}",
     "type": "borderRadius"
-  },
-  "none": {
-    "value": {
-      "x": "2",
-      "y": "4",
-      "blur": "0",
-      "spread": "0",
-      "color": "#000000",
-      "type": "innerShadow"
-    },
-    "type": "boxShadow"
   },
   "xl": {
     "value": "{borderRadius.3xl}",

@@ -249,9 +249,11 @@
         "value": "#D3FF33",
         "type": "color"
       },
-      "colors.p-pink": {
-        "value": "{colors.p-pink.300}",
-        "type": "color"
+      "colors": {
+        "p-pink": {
+          "value": "{colors.p-pink.300}",
+          "type": "color"
+        }
       }
     }
   }
