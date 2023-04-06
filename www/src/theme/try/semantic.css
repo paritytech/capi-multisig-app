@@ -1,70 +1,17 @@
-/**
- * Do not edit directly
- * Generated on Thu, 06 Apr 2023 09:03:53 GMT
- */
-
 :root {
-  --box-shadow-pop: [object Object];
-  --box-shadow-idle: [object Object];
-  --box-shadow-hover: [object Object];
-  --background-default: #f3f5fb;
-  --background-system: #f9f9fb;
-  --background-layer-1: #ffffff7a;
-  --background-layer-1: #e6eaf6;
-  --fill-primary: #e6007a;
-  --fill-primary-hover: #e6007a;
-  --fill-primary-down: #e6007a;
-  --fill-secondary: #321d47;
-  --fill-secondary-hover: #321d47;
-  --fill-secondary-down: #1c0533;
-  --fill-ghost: #ffffff;
-  --fill-ghost-hover: #f3f5fb;
-  --fill-ghost-down: #e6eaf6;
-  --fill-match-background: #f3f5fb;
-  --fill-disabled: #f9f9fb;
-  --fill-danger: #fd4935;
-  --fill-danger-hover: #fd4935;
-  --fill-danger-pressed: #fd4935;
-  --fill-elevate-1: #ffffffb0;
-  --fill-overlay: #ffffff94;
-  --fill-selected: #e6eaf6;
-  --fill-white: #ffffff;
-  --fill-impress-1: #ffffff;
-  --text-and-icons-contrast: #201f37;
-  --text-and-icons-dimmed: #201f37;
-  --text-and-icons-match-background: #f3f5fb;
-  --text-and-icons-primary: #e6007a;
-  --text-and-icons-white: #ffffff;
-  --text-and-icons-disabled: #9d9caf;
-  --text-and-icons-danger: #e31902;
-  --text-and-icons-emphasized: #f272b6;
-  --interactive-hover: #ffffff0f;
-  --interactive-pressed: #00000008;
-  --interactive-hover-transparent-background: #ffffff7a;
-  --accent-cyan: #00D0FF;
-  --accent-green: #56F39A;
-  --accent-lime: #D3FF33;
-  --accent-pink: #f272b6;
-  --stroke-contrast: #201f37;
-  --stroke-dimmed: #00000070;
-  --stroke-primary: #e6007a;
-  --stroke-danger: #e31902;
-  --stroke-hint: #9d9caf;
-  --stroke-disabled: #00000029;
-  --stroke-focus: #201f37;
-  --padding-36-left-right: 1rem;
-  --padding-36-top-bottom: 0.5rem;
-  --padding-40-left-right: 1.25rem;
-  --padding-40-top-bottom: 0.625rem;
-  --padding-48-left-right: 1.5rem;
-  --padding-48-top-bottom: 0.75rem;
-  --padding-76-left-right: 2rem;
-  --padding-76-top-bottom: 1.25rem;
-  --padding-min-left-right: 0.5rem;
-  --padding-min-top-bottom: 0.25rem;
-  --gap-medium: 0.5rem;
-  --gap-small: 0.35 rem;
-  --gap-large: 0.75rem;
+  --padding-36-left-right: 1px;
+  --padding-36-top-bottom: 0.5px;
+  --padding-40-left-right: 1.25px;
+  --padding-40-top-bottom: 0.625px;
+  --padding-48-left-right: 1.5px;
+  --padding-48-top-bottom: 0.75px;
+  --padding-76-left-right: 2px;
+  --padding-76-top-bottom: 1.25px;
+  --padding-min-left-right: 0.5px;
+  --padding-min-top-bottom: 0.25px;
+  --gap-medium: 0.5px;
+  --gap-small: 0.35px;
+  --gap-large: 0.75px;
   --icon-20: 20px;
   --icon-24: 24px;
   --icon-36: 36px;
@@ -94,7 +41,7 @@
   --mobile-label: [object Object];
   --mobile-overline: [object Object];
   --pill: 9999px;
-  --default: 0.5rem;
+  --default: 0.5px;
   --none: [object Object];
-  --xl: 1.5rem;
+  --xl: 1.5px;
 }
