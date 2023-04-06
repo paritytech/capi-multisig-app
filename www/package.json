@@ -46,6 +46,10 @@
     "build": "vite build",
     "preview": "vite preview",
 
+    "tokens-global": "npx token-transformer src/theme/figma/global.json src/theme/global.json global  --resolveReferences --expandTypography=true",
+    "tokens-light": "npx token-transformer src/theme/figma/light.json src/theme/light.json --resolveReferences ",
+    "tokens-dark": "npx token-transformer src/theme/figma/dark.json src/theme/dark.json dark  --resolveReferences ",
+    "tokens-semantic": "npx token-transformer src/theme/figma/semantic.json src/theme/semantic.json semantic  --resolveReferences --expandTypography=true",
     "build:sd": "node sd.config.cjs"
   }
 }
