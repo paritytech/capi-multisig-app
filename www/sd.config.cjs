@@ -5,7 +5,7 @@ const { registerTransforms } = require("@tokens-studio/sd-transforms");
 const StyleDictionary = require("style-dictionary");
 
 const sdConfig = makeSdTailwindConfig({
-  type: 'color',
+  type: 'colors',
   isVariables: true,
   source: [`src/theme/figma/**/*.json`],
   transforms: ['attribute/cti', 'name/cti/kebab'],
