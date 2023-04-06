@@ -168,7 +168,7 @@
         "type": "color"
       },
       "white": {
-        "value": "{white}",
+        "value": "{colors.white}",
         "type": "color"
       },
       "impress-1": {
