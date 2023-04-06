@@ -1,0 +1,30 @@
+:root {
+  --desktop-h1: [object Object];
+  --desktop-h2: [object Object];
+  --desktop-h3: [object Object];
+  --desktop-h4: [object Object];
+  --desktop-h5: [object Object];
+  --desktop-h6: [object Object];
+  --desktop-body1: [object Object];
+  --desktop-body2: [object Object];
+  --desktop-body2-medium: [object Object];
+  --desktop-subtitle1: [object Object];
+  --desktop-subtitle2: [object Object];
+  --desktop-caption: [object Object];
+  --mobile-h1: [object Object];
+  --mobile-h2: [object Object];
+  --mobile-h3: [object Object];
+  --mobile-h4: [object Object];
+  --mobile-h5: [object Object];
+  --mobile-h6: [object Object];
+  --mobile-subtitle1: [object Object];
+  --mobile-subtitle2: [object Object];
+  --mobile-body1: [object Object];
+  --mobile-body2: [object Object];
+  --mobile-caption: [object Object];
+  --mobile-label: [object Object];
+  --mobile-overline: [object Object];
+  --pill: 9999px;
+  --default: 0.5px;
+  --xl: 1.5px;
+}
