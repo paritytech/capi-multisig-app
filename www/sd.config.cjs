@@ -1,12 +1,15 @@
 const StyleDictionaryModule = require('style-dictionary')
 const { makeSdTailwindConfig } = require('sd-tailwindcss-transformer')
+const StyleDictionaryPackage = require("style-dictionary");
+const { registerTransforms } = require("@tokens-studio/sd-transforms");
+const StyleDictionary = require("style-dictionary");
 
 const sdConfig = makeSdTailwindConfig({
   type: 'all',
   isVariables: true,
-  source: [`src/theme/**/*.json`],
+  source: [`src/theme/figma/**/*.json`],
   transforms: ['attribute/cti', 'name/cti/kebab'],
-  buildPath: `src/theme/try/`,
+  buildPath: `src/theme/`,
   tailwind: {
     content: [
       './pages/**/*.{js,ts,jsx,tsx}',
@@ -18,7 +21,7 @@ const sdConfig = makeSdTailwindConfig({
 
 // sdConfig.platforms['css'] = {
 //   transformGroup: 'css',
-//   buildPath: 'src/theme/try/',
+//   buildPath: 'src/theme/',
 //   files: [
 //     {
 //       destination: 'tailwind.css',
@@ -29,10 +32,6 @@ const sdConfig = makeSdTailwindConfig({
 
 const StyleDictionaryWithTailwind = StyleDictionaryModule.extend(sdConfig)
 StyleDictionaryWithTailwind.buildAllPlatforms()
-
-const StyleDictionaryPackage = require("style-dictionary");
-const { registerTransforms } = require("@tokens-studio/sd-transforms");
-const StyleDictionary = require("style-dictionary");
 
 registerTransforms(StyleDictionary);
 
@@ -83,13 +82,13 @@ StyleDictionaryPackage.registerTransform({
 
 ["light", "dark", "semantic", "global"].map((theme) => {
   const themeVariables = StyleDictionary.extend({
-    source: [`src/theme/${theme}.json`],
-    include: [`src/theme/global.json`],
+    source: [`src/theme/figma/${theme}.json`],
+    include: [`src/theme/figma/global.json`],
     platforms: {
       web: {
         transformGroup: "tokens-studio",
         transforms: ["attribute/cti", "name/cti/kebab", "size/px"],
-        buildPath: "src/theme/try/",
+        buildPath: "src/theme/",
         files: [
           {
             destination: `${theme}.css`,
