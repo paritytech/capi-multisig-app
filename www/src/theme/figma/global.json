@@ -254,7 +254,7 @@
       "value": "#ffffff",
       "type": "color"
     },
-    "pink": {
+    "p-pink": {
       "50": {
         "value": "#fff5fb",
         "type": "color"
@@ -300,7 +300,7 @@
         "type": "color"
       }
     },
-    "gray": {
+    "p-gray": {
       "50": {
         "value": "#f9f9fb",
         "type": "color"
@@ -346,7 +346,7 @@
         "type": "color"
       }
     },
-    "red": {
+    "p-red": {
       "50": {
         "value": "#fffafa",
         "type": "color"
@@ -392,7 +392,7 @@
         "type": "color"
       }
     },
-    "white-transparent": {
+    "p-white-transparent": {
       "100": {
         "value": "#ffffff0f",
         "type": "color"
@@ -430,7 +430,7 @@
         "type": "color"
       }
     },
-    "black-transparent": {
+    "p-black-transparent": {
       "50": {
         "value": "#00000008",
         "type": "color"
@@ -472,7 +472,7 @@
         "type": "color"
       }
     },
-    "cyan": {
+    "accent-cyan": {
       "500": {
         "value": "#00B2FF",
         "type": "color"
@@ -486,7 +486,7 @@
         "type": "color"
       }
     },
-    "green": {
+    "accent-green": {
       "500": {
         "value": "#56f39a",
         "type": "color"
@@ -500,7 +500,7 @@
         "type": "color"
       }
     },
-    "lime": {
+    "accent-lime": {
       "500": {
         "value": "#d3ff33",
         "type": "color"
@@ -514,7 +514,7 @@
         "type": "color"
       }
     },
-    "purple": {
+    "p-purple": {
       "50": {
         "value": "#fbfcfe",
         "type": "color"
