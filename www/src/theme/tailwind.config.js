@@ -5,36 +5,6 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-      0: "var(--0)",
-      1: "var(--1)",
-      2: "var(--2)",
-      3: "var(--3)",
-      4: "var(--4)",
-      5: "var(--5)",
-      6: "var(--6)",
-      7: "var(--7)",
-      8: "var(--8)",
-      9: "var(--9)",
-      10: "var(--10)",
-      11: "var(--11)",
-      12: "var(--12)",
-      14: "var(--14)",
-      16: "var(--16)",
-      20: "var(--20)",
-      24: "var(--24)",
-      28: "var(--28)",
-      32: "var(--32)",
-      36: "var(--36)",
-      40: "var(--40)",
-      44: "var(--44)",
-      48: "var(--48)",
-      52: "var(--52)",
-      56: "var(--56)",
-      60: "var(--60)",
-      64: "var(--64)",
-      72: "var(--72)",
-      80: "var(--80)",
-      96: "var(--96)",
       boxShadow: {
         pop: "var(--box-shadow-pop)",
         idle: "var(--box-shadow-idle)",
@@ -86,7 +56,9 @@ module.exports = {
           cyan: "var(--colors-accent-cyan)",
           green: "var(--colors-accent-green)",
           lime: "var(--colors-accent-lime)",
-          pink: "var(--colors-accent-pink)"
+          colors: {
+            pPink: "var(--colors-accent-colors-p-pink)"
+          }
         },
         stroke: {
           contrast: "var(--colors-stroke-contrast)",
@@ -96,14 +68,101 @@ module.exports = {
           hint: "var(--colors-stroke-hint)",
           disabled: "var(--colors-stroke-disabled)",
           focus: "var(--colors-stroke-focus)"
+        },
+        black: "var(--colors-black)",
+        white: "var(--colors-white)",
+        pPink: {
+          50: "var(--colors-p-pink-50)",
+          100: "var(--colors-p-pink-100)",
+          200: "var(--colors-p-pink-200)",
+          300: "var(--colors-p-pink-300)",
+          400: "var(--colors-p-pink-400)",
+          500: "var(--colors-p-pink-500)",
+          600: "var(--colors-p-pink-600)",
+          700: "var(--colors-p-pink-700)",
+          800: "var(--colors-p-pink-800)",
+          900: "var(--colors-p-pink-900)",
+          950: "var(--colors-p-pink-950)"
+        },
+        pGray: {
+          50: "var(--colors-p-gray-50)",
+          100: "var(--colors-p-gray-100)",
+          200: "var(--colors-p-gray-200)",
+          300: "var(--colors-p-gray-300)",
+          400: "var(--colors-p-gray-400)",
+          500: "var(--colors-p-gray-500)",
+          600: "var(--colors-p-gray-600)",
+          700: "var(--colors-p-gray-700)",
+          800: "var(--colors-p-gray-800)",
+          900: "var(--colors-p-gray-900)",
+          950: "var(--colors-p-gray-950)"
+        },
+        pRed: {
+          50: "var(--colors-p-red-50)",
+          100: "var(--colors-p-red-100)",
+          200: "var(--colors-p-red-200)",
+          300: "var(--colors-p-red-300)",
+          400: "var(--colors-p-red-400)",
+          500: "var(--colors-p-red-500)",
+          600: "var(--colors-p-red-600)",
+          700: "var(--colors-p-red-700)",
+          800: "var(--colors-p-red-800)",
+          900: "var(--colors-p-red-900)",
+          950: "var(--colors-p-red-950)"
+        },
+        pWhiteTransparent: {
+          100: "var(--colors-p-white-transparent-100)",
+          200: "var(--colors-p-white-transparent-200)",
+          300: "var(--colors-p-white-transparent-300)",
+          400: "var(--colors-p-white-transparent-400)",
+          500: "var(--colors-p-white-transparent-500)",
+          600: "var(--colors-p-white-transparent-600)",
+          700: "var(--colors-p-white-transparent-700)",
+          800: "var(--colors-p-white-transparent-800)",
+          900: "var(--colors-p-white-transparent-900)"
+        },
+        pBlackTransparent: {
+          50: "var(--colors-p-black-transparent-50)",
+          100: "var(--colors-p-black-transparent-100)",
+          200: "var(--colors-p-black-transparent-200)",
+          300: "var(--colors-p-black-transparent-300)",
+          400: "var(--colors-p-black-transparent-400)",
+          500: "var(--colors-p-black-transparent-500)",
+          600: "var(--colors-p-black-transparent-600)",
+          700: "var(--colors-p-black-transparent-700)",
+          800: "var(--colors-p-black-transparent-800)",
+          900: "var(--colors-p-black-transparent-900)"
+        },
+        accentCyan: {
+          500: "var(--colors-accent-cyan-500)",
+          600: "var(--colors-accent-cyan-600)",
+          700: "var(--colors-accent-cyan-700)"
+        },
+        accentGreen: {
+          500: "var(--colors-accent-green-500)",
+          600: "var(--colors-accent-green-600)",
+          700: "var(--colors-accent-green-700)"
+        },
+        accentLime: {
+          500: "var(--colors-accent-lime-500)",
+          600: "var(--colors-accent-lime-600)",
+          700: "var(--colors-accent-lime-700)"
+        },
+        pPurple: {
+          50: "var(--colors-p-purple-50)",
+          100: "var(--colors-p-purple-100)",
+          200: "var(--colors-p-purple-200)",
+          300: "var(--colors-p-purple-300)",
+          400: "var(--colors-p-purple-400)",
+          500: "var(--colors-p-purple-500)",
+          600: "var(--colors-p-purple-600)",
+          700: "var(--colors-p-purple-700)",
+          800: "var(--colors-p-purple-800)",
+          900: "var(--colors-p-purple-900)",
+          925: "var(--colors-p-purple-925)",
+          950: "var(--colors-p-purple-950)"
         }
       },
-      0_5: "var(--0-5)",
-      1_5: "var(--1-5)",
-      2_5: "var(--2-5)",
-      3_5: "var(--3-5)",
-      black: "var(--black)",
-      white: "var(--white)",
       borderRadius: {
         none: "var(--border-radius-none)",
         sm: "var(--border-radius-sm)",
@@ -178,97 +237,6 @@ module.exports = {
       },
       textDecoration: {
         none: "var(--text-decoration-none)"
-      },
-      pink: {
-        50: "var(--pink-50)",
-        100: "var(--pink-100)",
-        200: "var(--pink-200)",
-        300: "var(--pink-300)",
-        400: "var(--pink-400)",
-        500: "var(--pink-500)",
-        600: "var(--pink-600)",
-        700: "var(--pink-700)",
-        800: "var(--pink-800)",
-        900: "var(--pink-900)",
-        950: "var(--pink-950)"
-      },
-      gray: {
-        50: "var(--gray-50)",
-        100: "var(--gray-100)",
-        200: "var(--gray-200)",
-        300: "var(--gray-300)",
-        400: "var(--gray-400)",
-        500: "var(--gray-500)",
-        600: "var(--gray-600)",
-        700: "var(--gray-700)",
-        800: "var(--gray-800)",
-        900: "var(--gray-900)",
-        950: "var(--gray-950)"
-      },
-      red: {
-        50: "var(--red-50)",
-        100: "var(--red-100)",
-        200: "var(--red-200)",
-        300: "var(--red-300)",
-        400: "var(--red-400)",
-        500: "var(--red-500)",
-        600: "var(--red-600)",
-        700: "var(--red-700)",
-        800: "var(--red-800)",
-        900: "var(--red-900)",
-        950: "var(--red-950)"
-      },
-      whiteTransparent: {
-        100: "var(--white-transparent-100)",
-        200: "var(--white-transparent-200)",
-        300: "var(--white-transparent-300)",
-        400: "var(--white-transparent-400)",
-        500: "var(--white-transparent-500)",
-        600: "var(--white-transparent-600)",
-        700: "var(--white-transparent-700)",
-        800: "var(--white-transparent-800)",
-        900: "var(--white-transparent-900)"
-      },
-      blackTransparent: {
-        50: "var(--black-transparent-50)",
-        100: "var(--black-transparent-100)",
-        200: "var(--black-transparent-200)",
-        300: "var(--black-transparent-300)",
-        400: "var(--black-transparent-400)",
-        500: "var(--black-transparent-500)",
-        600: "var(--black-transparent-600)",
-        700: "var(--black-transparent-700)",
-        800: "var(--black-transparent-800)",
-        900: "var(--black-transparent-900)"
-      },
-      cyan: {
-        500: "var(--cyan-500)",
-        600: "var(--cyan-600)",
-        700: "var(--cyan-700)"
-      },
-      green: {
-        500: "var(--green-500)",
-        600: "var(--green-600)",
-        700: "var(--green-700)"
-      },
-      lime: {
-        500: "var(--lime-500)",
-        600: "var(--lime-600)",
-        700: "var(--lime-700)"
-      },
-      purple: {
-        50: "var(--purple-50)",
-        100: "var(--purple-100)",
-        200: "var(--purple-200)",
-        300: "var(--purple-300)",
-        400: "var(--purple-400)",
-        500: "var(--purple-500)",
-        600: "var(--purple-600)",
-        700: "var(--purple-700)",
-        800: "var(--purple-800)",
-        900: "var(--purple-900)",
-        925: "var(--purple-925)",
-        950: "var(--purple-950)"
       }
     },
   },

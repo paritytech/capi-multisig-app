@@ -4,6 +4,7 @@ const StyleDictionaryPackage = require("style-dictionary");
 const { registerTransforms } = require("@tokens-studio/sd-transforms");
 const StyleDictionary = require("style-dictionary");
 
+// generate tailwind config
 const sdConfig = makeSdTailwindConfig({
   type: 'all',
   isVariables: true,
@@ -15,21 +16,15 @@ const sdConfig = makeSdTailwindConfig({
       './pages/**/*.{js,ts,jsx,tsx}',
       './components/**/*.{js,ts,jsx,tsx}'
     ],
-    plugins: ['prettier-plugin-tailwindcss', 'forms', 'line-clamp']
+    plugins: ['forms', 'line-clamp']
   }
 })
 
-// sdConfig.platforms['css'] = {
-//   transformGroup: 'css',
-//   buildPath: 'src/theme/',
-//   files: [
-//     {
-//       destination: 'tailwind.css',
-//       format: 'css/variables'
-//     }
-//   ]
-// }
+// to-do:
+// add plugin: 'prettier-plugin-tailwindcss',
 
+
+// set formats and transforms for style dictionary
 const StyleDictionaryWithTailwind = StyleDictionaryModule.extend(sdConfig)
 StyleDictionaryWithTailwind.buildAllPlatforms()
 
@@ -80,6 +75,7 @@ StyleDictionaryPackage.registerTransform({
   transformer: (token) => parseFloat(token.value) + "px",
 });
 
+// generate css for each token set
 ["light", "dark", "semantic", "global"].map((theme) => {
   const themeVariables = StyleDictionary.extend({
     source: [`src/theme/figma/${theme}.json`],

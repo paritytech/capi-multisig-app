@@ -1,7 +1,4 @@
 :root[data-theme="dark"] {
-  --box-shadow-pop: [object Object];
-  --box-shadow-idle: [object Object];
-  --box-shadow-hover: [object Object];
   --colors-background-default: #140523;
   --colors-background-system: #101015;
   --colors-background-layer-1: #321d47;
@@ -38,5 +35,8 @@
   --colors-accent-cyan: #00D0FF;
   --colors-accent-green: #56F39A;
   --colors-accent-lime: #D3FF33;
-  --colors-accent-pink: #f272b6;
+  --colors-accent-colors-p-pink: #f272b6;
+  --box-shadow-pop: [object Object];
+  --box-shadow-idle: [object Object];
+  --box-shadow-hover: [object Object];
 }
