@@ -18,14 +18,13 @@
     "target/**": true
   },
   "ltex.disabledRules": {
-    "en-US": [
-      "MORFOLOGIK_RULE_EN_US"
-    ]
+    "en-US": ["MORFOLOGIK_RULE_EN_US"]
   },
   "markdownlint.config": {
     "MD013": false,
     "MD033": false,
     "MD041": false
   },
-  "prettier.printWidth": 2
+  "prettier.printWidth": 2,
+  "deno.enable": false
 }
