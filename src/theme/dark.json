@@ -1,0 +1,256 @@
+{
+  "boxShadow": {
+    "pop": {
+      "value": {
+        "color": "#00000030",
+        "type": "dropShadow",
+        "x": "0",
+        "y": "8",
+        "blur": "24",
+        "spread": "0"
+      },
+      "type": "boxShadow"
+    },
+    "idle": {
+      "value": {
+        "color": "#00000014",
+        "type": "dropShadow",
+        "x": "0",
+        "y": "4",
+        "blur": "16",
+        "spread": "0"
+      },
+      "type": "boxShadow"
+    },
+    "hover": {
+      "value": {
+        "color": "#00000008",
+        "type": "dropShadow",
+        "x": "0",
+        "y": "8",
+        "blur": "8",
+        "spread": "0"
+      },
+      "type": "boxShadow"
+    }
+  },
+  "background": {
+    "default": {
+      "value": "{purple.950}",
+      "type": "color"
+    },
+    "system": {
+      "value": "#101015",
+      "type": "color"
+    },
+    "layer+1": {
+      "value": "{purple.700}",
+      "type": "color"
+    }
+  },
+  "fill": {
+    "primary": {
+      "value": "{pink.500}",
+      "type": "color"
+    },
+    "primary-hover": {
+      "value": "{fill.primary}",
+      "type": "color",
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "darken",
+            "value": "0.1",
+            "space": "p3"
+          }
+        }
+      }
+    },
+    "primary-down": {
+      "value": "{fill.primary}",
+      "type": "color",
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "darken",
+            "value": "0.15",
+            "space": "p3"
+          }
+        }
+      }
+    },
+    "secondary": {
+      "value": "{purple.300}",
+      "type": "color"
+    },
+    "secondary-hover": {
+      "value": "{fill.secondary}",
+      "type": "color",
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "lighten",
+            "value": "0.05",
+            "space": "p3"
+          }
+        }
+      }
+    },
+    "secondary-down": {
+      "value": "{fill.secondary}",
+      "type": "color"
+    },
+    "ghost": {
+      "value": "{purple.700}",
+      "type": "color"
+    },
+    "ghost-hover": {
+      "value": "{fill.ghost}",
+      "type": "color",
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "darken",
+            "value": "0.1",
+            "space": "p3"
+          }
+        }
+      }
+    },
+    "ghost-down": {
+      "value": "{fill.ghost}",
+      "type": "color"
+    },
+    "match-background": {
+      "value": "{background.default}",
+      "type": "color"
+    },
+    "disabled": {
+      "value": "{white-transparent.100}",
+      "type": "color"
+    },
+    "danger": {
+      "value": "{red.400}",
+      "type": "color"
+    },
+    "danger-hover": {
+      "value": "{red.400}",
+      "type": "color",
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "darken",
+            "value": "0.1",
+            "space": "p3"
+          }
+        }
+      }
+    },
+    "danger-pressed": {
+      "value": "{red.400}",
+      "type": "color",
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "darken",
+            "value": "0.15",
+            "space": "p3"
+          }
+        }
+      }
+    },
+    "elevate-1": {
+      "value": "{white-transparent.700}",
+      "type": "color"
+    },
+    "overlay": {
+      "value": "{white-transparent.600}",
+      "type": "color"
+    },
+    "selected": {
+      "value": "{purple.200}",
+      "type": "color"
+    },
+    "white": {
+      "value": "{white}",
+      "type": "color"
+    },
+    "impress-1": {
+      "value": "{black-transparent.50}",
+      "type": "color"
+    }
+  },
+  "text-and-icons": {
+    "contrast": {
+      "value": "{white}",
+      "type": "color",
+      "description": "Contrast to background color (in both dark and light modes)."
+    },
+    "dimmed": {
+      "value": "{white-transparent.500}",
+      "type": "color",
+      "description": "Use for less important text and icons - eg. icons you'll find if you need them but don't need to"
+    },
+    "match-background": {
+      "value": "{background.default}",
+      "type": "color",
+      "description": "Matches background color (in both dark and light modes)."
+    },
+    "primary": {
+      "value": "{pink.500}",
+      "type": "color",
+      "description": "Use for most important action."
+    },
+    "white": {
+      "value": "{white}",
+      "type": "color",
+      "description": "Stays white both in dark and light themes."
+    },
+    "disabled": {
+      "value": "{white-transparent.400}",
+      "type": "color"
+    },
+    "danger": {
+      "value": "{red.400}",
+      "type": "color",
+      "description": "Use for errors and to signify dangerous actions."
+    },
+    "emphasized": {
+      "value": "{pink.300}",
+      "type": "color",
+      "description": "Use to emphasize actions - eg. filters selected"
+    }
+  },
+  "interactive": {
+    "hover": {
+      "value": "{black-transparent.50}",
+      "type": "color"
+    },
+    "pressed": {
+      "value": "{black-transparent.50}",
+      "type": "color"
+    },
+    "hover-transparent-background": {
+      "value": "{white-transparent.100}",
+      "type": "color"
+    }
+  },
+  "accent": {
+    "cyan": {
+      "value": "#00D0FF",
+      "type": "color"
+    },
+    "green": {
+      "value": "#56F39A",
+      "type": "color"
+    },
+    "lime": {
+      "value": "#D3FF33",
+      "type": "color"
+    },
+    "pink": {
+      "value": "{pink.300}",
+      "type": "color"
+    }
+  }
+}
