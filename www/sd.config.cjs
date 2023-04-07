@@ -13,8 +13,7 @@ const sdConfig = makeSdTailwindConfig({
   buildPath: `src/theme/`,
   tailwind: {
     content: [
-      './pages/**/*.{js,ts,jsx,tsx}',
-      './components/**/*.{js,ts,jsx,tsx}'
+      "./src/**/*.{js,ts,jsx,tsx}"
     ],
     plugins: ['forms', 'line-clamp']
   }
@@ -83,7 +82,20 @@ StyleDictionaryPackage.registerTransform({
     platforms: {
       web: {
         transformGroup: "tokens-studio",
-        transforms: ["attribute/cti", "name/cti/kebab", "size/px"],
+        transforms: [
+          'ts/descriptionToComment',
+          'ts/size/px',
+          'ts/size/css/letterspacing',
+          'ts/size/lineheight',
+          'ts/type/fontWeight',
+          'ts/resolveMath',
+          'ts/typography/css/shorthand',
+          'ts/border/css/shorthand',
+          'ts/shadow/css/shorthand',
+          'ts/color/css/hexrgba',
+          'ts/color/modifiers',
+          'name/cti/kebab',
+        ],
         buildPath: "src/theme/",
         files: [
           {
