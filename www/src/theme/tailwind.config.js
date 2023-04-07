@@ -240,5 +240,5 @@ module.exports = {
       }
     },
   },
-  plugins: [require("@tailwindcss/prettier-plugin-tailwindcss"),require("@tailwindcss/forms"),require("@tailwindcss/line-clamp")]
+  plugins: [require("@tailwindcss/forms"),require("@tailwindcss/line-clamp")]
 }

@@ -9,6 +9,7 @@ import { NewTransaction } from "./pages/new-transaction.js"
 import { PageError } from "./pages/error.js"
 import { trpc } from "./trpc.js"
 import "./index.css"
+import './theme/light.css'
 
 function Main() {
   const [queryClient] = useState(() => new QueryClient())

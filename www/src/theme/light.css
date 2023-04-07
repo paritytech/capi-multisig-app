@@ -4,10 +4,10 @@
   --colors-background-layer-1: #ffffff7a;
   --colors-background-layer-1: #e6eaf6;
   --colors-fill-primary: #e6007a;
-  --colors-fill-primary-hover: #e6007a;
-  --colors-fill-primary-down: #e6007a;
+  --colors-fill-primary-hover: color(display-p3 0.74 0.16 0.43);
+  --colors-fill-primary-down: color(display-p3 0.7 0.15 0.4);
   --colors-fill-secondary: #321d47;
-  --colors-fill-secondary-hover: #321d47;
+  --colors-fill-secondary-hover: color(display-p3 0.23 0.16 0.31);
   --colors-fill-secondary-down: #1c0533;
   --colors-fill-ghost: #ffffff;
   --colors-fill-ghost-hover: #f3f5fb;
@@ -15,8 +15,8 @@
   --colors-fill-match-background: #f3f5fb;
   --colors-fill-disabled: #f9f9fb;
   --colors-fill-danger: #fd4935;
-  --colors-fill-danger-hover: #fd4935;
-  --colors-fill-danger-pressed: #fd4935;
+  --colors-fill-danger-hover: color(display-p3 0.82 0.31 0.23);
+  --colors-fill-danger-pressed: color(display-p3 0.78 0.29 0.22);
   --colors-fill-elevate-1: #ffffffb0;
   --colors-fill-overlay: #ffffff94;
   --colors-fill-selected: #e6eaf6;
@@ -44,7 +44,7 @@
   --colors-accent-green: #56F39A;
   --colors-accent-lime: #D3FF33;
   --colors-accent-colors-p-pink: #f272b6;
-  --box-shadow-pop: [object Object];
-  --box-shadow-idle: [object Object];
-  --box-shadow-hover: [object Object];
+  --box-shadow-pop: 0 8px 24px 0 #00000030;
+  --box-shadow-idle: 0 4px 16px 0 #00000014;
+  --box-shadow-hover: 0 8px 8px 0 #00000008;
 }
