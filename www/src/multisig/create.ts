@@ -1,92 +1,72 @@
-import { Balances, chain, Proxy, System } from "@capi/westend"
+import { chain, Proxy, Westend } from "@capi/westend"
 import { MultiAddress } from "@capi/westend/types/sp_runtime/multiaddress.js"
-import { ss58 } from "capi"
-import { accounts, defaultExtension } from "../signals/accounts.js"
-import { filterPureCreatedEvents } from "./events.js"
-import { MultisigRune } from "./MultisigRune.js"
-import { pjsSender } from "./sender.js"
-import { signature } from "./signature.js"
+import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
+import { ExtrinsicRune, ss58 } from "capi"
+import { filterPureCreatedEvents } from "./patterns/events.js"
+import { MultisigRune } from "./patterns/MultisigRune.js"
+import { pjsSender } from "./patterns/sender.js"
+import { signature } from "./patterns/signature.js"
 
-if (!accounts.value) throw new Error("No accounts found")
+type Account = {
+  address: string
+  publicKey: Uint8Array
+}
 
-const acc = accounts.value.slice(0, 3).map(({ address }) => {
-  return {
-    address,
-    publicKey: ss58.decode(address)[1],
+export class PureProxyMultisig {
+  members: Account[]
+  threshold: number
+  creator: WalletAccount
+  multisig: MultisigRune<Westend, never>
+  sender = pjsSender(chain, getWalletBySource("polkadot-js")?.signer)
+  stash?: Account
+
+  constructor(
+    members: WalletAccount[],
+    threshold: number,
+    creator: WalletAccount,
+  ) {
+    this.members = members.map(({ address }) => {
+      return {
+        address,
+        publicKey: ss58.decode(address)[1],
+      }
+    })
+    this.threshold = threshold
+    this.creator = creator
+    this.multisig = MultisigRune.from(chain, {
+      signatories: this.members.map(({ publicKey }) => publicKey),
+      threshold,
+    })
   }
-})
 
-const alexa = acc[0]!
-const billy = acc[1]!
-const carol = acc[2]!
+  async propose(sender: Account, call: ExtrinsicRune<Westend, never>) {
+    return await this.multisig
+      .ratify({ call, sender: MultiAddress.Id(sender.publicKey) })
+      .signed(signature({ sender: this.sender(sender.address) }))
+      .sent()
+      .dbgStatus("Proposal:")
+      .finalized()
+      .run()
+  }
 
-const sender = pjsSender(chain, defaultExtension.value?.signer)
+  async approve(sender: Account, call: ExtrinsicRune<Westend, never>) {
+    return await this.multisig
+      .ratify({ call, sender: MultiAddress.Id(sender.publicKey) })
+      .signed(signature({ sender: this.sender(sender.address) }))
+      .sent()
+      .finalizedEvents()
+      .pipe(filterPureCreatedEvents)
+      .access(0, "pure")
+      .run()
+  }
 
-// Initialize the `MultisigRune` with Alexa, Billy and Carol. Set the passing threshold to 2.
-const multisig = MultisigRune.from(chain, {
-  signatories: [alexa, billy, carol].map(({ publicKey }) => publicKey),
-  threshold: 2,
-})
-
-// Send funds to the multisig (existential deposit).
-await Balances
-  .transfer({
-    value: 20_000_000_000_000n,
-    dest: multisig.address,
-  })
-  .signed(signature({ sender: sender(alexa.address) }))
-  .sent()
-  .dbgStatus("Existential deposit:")
-  .finalized()
-  .run()
-
-// Describe the call which we wish to dispatch from the multisig account:
-// the creation of the stash / pure proxy, belonging to the multisig account itself.
-const call = Proxy.createPure({
-  proxyType: "Any",
-  delay: 0,
-  index: 0,
-})
-
-// Propose the stash creation call.
-await multisig
-  .ratify({ call, sender: MultiAddress.Id(alexa.publicKey) })
-  .signed(signature({ sender: sender(alexa.address) }))
-  .sent()
-  .dbgStatus("Proposal:")
-  .finalized()
-  .run()
-
-// Approve the stash creation call and extract the pure creation event, which should
-// contain its account id.
-const stashAccountId = await multisig
-  .ratify({ call, sender: MultiAddress.Id(billy.publicKey) })
-  .signed(signature({ sender: sender(billy.address) }))
-  .sent()
-  .dbgStatus("Final approval:")
-  .finalizedEvents()
-  .pipe(filterPureCreatedEvents)
-  .access(0, "pure")
-  .run()
-
-// Send funds to the stash (existential deposit).
-await Balances
-  .transfer({
-    value: 20_000_000_000_000n,
-    dest: MultiAddress.Id(stashAccountId),
-  })
-  .signed(signature({ sender: sender(alexa.address) }))
-  .sent()
-  .dbgStatus("Fund Stash:")
-  .finalized()
-  .run()
-
-// Ensure that the funds arrived successfully.
-const stashFree = await System.Account
-  .value(stashAccountId)
-  .unhandle(undefined)
-  .access("data", "free")
-  .run()
-
-// The stash's free should be greater than zero.
-console.log("Stash free:", stashFree)
+  async createStash() {
+    const call = Proxy.createPure({
+      proxyType: "Any",
+      delay: 0,
+      index: 0,
+    })
+    const x = await this.propose(this.members[0]!, call)
+    console.log(x)
+  }
+}

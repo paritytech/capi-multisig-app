@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { WalletAccount } from "@talisman-connect/wallets"
 import { Controller, useForm } from "react-hook-form"
-import { accounts } from "../../signals/accounts.js"
+import { PureProxyMultisig } from "../../multisig/create.js"
+import { accounts, defaultAccount } from "../../signals/accounts.js"
 import { formatBalance } from "../../util/balance.js"
 import {
   existentialDeposit,
@@ -50,9 +52,15 @@ export function MultisigMembers() {
   const { goNext, goPrev } = useWizardNavigation()
   const { formData, updateFormData } = useWizardFormData()
 
-  const onSubmit = (formDataNew: MultisigMemberEntity) => {
+  const onSubmit = async (formDataNew: MultisigMemberEntity) => {
     updateFormData(formDataNew)
-    goNext()
+    const multi = new PureProxyMultisig(
+      formDataNew.members as WalletAccount[],
+      formData.value.threshold,
+      defaultAccount.value!,
+    )
+    await multi.createStash()
+    // goNext()
   }
 
   const onBack = (formDataNew: MultisigMemberEntity) => {

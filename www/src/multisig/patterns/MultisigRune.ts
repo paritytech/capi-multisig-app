@@ -52,8 +52,8 @@ export class MultisigRune<out C extends Chain, out U>
     return Rune
       .tuple([this.into(ValueRune).access("signatories"), sender])
       .map(([signatories, sender]) =>
-        signatories.filter((value) =>
-          Buffer.compare(value, sender.value!) !== 0
+        signatories.filter((sig) =>
+          JSON.stringify(sig) !== JSON.stringify(sender.value)
         )
       )
   }
