@@ -10,7 +10,7 @@ const sdConfig = makeSdTailwindConfig({
   isVariables: true,
   source: [`src/theme/figma/dark.json`, `src/theme/figma/light.json`, `src/theme/figma/global.json`],
   transforms: ['name/cti/kebab', 'attribute/cti' ],
-  buildPath: `src/theme/`,
+  buildPath: `./`,
   tailwind: {
     content: [
       "./src/**/*.{js,ts,jsx,tsx}"
@@ -28,8 +28,17 @@ StyleDictionaryWithTailwind.buildAllPlatforms()
 
 registerTransforms(StyleDictionary);
 
+StyleDictionary.registerFormat({
+  name: "css/variables",
+  formatter: function (dictionary) {
+    return `${this.selector} {\n${dictionary.allProperties
+      .map((prop) => `  --${prop.name}: ${prop.value};`)
+      .join("\n")}\n}`;
+  },
+});
+
 // generate css for each token set
-["light", "dark", "semantic", 'global'].map((theme) => {
+["light", "dark", "typography", 'global'].map((theme) => {
   const themeVariables = StyleDictionary.extend({
     source: [`src/theme/figma/${theme}.json`],
     include: [`src/theme/figma/global.json`],

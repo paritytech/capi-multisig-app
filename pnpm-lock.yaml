@@ -130,8 +130,8 @@ importers:
         specifier: ^5.10.5
         version: 5.10.5(react-dom@18.2.0)(react@18.2.0)
       sd-tailwindcss-transformer:
-        specifier: ^1.2.0
-        version: 1.2.0(style-dictionary@3.7.2)
+        specifier: github:dnlklmn/style-dictionary-tailwindcss-transformer
+        version: github.com/dnlklmn/style-dictionary-tailwindcss-transformer/a2bab46ee973a8218021807756424c7f795994bc(style-dictionary@3.7.2)
       server:
         specifier: workspace:../server
         version: link:../server
@@ -4859,14 +4859,6 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /sd-tailwindcss-transformer@1.2.0(style-dictionary@3.7.2):
-    resolution: {integrity: sha512-lIcDFyJYHLt0pD5rKfIle8z7X+FfunOaz1UAzh89NDkrCKLupr55xR+jcIIQ9aGXLR3IP1eksyqvH/8+MmPH/g==}
-    peerDependencies:
-      style-dictionary: '>=3.7.0'
-    dependencies:
-      style-dictionary: 3.7.2
-    dev: false
-
   /semver@5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
     hasBin: true
@@ -5588,4 +5580,17 @@ packages:
       capi: '*'
     dependencies:
       capi: 0.1.0-beta.31(@polkadot/util@11.1.2)(ws@8.13.0)
+    dev: false
+
+  github.com/dnlklmn/style-dictionary-tailwindcss-transformer/a2bab46ee973a8218021807756424c7f795994bc(style-dictionary@3.7.2):
+    resolution: {tarball: https://codeload.github.com/dnlklmn/style-dictionary-tailwindcss-transformer/tar.gz/a2bab46ee973a8218021807756424c7f795994bc}
+    id: github.com/dnlklmn/style-dictionary-tailwindcss-transformer/a2bab46ee973a8218021807756424c7f795994bc
+    name: sd-tailwindcss-transformer
+    version: 1.2.0
+    prepare: true
+    requiresBuild: true
+    peerDependencies:
+      style-dictionary: '>=3.7.0'
+    dependencies:
+      style-dictionary: 3.7.2
     dev: false

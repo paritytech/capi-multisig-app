@@ -18,7 +18,7 @@
     "react-hook-form": "^7.43.3",
     "react-router-dom": "^6.8.1",
     "react-tooltip": "^5.10.5",
-    "sd-tailwindcss-transformer": "^1.2.0",
+    "sd-tailwindcss-transformer": "github:dnlklmn/style-dictionary-tailwindcss-transformer",
     "server": "workspace:../server",
     "style-dictionary": "^3.7.2",
     "tailwind-merge": "^1.10.0",
@@ -45,7 +45,6 @@
     "watch": "vite",
     "build": "vite build",
     "preview": "vite preview",
-
     "build:sd": "node sd.config.cjs"
   }
 }
