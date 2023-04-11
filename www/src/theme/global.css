@@ -1,61 +1,42 @@
 /**
  * Do not edit directly
- * Generated on Tue, 11 Apr 2023 08:08:47 GMT
+ * Generated on Tue, 11 Apr 2023 08:30:59 GMT
  */
 
 :root {
-  --border-radius-none: 0px;
-  --border-radius-sm: 0.125rem;
-  --border-radius-default: 0.25rem;
-  --border-radius-md: 0.375rem;
-  --border-radius-lg: 0.5rem;
-  --border-radius-xl: 0.75rem;
-  --border-radius-2xl: 1rem;
-  --border-radius-3xl: 1.5rem;
-  --border-radius-full: 9999px;
   --number: 95px;
   --font-family-unbounded: Unbounded;
   --font-family-inter: Inter;
   --font-family-mono: Roboto Mono;
-  --line-height-0: 14;
-  --line-height-1: 16;
-  --line-height-2: 20;
-  --line-height-3: 24;
-  --line-height-4: 32;
-  --line-height-5: 36;
-  --line-height-6: 40;
-  --line-height-7: 48;
-  --line-height-8: 54;
-  --line-height-9: 64;
-  --line-height-10: 72;
-  --line-height-11: 84;
-  --line-height-12: 96;
-  --line-height-13: 120;
-  --line-height-14: 144;
-  --line-height-15: 172;
-  --font-weight-unbounded-black: 900;
-  --font-weight-unbounded-regular: 400;
+  --line-height-desktop-h2: 32;
+  --line-height-desktop-h1: 36;
+  --line-height-desktop-h3: 36;
+  --line-height-desktop-h4: 36;
+  --line-height-desktop-h5: 40;
+  --line-height-desktop-h6: 24;
+  --line-height-desktop-body: 24;
+  --line-height-desktop-body-2: 20;
+  --line-height-desktop-subtitle: 36;
+  --line-height-desktop-subtitle-2: 24;
+  --line-height-desktop-caption: 16;
+  --font-weight-unbounded-bold: 700;
+  --font-weight-unbounded-medium: 500;
   --font-weight-inter-regular: 400;
   --font-weight-inter-medium: Semi Bold;
   --font-weight-inter-bold: 700;
   --font-weight-mono-regular: 400;
   --font-weight-mono-medium: 500;
-  --font-size-0: 0.625rem;
-  --font-size-1: 0.75rem;
-  --font-size-2: 0.875rem;
-  --font-size-3: 1rem;
-  --font-size-4: 1.25rem;
-  --font-size-5: 1.5rem;
-  --font-size-6: 1.75rem;
-  --font-size-7: 2rem;
-  --font-size-8: 2.25rem;
-  --font-size-9: 2.5rem;
-  --font-size-10: 3rem;
-  --font-size-11: 4rem;
-  --font-size-12: 4.5rem;
-  --font-size-13: 6rem;
-  --font-size-14: 7.5rem;
-  --font-size-15: 9rem;
+  --font-size-desktop-body-2: 0.875rem;
+  --font-size-desktop-body: 1rem;
+  --font-size-desktop-h6: 1rem;
+  --font-size-desktop-h5: 1.25rem;
+  --font-size-desktop-h4: 1.5rem;
+  --font-size-desktop-h3: 1.75rem;
+  --font-size-desktop-h2: 2rem;
+  --font-size-desktop-h1: 2.25rem;
+  --font-size-desktop-subtitle: 24px;
+  --font-size-desktop-subtitle-2: 16px;
+  --font-size-desktop-caption: 12px;
   --letter-spacing-0: 0;
   --letter-spacing-1: 0.02em;
   --paragraph-spacing-0: 0;
