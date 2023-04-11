@@ -1,3 +1,8 @@
+/**
+ * Do not edit directly
+ * Generated on Tue, 11 Apr 2023 08:08:47 GMT
+ */
+
 :root {
   --border-radius-none: 0px;
   --border-radius-sm: 0.125rem;
@@ -129,6 +134,6 @@
   --colors-p-purple-700: #321d47;
   --colors-p-purple-800: #28123e;
   --colors-p-purple-900: #1c0533;
-  --colors-p-purple-925: #160527;
+  --colors-p-purple-925: #160527; /* App background */
   --colors-p-purple-950: #140523;
 }

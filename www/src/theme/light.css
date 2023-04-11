@@ -1,3 +1,8 @@
+/**
+ * Do not edit directly
+ * Generated on Tue, 11 Apr 2023 08:08:47 GMT
+ */
+
 :root {
   --colors-background-default: #f3f5fb;
   --colors-background-system: #f9f9fb;
@@ -22,7 +27,9 @@
   --colors-fill-selected: #e6eaf6;
   --colors-fill-white: #ffffff;
   --colors-fill-impress-1: #ffffff;
-  --colors-stroke-contrast: #201f37;
+  --colors-stroke-contrast: #201f37; /* 
+
+ */
   --colors-stroke-dimmed: #00000070;
   --colors-stroke-primary: #e6007a;
   --colors-stroke-danger: #e31902;
