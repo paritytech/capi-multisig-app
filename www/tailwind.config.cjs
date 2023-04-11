@@ -170,19 +170,17 @@ module.exports = {
         mono: "var(--font-family-mono)"
       },
       lineHeight: {
-        desktop: {
-      "h2": "var(--line-height-desktop-h2)",
-      "h1": "var(--line-height-desktop-h1)",
-      "h3": "var(--line-height-desktop-h3)",
-      "h4": "var(--line-height-desktop-h4)",
-      "h5": "var(--line-height-desktop-h5)",
-      "h6": "var(--line-height-desktop-h6)",
-          body: "var(--line-height-desktop-body)",
-      "body_2": "var(--line-height-desktop-body-2)",
-          subtitle: "var(--line-height-desktop-subtitle)",
-      "subtitle_2": "var(--line-height-desktop-subtitle-2)",
-          caption: "var(--line-height-desktop-caption)"
-        }
+    "h2": "var(--line-height-h2)",
+    "h1": "var(--line-height-h1)",
+    "h3": "var(--line-height-h3)",
+    "h4": "var(--line-height-h4)",
+    "h5": "var(--line-height-h5)",
+    "h6": "var(--line-height-h6)",
+        body: "var(--line-height-body)",
+    "body_2": "var(--line-height-body-2)",
+        subtitle: "var(--line-height-subtitle)",
+    "subtitle_2": "var(--line-height-subtitle-2)",
+        caption: "var(--line-height-caption)"
       },
       fontWeight: {
         unboundedBold: "var(--font-weight-unbounded-bold)",
@@ -194,19 +192,17 @@ module.exports = {
         monoMedium: "var(--font-weight-mono-medium)"
       },
       fontSize: {
-        desktop: {
-      "body_2": "var(--font-size-desktop-body-2)",
-          body: "var(--font-size-desktop-body)",
-      "h6": "var(--font-size-desktop-h6)",
-      "h5": "var(--font-size-desktop-h5)",
-      "h4": "var(--font-size-desktop-h4)",
-      "h3": "var(--font-size-desktop-h3)",
-      "h2": "var(--font-size-desktop-h2)",
-      "h1": "var(--font-size-desktop-h1)",
-          subtitle: "var(--font-size-desktop-subtitle)",
-      "subtitle_2": "var(--font-size-desktop-subtitle-2)",
-          caption: "var(--font-size-desktop-caption)"
-        }
+    "body_2": "var(--font-size-body-2)",
+        body: "var(--font-size-body)",
+    "h6": "var(--font-size-h6)",
+    "h5": "var(--font-size-h5)",
+    "h4": "var(--font-size-h4)",
+    "h3": "var(--font-size-h3)",
+    "h2": "var(--font-size-h2)",
+    "h1": "var(--font-size-h1)",
+        subtitle: "var(--font-size-subtitle)",
+    "subtitle_2": "var(--font-size-subtitle-2)",
+        caption: "var(--font-size-caption)"
       },
       letterSpacing: {
         0: "var(--letter-spacing-0)",
