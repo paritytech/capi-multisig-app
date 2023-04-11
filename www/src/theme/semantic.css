@@ -1,35 +1,21 @@
 /**
  * Do not edit directly
- * Generated on Tue, 11 Apr 2023 08:08:47 GMT
+ * Generated on Tue, 11 Apr 2023 08:30:59 GMT
  */
 
 :root {
-  --desktop-h1: 900 2.25rem/24 Unbounded;
-  --desktop-h2: 900 2rem/32 Unbounded;
+  --desktop-h1: 700 2.25rem/36 Unbounded;
+  --desktop-h2: 700 2rem/32 Unbounded;
   --desktop-h3: 400 1.75rem/36 Inter;
   --desktop-h4: 700 1.5rem/36 Inter;
   --desktop-h5: Semi Bold 1.25rem/40 Inter;
   --desktop-h6: Semi Bold 1rem/24 Inter;
-  --desktop-body1: 400 1rem/24 Inter;
-  --desktop-body2: 400 0.875rem/20 Inter;
-  --desktop-body2-medium: Semi Bold 0.875rem/20 Inter;
-  --desktop-subtitle1: Semi Bold 1.5rem/36 Inter;
-  --desktop-subtitle2: Semi Bold 1rem/24 Inter;
-  --desktop-caption: 400 0.75rem/16 Inter;
-  --mobile-h1: 900 2.25rem/24 Unbounded;
-  --mobile-h2: 900 2rem/32 Unbounded;
-  --mobile-h3: 400 1.75rem/36 Inter;
-  --mobile-h4: 400 1.5rem/20 Inter;
-  --mobile-h5: 400 1.25rem/40 Inter;
-  --mobile-h6: 400 1rem/14 Inter;
-  --mobile-subtitle1: 400 1.25rem/40 Inter;
-  --mobile-subtitle2: 400 1rem/14 Inter;
-  --mobile-body1: 400 1rem/14 Inter;
-  --mobile-body2: 400 0.875rem/16 Inter;
-  --mobile-caption: 400 0.75rem/48 Inter;
-  --mobile-label: 400 0.875rem/16 Inter;
-  --mobile-overline: 400 0.625rem/54 Inter;
+  --desktop-body: 400 1rem/24 Inter;
+  --desktop-body-medium: Semi Bold 1rem/24 Inter;
+  --desktop-body-2: 400 0.875rem/20 Inter;
+  --desktop-body-2-medium: Semi Bold 0.875rem/20 Inter;
+  --desktop-subtitle: Semi Bold 1.5rem/36 Inter;
+  --desktop-subtitle-2: Semi Bold 1rem/24 Inter;
+  --desktop-caption: 400 12px/16 Inter;
   --pill: 9999px;
-  --default: 0.5rem;
-  --xl: 1.5rem;
 }
