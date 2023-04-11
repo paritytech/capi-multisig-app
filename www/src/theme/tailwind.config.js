@@ -163,17 +163,6 @@ module.exports = {
           950: "var(--colors-p-purple-950)"
         }
       },
-      borderRadius: {
-        none: "var(--border-radius-none)",
-        sm: "var(--border-radius-sm)",
-        default: "var(--border-radius-default)",
-        md: "var(--border-radius-md)",
-        lg: "var(--border-radius-lg)",
-        xl: "var(--border-radius-xl)",
-    "2xl": "var(--border-radius-2xl)",
-    "3xl": "var(--border-radius-3xl)",
-        full: "var(--border-radius-full)"
-      },
       number: "var(--number)",
       fontFamily: {
         unbounded: "var(--font-family-unbounded)",
@@ -181,26 +170,23 @@ module.exports = {
         mono: "var(--font-family-mono)"
       },
       lineHeight: {
-        0: "var(--line-height-0)",
-        1: "var(--line-height-1)",
-        2: "var(--line-height-2)",
-        3: "var(--line-height-3)",
-        4: "var(--line-height-4)",
-        5: "var(--line-height-5)",
-        6: "var(--line-height-6)",
-        7: "var(--line-height-7)",
-        8: "var(--line-height-8)",
-        9: "var(--line-height-9)",
-        10: "var(--line-height-10)",
-        11: "var(--line-height-11)",
-        12: "var(--line-height-12)",
-        13: "var(--line-height-13)",
-        14: "var(--line-height-14)",
-        15: "var(--line-height-15)"
+        desktop: {
+      "h2": "var(--line-height-desktop-h2)",
+      "h1": "var(--line-height-desktop-h1)",
+      "h3": "var(--line-height-desktop-h3)",
+      "h4": "var(--line-height-desktop-h4)",
+      "h5": "var(--line-height-desktop-h5)",
+      "h6": "var(--line-height-desktop-h6)",
+          body: "var(--line-height-desktop-body)",
+      "body_2": "var(--line-height-desktop-body-2)",
+          subtitle: "var(--line-height-desktop-subtitle)",
+      "subtitle_2": "var(--line-height-desktop-subtitle-2)",
+          caption: "var(--line-height-desktop-caption)"
+        }
       },
       fontWeight: {
-        unboundedBlack: "var(--font-weight-unbounded-black)",
-        unboundedRegular: "var(--font-weight-unbounded-regular)",
+        unboundedBold: "var(--font-weight-unbounded-bold)",
+        unboundedMedium: "var(--font-weight-unbounded-medium)",
         interRegular: "var(--font-weight-inter-regular)",
         interMedium: "var(--font-weight-inter-medium)",
         interBold: "var(--font-weight-inter-bold)",
@@ -208,22 +194,19 @@ module.exports = {
         monoMedium: "var(--font-weight-mono-medium)"
       },
       fontSize: {
-        0: "var(--font-size-0)",
-        1: "var(--font-size-1)",
-        2: "var(--font-size-2)",
-        3: "var(--font-size-3)",
-        4: "var(--font-size-4)",
-        5: "var(--font-size-5)",
-        6: "var(--font-size-6)",
-        7: "var(--font-size-7)",
-        8: "var(--font-size-8)",
-        9: "var(--font-size-9)",
-        10: "var(--font-size-10)",
-        11: "var(--font-size-11)",
-        12: "var(--font-size-12)",
-        13: "var(--font-size-13)",
-        14: "var(--font-size-14)",
-        15: "var(--font-size-15)"
+        desktop: {
+      "body_2": "var(--font-size-desktop-body-2)",
+          body: "var(--font-size-desktop-body)",
+      "h6": "var(--font-size-desktop-h6)",
+      "h5": "var(--font-size-desktop-h5)",
+      "h4": "var(--font-size-desktop-h4)",
+      "h3": "var(--font-size-desktop-h3)",
+      "h2": "var(--font-size-desktop-h2)",
+      "h1": "var(--font-size-desktop-h1)",
+          subtitle: "var(--font-size-desktop-subtitle)",
+      "subtitle_2": "var(--font-size-desktop-subtitle-2)",
+          caption: "var(--font-size-desktop-caption)"
+        }
       },
       letterSpacing: {
         0: "var(--letter-spacing-0)",
