@@ -1,4 +1,9 @@
-:root[data-theme="dark"] {
+/**
+ * Do not edit directly
+ * Generated on Tue, 11 Apr 2023 08:08:47 GMT
+ */
+
+:root {
   --colors-background-default: #140523;
   --colors-background-system: #101015;
   --colors-background-layer-1: #321d47;
@@ -21,14 +26,14 @@
   --colors-fill-selected: #e6eaf6;
   --colors-fill-white: #ffffff;
   --colors-fill-impress-1: #00000008;
-  --colors-text-and-icons-contrast: #ffffff;
-  --colors-text-and-icons-dimmed: #ffffff7a;
-  --colors-text-and-icons-match-background: #140523;
-  --colors-text-and-icons-primary: #e6007a;
-  --colors-text-and-icons-white: #ffffff;
+  --colors-text-and-icons-contrast: #ffffff; /* Contrast to background color (in both dark and light modes). */
+  --colors-text-and-icons-dimmed: #ffffff7a; /* Use for less important text and icons - eg. icons you'll find if you need them but don't need to */
+  --colors-text-and-icons-match-background: #140523; /* Matches background color (in both dark and light modes). */
+  --colors-text-and-icons-primary: #e6007a; /* Use for most important action. */
+  --colors-text-and-icons-white: #ffffff; /* Stays white both in dark and light themes. */
   --colors-text-and-icons-disabled: #ffffff61;
-  --colors-text-and-icons-danger: #fd4935;
-  --colors-text-and-icons-emphasized: #f272b6;
+  --colors-text-and-icons-danger: #fd4935; /* Use for errors and to signify dangerous actions. */
+  --colors-text-and-icons-emphasized: #f272b6; /* Use to emphasize actions - eg. filters selected */
   --colors-interactive-hover: #00000008;
   --colors-interactive-pressed: #00000008;
   --colors-interactive-hover-transparent-background: #ffffff0f;

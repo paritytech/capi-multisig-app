@@ -1,6 +1,6 @@
 const StyleDictionaryModule = require('style-dictionary')
 const { makeSdTailwindConfig } = require('sd-tailwindcss-transformer')
-const StyleDictionaryPackage = require("style-dictionary");
+// const StyleDictionaryPackage = require("style-dictionary");
 const { registerTransforms } = require("@tokens-studio/sd-transforms");
 const StyleDictionary = require("style-dictionary");
 
@@ -9,7 +9,7 @@ const sdConfig = makeSdTailwindConfig({
   type: 'all',
   isVariables: true,
   source: [`src/theme/figma/dark.json`, `src/theme/figma/light.json`, `src/theme/figma/global.json`],
-  transforms: ['attribute/cti', 'name/cti/kebab'],
+  transforms: ['name/cti/kebab', 'attribute/cti' ],
   buildPath: `src/theme/`,
   tailwind: {
     content: [
@@ -18,6 +18,7 @@ const sdConfig = makeSdTailwindConfig({
     plugins: ['forms', 'line-clamp']
   }
 })
+
 
 // to-do:
 // add plugin: 'prettier-plugin-tailwindcss',
@@ -29,50 +30,50 @@ StyleDictionaryWithTailwind.buildAllPlatforms()
 
 registerTransforms(StyleDictionary);
 
-StyleDictionaryPackage.registerFormat({
-  name: "css/variables",
-  formatter: function (dictionary) {
-    return `${this.selector} {\n${dictionary.allProperties
-      .map((prop) => `  --${prop.name}: ${prop.value};`)
-      .join("\n")}\n}`;
-  },
-});
+// StyleDictionaryPackage.registerFormat({
+//   name: "css/variables",
+//   formatter: function (dictionary) {
+//     return `${this.selector} {\n${dictionary.allProperties
+//       .map((prop) => `  --${prop.name}: ${prop.value};`)
+//       .join("\n")}\n}`;
+//   },
+// });
 
-StyleDictionaryPackage.registerFormat({
-  name: "tailwind/colors",
-  formatter: function (dictionary) {
-    return `${this.selector} {\n${dictionary.allProperties
-      .map((prop) => `"${prop.name}": "${prop.value}",`)
-      .join("\n")}\n}`;
-  },
-});
+// StyleDictionaryPackage.registerFormat({
+//   name: "tailwind/colors",
+//   formatter: function (dictionary) {
+//     return `${this.selector} {\n${dictionary.allProperties
+//       .map((prop) => `"${prop.name}": "${prop.value}",`)
+//       .join("\n")}\n}`;
+//   },
+// });
 
-StyleDictionaryPackage.registerFormat({
-  name: "tailwind/fontFamily",
-  formatter: function (dictionary) {
-    return `${this.selector} {\n${dictionary.allProperties
-      .map(
-        (prop) =>
-          `"${prop.name.substring(0, prop.name.indexOf("-font-family"))}": "${
-            prop.value
-          }",`
-      )
-      .join("\n")}\n}`;
-  },
-});
+// StyleDictionaryPackage.registerFormat({
+//   name: "tailwind/fontFamily",
+//   formatter: function (dictionary) {
+//     return `${this.selector} {\n${dictionary.allProperties
+//       .map(
+//         (prop) =>
+//           `"${prop.name.substring(0, prop.name.indexOf("-font-family"))}": "${
+//             prop.value
+//           }",`
+//       )
+//       .join("\n")}\n}`;
+//   },
+// });
 
-StyleDictionaryPackage.registerTransform({
-  name: "size/px",
-  type: "value",
-  transitive: true,
+// StyleDictionaryPackage.registerTransform({
+//   name: "size/px",
+//   type: "value",
+//   transitive: true,
 
-  matcher: (token) => ["fontWeights"].includes(token.type),
-  transformer: (token) => (token.value === "Regular" ? 400 : 700),
+//   matcher: (token) => ["fontWeights"].includes(token.type),
+//   transformer: (token) => (token.value === "Regular" ? 400 : 700),
 
-  matcher: (token) =>
-    ["fontSizes", "dimension", "borderRadius", "spacing"].includes(token.type),
-  transformer: (token) => parseFloat(token.value) + "px",
-});
+//   matcher: (token) =>
+//     ["fontSizes", "dimension", "borderRadius", "spacing"].includes(token.type),
+//   transformer: (token) => parseFloat(token.value) + "px",
+// });
 
 // generate css for each token set
 ["light", "dark", "semantic", "global"].map((theme) => {
