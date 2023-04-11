@@ -19,61 +19,14 @@ const sdConfig = makeSdTailwindConfig({
   }
 })
 
-
 // to-do:
 // add plugin: 'prettier-plugin-tailwindcss',
-
 
 // set formats and transforms for style dictionary
 const StyleDictionaryWithTailwind = StyleDictionaryModule.extend(sdConfig)
 StyleDictionaryWithTailwind.buildAllPlatforms()
 
 registerTransforms(StyleDictionary);
-
-// StyleDictionaryPackage.registerFormat({
-//   name: "css/variables",
-//   formatter: function (dictionary) {
-//     return `${this.selector} {\n${dictionary.allProperties
-//       .map((prop) => `  --${prop.name}: ${prop.value};`)
-//       .join("\n")}\n}`;
-//   },
-// });
-
-// StyleDictionaryPackage.registerFormat({
-//   name: "tailwind/colors",
-//   formatter: function (dictionary) {
-//     return `${this.selector} {\n${dictionary.allProperties
-//       .map((prop) => `"${prop.name}": "${prop.value}",`)
-//       .join("\n")}\n}`;
-//   },
-// });
-
-// StyleDictionaryPackage.registerFormat({
-//   name: "tailwind/fontFamily",
-//   formatter: function (dictionary) {
-//     return `${this.selector} {\n${dictionary.allProperties
-//       .map(
-//         (prop) =>
-//           `"${prop.name.substring(0, prop.name.indexOf("-font-family"))}": "${
-//             prop.value
-//           }",`
-//       )
-//       .join("\n")}\n}`;
-//   },
-// });
-
-// StyleDictionaryPackage.registerTransform({
-//   name: "size/px",
-//   type: "value",
-//   transitive: true,
-
-//   matcher: (token) => ["fontWeights"].includes(token.type),
-//   transformer: (token) => (token.value === "Regular" ? 400 : 700),
-
-//   matcher: (token) =>
-//     ["fontSizes", "dimension", "borderRadius", "spacing"].includes(token.type),
-//   transformer: (token) => parseFloat(token.value) + "px",
-// });
 
 // generate css for each token set
 ["light", "dark", "semantic", 'global'].map((theme) => {
