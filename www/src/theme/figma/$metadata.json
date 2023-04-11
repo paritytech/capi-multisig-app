@@ -1,7 +1,7 @@
 {
   "tokenSetOrder": [
     "global",
-    "semantic",
+    "typography",
     "light",
     "dark"
   ]
