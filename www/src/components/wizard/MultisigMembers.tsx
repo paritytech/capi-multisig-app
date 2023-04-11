@@ -49,17 +49,18 @@ export function MultisigMembers() {
     resolver: zodResolver(multisigMemberSchema),
     mode: "onChange",
   })
-  const { goNext, goPrev } = useWizardNavigation()
+  const { goPrev } = useWizardNavigation()
   const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
     updateFormData(formDataNew)
     const multi = new PureProxyMultisig(
       formDataNew.members as WalletAccount[],
-      formData.value.threshold,
-      defaultAccount.value!,
+      formData.peek().threshold,
+      defaultAccount.peek()!,
     )
-    await multi.createStash()
+    console.log(multi)
+    // await multi.createStash(defaultAccount.peek()?.address!)
     // goNext()
   }
 

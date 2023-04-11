@@ -1,4 +1,4 @@
-import { chain, Proxy, Westend } from "@capi/westend"
+import { Balances, chain, Proxy, Westend } from "@capi/westend"
 import { MultiAddress } from "@capi/westend/types/sp_runtime/multiaddress.js"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
 import { ExtrinsicRune, ss58 } from "capi"
@@ -13,10 +13,10 @@ type Account = {
 }
 
 export class PureProxyMultisig {
-  members: Account[]
-  threshold: number
-  creator: WalletAccount
-  multisig: MultisigRune<Westend, never>
+  readonly members: Account[]
+  readonly threshold: number
+  readonly creator: WalletAccount
+  readonly multisig: MultisigRune<Westend, never>
   sender = pjsSender(chain, getWalletBySource("polkadot-js")?.signer)
   stash?: Account
 
@@ -25,18 +25,37 @@ export class PureProxyMultisig {
     threshold: number,
     creator: WalletAccount,
   ) {
-    this.members = members.map(({ address }) => {
-      return {
-        address,
-        publicKey: ss58.decode(address)[1],
-      }
-    })
+    this.members = members.map(({ address }) =>
+      PureProxyMultisig.createAccount(address)
+    )
     this.threshold = threshold
     this.creator = creator
     this.multisig = MultisigRune.from(chain, {
       signatories: this.members.map(({ publicKey }) => publicKey),
       threshold,
     })
+    this.fund(creator.address, 1000000000000n)
+  }
+
+  async fund(senderAddress: string, amount: bigint) {
+    return await Balances
+      .transfer({
+        value: amount,
+        dest: this.multisig.address,
+      })
+      .signed(signature({ sender: this.sender(senderAddress) }))
+      .sent()
+      .dbgStatus("Existential deposit:")
+      .finalized()
+      .run()
+  }
+
+  static createAccount(address: string): Account {
+    const publicKey = ss58.decode(address)[1]
+    return {
+      address,
+      publicKey,
+    }
   }
 
   async propose(sender: Account, call: ExtrinsicRune<Westend, never>) {
@@ -60,13 +79,14 @@ export class PureProxyMultisig {
       .run()
   }
 
-  async createStash() {
+  async createStash(senderAddress: string) {
+    const sender = PureProxyMultisig.createAccount(senderAddress)
     const call = Proxy.createPure({
       proxyType: "Any",
       delay: 0,
       index: 0,
     })
-    const x = await this.propose(this.members[0]!, call)
+    const x = await this.propose(sender, call)
     console.log(x)
   }
 }

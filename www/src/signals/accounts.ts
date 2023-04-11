@@ -1,4 +1,4 @@
-import { effect, signal } from "@preact/signals"
+import { effect, Signal, signal } from "@preact/signals"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
 import { retrieveStored } from "../util/local-storage.js"
 import { retry } from "../util/retry.js"
@@ -7,10 +7,10 @@ interface InjectedWindow extends Window {
   injectedWeb3: unknown
 }
 
-const accounts = signal<WalletAccount[]>([])
+const accounts: Signal<WalletAccount[]> = signal<WalletAccount[]>([])
 const storedAccount = retrieveStored("defaultAccount")
 const storedExtension = retrieveStored("defaultExtension")
-const defaultAccount = signal(storedAccount)
+const defaultAccount: Signal<WalletAccount | undefined> = signal(storedAccount)
 const defaultExtension = signal(storedExtension)
 
 effect(
