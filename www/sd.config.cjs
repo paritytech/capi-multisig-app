@@ -76,7 +76,7 @@ registerTransforms(StyleDictionary);
 // });
 
 // generate css for each token set
-["light", "dark", "semantic", "global"].map((theme) => {
+["light", "dark", "semantic", 'global'].map((theme) => {
   const themeVariables = StyleDictionary.extend({
     source: [`src/theme/figma/${theme}.json`],
     include: [`src/theme/figma/global.json`],
@@ -108,22 +108,6 @@ registerTransforms(StyleDictionary);
               return isSource;
             },
           },
-          // {
-          //   destination: `${theme}.js`,
-          //   format: "tailwind/colors",
-          //   selector: "module.exports = ",
-          //   filter: ({ isSource }) => {
-          //     return isSource;
-          //   },
-          // },
-          // {
-          //   destination: `${theme}.js`,
-          //   format: "tailwind/fontFamily",
-          //   selector: "module.exports = ",
-          //   filter: (token) => {
-          //     return token.type === "fontFamilies";
-          //   },
-          // },
         ],
       },
     },
@@ -131,3 +115,37 @@ registerTransforms(StyleDictionary);
   themeVariables.cleanAllPlatforms();
   themeVariables.buildAllPlatforms();
 });
+
+const globalVariables = StyleDictionary.extend({
+  source: [`src/theme/figma/global.json`],
+  include: [`src/theme/figma/global.json`],
+  platforms: {
+    web: {
+      transformGroup: "tokens-studio",
+      transforms: [
+        'ts/descriptionToComment',
+        'ts/size/px',
+        'ts/size/css/letterspacing',
+        'ts/size/lineheight',
+        'ts/type/fontWeight',
+        'ts/resolveMath',
+        'ts/typography/css/shorthand',
+        'ts/border/css/shorthand',
+        'ts/shadow/css/shorthand',
+        'ts/color/css/hexrgba',
+        'ts/color/modifiers',
+        'name/cti/kebab',
+      ],
+      buildPath: "src/theme/",
+      files: [
+        {
+          destination: `global.css`,
+          format: "css/variables",
+          selector:`:root`,
+        },
+      ],
+    },
+  },
+});
+globalVariables.cleanAllPlatforms();
+globalVariables.buildAllPlatforms();
