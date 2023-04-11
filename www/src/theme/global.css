@@ -1,8 +1,3 @@
-/**
- * Do not edit directly
- * Generated on Tue, 11 Apr 2023 08:37:34 GMT
- */
-
 :root {
   --number: 95px;
   --font-family-unbounded: Unbounded;
@@ -115,6 +110,6 @@
   --colors-p-purple-700: #321d47;
   --colors-p-purple-800: #28123e;
   --colors-p-purple-900: #1c0533;
-  --colors-p-purple-925: #160527; /* App background */
+  --colors-p-purple-925: #160527;
   --colors-p-purple-950: #140523;
 }
