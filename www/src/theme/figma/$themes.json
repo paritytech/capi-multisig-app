@@ -4,8 +4,7 @@
     "name": "light",
     "selectedTokenSets": {
       "global": "enabled",
-      "dark": "enabled",
-      "typography": "disabled"
+      "dark": "enabled"
     },
     "$figmaStyleReferences": {}
   },
@@ -14,8 +13,7 @@
     "name": "dark",
     "selectedTokenSets": {
       "global": "enabled",
-      "dark": "enabled",
-      "typography": "disabled"
+      "dark": "enabled"
     },
     "$figmaStyleReferences": {}
   },
@@ -23,8 +21,7 @@
     "id": "051639f704113682cc716a9c1433aaaf7974f0ed",
     "name": "mobile",
     "selectedTokenSets": {
-      "global": "enabled",
-      "typography": "disabled"
+      "global": "enabled"
     },
     "$figmaStyleReferences": {}
   },
@@ -33,8 +30,7 @@
     "name": "desktop",
     "selectedTokenSets": {
       "global": "enabled",
-      "dark": "enabled",
-      "typography": "disabled"
+      "dark": "enabled"
     },
     "$figmaStyleReferences": {}
   }
