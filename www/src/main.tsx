@@ -12,7 +12,6 @@ import "./index.css"
 import './theme/global.css'
 import './theme/light.css'
 import './theme/dark.css'
-import './theme/typography.css'
 
 function Main() {
   const [queryClient] = useState(() => new QueryClient())
