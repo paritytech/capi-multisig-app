@@ -57,7 +57,7 @@ export const Button = ({
             variant === "secondary",
         },
         {
-          "hover:bg-fill-secondaryHover bg-fill-secondary text-textAndIcons-white": variant === "primary",
+          "hover:bg-fill-secondaryHover bg-fill-secondary text-foreground-white": variant === "primary",
         },
         { "cursor-not-allowed opacity-70": disabled },
         className,
