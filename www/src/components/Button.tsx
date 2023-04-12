@@ -49,11 +49,11 @@ export const Button = ({
           "bg-transparent text-button": variant === "ghost",
         },
         {
-          "bg-button-danger hover:bg-button-danger/90 text-white":
+          "bg-button-danger hover:bg-button-danger/90 text-foreground-white":
             variant === "danger",
         },
         {
-          "bg-button-secondary hover:bg-button-secondary/90 text-button-secondary-text":
+          "bg-button-secondary hover:bg-fill-secondary text-foreground-white":
             variant === "secondary",
         },
         {
