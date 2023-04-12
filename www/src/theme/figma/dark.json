@@ -181,7 +181,38 @@
         "type": "color"
       }
     },
-    "text-and-icons": {
+    "border": {
+      "contrast": {
+        "value": "{colors.p-gray.800}",
+        "type": "color",
+        "description": "\n\n"
+      },
+      "dimmed": {
+        "value": "{colors.p-black-transparent.500}",
+        "type": "color"
+      },
+      "primary": {
+        "value": "{colors.p-pink.500}",
+        "type": "color"
+      },
+      "danger": {
+        "value": "{colors.p-red.500}",
+        "type": "color"
+      },
+      "hint": {
+        "value": "{colors.p-gray.400}",
+        "type": "color"
+      },
+      "disabled": {
+        "value": "{colors.p-black-transparent.200}",
+        "type": "color"
+      },
+      "focus": {
+        "value": "{colors.p-gray.800}",
+        "type": "color"
+      }
+    },
+    "foreground": {
       "contrast": {
         "value": "{colors.white}",
         "type": "color",
@@ -222,20 +253,6 @@
         "description": "Use to emphasize actions - eg. filters selected"
       }
     },
-    "interactive": {
-      "hover": {
-        "value": "{colors.p-black-transparent.50}",
-        "type": "color"
-      },
-      "pressed": {
-        "value": "{colors.p-black-transparent.50}",
-        "type": "color"
-      },
-      "hover-transparent-background": {
-        "value": "{colors.p-white-transparent.100}",
-        "type": "color"
-      }
-    },
     "accent": {
       "cyan": {
         "value": "#00D0FF",
@@ -248,12 +265,6 @@
       "lime": {
         "value": "#D3FF33",
         "type": "color"
-      },
-      "colors": {
-        "p-pink": {
-          "value": "{colors.p-pink.300}",
-          "type": "color"
-        }
       }
     }
   }
