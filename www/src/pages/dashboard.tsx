@@ -11,7 +11,7 @@ export function Dashboard() {
     <Page>
       <CenteredCard>
         <div className="flex flex-col gap-6 divide-y divide-divider">
-          <h2 className="text-h4 text-textAndIcons-contrast font-sans font-medium">Create a multisig</h2>
+          <h2 className="text-h4 text-textAndIcons-contrast font-sans font-bold">Create a multisig</h2>
           <div className="">
             <div className="mt-32 flex justify-center">
               <Link to="/create-multisig">

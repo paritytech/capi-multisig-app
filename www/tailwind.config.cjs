@@ -37,37 +37,29 @@ module.exports = {
           white: "var(--colors-fill-white)",
       "impress_1": "var(--colors-fill-impress-1)"
         },
-        textAndIcons: {
-          contrast: "var(--colors-text-and-icons-contrast)",
-          dimmed: "var(--colors-text-and-icons-dimmed)",
-          matchBackground: "var(--colors-text-and-icons-match-background)",
-          primary: "var(--colors-text-and-icons-primary)",
-          white: "var(--colors-text-and-icons-white)",
-          disabled: "var(--colors-text-and-icons-disabled)",
-          danger: "var(--colors-text-and-icons-danger)",
-          emphasized: "var(--colors-text-and-icons-emphasized)"
+        border: {
+          contrast: "var(--colors-border-contrast)",
+          dimmed: "var(--colors-border-dimmed)",
+          primary: "var(--colors-border-primary)",
+          danger: "var(--colors-border-danger)",
+          hint: "var(--colors-border-hint)",
+          disabled: "var(--colors-border-disabled)",
+          focus: "var(--colors-border-focus)"
         },
-        interactive: {
-          hover: "var(--colors-interactive-hover)",
-          pressed: "var(--colors-interactive-pressed)",
-          hoverTransparentBackground: "var(--colors-interactive-hover-transparent-background)"
+        foreground: {
+          contrast: "var(--colors-foreground-contrast)",
+          dimmed: "var(--colors-foreground-dimmed)",
+          matchBackground: "var(--colors-foreground-match-background)",
+          primary: "var(--colors-foreground-primary)",
+          white: "var(--colors-foreground-white)",
+          disabled: "var(--colors-foreground-disabled)",
+          danger: "var(--colors-foreground-danger)",
+          emphasized: "var(--colors-foreground-emphasized)"
         },
         accent: {
           cyan: "var(--colors-accent-cyan)",
           green: "var(--colors-accent-green)",
-          lime: "var(--colors-accent-lime)",
-          colors: {
-            pPink: "var(--colors-accent-colors-p-pink)"
-          }
-        },
-        stroke: {
-          contrast: "var(--colors-stroke-contrast)",
-          dimmed: "var(--colors-stroke-dimmed)",
-          primary: "var(--colors-stroke-primary)",
-          danger: "var(--colors-stroke-danger)",
-          hint: "var(--colors-stroke-hint)",
-          disabled: "var(--colors-stroke-disabled)",
-          focus: "var(--colors-stroke-focus)"
+          lime: "var(--colors-accent-lime)"
         },
         black: "var(--colors-black)",
         white: "var(--colors-white)",
@@ -163,7 +155,6 @@ module.exports = {
           950: "var(--colors-p-purple-950)"
         }
       },
-      number: "var(--number)",
       fontFamily: {
         unbounded: "var(--font-family-unbounded)",
         inter: "var(--font-family-inter)",
