@@ -1,8 +1,4 @@
 {
-  "number": {
-    "value": "95",
-    "type": "spacing"
-  },
   "fontFamily": {
     "unbounded": {
       "value": "Unbounded",
