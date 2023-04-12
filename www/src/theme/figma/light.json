@@ -176,7 +176,7 @@
         "type": "color"
       }
     },
-    "stroke": {
+    "border": {
       "contrast": {
         "value": "{colors.p-gray.800}",
         "type": "color",
@@ -207,7 +207,7 @@
         "type": "color"
       }
     },
-    "text-and-icons": {
+    "foreground": {
       "contrast": {
         "value": "{colors.p-gray.800}",
         "type": "color"
@@ -241,20 +241,6 @@
         "type": "color"
       }
     },
-    "interactive": {
-      "hover": {
-        "value": "{colors.p-white-transparent.100}",
-        "type": "color"
-      },
-      "pressed": {
-        "value": "{colors.p-black-transparent.50}",
-        "type": "color"
-      },
-      "hover-transparent-background": {
-        "value": "{colors.p-white-transparent.500}",
-        "type": "color"
-      }
-    },
     "accent": {
       "cyan": {
         "value": "#00D0FF",
@@ -267,12 +253,6 @@
       "lime": {
         "value": "#D3FF33",
         "type": "color"
-      },
-      "colors": {
-        "p-pink": {
-          "value": "{colors.p-pink.300}",
-          "type": "color"
-        }
       }
     }
   }
