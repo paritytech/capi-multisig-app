@@ -49,15 +49,15 @@ export const Button = ({
           "bg-transparent text-button": variant === "ghost",
         },
         {
-          "bg-button-danger hover:bg-button-danger/90 text-white":
+          "bg-button-danger hover:bg-button-danger/90 text-foreground-white":
             variant === "danger",
         },
         {
-          "bg-button-secondary hover:bg-button-secondary/90 text-button-secondary-text":
+          "bg-button-secondary hover:bg-fill-secondary text-foreground-white":
             variant === "secondary",
         },
         {
-          "bg-button hover:bg-button/90 text-white": variant === "primary",
+          "hover:bg-fill-secondaryHover bg-fill-secondary text-foreground-white": variant === "primary",
         },
         { "cursor-not-allowed opacity-70": disabled },
         className,

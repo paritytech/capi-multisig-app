@@ -73,6 +73,7 @@
       },
       "primary-down": {
         "value": "{colors.fill.primary}",
+
         "type": "color",
         "$extensions": {
           "studio.tokens": {
