@@ -1,0 +1,37 @@
+name: Process Figma Tokens PR
+
+on: pull_request
+
+jobs:
+  run_if: # only if base branch is "figma-tokens"
+    if: ${{ github.head_ref == 'tokens-from-figma' }}
+    name: Process Figma Tokens
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # checkout to the head of this PR
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.2
+
+      - name: Install Dependencies
+        run: pnpm i style-dictionary --filter www
+
+      - name: Build css using Style Dictionary
+        run: |
+          cd www
+          node sd.config.cjs
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Donnie
+          author_email: pelicansinberlin@gmail.com
+          message: "chore: style-dictionary output"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          add: "."
