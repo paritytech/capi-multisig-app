@@ -4,7 +4,7 @@ name: Create Tokens Studio for Figma PR
 on:
   push:
     branches:
-      - tokens-from-figma
+      - figma-tokens
 
 jobs:
   pull-request:
