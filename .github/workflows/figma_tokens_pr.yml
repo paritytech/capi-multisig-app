@@ -23,7 +23,9 @@ jobs:
         run: pnpm i style-dictionary --filter www
 
       - name: Build css using Style Dictionary
-        run: node www/sd.config.cjs
+        run: |
+          cd www
+          node sd.config.cjs
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
