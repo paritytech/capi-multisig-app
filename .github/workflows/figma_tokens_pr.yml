@@ -20,13 +20,13 @@ jobs:
           version: 6.0.2
 
       - name: Install Style Dictionary
-        run: pnpm i style-dictionary --workspace:www
+        run: pnpm -C www i style-dictionary
 
       - name: Install SD Transforms
-        run: pnpm i @tokens-studio/sd-transforms --workspace:www
+        run: pnpm -C www i @tokens-studio/sd-transforms
 
       - name: Install Tailwind Transformer
-        run: pnpm i https://github.com/dnlklmn/style-dictionary-tailwindcss-transformer --workspace:www
+        run: pnpm -C www i https://github.com/dnlklmn/style-dictionary-tailwindcss-transformer
 
       - name: Build css using Style Dictionary
         run: node www/sd.config.cjs
