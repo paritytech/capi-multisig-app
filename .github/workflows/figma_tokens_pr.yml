@@ -19,11 +19,11 @@ jobs:
         with:
           version: 6.0.2
 
-      - name: Install Style Dictionary
-        run: pnpm i style-dictionary --filter www
-
       - name: Install SD Transforms
         run: pnpm i @tokens-studio/sd-transforms --filter www
+
+      - name: Install Style Dictionary
+        run: pnpm i style-dictionary --filter www
 
       - name: Install Tailwind Transformer
         run: pnpm i https://github.com/dnlklmn/style-dictionary-tailwindcss-transformer --filter www
