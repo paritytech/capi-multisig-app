@@ -16,7 +16,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Build css using Style Dictionary
-        run: node sd.config.cjs
+        run: node www/sd.config.cjs
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
