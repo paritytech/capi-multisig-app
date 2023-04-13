@@ -15,6 +15,9 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
+      - name: Install dependencies
+        run: pnpm i
+
       - name: Build css using Style Dictionary
         run: node www/sd.config.cjs
 
