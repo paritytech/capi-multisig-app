@@ -18,12 +18,9 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 6.0.2
-
-      - name: Go to Folder
-        run: cd www
-
-      - name: Install dependencies
-        run: pnpm i
+          run_install: |
+            - recursive: true
+            - args: [--global, style-dictionary, @tokens-studio/sd-transforms, github:dnlklmn/style-dictionary-tailwindcss-transformer]
 
       - name: Build css using Style Dictionary
         run: node sd.config.cjs
