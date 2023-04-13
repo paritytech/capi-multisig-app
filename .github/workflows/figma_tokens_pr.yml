@@ -18,21 +18,10 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 6.0.2
-
-      - name: Install Style Dictionary
-        run: |
-          cd www
-          pnpm i style-dictionary
-
-      - name: Install SD Transforms
-        run: |
-          cd www
-          pnpm i @tokens-studio/sd-transforms
-
-      - name: Install Tailwind Transformer
-        run: |
-          cd www
-          pnpm i https://github.com/dnlklmn/style-dictionary-tailwindcss-transformer
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+            - args: [style-dictionary, '@tokens-studio/sd-transforms']
 
       - name: Build css using Style Dictionary
         run: node www/sd.config.cjs
