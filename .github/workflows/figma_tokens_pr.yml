@@ -20,7 +20,7 @@ jobs:
           version: 6.0.2
 
       - name: Install Dependencies
-        run: pnpm i --filter www
+        run: pnpm i
 
       - name: Build css using Style Dictionary
         run: node www/sd.config.cjs
