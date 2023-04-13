@@ -19,7 +19,7 @@ jobs:
         run: cd www
 
       - name: Install dependencies
-        run: pnpm i
+        run: npm i
 
       - name: Build css using Style Dictionary
         run: node sd.config.cjs
