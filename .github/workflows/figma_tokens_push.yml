@@ -18,4 +18,4 @@ jobs:
           destination_branch: "d-tokens" # match your default branch
           pr_title: "Figma Tokens Update"
           pr_body: "Design Tokens were updated in Figma. This PR contains the updated Tailwind config and CSS variables."
-          github_token: ${{ secrets.GH_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
