@@ -1,0 +1,21 @@
+name: Create Tokens Studio for Figma PR
+
+# match the branch you put in your Tokens Studio for Figma sync credentials in the next step
+on:
+  push:
+    branches:
+      - tokens-from-figma
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "d-tokens" # match your default branch
+          pr_title: "Figma Tokens Update"
+          pr_body: "Design Tokens were updated in Figma. This PR contains the updated Tailwind config and CSS variables."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
