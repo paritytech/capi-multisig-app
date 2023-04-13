@@ -19,20 +19,17 @@ jobs:
         with:
           version: 6.0.2
 
-      - name: Go to Folder
-        run: cd www
-
       - name: Install Style Dictionary
-        run: pnpm i style-dictionary
+        run: pnpm i style-dictionary --workspace:www
 
       - name: Install SD Transforms
-        run: pnpm i @tokens-studio/sd-transforms
+        run: pnpm i @tokens-studio/sd-transforms --workspace:www
 
       - name: Install Tailwind Transformer
-        run: pnpm i https://github.com/dnlklmn/style-dictionary-tailwindcss-transformer
+        run: pnpm i https://github.com/dnlklmn/style-dictionary-tailwindcss-transformer --workspace:www
 
       - name: Build css using Style Dictionary
-        run: node sd.config.cjs
+        run: node www/sd.config.cjs
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
