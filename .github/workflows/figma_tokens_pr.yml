@@ -15,9 +15,6 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Install pnpm
-        run: npm install pnpm -w www
-
       - name: Install dependencies
         run: pnpm install
 
