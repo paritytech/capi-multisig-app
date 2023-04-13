@@ -15,14 +15,11 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Find folder
-        run: cd www
-
       - name: Install dependencies
-        run: npm i
+        run: pnpm install
 
       - name: Build css using Style Dictionary
-        run: node sd.config.cjs
+        run: node www/sd.config.cjs
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
