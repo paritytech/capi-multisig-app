@@ -73,7 +73,6 @@
       },
       "primary-down": {
         "value": "{colors.fill.primary}",
-
         "type": "color",
         "$extensions": {
           "studio.tokens": {
@@ -253,6 +252,10 @@
       },
       "lime": {
         "value": "#D3FF33",
+        "type": "color"
+      },
+      "random": {
+        "value": "#abcabc",
         "type": "color"
       }
     }
