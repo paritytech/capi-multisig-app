@@ -59,7 +59,7 @@ pnpm run build
 - [Wiki PureProxies](https://wiki.polkadot.network/docs/learn-proxies#anonymous-proxy-pure-proxy)
 
 
-# Design Tokens from Figmga
+# Design Tokens from Figma
 
 The theme at ```www/src/theme/``` contains the theme generated from design tokens exported from Figma.
 
