@@ -4,6 +4,9 @@ import polkadotLogo from "../../assets/polkadot.svg"
 import { IconMenuMultisig } from "../../components/icons/IconMenuMultisig.js"
 import { Notifications } from "../../components/Notifications.js"
 import { TopBar } from "../../components/TopBar.js"
+import '../../theme/global.css'
+import '../../theme/light.css'
+import '../../theme/dark.css'
 
 type Props = {
   children: ComponentChildren
@@ -39,7 +42,7 @@ export function Page({ children }: Props) {
     <div className="min-h-full flex w-full font-inter">
       <Notifications />
       <Sidebar />
-      <div className="bg-gray-100 w-full">
+      <div className="w-full bg-background-default">
         <TopBar />
         {children}
       </div>

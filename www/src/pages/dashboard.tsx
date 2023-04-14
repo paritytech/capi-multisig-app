@@ -6,12 +6,13 @@ import { IconPlus } from "../components/icons/IconPlus.js"
 import { defaultAccount } from "../signals/accounts.js"
 import { Page } from "./templates/base.js"
 
+
 export function Dashboard() {
   return (
     <Page>
       <CenteredCard>
         <div className="flex flex-col gap-6 divide-y divide-divider">
-          <h2 className="text-h4 text-textAndIcons-contrast font-sans font-bold">Create a multisig</h2>
+          <h2 className="text-h4 text-foreground-contrast font-sans font-bold">Create a multisig</h2>
           <div className="">
             <div className="mt-32 flex justify-center">
               <Link to="/create-multisig">

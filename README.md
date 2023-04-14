@@ -57,3 +57,24 @@ pnpm run build
 
 - [Wiki Multisig](https://wiki.polkadot.network/docs/learn-account-multisig)
 - [Wiki PureProxies](https://wiki.polkadot.network/docs/learn-proxies#anonymous-proxy-pure-proxy)
+
+
+# Design Tokens from Figmga
+
+The theme at ```www/src/theme/``` contains the theme generated from design tokens exported from Figma.
+
+Tokens get pushed to ```tokens-from-figma``` branch from Figma, then get transformed to CSS variables and a tailwind config file with the tokens set up as variables, making them available as an extension of the default tailwind theme.
+
+### Tokens API
+
+global
+* typography: fontFamily, fontWeight, lineHeight, etc.
+* colors: entire range of usable colors (eg. shades of pink)
+
+colors (light/dark)
+* background - for full width and/or height app backgrounds
+* fill - for UI elements (eg. buttons)
+* border - for UI elements, and separation lines
+* foreground - for text, icons, etc.
+
+* box shadow
