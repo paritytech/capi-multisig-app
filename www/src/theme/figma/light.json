@@ -72,7 +72,8 @@
         }
       },
       "primary-down": {
-        "value": "{colors.p-pink.500}",
+        "value": "{colors.fill.primary}",
+
         "type": "color",
         "$extensions": {
           "studio.tokens": {
