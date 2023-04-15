@@ -81,7 +81,7 @@
         }
       },
       "secondary": {
-        "value": "{colors.p-purple.300}",
+        "value": "{colors.p-purple.100}",
         "type": "color"
       },
       "secondary-hover": {
