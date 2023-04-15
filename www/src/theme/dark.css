@@ -2,6 +2,7 @@
   --colors-background-default: #140523;
   --colors-background-system: #101015;
   --colors-background-layer-1: #321d47;
+  --colors-background-float: #28123e;
   --colors-fill-primary: #e6007a;
   --colors-fill-primary-hover: color(display-p3 0.74 0.16 0.43);
   --colors-fill-primary-down: color(display-p3 0.7 0.15 0.4);
@@ -20,7 +21,6 @@
   --colors-fill-overlay: #ffffff94;
   --colors-fill-selected: #e6eaf6;
   --colors-fill-white: #ffffff;
-  --colors-fill-impress-1: #00000008;
   --colors-border-contrast: #201f37;
   --colors-border-dimmed: #00000070;
   --colors-border-primary: #e6007a;
