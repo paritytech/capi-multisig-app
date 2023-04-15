@@ -35,7 +35,8 @@ module.exports = {
       "elevate_1": "var(--colors-fill-elevate-1)",
           overlay: "var(--colors-fill-overlay)",
           selected: "var(--colors-fill-selected)",
-          white: "var(--colors-fill-white)"
+          white: "var(--colors-fill-white)",
+          separator: "var(--colors-fill-separator)"
         },
         border: {
           contrast: "var(--colors-border-contrast)",
