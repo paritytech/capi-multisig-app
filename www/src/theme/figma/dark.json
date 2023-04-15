@@ -44,12 +44,8 @@
         "value": "#101015",
         "type": "color"
       },
-      "layer+1": {
-        "value": "{colors.p-purple.700}",
-        "type": "color"
-      },
       "float": {
-        "value": "{colors.p-purple.800}",
+        "value": "{colors.p-purple.700}",
         "type": "color"
       }
     },
