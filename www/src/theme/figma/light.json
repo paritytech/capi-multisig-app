@@ -13,12 +13,12 @@
     },
     "idle": {
       "value": {
-        "color": "#00000014",
-        "type": "dropShadow",
         "x": "0",
-        "y": "4",
-        "blur": "16",
-        "spread": "0"
+        "y": "2",
+        "blur": "4",
+        "spread": "0",
+        "color": "#00000014",
+        "type": "dropShadow"
       },
       "type": "boxShadow"
     },
@@ -173,6 +173,10 @@
       },
       "white": {
         "value": "{colors.white}",
+        "type": "color"
+      },
+      "separator": {
+        "value": "{colors.p-black-transparent.200}",
         "type": "color"
       }
     },

@@ -22,6 +22,7 @@
   --colors-fill-overlay: #ffffff94;
   --colors-fill-selected: #e6eaf6;
   --colors-fill-white: #ffffff;
+  --colors-fill-separator: #00000029;
   --colors-border-contrast: #201f37;
   --colors-border-dimmed: #00000070;
   --colors-border-primary: #e6007a;
@@ -42,6 +43,6 @@
   --colors-accent-lime: #D3FF33;
   --colors-accent-random: #aaaaaa;
   --box-shadow-pop: 0 8px 24px 0 #00000030;
-  --box-shadow-idle: 0 4px 16px 0 #00000014;
+  --box-shadow-idle: 0 2px 4px 0 #00000014;
   --box-shadow-hover: 0 8px 8px 0 #00000008;
 }
