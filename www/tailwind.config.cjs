@@ -14,7 +14,8 @@ module.exports = {
         background: {
           default: "var(--colors-background-default)",
           system: "var(--colors-background-system)",
-      "layer_1": "var(--colors-background-layer-1)"
+      "layer_1": "var(--colors-background-layer-1)",
+          float: "var(--colors-background-float)"
         },
         fill: {
           primary: "var(--colors-fill-primary)",
@@ -34,8 +35,7 @@ module.exports = {
       "elevate_1": "var(--colors-fill-elevate-1)",
           overlay: "var(--colors-fill-overlay)",
           selected: "var(--colors-fill-selected)",
-          white: "var(--colors-fill-white)",
-      "impress_1": "var(--colors-fill-impress-1)"
+          white: "var(--colors-fill-white)"
         },
         border: {
           contrast: "var(--colors-border-contrast)",
