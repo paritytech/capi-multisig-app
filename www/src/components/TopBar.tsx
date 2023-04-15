@@ -2,20 +2,8 @@ import { accounts, defaultAccount } from "../signals/index.js"
 import { AccountSelect } from "./AccountSelect.js"
 import { Tabs } from "./Tabs.js"
 import type { Tab } from "./Tabs.js"
+import ThemeSwitchToggle from "./ThemeSwitchToggle.js"
 
-function setTheme(themeName: string) {
-  localStorage.setItem("data-theme", themeName);
-  document.documentElement.setAttribute("data-theme", themeName);
-}
-
-(function () {
-  if (localStorage.getItem("data-theme") === "dark") {
-    setTheme("dark");
-  } else {
-    setTheme("light");
-  }
-  console.log(localStorage.getItem("data-theme"))
-})();
 
 const tabs: Tab[] = [
   { name: "Dashboard", href: "/" },
@@ -24,14 +12,6 @@ const tabs: Tab[] = [
 
 export function TopBar() {
 
-  const toggleOn = () => {
-    let theme = localStorage.getItem("data-theme");
-    if (theme === "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
-  };
 
   return (
     <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-white border-b border-border">
@@ -40,7 +20,7 @@ export function TopBar() {
         <div className="py-2 px-7 bg-menu-bg text-textAndIcons-primary rounded-full">
           Soon
         </div>
-        <button className='bg-fill-secondary px-4 py-2 text-foreground-matchBackground rounded-full text-body_2 font-medium' onClick={toggleOn} >Change theme</button>
+        <ThemeSwitchToggle />
       </div>
 
       <div className="w-60 my-2">
