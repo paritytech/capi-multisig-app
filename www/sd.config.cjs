@@ -1,5 +1,5 @@
 const StyleDictionaryModule = require('style-dictionary')
-const { makeSdTailwindConfig } = require('sd-tailwindcss-transformer')
+const { makeSdTailwindConfig } = require('sd-tw-transformer')
 // const StyleDictionaryPackage = require("style-dictionary");
 const { registerTransforms } = require("@tokens-studio/sd-transforms");
 const StyleDictionary = require("style-dictionary");
