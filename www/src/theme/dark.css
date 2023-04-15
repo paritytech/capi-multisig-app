@@ -5,9 +5,9 @@
   --colors-fill-primary: #e6007a;
   --colors-fill-primary-hover: color(display-p3 0.74 0.16 0.43);
   --colors-fill-primary-down: color(display-p3 0.7 0.15 0.4);
-  --colors-fill-secondary: #dae0f2;
-  --colors-fill-secondary-hover: color(display-p3 0.87 0.88 0.95);
-  --colors-fill-secondary-down: #dae0f2;
+  --colors-fill-secondary: #f3f5fb;
+  --colors-fill-secondary-hover: color(display-p3 0.96 0.96 0.98);
+  --colors-fill-secondary-down: #f3f5fb;
   --colors-fill-ghost: #321d47;
   --colors-fill-ghost-hover: color(display-p3 0.17 0.11 0.24);
   --colors-fill-ghost-down: #321d47;
