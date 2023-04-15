@@ -47,6 +47,10 @@
       "layer+1": {
         "value": "{colors.p-purple.700}",
         "type": "color"
+      },
+      "float": {
+        "value": "{colors.p-purple.800}",
+        "type": "color"
       }
     },
     "fill": {
@@ -174,10 +178,6 @@
       },
       "white": {
         "value": "{colors.white}",
-        "type": "color"
-      },
-      "impress-1": {
-        "value": "{colors.p-black-transparent.50}",
         "type": "color"
       }
     },
