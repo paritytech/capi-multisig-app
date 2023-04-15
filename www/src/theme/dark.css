@@ -20,11 +20,12 @@
   --colors-fill-overlay: #ffffff94;
   --colors-fill-selected: #e6eaf6;
   --colors-fill-white: #ffffff;
+  --colors-fill-separator: #ffffff2b;
   --colors-border-contrast: #201f37;
   --colors-border-dimmed: #00000070;
   --colors-border-primary: #e6007a;
   --colors-border-danger: #e31902;
-  --colors-border-hint: #9d9caf;
+  --colors-border-hint: #ffffff2b;
   --colors-border-disabled: #00000029;
   --colors-border-focus: #201f37;
   --colors-foreground-contrast: #ffffff;
@@ -40,6 +41,6 @@
   --colors-accent-lime: #D3FF33;
   --colors-accent-random: #abcabc;
   --box-shadow-pop: 0 8px 24px 0 #00000030;
-  --box-shadow-idle: 0 4px 16px 0 #00000014;
+  --box-shadow-idle: 0 2px 4px 0 rgba(0,0,0,0.85);
   --box-shadow-hover: 0 8px 8px 0 #00000008;
 }
