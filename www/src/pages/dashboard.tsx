@@ -11,10 +11,11 @@ export function Dashboard() {
   return (
     <Page>
       <CenteredCard>
-        <div className="flex flex-col gap-6 divide-y divide-divider">
-          <h2 className="text-h4 text-foreground-contrast font-sans font-bold">Create a multisig</h2>
+        <div className="flex flex-col gap-6 text-foreground-contrast">
+          <h2 className="text-h4 font-inter font-semibold">Create a multisig</h2>
+          <div className="h-[1px] bg-fill-separator"/>
           <div className="">
-            <div className="mt-32 flex justify-center">
+            <div className="my-24 flex justify-center">
               <Link to="/create-multisig">
                 <Button
                   iconLeft={<IconPlus className="w-6 h-6" />}
@@ -24,11 +25,7 @@ export function Dashboard() {
                 </Button>
               </Link>
             </div>
-            <div className="mt-14 flex flex-wrap gap-2 items-center">
-              <p className="leading-8">Create a Multisig with address</p>
-              <AccountId account={defaultAccount.value} />
-            </div>
-            <p className="leading-8">
+            <p className="text-body font-inter">
               Multi-signature wallets require authorization of transactions
               through multiple keys.&nbsp;
               <a
