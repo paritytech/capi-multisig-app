@@ -14,8 +14,8 @@ module.exports = {
         background: {
           default: "var(--colors-background-default)",
           system: "var(--colors-background-system)",
-      "layer_1": "var(--colors-background-layer-1)",
-          float: "var(--colors-background-float)"
+          float: "var(--colors-background-float)",
+      "layer_1": "var(--colors-background-layer-1)"
         },
         fill: {
           primary: "var(--colors-fill-primary)",
