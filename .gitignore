@@ -18,3 +18,5 @@ dist-ssr
 
 .env
 tsconfig.tsbuildinfo
+
+.netlify

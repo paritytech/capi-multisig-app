@@ -14,9 +14,16 @@ export const client = DynamoDBDocument.from(
   new DynamoDBClient({
     region: "us-east-1",
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+      accessKeyId: process.env.NODE_ENV !== "production"
+        ? "accessKey"
+        : process.env.AWS_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.NODE_ENV !== "production"
+        ? "secretKey"
+        : process.env.AWS_SECRET_ACCESS_KEY!,
     },
+    endpoint: process.env.NODE_ENV !== "production"
+      ? "http://localhost:8000"
+      : undefined,
   }),
 ) as unknown as TypeSafeDocumentClientV3<Model, "id">
 

@@ -1,24 +1,17 @@
+import * as $ from "scale-codec"
 export type Model = Setup | Account
 
-export interface Setup {
-  type: "setup"
-  /** The stash accountId */
-  id: string
-  /** The genesis hash of the setup's network */
-  genesisHash: string
-  /** A human-readable name for the setup */
-  name: string
-  /** member accountIds */
-  members: [user: string, proxy?: string][]
-  /** The number of signatories a proposal need in order to be executed */
-  threshold: number
-  /** The underlying multisig accountId */
-  multisig: string
-  /** The underlying pure proxy accountId */
-  stash: string
-  /** Previous actions of the setup */
-  history: HistoryItem[]
+export interface Approvals {
+  /** The block at which the approval was finalized */
+  blockHash: string
+  /** The accountId of the voting user */
+  member: string
 }
+
+export const $approvals: $.Codec<Approvals> = $.object(
+  $.field("blockHash", $.str),
+  $.field("member", $.str),
+)
 
 export interface HistoryItem {
   /** The scale-encoded call data */
@@ -31,12 +24,44 @@ export interface HistoryItem {
   cancelled?: string
 }
 
-export interface Approvals {
-  /** The block at which the approval was finalized */
-  blockHash: string
-  /** The accountId of the voting user */
-  member: string
+export const $historyItem: $.Codec<HistoryItem> = $.object(
+  $.field("callData", $.str),
+  $.field("timePoint", $.tuple($.u32, $.u32)),
+  $.field("approvals", $.array($approvals)),
+  $.optionalField("cancelled", $.str),
+)
+
+export interface Setup {
+  type: "setup"
+  /** The stash accountId */
+  id: string
+  /** The genesis hash of the setup's network */
+  genesisHash: string
+  /** A human-readable name for the setup */
+  name: string
+  /** member accountIds */
+  members: [user: string, proxy: string][]
+  /** The number of signatories a proposal need in order to be executed */
+  threshold: number
+  /** The underlying multisig accountId */
+  multisig: string
+  /** The underlying pure proxy accountId */
+  stash: string
+  /** Previous actions of the setup */
+  history: HistoryItem[]
 }
+
+export const $setup: $.Codec<Setup> = $.object(
+  $.field("type", $.constant<"setup">("setup", $.str)),
+  $.field("id", $.str),
+  $.field("genesisHash", $.str),
+  $.field("name", $.str),
+  $.field("members", $.array($.tuple($.str, $.str))),
+  $.field("threshold", $.u32),
+  $.field("multisig", $.str),
+  $.field("stash", $.str),
+  $.field("history", $.array($historyItem)),
+)
 
 export interface Account {
   type: "account"

@@ -5,10 +5,8 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.288.0",
     "@aws-sdk/lib-dynamodb": "^3.288.0",
-    "@trpc/server": "^10.14.1",
     "common": "workspace:../common",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
     "nodemon": "^2.0.21",
     "typesafe-dynamodb": "^0.2.3"
   },
