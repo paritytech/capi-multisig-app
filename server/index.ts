@@ -1,4 +1,3 @@
-import { CreateTableCommand } from "@aws-sdk/client-dynamodb"
 import { chain } from "@capi/westend"
 import { initTRPC } from "@trpc/server"
 import Alby from "ably"
