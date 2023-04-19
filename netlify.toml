@@ -1,4 +1,10 @@
+[build]
+base = "www/"
+
 [[redirects]]
 from = "/*"
 status = 200
 to = "/index.html"
+
+[functions]
+node_bundler = "esbuild"

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@capi/westend':
+        specifier: https://capi.dev/@v0.1.0-beta.35/b6404bc69a8e5567/westend.tar
+        version: '@capi.dev/@v0.1.0-beta.35/b6404bc69a8e5567/westend.tar(capi@0.1.0-beta.35)'
       '@headlessui/react':
         specifier: ^1.7.11
         version: 1.7.13(react-dom@18.2.0)(react@18.2.0)
@@ -23,6 +26,9 @@ importers:
       ably:
         specifier: ^1.2.38
         version: 1.2.38
+      capi:
+        specifier: 0.1.0-beta.35
+        version: 0.1.0-beta.35
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
@@ -84,9 +90,6 @@ importers:
 
   www:
     dependencies:
-      '@capi/westend':
-        specifier: https://capi.dev/@v0.1.0-beta.35/b6404bc69a8e5567/westend.tar
-        version: '@capi.dev/@v0.1.0-beta.35/b6404bc69a8e5567/westend.tar(capi@0.1.0-beta.35)'
       '@headlessui/react':
         specifier: ^1.7.11
         version: 1.7.13(react-dom@18.2.0)(react@18.2.0)
@@ -111,9 +114,6 @@ importers:
       '@trpc/react-query':
         specifier: ^10.20.0
         version: 10.20.0(@tanstack/react-query@4.29.3)(@trpc/client@10.20.0)(@trpc/server@10.20.0)(react-dom@18.2.0)(react@18.2.0)
-      capi:
-        specifier: 0.1.0-beta.35
-        version: 0.1.0-beta.35
       common:
         specifier: workspace:../common
         version: link:../common

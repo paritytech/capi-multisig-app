@@ -3,8 +3,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "capi": "0.1.0-beta.35",
-    "@capi/westend": "https://capi.dev/@v0.1.0-beta.35/b6404bc69a8e5567/westend.tar",
     "@aws-sdk/client-dynamodb": "^3.288.0",
     "@aws-sdk/lib-dynamodb": "^3.288.0",
     "common": "workspace:../common",
