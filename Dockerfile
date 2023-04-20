@@ -2,13 +2,17 @@ FROM node:18
 
 RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 
-COPY package.json pnpm-lock.yaml ./
+WORKDIR /capi-mutlisig-app
 
-RUN pnpm install --frozen-lockfile --prod
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml /capi-mutlisig-app/
+COPY www/package.json /capi-mutlisig-app/www/package.json
+COPY server/package.json /capi-mutlisig-app/server/package.json
+COPY common/package.json /capi-mutlisig-app/common/package.json
 
-COPY . .
+RUN pnpm install
 
-RUN npm install -g typescript
+COPY . /capi-mutlisig-app/
+
 RUN pnpm run build:server
 
 EXPOSE 5000
