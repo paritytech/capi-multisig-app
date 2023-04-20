@@ -4,7 +4,7 @@ import * as dotenv from "dotenv"
 
 dotenv.config()
 
-export async function handler(event: HandlerEvent, context: HandlerContext) {
+export async function handler(event: HandlerEvent, _context: HandlerContext) {
   if (!process.env.ABLY_API_KEY) {
     return {
       statusCode: 500,

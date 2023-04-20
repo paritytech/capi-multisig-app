@@ -1,6 +1,6 @@
 import { chain } from "@capi/westend"
 import { initTRPC } from "@trpc/server"
-import Alby from "ably"
+/* import Alby from "ably" */
 import { SignedExtrinsicRune } from "capi"
 import * as $ from "scale-codec"
 import { TypeSafeGetDocumentCommand } from "typesafe-dynamodb/lib/get-document-command.js"
@@ -8,10 +8,11 @@ import { TypeSafePutDocumentCommand } from "typesafe-dynamodb/lib/put-document-c
 import { client as ddbClient, TableName } from "./db.js"
 import { $setup, Model } from "./models.js"
 const t = initTRPC.create()
-const alby = new Alby.Realtime.Promise({ key: process.env.ABLY_API_KEY })
+/* const alby = new Alby.Realtime.Promise({ key: process.env.ABLY_API_KEY }) */
 
 export type router = typeof router
 export const router = t.router({
+  hello: t.procedure.query(() => "hello world"),
   something: t.procedure
     .input($.object(
       $.field("greeting", $.str),
@@ -32,12 +33,12 @@ export const router = t.router({
         }),
       )
 
-      console.log(
+      /*       console.log(
         "result",
         await alby.channels.get("events").publish("setupPut", {
           message: input.id,
         }),
-      )
+      ) */
     }),
   setupGet: t.procedure.input($.object($.field("id", $.str))).query(
     async ({ input }) => {
@@ -61,7 +62,7 @@ export const router = t.router({
         .finalized()
         .run()
     }),
-  notifyMultisigWatchers: t.procedure.input($.object(
+  /*   notifyMultisigWatchers: t.procedure.input($.object(
     $.field("multisigHash", $.str),
     $.field("callHash", $.str),
   )).mutation(async ({ input }) => {
@@ -69,5 +70,5 @@ export const router = t.router({
       "callHash",
       input.callHash,
     )
-  }),
+  }), */
 })

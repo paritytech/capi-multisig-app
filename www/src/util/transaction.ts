@@ -1,5 +1,4 @@
-import { Balances } from "@capi/westend"
-import { MultiAddress } from "@capi/westend/types/sp_runtime/multiaddress.js"
+import { Balances, MultiAddress } from "@capi/westend"
 import { ss58 } from "capi"
 import { isValidAddress } from "./address.js"
 
