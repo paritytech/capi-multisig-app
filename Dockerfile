@@ -8,6 +8,7 @@ RUN pnpm install --frozen-lockfile --prod
 
 COPY . .
 
+RUN npm install -g typescript
 RUN pnpm run build:server
 
 EXPOSE 5000
