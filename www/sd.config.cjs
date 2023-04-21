@@ -15,7 +15,7 @@ const sdConfig = makeSdTailwindConfig({
     content: [
       "./src/**/*.{js,ts,jsx,tsx}"
     ],
-    plugins: ['forms', 'line-clamp']
+    plugins: ['forms']
   }
 })
 
