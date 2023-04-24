@@ -44,10 +44,6 @@
         "value": "{colors.p-gray.50}",
         "type": "color"
       },
-      "layer+1": {
-        "value": "{colors.p-white-transparent.500}",
-        "type": "color"
-      },
       "layer-1": {
         "value": "{colors.p-purple.200}",
         "type": "color"
@@ -259,7 +255,7 @@
         "type": "color"
       },
       "random": {
-        "value": "#aaaaab",
+        "value": "#aaaaac",
         "type": "color"
       }
     }
