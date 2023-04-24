@@ -37,15 +37,16 @@ export const AccountSelect = forwardRef((
         <div className="relative w-full">
           <Listbox.Button
             className={clsx(
-              "h-12 w-full flex items-center gap-2 p-3 cursor-default",
-              "rounded-lg bg-jaguar text-select-text border border-select-border ",
+              "h-12 w-full flex items-center gap-2 py-0 px-2 cursor-pointer",
+              "rounded-full bg-fill-secondary select-none text-body2 text-foreground-matchBackground border border-select-border ",
+              "hover:bg-fill-secondaryHover",
               "focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700",
             )}
           >
             {value && value.name
               ? (
                 <>
-                  <Identicon value={value.address} size={24} />
+                  <Identicon value={value.address} size={20} />
                   <span className="font-semibold overflow-hidden text-ellipsis">
                     {shortAccountName(value.name)}
                   </span>
@@ -75,8 +76,8 @@ export const AccountSelect = forwardRef((
             <Listbox.Options
               className={clsx(
                 "absolute right-0 min-w-[400px] w-full z-10 mt-2 py-4",
-                "text-select-text bg-white border border-select-border",
-                "shadow-lg rounded-md overflow-auto focus:outline-none",
+                "text-select-text bg-background-float",
+                "shadow-pop rounded-md overflow-auto focus:outline-none",
               )}
             >
               {accounts.length

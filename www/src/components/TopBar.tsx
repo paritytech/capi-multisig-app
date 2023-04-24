@@ -3,6 +3,7 @@ import { AccountSelect } from "./AccountSelect.js"
 import { Tabs } from "./Tabs.js"
 import type { Tab } from "./Tabs.js"
 import ThemeSwitchToggle from "./ThemeSwitchToggle.js"
+import PolkadotLogo from "./icons/PolkadotLogo.js"
 
 
 const tabs: Tab[] = [
@@ -14,25 +15,23 @@ export function TopBar() {
 
 
   return (
-    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-background-default text-foreground-contrast">
+    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-6 lg:px-16 bg-background-default text-foreground-contrast">
       <div className="w-full flex items-center justify-between">
-        <div>logo</div>
-        <div className='flex gap-2 items-center'>
-          <Tabs tabs={tabs} />
-          <div className="py-2 text-body_2 px-7 bg-fill-disabled text-foreground-disabled rounded-full">
-             Soon
-          </div>
-          <ThemeSwitchToggle />
+        <div className='flex gap-4 items-center'>
+          <PolkadotLogo />
+          <div className='w-[2px] h-5 bg-fill-separator' />
+         <span className='font-unbounded font-medium text-h5' >Multisig</span>
         </div>
-        <div className="w-60 my-2">
+          <Tabs tabs={tabs} />
+          <div className='flex gap-3 items-center' >
+        <ThemeSwitchToggle />
         <AccountSelect
           accounts={accounts.value}
           value={defaultAccount.value}
           onChange={(account) => {
             defaultAccount.value = account
           }}
-        />
-      </div>
+        /></div>
       </div>
 
 

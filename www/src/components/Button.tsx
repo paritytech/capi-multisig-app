@@ -17,7 +17,7 @@ export const Button = ({
   & Omit<JSX.HTMLAttributes<HTMLButtonElement>, "size">
   & {
     variant?: "primary" | "secondary" | "ghost" | "danger"
-    size?: "md" | "xl"
+    size?: "sm" | "md" | "xl"
     full?: boolean
     iconLeft?: ComponentChildren
     iconRight?: ComponentChildren
@@ -25,6 +25,9 @@ export const Button = ({
 {
   const iconClassName = clsx(
     "flex items-center ",
+    {
+      "h-3 w-3": size === "sm",
+    },
     {
       "h-6 w-6": size === "md",
     },
@@ -35,14 +38,17 @@ export const Button = ({
   return (
     <button
       className={clsx(
-        "flex flex-row items-center gap-2 justify-center whitespace-nowrap box-border",
+        "flex flex-row items-center justify-center whitespace-nowrap box-border",
         "font-semibold rounded-full",
         "outline-none focus:outline-none",
         {
-          "py-3 px-8": size === "md",
+          "py-2 px-4 text-body2": size === "sm",
         },
         {
-          "min-w-[300px] h-20 font-bold py-5 px-16 text-2xl": size === "xl",
+          "py-3 px-8 text-body2": size === "md",
+        },
+        {
+          "min-w-[300px] h-20 font-bold py-5 px-16 text-h4": size === "xl",
         },
         full ? "w-full" : "w-fit",
         {

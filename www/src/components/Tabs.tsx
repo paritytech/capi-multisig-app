@@ -10,14 +10,14 @@ export interface Tab {
 export function Tabs({ tabs, className }: { tabs: Tab[]; className?: string }) {
   return (
     <nav className={className} aria-label="Tabs">
-      <ul className="flex space-x-2 text-body_2 font-medium font-inter">
+      <ul className="flex gap-4 text-body2 font-medium font-inter">
         {tabs.map((tab) =>
           tab.disabled
             ? (
               <span
                 className={clsx(
                   "text-foreground-disabled border-transparent cursor-not-allowed",
-                  "block border-b-2 whitespace-nowrap py-2 px-6 font-medium",
+                  "block border-b-2 whitespace-nowrap py-1 font-medium",
                 )}
               >
                 {tab.name}
@@ -33,7 +33,7 @@ export function Tabs({ tabs, className }: { tabs: Tab[]; className?: string }) {
                       isActive
                         ? "border-fill-secondary text-foreground-contrast"
                         : "text-foreground-contrast border-transparent hover:border-tabs hover:text-tabs-text",
-                      "block border-b-2 whitespace-nowrap py-2 font-medium",
+                      "block border-b-2 whitespace-nowrap py-1 font-medium",
                     )}
                   aria-current={({ isActive }: { isActive: boolean }) =>
                     isActive ? "page" : undefined}
