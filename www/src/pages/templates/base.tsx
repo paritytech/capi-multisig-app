@@ -41,7 +41,6 @@ export function Page({ children }: Props) {
   return (
     <div className="min-h-full flex w-full font-inter">
       <Notifications />
-      <Sidebar />
       <div className="w-full bg-background-default">
         <TopBar />
         {children}
