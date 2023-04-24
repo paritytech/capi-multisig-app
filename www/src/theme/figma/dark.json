@@ -82,7 +82,16 @@
       },
       "secondary": {
         "value": "{colors.p-purple.100}",
-        "type": "color"
+        "type": "color",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "darken",
+              "value": "0.02",
+              "space": "p3"
+            }
+          }
+        }
       },
       "secondary-hover": {
         "value": "{colors.fill.secondary}",
@@ -91,7 +100,7 @@
           "studio.tokens": {
             "modify": {
               "type": "lighten",
-              "value": "0.05",
+              "value": "0.5",
               "space": "p3"
             }
           }
