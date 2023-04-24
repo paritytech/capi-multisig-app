@@ -19,7 +19,7 @@ export function TopBar() {
         <div>logo</div>
         <div className='flex gap-2 items-center'>
           <Tabs tabs={tabs} />
-          <div className="py-2 px-7 bg-fill-disabled text-foreground-disabled rounded-full">
+          <div className="py-2 text-body_2 px-7 bg-fill-disabled text-foreground-disabled rounded-full">
              Soon
           </div>
           <ThemeSwitchToggle />
