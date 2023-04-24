@@ -14,16 +14,17 @@ export function TopBar() {
 
 
   return (
-    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-white border-b border-border">
-      <div className="self-end mx-auto flex items-center">
-        <Tabs tabs={tabs} />
-        <div className="py-2 px-7 bg-menu-bg text-textAndIcons-primary rounded-full">
-          Soon
+    <header className="flex flex-col md:flex-row items-center w-full h-auto md:h-16 px-3 bg-background-default text-foreground-contrast">
+      <div className="w-full flex items-center justify-between">
+        <div>logo</div>
+        <div className='flex gap-2 items-center'>
+          <Tabs tabs={tabs} />
+          <div className="py-2 px-7 bg-fill-disabled text-foreground-disabled rounded-full">
+             Soon
+          </div>
+          <ThemeSwitchToggle />
         </div>
-        <ThemeSwitchToggle />
-      </div>
-
-      <div className="w-60 my-2">
+        <div className="w-60 my-2">
         <AccountSelect
           accounts={accounts.value}
           value={defaultAccount.value}
@@ -32,6 +33,9 @@ export function TopBar() {
           }}
         />
       </div>
+      </div>
+
+
     </header>
   )
 }
