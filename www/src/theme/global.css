@@ -9,9 +9,9 @@
   --line-height-h5: 40;
   --line-height-h6: 24;
   --line-height-body: 24;
-  --line-height-body-2: 20;
+  --line-height-body2: 20;
   --line-height-subtitle: 36;
-  --line-height-subtitle-2: 24;
+  --line-height-subtitle2: 24;
   --line-height-caption: 16;
   --font-weight-unbounded-bold: 700;
   --font-weight-unbounded-medium: 500;
@@ -20,7 +20,7 @@
   --font-weight-inter-bold: 700;
   --font-weight-mono-regular: 400;
   --font-weight-mono-medium: 500;
-  --font-size-body-2: 0.875rem;
+  --font-size-body2: 0.875rem;
   --font-size-body: 1rem;
   --font-size-h6: 1rem;
   --font-size-h5: 1.25rem;
@@ -29,7 +29,7 @@
   --font-size-h2: 2rem;
   --font-size-h1: 2.25rem;
   --font-size-subtitle: 24px;
-  --font-size-subtitle-2: 16px;
+  --font-size-subtitle2: 16px;
   --font-size-caption: 12px;
   --letter-spacing-0: 0;
   --letter-spacing-1: 0.02em;
