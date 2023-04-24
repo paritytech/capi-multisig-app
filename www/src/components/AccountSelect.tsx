@@ -34,10 +34,10 @@ export const AccountSelect = forwardRef((
       ref={ref}
     >
       {({ open }: { open: boolean }) => (
-        <div className="relative w-full">
+        <div className="relative w-full ">
           <Listbox.Button
             className={clsx(
-              "h-12 w-full flex items-center gap-2 py-0 px-2 cursor-pointer",
+              "w-full flex items-center gap-2 py-2 px-2 cursor-pointer",
               "rounded-full bg-fill-secondary select-none text-body2 text-foreground-matchBackground border border-select-border ",
               "hover:bg-fill-secondaryHover",
               "focus:outline-none focus-visible:ring focus-visible:ring-cyan-700 focus-visible:ring-opacity-75 focus-visible:ring-offset focus-visible:ring-offset-cyan-700",
@@ -47,7 +47,7 @@ export const AccountSelect = forwardRef((
               ? (
                 <>
                   <Identicon value={value.address} size={20} />
-                  <span className="font-semibold overflow-hidden text-ellipsis">
+                  <span className="font-inter font-medium text-body2 overflow-hidden text-ellipsis">
                     {shortAccountName(value.name)}
                   </span>
                 </>
@@ -61,8 +61,8 @@ export const AccountSelect = forwardRef((
 
             <span className="ml-auto text-dimmed">
               {open
-                ? <IconChevronUp className="w-6 h-6" />
-                : <IconChevronDown className="w-6 h-6" />}
+                ? <IconChevronUp className="w-4 h-4" />
+                : <IconChevronDown className="w-4 h-4" />}
             </span>
           </Listbox.Button>
 
@@ -76,7 +76,7 @@ export const AccountSelect = forwardRef((
             <Listbox.Options
               className={clsx(
                 "absolute right-0 min-w-[400px] w-full z-10 mt-2 py-4",
-                "text-select-text bg-background-float",
+                "font-inter font-medium text-body2 bg-background-float",
                 "shadow-pop rounded-md overflow-auto focus:outline-none",
               )}
             >
@@ -103,7 +103,7 @@ export const AccountSelect = forwardRef((
                         >
                           <Identicon value={account.address} size={24} />
                           <p className="overflow-hidden text-ellipsis">
-                            <span className="font-semibold">
+                            <span className="font-medium">
                               {shortAccountName(account.name)}
                             </span>
                           </p>
