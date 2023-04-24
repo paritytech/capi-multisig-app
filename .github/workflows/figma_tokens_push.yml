@@ -16,6 +16,6 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "d-tokens" # match your default branch
-          pr_title: "Figma Tokens Update"
+          pr_title: "fix: Figma Tokens Update"
           pr_body: "Design Tokens were updated in Figma. This PR contains the updated Tailwind config and CSS variables."
           github_token: ${{ secrets.GITHUB_TOKEN }}
