@@ -1,5 +1,7 @@
 {
   "name": "common",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts"
 }
