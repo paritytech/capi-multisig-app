@@ -37,7 +37,7 @@
   "colors": {
     "background": {
       "default": {
-        "value": "{colors.p-purple.950}",
+        "value": "{colors.p-purple.900}",
         "type": "color"
       },
       "system": {
@@ -46,6 +46,10 @@
       },
       "float": {
         "value": "{colors.p-purple.700}",
+        "type": "color"
+      },
+      "dip": {
+        "value": "{colors.p-purple.950}",
         "type": "color"
       }
     },

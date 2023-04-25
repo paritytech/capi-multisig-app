@@ -44,7 +44,7 @@
         "value": "{colors.p-gray.50}",
         "type": "color"
       },
-      "layer-1": {
+      "dip": {
         "value": "{colors.p-purple.200}",
         "type": "color"
       },
