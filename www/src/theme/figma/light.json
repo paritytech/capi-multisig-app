@@ -253,10 +253,6 @@
       "lime": {
         "value": "#D3FF33",
         "type": "color"
-      },
-      "random": {
-        "value": "#aaaaac",
-        "type": "color"
       }
     }
   }
