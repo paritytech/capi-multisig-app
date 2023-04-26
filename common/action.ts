@@ -35,11 +35,13 @@ export const $input: $.Codec<Input> = $.taggedUnion("type", [
 
 export interface SubscribeResult {
   type: "subscribe"
+  channel: string
   result: "ok" | "error"
 }
 
 export interface UnsubscribeResult {
   type: "unsubscribe"
+  channel: string
   result: "ok" | "error"
 }
 
@@ -65,11 +67,17 @@ export type Result = SubmitResult | SubscribeResult | UnsubscribeResult
 export const $result: $.Codec<Result> = $.taggedUnion("type", [
   $.variant(
     "subscribe",
-    $.object($.field("result", $.literalUnion(["ok", "error"] as const))),
+    $.object(
+      $.field("channel", $.str),
+      $.field("result", $.literalUnion(["ok", "error"] as const)),
+    ),
   ),
   $.variant(
     "unsubscribe",
-    $.object($.field("result", $.literalUnion(["ok", "error"] as const))),
+    $.object(
+      $.field("channel", $.str),
+      $.field("result", $.literalUnion(["ok", "error"] as const)),
+    ),
   ),
   $.variant(
     "submit",

@@ -44,6 +44,7 @@ wsServer.on("connection", (ws, _req) => {
           channels[decoded.channel]?.add(ws)
           ws.send($result.encode({
             type: "subscribe",
+            channel: decoded.channel,
             result: "ok",
           }))
           break
@@ -51,6 +52,7 @@ wsServer.on("connection", (ws, _req) => {
           if (channels[decoded.channel]?.delete(ws)) {
             ws.send($result.encode({
               type: "unsubscribe",
+              channel: decoded.channel,
               result: "ok",
             }))
           }
