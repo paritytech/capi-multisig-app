@@ -1,6 +1,6 @@
-import { clsx } from "clsx"
-import { JSX } from "preact"
-import type { ComponentChildren } from "preact"
+import { clsx } from "clsx";
+import { JSX } from "preact";
+import type { ComponentChildren } from "preact";
 
 export const Button = ({
   variant = "primary",
@@ -12,17 +12,14 @@ export const Button = ({
   full,
   children,
   ...rest
-}:
-  & JSX.IntrinsicAttributes
-  & Omit<JSX.HTMLAttributes<HTMLButtonElement>, "size">
-  & {
-    variant?: "primary" | "secondary" | "ghost" | "danger"
-    size?: "sm" | "md" | "xl"
-    full?: boolean
-    iconLeft?: ComponentChildren
-    iconRight?: ComponentChildren
-  }) =>
-{
+}: JSX.IntrinsicAttributes &
+  Omit<JSX.HTMLAttributes<HTMLButtonElement>, "size"> & {
+    variant?: "primary" | "secondary" | "ghost" | "danger";
+    size?: "sm" | "md" | "xl";
+    full?: boolean;
+    iconLeft?: ComponentChildren;
+    iconRight?: ComponentChildren;
+  }) => {
   const iconClassName = clsx(
     "flex items-center ",
     {
@@ -33,8 +30,8 @@ export const Button = ({
     },
     {
       "h-9 w-9 text-2xl": size === "xl",
-    },
-  )
+    }
+  );
   return (
     <button
       className={clsx(
@@ -55,18 +52,18 @@ export const Button = ({
           "bg-transparent text-button": variant === "ghost",
         },
         {
-          "bg-button-danger hover:bg-button-danger/90 text-foreground-white":
-            variant === "danger",
+          "bg-button-danger hover:bg-button-danger/90 text-foreground-white": variant === "danger",
         },
         {
           "bg-button-secondary hover:bg-fill-secondary text-foreground-white":
             variant === "secondary",
         },
         {
-          "hover:bg-fill-secondaryHover bg-fill-secondary text-foreground-matchBackground": variant === "primary",
+          "hover:bg-fill-secondaryHover bg-fill-secondary text-foreground-matchBackground":
+            variant === "primary",
         },
         { "cursor-not-allowed opacity-70": disabled },
-        className,
+        className
       )}
       disabled={disabled}
       {...rest}
@@ -75,5 +72,5 @@ export const Button = ({
       {children}
       {iconRight && <div className={iconClassName}>{iconRight}</div>}
     </button>
-  )
-}
+  );
+};
