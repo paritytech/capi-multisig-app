@@ -1,4 +1,4 @@
-import { System } from "@capi/westend"
+import { westend } from "@capi/westend"
 import { ss58 } from "capi"
 
 type Token = "DOT" | "KSM" | "WND"
@@ -33,7 +33,7 @@ export function formatBalance(
 export async function getBalance(address: string) {
   const addressPubKey = ss58.decode(address)[1]
 
-  const balance = await System.Account.value(
+  const balance = await westend.System.Account.value(
     addressPubKey,
   ).run()
 

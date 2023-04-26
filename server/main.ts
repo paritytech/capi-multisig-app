@@ -1,4 +1,4 @@
-import { chain as chain } from "@capi/westend"
+import { westend } from "@capi/westend"
 import { SignedExtrinsicRune } from "capi"
 import { $input, $result, Submit } from "common"
 import express from "express"
@@ -48,11 +48,12 @@ wsServer.on("connection", (ws, _req) => {
           }))
           break
         case "unsubscribe":
-          channels[decoded.channel]?.delete(ws)
-          ws.send($result.encode({
-            type: "unsubscribe",
-            result: "ok",
-          }))
+          if (channels[decoded.channel]?.delete(ws)) {
+            ws.send($result.encode({
+              type: "unsubscribe",
+              result: "ok",
+            }))
+          }
           break
         case "submit":
           await handleSubmit(ws, decoded)
@@ -77,25 +78,29 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
     }
 
     await SignedExtrinsicRune.fromHex(
-      chain,
+      westend,
       submit.signedExtrinsic,
     )
       .sent()
       .dbgStatus("tx status")
-      .transactionStatuses((txStatus: Record<string, unknown> | string) => {
+      .transactionStatuses((txStatus) => {
         if (typeof txStatus === "string") {
-          if (txStatus === "ready") {
-            send($result.encode({
-              type: "submit",
-              result: { status: "ready" },
-            }))
-          }
+          send($result.encode({
+            type: "submit",
+            result: { status: txStatus },
+          }))
         } else {
           const status = Object.keys(txStatus)[0]!
           switch (status) {
+            case "future":
             case "ready":
             case "broadcast":
             case "inBlock":
+            case "retracted":
+            case "finalityTimeout":
+            case "usurped":
+            case "dropped":
+            case "invalid":
               send($result.encode({
                 type: "submit",
                 result: { status },
@@ -110,6 +115,8 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
               break
           }
         }
+
+        return false
       })
       .run()
   } catch (err) {

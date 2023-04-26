@@ -1,4 +1,4 @@
-import { Balances } from "@capi/westend"
+import { westend } from "@capi/westend"
 import { hex, Sr25519 } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"
 import { $input, $result } from "common"
@@ -16,7 +16,7 @@ const sender = Sr25519.fromSecret(secret)
 
 const recipient = Sr25519.fromSecret(crypto.getRandomValues(new Uint8Array(64)))
 
-const signedExtrinsic = await Balances
+const signedExtrinsic = await westend.Balances
   .transfer({
     value: 12345n,
     dest: recipient.address,

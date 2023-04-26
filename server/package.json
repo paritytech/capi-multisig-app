@@ -7,9 +7,9 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.288.0",
     "@aws-sdk/lib-dynamodb": "^3.288.0",
-    "@capi/westend": "https://capi.dev/@v0.1.0-beta.35/29dcd8564faca56b/westend.tar",
-    "@capi/westend-dev": "https://capi.dev/@v0.1.0-beta.35/29dcd8564faca56b/westend-dev.tar",
-    "capi": "0.1.0-beta.35",
+    "@capi/westend": "https://capi.dev/@v0.1.0-beta.36/2c655e26fc9ba86a/westend.tar",
+    "@capi/westend-dev": "https://capi.dev/@v0.1.0-beta.36/2c655e26fc9ba86a/westend-dev.tar",
+    "capi": "0.1.0-beta.36",
     "common": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.18.2",
@@ -24,6 +24,7 @@
   },
   "scripts": {
     "watch": "nodemon dist/main.js",
-    "compile": "tsc -b"
+    "compile": "tsc -b",
+    "sync": "capi sync --package-json package.json"
   }
 }

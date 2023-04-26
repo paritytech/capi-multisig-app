@@ -47,11 +47,17 @@ export interface SubmitResult {
   type: "submit"
   // TODO: callHash: string
   result:
+    | { status: "future" }
     | { status: "ready" }
     | { status: "broadcast" }
     | { status: "inBlock" }
-    | { status: "failed" }
+    | { status: "retracted" }
+    | { status: "finalityTimeout" }
     | { status: "finalized"; hash: string }
+    | { status: "usurped" }
+    | { status: "dropped" }
+    | { status: "invalid" }
+    | { status: "failed" }
 }
 
 export type Result = SubmitResult | SubscribeResult | UnsubscribeResult
@@ -73,11 +79,17 @@ export const $result: $.Codec<Result> = $.taggedUnion("type", [
         $.taggedUnion(
           "status",
           [
+            $.variant("future"),
             $.variant("ready"),
             $.variant("broadcast"),
             $.variant("inBlock"),
-            $.variant("failed"),
+            $.variant("retracted"),
+            $.variant("finalityTimeout"),
             $.variant("finalized", $.object($.field("hash", $.str))),
+            $.variant("usurped"),
+            $.variant("dropped"),
+            $.variant("invalid"),
+            $.variant("failed"),
           ],
         ),
       ),
