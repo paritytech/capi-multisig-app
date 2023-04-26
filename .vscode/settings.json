@@ -26,8 +26,5 @@
     "MD041": false
   },
   "prettier.printWidth": 2,
-  "deno.enable": false,
-  "[typescript]": {
-    "editor.defaultFormatter": "dprint.dprint"
-  }
+  "deno.enable": false
 }

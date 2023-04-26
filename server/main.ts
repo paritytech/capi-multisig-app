@@ -18,7 +18,7 @@ const wsServer = new ws.WebSocketServer({ noServer: true })
 const channels: Record<string, Set<ws.WebSocket>> = {}
 
 const port = process.env.PORT ?? 5000
-httpServer.listen(port, function() {
+httpServer.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`)
 })
 
@@ -31,11 +31,10 @@ httpServer.on("upgrade", (req, socket, head) => {
 wsServer.on("connection", (ws, _req) => {
   ws.on("error", handleError)
 
-  ws.on("message", async function(message) {
+  ws.on("message", async (message) => {
     try {
       const payload = Uint8Array.from(message as Buffer)
       const decoded = $input.decode(payload)
-      console.log("decoded", decoded)
 
       switch (decoded.type) {
         case "subscribe":
@@ -61,7 +60,6 @@ wsServer.on("connection", (ws, _req) => {
         default:
           break
       }
-      console.log(channels)
     } catch (err) {
       handleError(err as Error)
     }
