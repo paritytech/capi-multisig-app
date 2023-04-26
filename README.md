@@ -59,11 +59,22 @@ pnpm run build
 - [Wiki PureProxies](https://wiki.polkadot.network/docs/learn-proxies#anonymous-proxy-pure-proxy)
 
 
+---
+
 # Design Tokens from Figma
 
-The theme at ```www/src/theme/``` contains the theme generated from design tokens exported from Figma.
+**Building blocks:**
 
-Tokens get pushed to ```tokens-from-figma``` branch from Figma, then get transformed to CSS variables and a tailwind config file with the tokens set up as variables, making them available as an extension of the default tailwind theme.
+Design tokens json: the raw json gets pushed from figma directly to ```www/src/theme/figma``` (eventually somewhere else to be easily accessible for other apps too)
+
+Style Dictionary config: ```www/sd.config.cjs``` specifies how Style Dictionary transforms the raw tokens to a tailwind config and custom css variables the tailwind config references (using [sd-transforms](https://github.com/tokens-studio/sd-transforms), and [sd-tw-transforms](https://www.npmjs.com/package/sd-tailwindcss-transformer))
+
+Tailwind Config: ```www/tailwind.config.cjs```
+CSS Variables: ```www/src/theme/*``` global (for theme-agnostic tokens, eg. font sizes), dark and light
+
+**Workflow:**
+
+Tokens pushed to ```tokens-from-figma``` branch from Figma create a pull request and get transformed to Tailwind config + CSS variables, making them available as an extension of the default tailwind theme.
 
 ### Tokens API
 
