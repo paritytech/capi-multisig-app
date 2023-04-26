@@ -33,7 +33,7 @@ importers:
       react-tooltip: ^5.10.5
       sd-tw-transformer: ^1.2.0
       server: workspace:../server
-      style-dictionary: ^3.7.2
+      style-dictionary: ^3.8.0
       tailwind-merge: ^1.10.0
       tailwindcss: ^3.2.7
       token-transformer: ^0.0.32
@@ -54,9 +54,9 @@ importers:
       react-hook-form: 7.43.9
       react-router-dom: 6.10.0
       react-tooltip: 5.11.1
-      sd-tw-transformer: 1.2.0_style-dictionary@3.7.2
+      sd-tw-transformer: 1.2.0_style-dictionary@3.8.0
       server: link:../server
-      style-dictionary: 3.7.2
+      style-dictionary: 3.8.0
       tailwind-merge: 1.12.0
       token-transformer: 0.0.32
       vite-tsconfig-paths: 4.2.0_vite@4.3.1
@@ -2294,12 +2294,12 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /sd-tw-transformer/1.2.0_style-dictionary@3.7.2:
+  /sd-tw-transformer/1.2.0_style-dictionary@3.8.0:
     resolution: {integrity: sha512-1Z/OIaXcTZPTXo589lf8eWFkU8JPyDEgENszv/6xCoPx4b8ksPB60InIEWv6J7cMz1G/QAPbK18FlFhDTbxHrQ==}
     peerDependencies:
       style-dictionary: '>=3.7.0'
     dependencies:
-      style-dictionary: 3.7.2
+      style-dictionary: 3.8.0
     dev: false
 
   /semver/6.3.0:
@@ -2345,6 +2345,22 @@ packages:
 
   /style-dictionary/3.7.2:
     resolution: {integrity: sha512-Nd/qrPj1ikYX+sL/8PofMgfaJLRvGgT96Ty3dJLGNqtZmecVr3Xs+OZivMQEYmSCTiap/UyeV5SqwmAgn3/KKA==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      change-case: 4.1.2
+      commander: 8.3.0
+      fs-extra: 10.1.0
+      glob: 7.2.3
+      json5: 2.2.3
+      jsonc-parser: 3.2.0
+      lodash: 4.17.21
+      tinycolor2: 1.6.0
+    dev: false
+
+  /style-dictionary/3.8.0:
+    resolution: {integrity: sha512-wHlB/f5eO3mDcYv6WtOz6gvQC477jBKrwuIXe+PtHskTCBsJdAOvL8hCquczJxDui2TnwpeNE+2msK91JJomZg==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:

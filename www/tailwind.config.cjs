@@ -60,8 +60,7 @@ module.exports = {
         accent: {
           cyan: "var(--colors-accent-cyan)",
           green: "var(--colors-accent-green)",
-          lime: "var(--colors-accent-lime)",
-          random: "var(--colors-accent-random)"
+          lime: "var(--colors-accent-lime)"
         },
         black: "var(--colors-black)",
         white: "var(--colors-white)",
