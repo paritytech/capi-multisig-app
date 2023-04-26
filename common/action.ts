@@ -47,6 +47,7 @@ export interface UnsubscribeResult {
 
 export interface SubmitResult {
   type: "submit"
+  channel: string
   // TODO: callHash: string
   result:
     | { status: "future" }
@@ -82,6 +83,7 @@ export const $result: $.Codec<Result> = $.taggedUnion("type", [
   $.variant(
     "submit",
     $.object(
+      $.field("channel", $.str),
       $.field(
         "result",
         $.taggedUnion(

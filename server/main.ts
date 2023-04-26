@@ -89,6 +89,7 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
         if (typeof txStatus === "string") {
           send($result.encode({
             type: "submit",
+            channel: submit.channel,
             result: { status: txStatus },
           }))
         } else {
@@ -105,6 +106,7 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
             case "invalid":
               send($result.encode({
                 type: "submit",
+                channel: submit.channel,
                 result: { status },
               }))
               break
@@ -112,6 +114,7 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
               const hash: string = txStatus["finalized"]! as string
               send($result.encode({
                 type: "submit",
+                channel: submit.channel,
                 result: { status, hash },
               }))
               break
@@ -124,6 +127,7 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
   } catch (err) {
     ws.send($result.encode({
       type: "submit",
+      channel: submit.channel,
       result: { status: "failed" },
     }))
     handleError(err)
