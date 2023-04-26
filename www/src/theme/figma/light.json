@@ -45,7 +45,7 @@
         "type": "color"
       },
       "dip": {
-        "value": "{colors.p-purple.200}",
+        "value": "{colors.p-purple.100}",
         "type": "color"
       },
       "float": {
