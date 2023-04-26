@@ -1,6 +1,6 @@
 import { chain as chain } from "@capi/westend"
 import { SignedExtrinsicRune } from "capi"
-import { $result, input, Submit } from "common"
+import { $input, $result, Submit } from "common"
 import express from "express"
 import * as http from "http"
 import * as ws from "ws"
@@ -34,7 +34,7 @@ wsServer.on("connection", (ws, _req) => {
   ws.on("message", async function(message) {
     try {
       const payload = Uint8Array.from(message as Buffer)
-      const decoded = input.decode(payload)
+      const decoded = $input.decode(payload)
       console.log("decoded", decoded)
 
       switch (decoded.type) {

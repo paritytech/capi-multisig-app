@@ -20,7 +20,7 @@ export interface Unsubscribe {
 
 export type Input = Submit | Subscribe | Unsubscribe
 
-export const input: $.Codec<Input> = $.taggedUnion("type", [
+export const $input: $.Codec<Input> = $.taggedUnion("type", [
   $.variant(
     "submit",
     $.object(
