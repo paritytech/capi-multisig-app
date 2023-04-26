@@ -37,7 +37,7 @@
   "colors": {
     "background": {
       "default": {
-        "value": "{colors.p-purple.950}",
+        "value": "{colors.p-purple.900}",
         "type": "color"
       },
       "system": {
@@ -46,6 +46,10 @@
       },
       "float": {
         "value": "{colors.p-purple.700}",
+        "type": "color"
+      },
+      "dip": {
+        "value": "{colors.p-purple.950}",
         "type": "color"
       }
     },
@@ -82,7 +86,16 @@
       },
       "secondary": {
         "value": "{colors.p-purple.100}",
-        "type": "color"
+        "type": "color",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "darken",
+              "value": "0.02",
+              "space": "p3"
+            }
+          }
+        }
       },
       "secondary-hover": {
         "value": "{colors.fill.secondary}",
@@ -91,7 +104,7 @@
           "studio.tokens": {
             "modify": {
               "type": "lighten",
-              "value": "0.05",
+              "value": "0.5",
               "space": "p3"
             }
           }
@@ -264,10 +277,6 @@
       },
       "lime": {
         "value": "#D3FF33",
-        "type": "color"
-      },
-      "random": {
-        "value": "#abcabc",
         "type": "color"
       }
     }

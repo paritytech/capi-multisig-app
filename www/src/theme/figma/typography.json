@@ -108,8 +108,8 @@
       "value": {
         "fontFamily": "{fontFamily.inter}",
         "fontWeight": "{fontWeight.inter-regular}",
-        "lineHeight": "{lineHeight.body-2}",
-        "fontSize": "{fontSize.body-2}",
+        "lineHeight": "{lineHeight.body2}",
+        "fontSize": "{fontSize.body2}",
         "letterSpacing": "{letterSpacing.0}",
         "paragraphSpacing": "{paragraphSpacing.0}",
         "textCase": "{textCase.none}",
@@ -121,8 +121,8 @@
       "value": {
         "fontFamily": "{fontFamily.inter}",
         "fontWeight": "{fontWeight.inter-medium}",
-        "lineHeight": "{lineHeight.body-2}",
-        "fontSize": "{fontSize.body-2}",
+        "lineHeight": "{lineHeight.body2}",
+        "fontSize": "{fontSize.body2}",
         "letterSpacing": "0%",
         "paragraphSpacing": "",
         "textCase": "{textCase.none}",
@@ -147,7 +147,7 @@
       "value": {
         "fontFamily": "{fontFamily.inter}",
         "fontWeight": "{fontWeight.inter-medium}",
-        "lineHeight": "{lineHeight.subtitle-2}",
+        "lineHeight": "{lineHeight.subtitle2}",
         "fontSize": "{fontSize.h6}",
         "letterSpacing": "",
         "paragraphSpacing": "",

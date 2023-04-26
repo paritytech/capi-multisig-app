@@ -44,12 +44,8 @@
         "value": "{colors.p-gray.50}",
         "type": "color"
       },
-      "layer+1": {
-        "value": "{colors.p-white-transparent.500}",
-        "type": "color"
-      },
-      "layer-1": {
-        "value": "{colors.p-purple.200}",
+      "dip": {
+        "value": "{colors.p-purple.100}",
         "type": "color"
       },
       "float": {
@@ -256,10 +252,6 @@
       },
       "lime": {
         "value": "#D3FF33",
-        "type": "color"
-      },
-      "random": {
-        "value": "#aaaaab",
         "type": "color"
       }
     }

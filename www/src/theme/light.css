@@ -1,8 +1,7 @@
 :root {
   --colors-background-default: #f3f5fb;
   --colors-background-system: #f9f9fb;
-  --colors-background-layer-1: #ffffff7a;
-  --colors-background-layer-1: #e6eaf6;
+  --colors-background-dip: #f3f5fb;
   --colors-background-float: #ffffff;
   --colors-fill-primary: #e6007a;
   --colors-fill-primary-hover: color(display-p3 0.74 0.16 0.43);
@@ -41,7 +40,6 @@
   --colors-accent-cyan: #00D0FF;
   --colors-accent-green: #56F39A;
   --colors-accent-lime: #D3FF33;
-  --colors-accent-random: #aaaaaa;
   --box-shadow-pop: 0 8px 24px 0 #00000030;
   --box-shadow-idle: 0 2px 4px 0 #00000014;
   --box-shadow-hover: 0 8px 8px 0 #00000008;

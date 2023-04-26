@@ -15,14 +15,14 @@ export const Input = forwardRef(
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
     return (
-      <div className="flex flex-col mb-4">
-        <label className="mb-2">
+      <div className="flex flex-col gap-2">
+        <label className="text-foreground-contrast text-body2">
           {label}
           {required && <span className="text-error">*</span>}
         </label>
         <input
           className={clsx(
-            "bg-input-bg rounded-lg border p-3 focus:outline-none",
+            "bg-background-dip rounded-lg border border-border-hint text-foreground-contrast p-3 focus:outline-none",
             error ? "border-2 border-error" : "border-inherit ",
             className,
           )}
@@ -30,7 +30,7 @@ export const Input = forwardRef(
           ref={ref}
         />
         {error && (
-          <div className="text-input-error text-sm mt-1 flex items-center">
+          <div className="text-foreground-danger text-body2 flex items-center">
             <IconInfo className="mr-1" />
             <span>{error}</span>
           </div>

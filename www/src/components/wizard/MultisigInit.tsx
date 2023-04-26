@@ -37,61 +37,64 @@ export function MultisigInit() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="text-xl leading-8">1. Multisig setup</h1>
-      <hr className="border-t border-gray-300 mt-6 mb-4" />
-      <Controller
-        control={control}
-        name="name"
-        defaultValue={name}
-        render={({ field }) => (
-          <Input
-            {...field}
-            placeholder="Enter the name..."
-            className="w-64"
-            error={errors.name && errors.name.message}
-            label="Multisig name"
-            required
+      <div className='flex flex-col gap-6'>
+        <span className="text-h4 font-inter font-semibold text-foreground-contrast">1. Multisig Setup</span>
+        <Controller
+          control={control}
+          name="name"
+          defaultValue={name}
+          render={({ field }) => (
+            <Input
+              {...field}
+              placeholder="Enter the name..."
+              className="w-64"
+              error={errors.name && errors.name.message}
+              label="Multisig name"
+              required
+            />
+          )}
+        />
+        <div className='flex flex-col gap-2 text-foreground-contrast'>
+          <label className="text-body2 inline-block">Creator</label>
+          <div className="mb-2">
+            <AccountId account={defaultAccount.value} />
+          </div>
+        </div>
+        <div className="flex gap-8 justify-start">
+          <Controller
+            control={control}
+            name="memberCount"
+            defaultValue={memberCount}
+            render={({ field }) => (
+              <InputNumber
+                {...field}
+                label="Members"
+                required
+                error={errors.memberCount && errors.memberCount.message}
+              />
+            )}
           />
-        )}
-      />
-      <label className="mb-2 inline-block">Creator</label>
-      <div className="mb-4">
-        <AccountId account={defaultAccount.value} />
-      </div>
-      <div className="flex gap-8 justify-start">
-        <Controller
-          control={control}
-          name="memberCount"
-          defaultValue={memberCount}
-          render={({ field }) => (
-            <InputNumber
-              {...field}
-              label="Members"
-              required
-              error={errors.memberCount && errors.memberCount.message}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="threshold"
-          defaultValue={threshold}
-          rules={{ validate: (t) => t < memberCount }}
-          render={({ field }) => (
-            <InputNumber
-              {...field}
-              label="Threshold"
-              required
-              error={errors.threshold && errors.threshold.message}
-            />
-          )}
-        />
-      </div>
-      <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
-      <div className="flex justify-end">
-        <Button variant="ghost" type="submit" iconRight={<IconChevronRight />}>
-          Next
-        </Button>
+          <Controller
+            control={control}
+            name="threshold"
+            defaultValue={threshold}
+            rules={{ validate: (t) => t < memberCount }}
+            render={({ field }) => (
+              <InputNumber
+                {...field}
+                label="Threshold"
+                required
+                error={errors.threshold && errors.threshold.message}
+              />
+            )}
+          />
+        </div>
+        <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
+        <div className="flex justify-end">
+          <Button variant="ghost" type="submit" iconRight={<IconChevronRight />}>
+            Next
+          </Button>
+        </div>
       </div>
     </form>
   )

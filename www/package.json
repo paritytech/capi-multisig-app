@@ -19,7 +19,7 @@
     "react-tooltip": "^5.10.5",
     "sd-tw-transformer": "^1.2.0",
     "server": "workspace:../server",
-    "style-dictionary": "^3.7.2",
+    "style-dictionary": "^3.8.0",
     "tailwind-merge": "^1.10.0",
     "token-transformer": "^0.0.32",
     "vite-tsconfig-paths": "^4.0.5"

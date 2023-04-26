@@ -42,7 +42,7 @@
       "value": "24",
       "type": "lineHeights"
     },
-    "body-2": {
+    "body2": {
       "value": "20",
       "type": "lineHeights"
     },
@@ -50,7 +50,7 @@
       "value": "36",
       "type": "lineHeights"
     },
-    "subtitle-2": {
+    "subtitle2": {
       "value": "24",
       "type": "lineHeights"
     },
@@ -90,7 +90,7 @@
     }
   },
   "fontSize": {
-    "body-2": {
+    "body2": {
       "value": "0.875rem",
       "type": "fontSizes"
     },
@@ -126,7 +126,7 @@
       "value": "24",
       "type": "fontSizes"
     },
-    "subtitle-2": {
+    "subtitle2": {
       "value": "16",
       "type": "fontSizes"
     },
