@@ -40,10 +40,10 @@ export const InputNumber = forwardRef(
     return (
       <div
         className={clsx(
-          "mb-4 flex flex-col",
+          "flex flex-col gap-2 text-foreground-contrast",
         )}
       >
-        <label className="mb-2">
+        <label className="text-body2">
           {label}
           {required && <span className="text-error">*</span>}
         </label>
@@ -55,17 +55,17 @@ export const InputNumber = forwardRef(
           <button
             type="button"
             className={clsx(
-              "flex items-center px-4 py-2 rounded-l-lg focus:outline-none border border-r-0",
+              "flex items-center px-4 py-2 rounded-l-lg focus:outline-none border border-border-hint border-r-0",
               error ? "border-2 border-error" : "border-inherit ",
             )}
             onClick={decrease}
           >
-            <IconMinus className="w-4 h-4 text-black" />
+            <IconMinus className="w-4 h-4 text-foreground-contrast" />
           </button>
           <input
             type="number"
             className={clsx(
-              "w-11 border border-l-0 border-r-0 outline-none  focus:ring-0 p-3 focus:outline-none",
+              "w-11 border border-l-0 border-r-0 text-center border-border-hint bg-background-dip outline-none focus:ring-0 p-3 focus:outline-none",
               className,
               error ? "border-2 border-error" : "border-inherit ",
             )}
@@ -77,12 +77,12 @@ export const InputNumber = forwardRef(
           <button
             type="button"
             className={clsx(
-              "flex items-center px-4 py-2 rounded-r-lg focus:outline-none border border-l-0",
+              "flex items-center px-4 py-2 rounded-r-lg focus:outline-none border border-l-0 border-border-hint",
               error ? "border-2 border-error" : "border-inherit ",
             )}
             onClick={increase}
           >
-            <IconPlus className="w-4 h-4 text-black" />
+            <IconPlus className="w-4 h-4 text-foreground-contrast" />
           </button>
         </div>
 
