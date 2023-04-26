@@ -38,7 +38,7 @@ StyleDictionary.registerFormat({
 });
 
 // generate css for each token set
-["light", "dark", "typography", 'global'].map((theme) => {
+["light", "dark", 'global'].map((theme) => {
   const themeVariables = StyleDictionary.extend({
     source: [`src/theme/figma/${theme}.json`],
     include: [`src/theme/figma/global.json`],
