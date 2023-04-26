@@ -7,7 +7,7 @@ import WebSocket from "ws"
 
 const args = process.argv.slice(2)
 if (args.length < 2) {
-  throw new Error("secretkey and endpoint are required")
+  throw new Error("secret key and endpoint are required")
 }
 const secret = hex.decode(args[0]!)
 const endpoint = args[1]!
