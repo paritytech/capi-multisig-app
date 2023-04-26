@@ -15,7 +15,7 @@ module.exports = {
           default: "var(--colors-background-default)",
           system: "var(--colors-background-system)",
           float: "var(--colors-background-float)",
-      "layer_1": "var(--colors-background-layer-1)"
+          dip: "var(--colors-background-dip)"
         },
         fill: {
           primary: "var(--colors-fill-primary)",
@@ -60,8 +60,7 @@ module.exports = {
         accent: {
           cyan: "var(--colors-accent-cyan)",
           green: "var(--colors-accent-green)",
-          lime: "var(--colors-accent-lime)",
-          random: "var(--colors-accent-random)"
+          lime: "var(--colors-accent-lime)"
         },
         black: "var(--colors-black)",
         white: "var(--colors-white)",
@@ -170,9 +169,9 @@ module.exports = {
     "h5": "var(--line-height-h5)",
     "h6": "var(--line-height-h6)",
         body: "var(--line-height-body)",
-    "body_2": "var(--line-height-body-2)",
+    "body2": "var(--line-height-body2)",
         subtitle: "var(--line-height-subtitle)",
-    "subtitle_2": "var(--line-height-subtitle-2)",
+    "subtitle2": "var(--line-height-subtitle2)",
         caption: "var(--line-height-caption)"
       },
       fontWeight: {
@@ -185,7 +184,7 @@ module.exports = {
         monoMedium: "var(--font-weight-mono-medium)"
       },
       fontSize: {
-    "body_2": "var(--font-size-body-2)",
+    "body2": "var(--font-size-body2)",
         body: "var(--font-size-body)",
     "h6": "var(--font-size-h6)",
     "h5": "var(--font-size-h5)",
@@ -194,7 +193,7 @@ module.exports = {
     "h2": "var(--font-size-h2)",
     "h1": "var(--font-size-h1)",
         subtitle: "var(--font-size-subtitle)",
-    "subtitle_2": "var(--font-size-subtitle-2)",
+    "subtitle2": "var(--font-size-subtitle2)",
         caption: "var(--font-size-caption)"
       },
       letterSpacing: {
