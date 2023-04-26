@@ -26,5 +26,11 @@
     "MD041": false
   },
   "prettier.printWidth": 2,
-  "deno.enable": false
+  "deno.enable": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

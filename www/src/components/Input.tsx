@@ -21,7 +21,7 @@ export const Input = forwardRef(
           {required && <span className="text-error">*</span>}
         </label>
         <input
-          className={clsx(
+           className={clsx(
             "bg-background-dip rounded-lg border border-border-hint text-foreground-contrast p-3 focus:outline-none",
             error ? "border-2 border-error" : "border-inherit ",
             className,
