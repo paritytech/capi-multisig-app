@@ -1,6 +1,4 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { render } from "preact"
-import { useState } from "preact/hooks"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { CreateMultisig } from "./pages/create-multisig.js"
 import { Dashboard } from "./pages/dashboard.js"
@@ -9,14 +7,7 @@ import { PageError } from "./pages/error.js"
 import "./index.css"
 
 function Main() {
-  const [queryClient] = useState(() => new QueryClient())
-
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  )
+  return <RouterProvider router={router} />
 }
 
 const router = createBrowserRouter([
