@@ -7,14 +7,17 @@
     "www"
   ],
   "dependencies": {
+    "@capi/westend": "https://capi.dev/@v0.1.0-beta.36/2c655e26fc9ba86a/westend.tar",
+    "@capi/westend-dev": "https://capi.dev/@v0.1.0-beta.36/2c655e26fc9ba86a/westend-dev.tar",
     "@headlessui/react": "^1.7.11",
     "@preact/signals": "^1.1.3",
     "@talisman-connect/wallets": "^1.1.3",
-    "capi": "0.1.0-beta.26",
+    "capi": "0.1.0-beta.36",
+    "dotenv": "^16.0.3",
     "preact": "^10.12.1",
     "react-hook-form": "^7.43.3",
     "react-router-dom": "^6.8.1",
-    "scale-codec": "0.11.0-beta.1",
+    "scale-codec": "0.11.2",
     "tailwind-merge": "^1.10.0",
     "vite-tsconfig-paths": "^4.0.5",
     "zod": "^3.21.4"
@@ -24,6 +27,8 @@
     "react-dom": "preact/compat"
   },
   "devDependencies": {
+    "@types/node": "^18.16.0",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
   },
   "scripts": {
@@ -31,6 +36,7 @@
     "watch:compile": "npm run compile -- -w",
     "watch:server": "npm run watch -w server",
     "watch:www": "npm run watch -w www",
-    "build": "npm run compile && npm run build -w www"
+    "build": "npm run compile && npm run build -w www",
+    "build:server": "npm run compile -w server"
   }
 }

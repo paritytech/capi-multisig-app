@@ -1,33 +1,31 @@
-import type { WalletAccount } from "@talisman-connect/wallets"
-import { useCallback } from "preact/hooks"
-import { z } from "zod"
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { AccountSelect } from "../components/AccountSelect.js"
-import { CenteredCard } from "../components/CenteredCard.js"
-import { Page } from "./templates/base.js"
-import { accounts, defaultAccount } from '../signals/index.js'
 import { useSignal } from "@preact/signals"
-import { isValidAddress } from "../util/isValidAddress.js";
-import { AddressInput } from "../components/AddressInput.js";
-import { Button } from "../components/Button.js";
-import { Identicon } from "../components/identicon/Identicon.js";
-import { Table } from "../components/Table.js";
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
+import { AccountSelect } from "../components/AccountSelect.js"
+import { AddressInput } from "../components/AddressInput.js"
+import { Button } from "../components/Button.js"
+import { CenteredCard } from "../components/CenteredCard.js"
+import { Identicon } from "../components/identicon/Identicon.js"
+import { Table } from "../components/Table.js"
+import { accounts, defaultAccount } from "../signals/index.js"
+import { isValidAddress } from "../util/address.js"
+import { Page } from "./templates/base.js"
 
 export const newTransactionSchema = z.object({
-  amount: z.number({ required_error: "Amount is required", invalid_type_error: "Amount must be provided", }),
+  amount: z.number({
+    required_error: "Amount is required",
+    invalid_type_error: "Amount must be provided",
+  }),
   to: z.string().refine((value) => isValidAddress(value), {
-    message: "Provided address is invalid. Please insure you have typed correctly.",
-  })
+    message:
+      "Provided address is invalid. Please insure you have typed correctly.",
+  }),
 })
 export type NewTransaction = z.infer<typeof newTransactionSchema>
 
 export function NewTransaction() {
-  const selectedAccount = useSignal(defaultAccount.value);
-
-  const setSelectedAccount = useCallback((account: WalletAccount) => {
-    selectedAccount.value = account
-  }, [])
+  const selectedAccount = useSignal(defaultAccount.value)
 
   const {
     register,
@@ -36,9 +34,9 @@ export function NewTransaction() {
     control,
   } = useForm<NewTransaction>({
     resolver: zodResolver(newTransactionSchema),
-  });
+  })
 
-  const onSubmit: SubmitHandler<NewTransaction> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<NewTransaction> = (data) => console.log(data)
 
   return (
     <Page>
@@ -53,8 +51,13 @@ export function NewTransaction() {
               <div className="space-y-2">
                 <p className="mt-4 text-[#321D47]">Initiated by:</p>
                 <div className="flex gap-2">
-                  <Identicon value={selectedAccount.value?.address!} size={24} />
-                  <span className="font-bold">{selectedAccount.value?.name!}</span>
+                  <Identicon
+                    value={selectedAccount.value?.address!}
+                    size={24}
+                  />
+                  <span className="font-bold">
+                    {selectedAccount.value?.name!}
+                  </span>
                   <span className="">{selectedAccount.value?.address!}</span>
                 </div>
               </div>
@@ -74,9 +77,11 @@ export function NewTransaction() {
               <div className="space-y-2">
                 <p>From:</p>
                 <AccountSelect
-                  selectedAccount={selectedAccount.value}
-                  setSelectedAccount={setSelectedAccount}
                   accounts={accounts.value}
+                  value={defaultAccount.value}
+                  onChange={(account) => {
+                    selectedAccount.value = account
+                  }}
                 />
               </div>
               <div className="space-y-2">
@@ -86,7 +91,7 @@ export function NewTransaction() {
                   name="to"
                   rules={{ required: true }}
                   render={({
-                    field
+                    field,
                   }) => (
                     <AddressInput
                       {...field}
@@ -113,8 +118,7 @@ export function NewTransaction() {
             </div>
           </form>
         </div>
-
-      </CenteredCard >
-    </Page >
+      </CenteredCard>
+    </Page>
   )
 }

@@ -1,6 +1,6 @@
 import type { JSX } from "preact/jsx-runtime"
 
-export const IconPlus = (
+export const IconMinus = (
   props: JSX.IntrinsicAttributes & JSX.SVGAttributes<SVGSVGElement>,
 ) => (
   <svg
@@ -12,11 +12,7 @@ export const IconPlus = (
     aria-hidden="true"
     className={props.className}
   >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M12 4.5v15m7.5-7.5h-15"
-    >
+    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15">
     </path>
   </svg>
 )

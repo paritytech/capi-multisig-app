@@ -46,6 +46,10 @@ module.exports = {
           text: "rgba(18, 17, 39, 0.7)",
           bg: "#F9F9FB;",
           border: "#D1D1DB",
+        },
+        input: {
+          bg: "#f7f7f7",
+          error: "#E31902"
         }
       },
       fontFamily: {
