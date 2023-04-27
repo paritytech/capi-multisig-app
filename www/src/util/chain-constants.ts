@@ -1,21 +1,21 @@
-import { chain } from "@capi/westend"
+import { westend } from "@capi/westend"
 
 async function getExistentialDeposit() {
-  return await chain
+  return await westend
     .pallet("Balances")
     .constant("ExistentialDeposit").decoded
     .run()
 }
 
 async function getProxyDepositBase() {
-  return await chain
+  return await westend
     .pallet("Proxy")
     .constant("ProxyDepositBase").decoded
     .run()
 }
 
 async function getProxyDepositFactor() {
-  return await chain
+  return await westend
     .pallet("Proxy")
     .constant("ProxyDepositFactor").decoded
     .run()
