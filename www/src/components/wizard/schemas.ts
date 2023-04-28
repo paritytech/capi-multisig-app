@@ -58,3 +58,21 @@ export const multisigFundSchema = z.object({
 })
 
 export type MultisigFundEntity = z.infer<typeof multisigFundSchema>
+
+export const transactionSchema = z.object({
+  amount: z.number({
+    required_error: "Amount is required",
+  }),
+  from: z.object({
+    address: z.string(),
+    name: z.string().optional(),
+    source: z.string(),
+  }).optional().refine((a) => isValidAddress(a?.address), {
+    message: "Invalid address",
+  }),
+  to: z.string().refine((value) => isValidAddress(value), {
+    message:
+      "Provided address is invalid. Please insure you have typed correctly.",
+  }),
+})
+export type Transaction = z.infer<typeof transactionSchema>

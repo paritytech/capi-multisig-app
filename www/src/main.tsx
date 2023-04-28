@@ -2,8 +2,8 @@ import { render } from "preact"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { CreateMultisig } from "./pages/create-multisig.js"
 import { Dashboard } from "./pages/dashboard.js"
-import { NewTransaction } from "./pages/new-transaction.js"
 import { PageError } from "./pages/error.js"
+import { NewTransaction } from "./pages/new-transaction.js"
 import "./index.css"
 
 function Main() {
