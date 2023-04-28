@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button } from "../../Button.js"
-import { useWizardNavigation } from "../Wizard.js"
+import { goNext } from "../Wizard.js"
 import {
   formData,
   TransactionData,
@@ -17,7 +17,6 @@ export function TransactionSign() {
     resolver: zodResolver(transactionSchema),
   })
 
-  const { goNext } = useWizardNavigation()
   const { value: { from } } = formData
 
   const onSubmit: SubmitHandler<TransactionData> = (formDataNew) => {

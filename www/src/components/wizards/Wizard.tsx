@@ -2,21 +2,14 @@ import { signal } from "@preact/signals"
 import { toChildArray } from "preact"
 import type { ComponentChildren } from "preact"
 
-const step = signal(0)
+let step = signal(0)
 
-function goNext() {
+export function goNext() {
   step.value = step.value + 1
 }
 
-function goPrev() {
+export function goPrev() {
   step.value = step.value - 1
-}
-
-export function useWizardNavigation() {
-  return {
-    goNext,
-    goPrev,
-  }
 }
 
 export function Wizard({ children }: { children: ComponentChildren }) {

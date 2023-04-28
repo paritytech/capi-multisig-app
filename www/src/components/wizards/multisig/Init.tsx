@@ -6,7 +6,7 @@ import { Button } from "../../Button.js"
 import { IconChevronRight } from "../../icons/IconChevronRight.js"
 import { Input } from "../../Input.js"
 import { InputNumber } from "../../InputNumber.js"
-import { useWizardNavigation } from "../Wizard.js"
+import { goNext } from "../Wizard.js"
 import {
   formData,
   MultisigInitEntity,
@@ -23,7 +23,7 @@ export function MultisigInit() {
     resolver: zodResolver(multisigInitSchema),
     mode: "onChange",
   })
-  const { goNext } = useWizardNavigation()
+
   const { value: { members, name, memberCount, threshold } } = formData
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {

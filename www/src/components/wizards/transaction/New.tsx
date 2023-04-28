@@ -8,7 +8,7 @@ import { AddressInput } from "../../AddressInput.js"
 import { Button } from "../../Button.js"
 import { Input } from "../../Input.js"
 import { Table } from "../../Table.js"
-import { useWizardNavigation } from "../Wizard.js"
+import { goNext } from "../Wizard.js"
 import {
   formData,
   TransactionData,
@@ -28,7 +28,6 @@ export function TransactionNew() {
     resolver: zodResolver(transactionSchema),
   })
 
-  const { goNext } = useWizardNavigation()
   const { value } = formData
 
   const onSubmit: SubmitHandler<TransactionData> = (formDataNew) => {

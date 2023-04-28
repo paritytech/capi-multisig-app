@@ -12,7 +12,7 @@ import { Button } from "../../Button.js"
 import { Fee, FeesTable } from "../../FeesTable.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { InputError } from "../../InputError.js"
-import { useWizardNavigation } from "../Wizard.js"
+import { goNext, goPrev } from "../Wizard.js"
 import {
   formData,
   MultisigMemberEntity,
@@ -52,7 +52,6 @@ export function MultisigMembers() {
     resolver: zodResolver(multisigMemberSchema),
     mode: "onChange",
   })
-  const { goNext, goPrev } = useWizardNavigation()
 
   const onSubmit = (formDataNew: MultisigMemberEntity) => {
     updateFormData(formDataNew)

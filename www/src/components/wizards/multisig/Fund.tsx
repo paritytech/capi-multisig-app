@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { Input } from "../../Input.js"
-import { useWizardNavigation } from "../Wizard.js"
+import { goNext, goPrev } from "../Wizard.js"
 import {
   formData,
   MultisigFundEntity,
@@ -21,7 +21,6 @@ export function MultisigFund() {
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
   })
-  const { goNext, goPrev } = useWizardNavigation()
   const { value: { fund } } = formData
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
