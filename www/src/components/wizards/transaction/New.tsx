@@ -10,7 +10,6 @@ import { Input } from "../../Input.js"
 import { Table } from "../../Table.js"
 import { goNext } from "../Wizard.js"
 import {
-  formData,
   TransactionData,
   transactionSchema,
   updateFormData,
@@ -27,8 +26,6 @@ export function TransactionNew() {
   } = useForm<TransactionData>({
     resolver: zodResolver(transactionSchema),
   })
-
-  const { value } = formData
 
   const onSubmit: SubmitHandler<TransactionData> = (formDataNew) => {
     updateFormData({ ...formDataNew })
