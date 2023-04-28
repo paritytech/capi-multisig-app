@@ -12,8 +12,8 @@ import { Button } from "../Button.js"
 import { Fee, FeesTable } from "../FeesTable.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { InputError } from "../InputError.js"
+import { formData, updateFormData } from "./multisigFormData.js"
 import { MultisigMemberEntity, multisigMemberSchema } from "./schemas.js"
-import { useMultisigForm } from "./useMultisigForm.js"
 import { useWizardNavigation } from "./Wizard.js"
 
 const multisigCreationFees: Fee[] = [
@@ -49,7 +49,6 @@ export function MultisigMembers() {
     mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formData, updateFormData } = useMultisigForm()
 
   const onSubmit = (formDataNew: MultisigMemberEntity) => {
     updateFormData(formDataNew)

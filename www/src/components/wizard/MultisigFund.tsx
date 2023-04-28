@@ -3,8 +3,8 @@ import { Controller, useForm } from "react-hook-form"
 import { Button } from "../Button.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { Input } from "../Input.js"
+import { formData, updateFormData } from "./multisigFormData.js"
 import { MultisigFundEntity, multisigFundSchema } from "./schemas.js"
-import { useMultisigForm } from "./useMultisigForm.js"
 import { useWizardNavigation } from "./Wizard.js"
 
 export function MultisigFund() {
@@ -18,7 +18,7 @@ export function MultisigFund() {
     mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formData: { value: { fund } }, updateFormData } = useMultisigForm()
+  const { value: { fund } } = formData
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
     updateFormData(formDataNew)

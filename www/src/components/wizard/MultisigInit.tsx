@@ -6,8 +6,8 @@ import { Button } from "../Button.js"
 import { IconChevronRight } from "../icons/IconChevronRight.js"
 import { Input } from "../Input.js"
 import { InputNumber } from "../InputNumber.js"
+import { formData, updateFormData } from "./multisigFormData.js"
 import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
-import { useMultisigForm } from "./useMultisigForm.js"
 import { useWizardNavigation } from "./Wizard.js"
 
 export function MultisigInit() {
@@ -20,10 +20,7 @@ export function MultisigInit() {
     mode: "onChange",
   })
   const { goNext } = useWizardNavigation()
-  const {
-    formData: { value: { members, name, memberCount, threshold } },
-    updateFormData,
-  } = useMultisigForm()
+  const { value: { members, name, memberCount, threshold } } = formData
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
     if (!members) return

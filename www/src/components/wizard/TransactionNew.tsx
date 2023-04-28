@@ -9,7 +9,7 @@ import { Button } from "../Button.js"
 import { Input } from "../Input.js"
 import { Table } from "../Table.js"
 import { TransactionData, transactionSchema } from "./schemas.js"
-import { useTransactionForm } from "./useTransactionForm.js"
+import { formData, updateFormData } from "./transactionFormData.js"
 import { useWizardNavigation } from "./Wizard.js"
 
 const selectedAccount = signal(defaultAccount.value)
@@ -25,10 +25,7 @@ export function TransactionNew() {
   })
 
   const { goNext } = useWizardNavigation()
-  const {
-    formData: { value: { from } },
-    updateFormData,
-  } = useTransactionForm()
+  const { value } = formData
 
   const onSubmit: SubmitHandler<TransactionData> = (formDataNew) => {
     updateFormData({ ...formDataNew })
