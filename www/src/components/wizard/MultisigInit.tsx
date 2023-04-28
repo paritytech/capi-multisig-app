@@ -7,7 +7,8 @@ import { IconChevronRight } from "../icons/IconChevronRight.js"
 import { Input } from "../Input.js"
 import { InputNumber } from "../InputNumber.js"
 import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
-import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
+import { useMultisigForm } from "./useMultisigForm.js"
+import { useWizardNavigation } from "./Wizard.js"
 
 export function MultisigInit() {
   const {
@@ -22,7 +23,7 @@ export function MultisigInit() {
   const {
     formData: { value: { members, name, memberCount, threshold } },
     updateFormData,
-  } = useWizardFormData()
+  } = useMultisigForm()
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
     if (!members) return
@@ -48,7 +49,7 @@ export function MultisigInit() {
             {...field}
             placeholder="Enter the name..."
             className="w-64"
-            error={errors.name && errors.name.message}
+            error={errors.name?.message}
             label="Multisig name"
             required
           />
@@ -68,7 +69,7 @@ export function MultisigInit() {
               {...field}
               label="Members"
               required
-              error={errors.memberCount && errors.memberCount.message}
+              error={errors.memberCount?.message}
             />
           )}
         />
@@ -82,7 +83,7 @@ export function MultisigInit() {
               {...field}
               label="Threshold"
               required
-              error={errors.threshold && errors.threshold.message}
+              error={errors.threshold?.message}
             />
           )}
         />

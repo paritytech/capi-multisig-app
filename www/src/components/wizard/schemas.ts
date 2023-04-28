@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { isValidAddress } from "../../util/address.js"
 
-export type FormData =
+export type MultisigData =
   & MultisigInitEntity
   & MultisigMemberEntity
   & MultisigFundEntity
@@ -75,4 +75,4 @@ export const transactionSchema = z.object({
       "Provided address is invalid. Please insure you have typed correctly.",
   }),
 })
-export type Transaction = z.infer<typeof transactionSchema>
+export type TransactionData = z.infer<typeof transactionSchema>

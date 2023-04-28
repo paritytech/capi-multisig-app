@@ -4,7 +4,8 @@ import { Button } from "../Button.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
 import { Input } from "../Input.js"
 import { MultisigFundEntity, multisigFundSchema } from "./schemas.js"
-import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
+import { useMultisigForm } from "./useMultisigForm.js"
+import { useWizardNavigation } from "./Wizard.js"
 
 export function MultisigFund() {
   const {
@@ -17,7 +18,7 @@ export function MultisigFund() {
     mode: "onChange",
   })
   const { goNext, goPrev } = useWizardNavigation()
-  const { formData: { value: { fund } }, updateFormData } = useWizardFormData()
+  const { formData: { value: { fund } }, updateFormData } = useMultisigForm()
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
     updateFormData(formDataNew)
@@ -48,7 +49,7 @@ export function MultisigFund() {
             {...field}
             placeholder="0 DOT"
             className="w-48"
-            error={errors.fund && errors.fund.message}
+            error={errors.fund?.message}
             label="Fund the Multisig"
             type="number"
           />

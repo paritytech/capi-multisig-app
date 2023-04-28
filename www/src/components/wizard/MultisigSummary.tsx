@@ -1,9 +1,10 @@
 import { Button } from "../Button.js"
 import { IconChevronLeft } from "../icons/IconChevronLeft.js"
-import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
+import { useMultisigForm } from "./useMultisigForm.js"
+import { useWizardNavigation } from "./Wizard.js"
 
 export function MultisigSummary() {
-  const { formData: { value: { name, fund, members } } } = useWizardFormData()
+  const { formData: { value: { name, fund, members } } } = useMultisigForm()
   const { goPrev } = useWizardNavigation()
 
   return (
