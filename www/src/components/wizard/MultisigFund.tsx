@@ -51,14 +51,6 @@ export function MultisigFund() {
             error={errors.fund && errors.fund.message}
             label="Fund the Multisig"
             type="number"
-            onChange={(
-              { target },
-            ) => {
-              if (target instanceof HTMLInputElement) {
-                const { valueAsNumber } = target
-                field.onChange(Number.isNaN(valueAsNumber) ? 0 : valueAsNumber)
-              }
-            }}
           />
         )}
       />
