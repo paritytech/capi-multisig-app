@@ -1,14 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
-import { accounts, defaultAccount } from "../../signals/accounts.js"
-import { AccountId } from "../AccountId.js"
-import { Button } from "../Button.js"
-import { IconChevronRight } from "../icons/IconChevronRight.js"
-import { Input } from "../Input.js"
-import { InputNumber } from "../InputNumber.js"
-import { formData, updateFormData } from "./multisigFormData.js"
-import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
-import { useWizardNavigation } from "./Wizard.js"
+import { accounts, defaultAccount } from "../../../signals/accounts.js"
+import { AccountId } from "../../AccountId.js"
+import { Button } from "../../Button.js"
+import { IconChevronRight } from "../../icons/IconChevronRight.js"
+import { Input } from "../../Input.js"
+import { InputNumber } from "../../InputNumber.js"
+import { useWizardNavigation } from "../Wizard.js"
+import {
+  formData,
+  MultisigInitEntity,
+  multisigInitSchema,
+  updateFormData,
+} from "./formData.js"
 
 export function MultisigInit() {
   const {

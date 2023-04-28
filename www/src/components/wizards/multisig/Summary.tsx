@@ -1,7 +1,7 @@
-import { Button } from "../Button.js"
-import { IconChevronLeft } from "../icons/IconChevronLeft.js"
-import { formData } from "./multisigFormData.js"
-import { useWizardNavigation } from "./Wizard.js"
+import { Button } from "../../Button.js"
+import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
+import { useWizardNavigation } from "../Wizard.js"
+import { formData } from "./formData.js"
 
 export function MultisigSummary() {
   const { value: { name, fund, members } } = formData

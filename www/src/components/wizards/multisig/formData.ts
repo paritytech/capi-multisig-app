@@ -1,5 +1,7 @@
+import { Signal, signal } from "@preact/signals"
+
 import { z } from "zod"
-import { isValidAddress } from "../../util/address.js"
+import { isValidAddress } from "../../../util/address.js"
 
 export type MultisigData =
   & MultisigInitEntity
@@ -59,20 +61,16 @@ export const multisigFundSchema = z.object({
 
 export type MultisigFundEntity = z.infer<typeof multisigFundSchema>
 
-export const transactionSchema = z.object({
-  amount: z.number({
-    required_error: "Amount is required",
-  }),
-  from: z.object({
-    address: z.string(),
-    name: z.string().optional(),
-    source: z.string(),
-  }).optional().refine((a) => isValidAddress(a?.address), {
-    message: "Invalid address",
-  }),
-  to: z.string().refine((value) => isValidAddress(value), {
-    message:
-      "Provided address is invalid. Please insure you have typed correctly.",
-  }),
-})
-export type TransactionData = z.infer<typeof transactionSchema>
+const initialValues = {
+  name: "",
+  memberCount: 2,
+  threshold: 2,
+  members: [],
+  fund: 1,
+}
+
+export const formData: Signal<MultisigData> = signal(initialValues)
+
+export const updateFormData = (formDataNew: Partial<MultisigData>) => {
+  formData.value = { ...formData.value, ...formDataNew }
+}

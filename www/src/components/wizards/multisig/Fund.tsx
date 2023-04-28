@@ -1,11 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
-import { Button } from "../Button.js"
-import { IconChevronLeft } from "../icons/IconChevronLeft.js"
-import { Input } from "../Input.js"
-import { formData, updateFormData } from "./multisigFormData.js"
-import { MultisigFundEntity, multisigFundSchema } from "./schemas.js"
-import { useWizardNavigation } from "./Wizard.js"
+import { Button } from "../../Button.js"
+import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
+import { Input } from "../../Input.js"
+import { useWizardNavigation } from "../Wizard.js"
+import {
+  formData,
+  MultisigFundEntity,
+  multisigFundSchema,
+  updateFormData,
+} from "./formData.js"
 
 export function MultisigFund() {
   const {

@@ -1,16 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { signal } from "@preact/signals"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { accounts, defaultAccount } from "../../signals/index.js"
-import { AccountId } from "../AccountId.js"
-import { AccountSelect } from "../AccountSelect.js"
-import { AddressInput } from "../AddressInput.js"
-import { Button } from "../Button.js"
-import { Input } from "../Input.js"
-import { Table } from "../Table.js"
-import { TransactionData, transactionSchema } from "./schemas.js"
-import { formData, updateFormData } from "./transactionFormData.js"
-import { useWizardNavigation } from "./Wizard.js"
+import { accounts, defaultAccount } from "../../../signals/index.js"
+import { AccountId } from "../../AccountId.js"
+import { AccountSelect } from "../../AccountSelect.js"
+import { AddressInput } from "../../AddressInput.js"
+import { Button } from "../../Button.js"
+import { Input } from "../../Input.js"
+import { Table } from "../../Table.js"
+import { useWizardNavigation } from "../Wizard.js"
+import {
+  formData,
+  TransactionData,
+  transactionSchema,
+  updateFormData,
+} from "./formData.js"
 
 const selectedAccount = signal(defaultAccount.value)
 

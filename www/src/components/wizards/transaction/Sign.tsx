@@ -1,9 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { Button } from "../Button.js"
-import { TransactionData, transactionSchema } from "./schemas.js"
-import { formData, updateFormData } from "./transactionFormData.js"
-import { useWizardNavigation } from "./Wizard.js"
+import { Button } from "../../Button.js"
+import { useWizardNavigation } from "../Wizard.js"
+import {
+  formData,
+  TransactionData,
+  transactionSchema,
+  updateFormData,
+} from "./formData.js"
 
 export function TransactionSign() {
   const {
