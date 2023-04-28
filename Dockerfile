@@ -15,5 +15,5 @@ COPY . /capi-multisig-app/
 
 RUN pnpm run build:server
 
-EXPOSE 5000
+EXPOSE 5555
 CMD [ "node", "server/dist/main.js" ]
