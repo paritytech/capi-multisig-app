@@ -30,30 +30,19 @@ export function TransactionNew() {
     resolver: zodResolver(transactionSchema),
   })
 
-  const subscription = watch(async ({ amount, to }) => {
-    if (isValid && amount && to) {
-      const addressPubKey = ss58.decode(to)[1]
-      const call = westend.Balances
-        .transferKeepAlive({
-          value: BigInt(amount),
-          dest: MultiAddress.Id(addressPubKey),
-        })
-      const callHash = hex.encode(await call.callHash.run())
-      const callData = hex.encode(await call.callData.run())
-
-      updateFormData({
-        ...formData,
-        callHash,
-        callData,
-      })
-    }
-  })
-
   const onSubmit: SubmitHandler<TransactionData> = async (formDataNew) => {
-    updateFormData({ ...formDataNew })
-    subscription.unsubscribe()
+    const addressPubKey = ss58.decode(formDataNew.to)[1]
+    const call = westend.Balances
+      .transferKeepAlive({
+        value: BigInt(formDataNew.amount),
+        dest: MultiAddress.Id(addressPubKey),
+      })
+    const callHash = hex.encode(await call.callHash.run())
+    const callData = hex.encode(await call.callData.run())
+    updateFormData({ ...formDataNew, callHash, callData })
     goNext()
   }
+
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
       <h2 className="text-black text-xl ">New transaction</h2>
@@ -69,8 +58,8 @@ export function TransactionNew() {
           <div className="space-y-2">
             <Controller
               control={control}
+              defaultValue={formData.value.amount}
               name="amount"
-              defaultValue={0}
               render={({ field }) => (
                 <Input
                   {...field}
@@ -88,7 +77,7 @@ export function TransactionNew() {
             <Controller
               control={control}
               name={`from`}
-              defaultValue={selectedAccount.value}
+              defaultValue={formData.value.from}
               render={({ field }) => (
                 <AccountSelect
                   {...field}
@@ -101,6 +90,7 @@ export function TransactionNew() {
             <p>To:</p>
             <Controller
               control={control}
+              defaultValue={formData.value.to}
               name="to"
               rules={{ required: true }}
               render={({
@@ -121,7 +111,7 @@ export function TransactionNew() {
         </div>
         <div class="pt-4">
           <Table unit="DOT">
-            <Table.Item name="Send" fee={0} />
+            <Table.Item name="Send" fee={watch("amount", 0)} />
           </Table>
         </div>
         <div class="pt-4 flex justify-end">

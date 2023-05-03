@@ -6,7 +6,7 @@ import { isValidAddress } from "../../../util/address.js"
 export const transactionSchema = z.object({
   amount: z.number({
     required_error: "Amount is required",
-  }),
+  }).min(1),
   from: z.object({
     address: z.string(),
     name: z.string().optional(),
