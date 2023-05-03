@@ -4,7 +4,7 @@ import { clsx } from "clsx"
 import type { ForwardedRef } from "preact/compat"
 import { forwardRef } from "preact/compat"
 import { Fragment } from "preact/jsx-runtime"
-import { shortAccountName, shortAddress } from "../util/address.js"
+import { shortAddress } from "../util/address.js"
 import { IconCheck } from "./icons/IconCheck.js"
 import { IconChevronDown } from "./icons/IconChevronDown.js"
 import { Identicon } from "./identicon/Identicon.js"
@@ -45,8 +45,8 @@ export const AccountSelect = forwardRef((
               ? (
                 <>
                   <Identicon value={value.address} size={24} />
-                  <span className="font-semibold overflow-hidden text-ellipsis">
-                    {shortAccountName(value.name)}
+                  <span className="font-semibold truncate">
+                    {value.name}
                   </span>
                 </>
               )
