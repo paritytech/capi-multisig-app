@@ -1,11 +1,42 @@
+import { MultiAddress, westend } from "@capi/westend"
+import { ss58 } from "capi"
+import { pjsSender } from "capi/patterns/compat/pjs_sender"
+import { signature } from "capi/patterns/signature/polkadot"
+import { defaultExtension } from "../../../signals/accounts.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
 import { goPrev } from "../Wizard.js"
 import { formData } from "./formData.js"
 
+const sender = pjsSender(westend, defaultExtension.value?.signer)
+
 export function TransactionSign() {
   const { value: { from, to, amount, callHash } } = formData
+
+  async function sign() {
+    const destPubKey = ss58.decode(to)[1]
+    // const callerPubKey = ss58.decode(from?.address!)[1]
+    // const callerFree = westend.System.Account
+    //   .value(callerPubKey)
+    //   .unhandle(undefined)
+    //   .access("data", "free")
+
+    // const callerFreeInitial = callerFree.run()
+    await westend.Balances
+      .transfer({
+        value: BigInt(amount),
+        dest: MultiAddress.Id(destPubKey),
+      }).signed(signature({ sender: sender(from?.address!) }))
+      .sent()
+      .dbgStatus("Transfer:")
+      .finalizedEvents()
+      .run()
+
+    // const callerFreeAfter = callerFree.run()
+
+    // console.log(callerFreeInitial, callerFreeAfter)
+  }
 
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
@@ -27,7 +58,7 @@ export function TransactionSign() {
           >
             Discard
           </Button>
-          <Button variant="primary">
+          <Button variant="primary" onClick={() => sign()}>
             Sign
           </Button>
         </div>
