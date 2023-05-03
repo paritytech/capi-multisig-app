@@ -18,6 +18,8 @@ export const transactionSchema = z.object({
     message:
       "Provided address is invalid. Please insure you have typed correctly.",
   }),
+  callHash: z.string().optional(),
+  callData: z.string().optional(),
 })
 
 export type TransactionData = z.infer<typeof transactionSchema>

@@ -1,5 +1,7 @@
+import { MultiAddress, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { signal } from "@preact/signals"
+import { hex, ss58 } from "capi"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { accounts, defaultAccount } from "../../../signals/index.js"
 import { AccountId } from "../../AccountId.js"
@@ -10,6 +12,7 @@ import { Input } from "../../Input.js"
 import { Table } from "../../Table.js"
 import { goNext } from "../Wizard.js"
 import {
+  formData,
   TransactionData,
   transactionSchema,
   updateFormData,
@@ -27,8 +30,28 @@ export function TransactionNew() {
     resolver: zodResolver(transactionSchema),
   })
 
-  const onSubmit: SubmitHandler<TransactionData> = (formDataNew) => {
+  const subscription = watch(async ({ amount, to }) => {
+    if (isValid && amount && to) {
+      const addressPubKey = ss58.decode(to)[1]
+      const call = westend.Balances
+        .transferKeepAlive({
+          value: BigInt(amount),
+          dest: MultiAddress.Id(addressPubKey),
+        })
+      const callHash = hex.encode(await call.callHash.run())
+      const callData = hex.encode(await call.callData.run())
+
+      updateFormData({
+        ...formData,
+        callHash,
+        callData,
+      })
+    }
+  })
+
+  const onSubmit: SubmitHandler<TransactionData> = async (formDataNew) => {
     updateFormData({ ...formDataNew })
+    subscription.unsubscribe()
     goNext()
   }
   return (
@@ -98,7 +121,7 @@ export function TransactionNew() {
         </div>
         <div class="pt-4">
           <Table unit="DOT">
-            <Table.Item name="Send" fee={watch("amount", 0)} />
+            <Table.Item name="Send" fee={0} />
           </Table>
         </div>
         <div class="pt-4 flex justify-end">
