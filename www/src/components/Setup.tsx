@@ -15,20 +15,20 @@ export function Setup({ setup }: Props) {
   return (
     <CenteredCard>
       <div className="flex flex-col gap-4">
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center space-x-2">
           <div>
             <Identicon size={48} value={setup.multisig} />
           </div>
 
           <div className="flex flex-col">
-            <div className="space-x-2">
-              <span className="font-bold">{setup.name}</span>
-              <span className="truncate" title={setup.multisig}>
+            <div className="flex flex-row flex-wrap">
+              <div className="font-bold pr-2">{setup.name}</div>
+              <div className="truncate" title={setup.multisig}>
                 {setup.multisig}
-              </span>
+              </div>
             </div>
 
-            <div className="space-x-2 text-sm flex flex-row">
+            <div className="flex flex-row flex-wrap text-sm space-x-2">
               <div>
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
@@ -69,6 +69,7 @@ export function Setup({ setup }: Props) {
             variant="ghost"
             type="submit"
             iconLeft={<IconPlus />}
+            onClick={() => window.location.href = "/new-transaction"}
           >
             New Transaction
           </Button>
