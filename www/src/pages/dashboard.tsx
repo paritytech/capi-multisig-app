@@ -23,8 +23,8 @@ export function Dashboard() {
                 </Button>
               </Link>
             </div>
-            <div className="mt-14 flex flex-wrap gap-2 items-center">
-              <p className="leading-8">Create a Multisig with address</p>
+            <div className="mt-14 flex flex-wrap items-center">
+              <p className="leading-8 mr-2">Create a Multisig with address</p>
               <AccountId account={defaultAccount.value} />
             </div>
             <p className="leading-8">

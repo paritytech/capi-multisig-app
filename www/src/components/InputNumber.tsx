@@ -64,6 +64,7 @@ export const InputNumber = forwardRef(
           </button>
           <input
             type="number"
+            style={{ "-moz-appearance": "textfield" }}
             className={clsx(
               "w-11 border border-l-0 border-r-0 outline-none  focus:ring-0 p-3 focus:outline-none",
               className,

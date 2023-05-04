@@ -1,13 +1,12 @@
 import { Listbox, Transition } from "@headlessui/react"
 import { WalletAccount } from "@talisman-connect/wallets"
 import { clsx } from "clsx"
-import { forwardRef } from "preact/compat"
 import type { ForwardedRef } from "preact/compat"
+import { forwardRef } from "preact/compat"
 import { Fragment } from "preact/jsx-runtime"
-import { shortAccountName, shortAddress } from "../util/address.js"
+import { shortAddress } from "../util/address.js"
 import { IconCheck } from "./icons/IconCheck.js"
 import { IconChevronDown } from "./icons/IconChevronDown.js"
-import { IconChevronUp } from "./icons/IconChevronUp.js"
 import { Identicon } from "./identicon/Identicon.js"
 import { VoidIdenticon } from "./identicon/VoidIdenticon.js"
 
@@ -46,8 +45,8 @@ export const AccountSelect = forwardRef((
               ? (
                 <>
                   <Identicon value={value.address} size={24} />
-                  <span className="font-semibold overflow-hidden text-ellipsis">
-                    {shortAccountName(value.name)}
+                  <span className="font-semibold truncate">
+                    {value.name}
                   </span>
                 </>
               )
@@ -59,9 +58,12 @@ export const AccountSelect = forwardRef((
               )}
 
             <span className="ml-auto text-dimmed">
-              {open
-                ? <IconChevronUp className="w-6 h-6" />
-                : <IconChevronDown className="w-6 h-6" />}
+              <IconChevronDown
+                className={clsx(
+                  "w-6 h-6 transition-transform",
+                  { "rotate-180": open },
+                )}
+              />
             </span>
           </Listbox.Button>
 
@@ -101,23 +103,23 @@ export const AccountSelect = forwardRef((
                           )}
                         >
                           <Identicon value={account.address} size={24} />
-                          <p className="overflow-hidden text-ellipsis">
-                            <span className="font-semibold">
-                              {shortAccountName(account.name)}
-                            </span>
+                          <p
+                            className="truncate font-semibold"
+                            title={account.name}
+                          >
+                            {account.name}
                           </p>
                           <p
                             className={clsx(
-                              "ml-auto overflow-hidden text-ellipsis",
+                              "ml-auto",
                               { "mr-8": !selected },
                             )}
+                            title={account.address}
                           >
-                            <span>
-                              {shortAddress(
-                                account.address,
-                                account.name?.length,
-                              )}
-                            </span>
+                            {shortAddress(
+                              account.address,
+                              account.name?.length,
+                            )}
                           </p>
                           {selected && (
                             <IconCheck className="h-6 w-6 text-dimmed" />
