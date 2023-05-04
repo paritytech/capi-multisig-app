@@ -17,7 +17,7 @@ const httpServer = http.createServer(app)
 const wsServer = new ws.WebSocketServer({ noServer: true })
 const channels: Record<string, Set<ws.WebSocket>> = {}
 
-const port = process.env.PORT ?? 5000
+const port = 5555
 httpServer.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`)
 })
