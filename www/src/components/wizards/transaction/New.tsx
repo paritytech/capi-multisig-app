@@ -28,6 +28,7 @@ export function TransactionNew() {
     watch,
   } = useForm<TransactionData>({
     resolver: zodResolver(transactionSchema),
+    mode: "onChange",
   })
 
   const onSubmit: SubmitHandler<TransactionData> = async (formDataNew) => {

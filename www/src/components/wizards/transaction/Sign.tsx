@@ -16,13 +16,6 @@ export function TransactionSign() {
 
   async function sign() {
     const destPubKey = ss58.decode(to)[1]
-    // const callerPubKey = ss58.decode(from?.address!)[1]
-    // const callerFree = westend.System.Account
-    //   .value(callerPubKey)
-    //   .unhandle(undefined)
-    //   .access("data", "free")
-
-    // const callerFreeInitial = callerFree.run()
     await westend.Balances
       .transfer({
         value: BigInt(amount),
@@ -32,10 +25,6 @@ export function TransactionSign() {
       .dbgStatus("Transfer:")
       .finalizedEvents()
       .run()
-
-    // const callerFreeAfter = callerFree.run()
-
-    // console.log(callerFreeInitial, callerFreeAfter)
   }
 
   return (
