@@ -7,13 +7,24 @@ import { IconInfo } from "./icons/IconInfo.js"
 type Props = JSX.HTMLAttributes<HTMLInputElement> & {
   error?: string
   required?: boolean
+  onChange: (value: number | string) => void
 }
 
 export const Input = forwardRef(
   (
-    { label, required, className, error, ...props }: Props,
+    { label, required, className, error, onChange, type, ...props }: Props,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
+    const handleOnChange: JSX.GenericEventHandler<HTMLInputElement> = (
+      { target },
+    ) => {
+      if (target instanceof HTMLInputElement) {
+        const { valueAsNumber, value } = target
+        type === "number"
+          ? onChange(Number.isNaN(valueAsNumber) ? 0 : valueAsNumber)
+          : onChange(value)
+      }
+    }
     return (
       <div className="flex flex-col mb-4">
         <label className="mb-2">
@@ -28,6 +39,8 @@ export const Input = forwardRef(
           )}
           {...props}
           ref={ref}
+          onChange={(e) => handleOnChange(e)}
+          type={type}
         />
         {error && (
           <div className="text-input-error text-sm mt-1 flex items-center">
