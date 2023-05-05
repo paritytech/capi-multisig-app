@@ -37,11 +37,19 @@ export function TransactionSign() {
         <AccountId account={from} />
         <div>to {to}</div>
       </div>
+      <div className="flex flex-wrap pt-6">
+        <div className="mr-2">Creator</div>
+        <AccountId account={from} />
+      </div>
+      <div className="flex flex-wrap pt-6">
+        <div className="mr-2">Signing as:</div>
+        <AccountId account={from} />
+      </div>
       <div>
         <div class="pt-4 flex justify-end">
           <Button
             variant="danger"
-            onClick={goPrev}
+            onClick={() => goPrev()}
             iconLeft={<IconTrash className="w-6" />}
             className="mr-4"
           >

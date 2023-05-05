@@ -111,7 +111,7 @@ export function TransactionNew() {
           </div>
         </div>
         <div class="pt-4">
-          <Table unit="DOT">
+          <Table unit="WND">
             <Table.Item name="Send" fee={watch("amount", 0)} />
           </Table>
         </div>
