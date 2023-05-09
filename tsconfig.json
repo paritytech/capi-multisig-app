@@ -1,8 +1,5 @@
 {
+  "extends": "./tsconfig.base.json",
   "files": [],
-  "references": [
-    { "path": "www" },
-    { "path": "server" },
-    { "path": "common" }
-  ]
+  "references": [{ "path": "www" }, { "path": "server" }, { "path": "common" }]
 }
