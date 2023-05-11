@@ -7,8 +7,8 @@ import { accounts, defaultAccount } from "../../../signals/index.js"
 import { AccountId } from "../../AccountId.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { AddressInput } from "../../AddressInput.js"
+import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
-import { Input } from "../../Input.js"
 import { Table } from "../../Table.js"
 import { goNext } from "../Wizard.js"
 import {
@@ -62,12 +62,11 @@ export function TransactionNew() {
               defaultValue={formData.value.amount}
               name="amount"
               render={({ field }) => (
-                <Input
+                <BalanceInput
                   {...field}
                   label="Send"
                   required
                   error={errors.amount?.message}
-                  type="number"
                   className="w-1/3"
                 />
               )}
