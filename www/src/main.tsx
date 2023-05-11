@@ -5,6 +5,9 @@ import { Dashboard } from "./pages/dashboard.js"
 import { PageError } from "./pages/error.js"
 import { NewTransaction } from "./pages/new-transaction.js"
 import "./index.css"
+import 'https://github.com/dnlklmn/polkadot-theme/blob/main/global.css'
+import 'https://github.com/dnlklmn/polkadot-theme/blob/main/light.css'
+import 'https://github.com/dnlklmn/polkadot-theme/blob/main/dark.css'
 
 function Main() {
   return <RouterProvider router={router} />

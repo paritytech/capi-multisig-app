@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@config "url(https://github.com/dnlklmn/polkadot-theme/blob/main/tailwind.config.cjs)";
+
 /* latin-ext */
 @font-face {
   font-family: 'Inter';
