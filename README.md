@@ -44,13 +44,13 @@ pnpm install
 Start the dev server
 
 ```
-pnpm run start
+pnpm watch:www
 ```
 
 Build for production
 
 ```
-pnpm run build
+pnpm build
 ```
 
 ## References and Links
