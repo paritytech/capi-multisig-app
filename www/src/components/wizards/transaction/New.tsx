@@ -1,7 +1,8 @@
 import { MultiAddress, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { signal } from "@preact/signals"
+import { signal, useSignal } from "@preact/signals"
 import { hex, ss58 } from "capi"
+import { useEffect } from "preact/hooks"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { accounts, defaultAccount } from "../../../signals/index.js"
 import { AccountId } from "../../AccountId.js"
@@ -43,6 +44,22 @@ export function TransactionNew() {
     updateFormData({ ...formDataNew, callHash, callData })
     goNext()
   }
+
+  const to = watch("to", "")
+  const amount = watch("amount", 0)
+  const fee = useSignal(0)
+  useEffect(function updateFee() {
+    if (!to || !amount) return
+
+    const addressPubKey = ss58.decode(to)[1]
+    westend.Balances
+      .transferKeepAlive({
+        value: BigInt(amount),
+        dest: MultiAddress.Id(addressPubKey),
+      }).estimate().run().then((estimate: BigInt) => {
+        fee.value = Number(estimate)
+      })
+  }, [to, amount])
 
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
@@ -113,6 +130,7 @@ export function TransactionNew() {
         <div class="pt-4">
           <Table unit="WND">
             <Table.Item name="Send" fee={watch("amount", 0)} />
+            <Table.Item name="Transaction Fee" fee={fee.value} />
           </Table>
         </div>
         <div class="pt-4 flex justify-end">
