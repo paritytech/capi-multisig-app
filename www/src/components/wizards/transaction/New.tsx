@@ -3,6 +3,7 @@ import { hex } from "capi"
 import { useEffect } from "preact/hooks"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { accounts } from "../../../signals/index.js"
+import { formatBalance } from "../../../util/balance.js"
 import { AccountId } from "../../AccountId.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { AddressInput } from "../../AddressInput.js"
@@ -112,8 +113,8 @@ export function TransactionNew() {
         </div>
         <div class="pt-4">
           <Table unit="WND">
-            <Table.Item name="Send" fee={watch("amount", 0)} />
-            <Table.Item name="Transaction Fee" fee={fee.value} />
+            <Table.Item name="Send" fee={formData.value.amount} />
+            <Table.Item name="Transaction Fee" fee={formatBalance(fee.value)} />
           </Table>
         </div>
         <div class="pt-4 flex justify-end">

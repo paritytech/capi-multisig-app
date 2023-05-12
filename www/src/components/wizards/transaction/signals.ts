@@ -6,7 +6,7 @@ import { formData } from "./formData.js"
 
 export const selectedAccount = signal(defaultAccount.value)
 export const call = signal<ExtrinsicRune<Westend, never> | undefined>(undefined)
-export const fee: Signal<number> = signal(0)
+export const fee: Signal<bigint> = signal(0n)
 
 effect(() => {
   if (!formData.value.to) return
@@ -19,7 +19,7 @@ effect(() => {
 })
 
 effect(() => {
-  call.value?.estimate().run().then((estimate: BigInt) => {
-    fee.value = Number(estimate)
+  call.value?.estimate().run().then((estimate: bigint) => {
+    fee.value = estimate
   })
 })
