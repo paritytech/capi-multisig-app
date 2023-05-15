@@ -1,7 +1,9 @@
-import { z } from "zod"
-import { isValidAddress } from "../../util/address.js"
+import { Signal, signal } from "@preact/signals"
 
-export type FormData =
+import { z } from "zod"
+import { isValidAddress } from "../../../util/address.js"
+
+export type MultisigData =
   & MultisigInitEntity
   & MultisigMemberEntity
   & MultisigFundEntity
@@ -58,3 +60,17 @@ export const multisigFundSchema = z.object({
 })
 
 export type MultisigFundEntity = z.infer<typeof multisigFundSchema>
+
+const initialValues = {
+  name: "",
+  memberCount: 2,
+  threshold: 2,
+  members: [],
+  fund: 1,
+}
+
+export const formData: Signal<MultisigData> = signal(initialValues)
+
+export const updateFormData = (formDataNew: Partial<MultisigData>) => {
+  formData.value = { ...formData.value, ...formDataNew }
+}

@@ -9,7 +9,7 @@ export async function estimateFee(address: string, value: bigint) {
     value,
     dest: MultiAddress.Id(addressPubKey),
   })
-    .feeEstimate()
+    .estimate()
     .run()
   return fee.partialFee
 }

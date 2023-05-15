@@ -1,5 +1,6 @@
 {
   "name": "root",
+  "type": "module",
   "private": true,
   "workspaces": [
     "common",
@@ -7,12 +8,11 @@
     "www"
   ],
   "dependencies": {
-    "@capi/westend": "https://capi.dev/@v0.1.0-beta.36/2c655e26fc9ba86a/westend.tar",
-    "@capi/westend-dev": "https://capi.dev/@v0.1.0-beta.36/2c655e26fc9ba86a/westend-dev.tar",
+    "@capi/westend": "https://capi.dev/9fccbde64e0e4b10/westend.tar",
     "@headlessui/react": "^1.7.11",
     "@preact/signals": "^1.1.3",
     "@talisman-connect/wallets": "^1.1.3",
-    "capi": "0.1.0-beta.36",
+    "capi": "0.1.0-beta.37",
     "dotenv": "^16.0.3",
     "preact": "^10.12.1",
     "react-hook-form": "^7.43.3",
@@ -37,6 +37,7 @@
     "watch:server": "npm run watch -w server",
     "watch:www": "npm run watch -w www",
     "build": "npm run compile && npm run build -w www",
-    "build:server": "npm run compile -w server"
+    "build:server": "npm run compile -w server",
+    "sync": "capi sync --package-json package.json"
   }
 }

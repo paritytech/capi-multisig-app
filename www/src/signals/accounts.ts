@@ -22,6 +22,15 @@ effect(
     ),
 )
 
+effect(
+  () =>
+    defaultExtension.value
+    && localStorage.setItem(
+      "defaultExtension",
+      JSON.stringify(defaultExtension.value),
+    ),
+)
+
 async function maybeInjectedAccounts() {
   if (!(window as unknown as InjectedWindow).injectedWeb3) throw new Error()
   await getAccounts()
@@ -30,6 +39,7 @@ async function maybeInjectedAccounts() {
 async function getAccounts() {
   const wallet = getWalletBySource("polkadot-js")
   if (wallet) {
+    defaultExtension.value = wallet
     try {
       await wallet.enable("Capi Multisig App")
       // TODO unsubscribe unknown
