@@ -3,7 +3,6 @@ import { AccountId } from "../components/AccountId.js"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
-import { Setup } from "../components/Setup.js"
 import { defaultAccount } from "../signals/accounts.js"
 import { Page } from "./templates/base.js"
 
