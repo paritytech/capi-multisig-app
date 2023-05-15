@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import { MockSetup } from "../../MockData.js"
 import { AccountId } from "../components/AccountId.js"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
@@ -44,10 +43,6 @@ export function Dashboard() {
             </div>
           </div>
         </CenteredCard>
-
-        <div className="flex flex-row flex-wrap items-center justify-center gap-4">
-          {[MockSetup, MockSetup].map((setup) => <Setup setup={setup} />)}
-        </div>
       </div>
     </Page>
   )
