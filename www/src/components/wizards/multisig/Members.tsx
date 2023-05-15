@@ -24,19 +24,19 @@ const multisigCreationFees: Fee[] = [
   {
     name: "Existential deposit PureProxy",
     value: existentialDeposit,
-    displayValue: formatBalance(existentialDeposit),
+    displayValue: `${formatBalance(existentialDeposit)} WND`,
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Existential deposit Multisig",
     value: existentialDeposit,
-    displayValue: formatBalance(existentialDeposit),
+    displayValue: `${formatBalance(existentialDeposit)} WND`,
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Proxy fee",
     value: proxyDepositBase + proxyDepositFactor,
-    displayValue: formatBalance(proxyDepositBase + proxyDepositFactor),
+    displayValue: `${formatBalance(proxyDepositBase + proxyDepositFactor)} WND`,
     info:
       "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
