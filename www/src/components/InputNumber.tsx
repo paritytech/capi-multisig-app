@@ -72,7 +72,7 @@ export const InputNumber = forwardRef(
             )}
             {...props}
             value={value}
-            onChange={handleOnChange}
+            onChange={(e) => handleOnChange(e)}
             ref={ref}
           />
           <button

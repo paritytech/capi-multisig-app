@@ -1,46 +1,51 @@
 import { clsx } from "clsx"
-import { forwardRef } from "preact/compat"
 import type { ForwardedRef } from "preact/compat"
+import { forwardRef } from "preact/compat"
 import type { JSX } from "preact/jsx-runtime"
+import { NumericFormat, NumericFormatProps } from "react-number-format"
 import { IconInfo } from "./icons/IconInfo.js"
 
 type Props = JSX.HTMLAttributes<HTMLInputElement> & {
   error?: string
   required?: boolean
-  onChange: (value: number | string) => void
-}
+  onChange: (value: number) => void
+} & Partial<NumericFormatProps>
 
-export const Input = forwardRef(
+export const BalanceInput = forwardRef(
   (
-    { label, required, className, error, onChange, type, ...props }: Props,
+    {
+      label,
+      required,
+      className,
+      error,
+      onChange,
+      decimalScale = 4,
+      ...props
+    }: Props,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
-    const handleOnChange: JSX.GenericEventHandler<HTMLInputElement> = (
-      { target },
-    ) => {
-      if (target instanceof HTMLInputElement) {
-        const { valueAsNumber, value } = target
-        type === "number"
-          ? onChange(Number.isNaN(valueAsNumber) ? 0 : valueAsNumber)
-          : onChange(value)
-      }
-    }
     return (
       <div className="flex flex-col mb-4">
         <label className="mb-2">
           {label}
           {required && <span className="text-error">*</span>}
         </label>
-        <input
+        <NumericFormat
+          allowLeadingZeros={false}
+          allowNegative={false}
           className={clsx(
             "bg-input-bg rounded-lg border p-3 focus:outline-none",
             error ? "border-2 border-error" : "border-inherit ",
             className,
           )}
+          thousandSeparator
+          thousandsGroupStyle="thousand"
+          getInputRef={ref}
+          decimalScale={decimalScale}
           {...props}
-          ref={ref}
-          onChange={(e) => handleOnChange(e)}
-          type={type}
+          onValueChange={(valueChange) => {
+            onChange(valueChange.floatValue)
+          }}
         />
         {error && (
           <div className="text-input-error text-sm mt-1 flex items-center">

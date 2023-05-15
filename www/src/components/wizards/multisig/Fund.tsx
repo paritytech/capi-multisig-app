@@ -1,10 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
-import { Button } from "../Button.js"
-import { IconChevronLeft } from "../icons/IconChevronLeft.js"
-import { Input } from "../Input.js"
-import { MultisigFundEntity, multisigFundSchema } from "./schemas.js"
-import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
+import { BalanceInput } from "../../BalanceInput.js"
+import { Button } from "../../Button.js"
+import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
+import { goNext, goPrev } from "../Wizard.js"
+import {
+  formData,
+  MultisigFundEntity,
+  multisigFundSchema,
+  updateFormData,
+} from "./formData.js"
 
 export function MultisigFund() {
   const {
@@ -16,8 +21,7 @@ export function MultisigFund() {
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
   })
-  const { goNext, goPrev } = useWizardNavigation()
-  const { formData: { value: { fund } }, updateFormData } = useWizardFormData()
+  const { value: { fund } } = formData
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
     updateFormData(formDataNew)
@@ -44,21 +48,12 @@ export function MultisigFund() {
         name="fund"
         defaultValue={fund}
         render={({ field }) => (
-          <Input
+          <BalanceInput
             {...field}
             placeholder="0 DOT"
             className="w-48"
-            error={errors.fund && errors.fund.message}
+            error={errors.fund?.message}
             label="Fund the Multisig"
-            type="number"
-            onChange={(
-              { target },
-            ) => {
-              if (target instanceof HTMLInputElement) {
-                const { valueAsNumber } = target
-                field.onChange(Number.isNaN(valueAsNumber) ? 0 : valueAsNumber)
-              }
-            }}
           />
         )}
       />
