@@ -9,7 +9,6 @@ import { AccountSelect } from "../../AccountSelect.js"
 import { AddressInput } from "../../AddressInput.js"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
-import { Input } from "../../Input.js"
 import { SumTable } from "../../SumTable.js"
 import { goNext } from "../Wizard.js"
 import {
@@ -112,7 +111,7 @@ export function TransactionNew() {
         </div>
         <div class="pt-4">
           <SumTable unit="WND">
-            <SumTable.Item name="Send" value={watch("amount", 0)} />
+            <SumTable.Item name="Send" value={watch("amount", 0).toString()} />
           </SumTable>
         </div>
         <div class="pt-4 flex justify-end">
