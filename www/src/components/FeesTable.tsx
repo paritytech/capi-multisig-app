@@ -39,7 +39,7 @@ export function FeesTable({ fees }: Props) {
       <Tooltip id="my-tooltip" />
       <div className="flex justify-between border-t pt-4 mt-2">
         <span>Total</span>
-        <span>{formatBalance(total)}</span>
+        <span>{formatBalance(total)} WND</span>
       </div>
     </div>
   )
