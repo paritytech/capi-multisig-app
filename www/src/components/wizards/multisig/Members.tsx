@@ -9,9 +9,9 @@ import {
 } from "../../../util/chain-constants.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
-import { Fee, FeesTable } from "../../FeesTable.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { InputError } from "../../InputError.js"
+import { SumTable } from "../../SumTable.js"
 import { goNext, goPrev } from "../Wizard.js"
 import {
   formData,
@@ -20,7 +20,12 @@ import {
   updateFormData,
 } from "./formData.js"
 
-const multisigCreationFees: Fee[] = [
+const multisigCreationFees: {
+  name: string
+  value: bigint
+  displayValue: string
+  info?: string
+}[] = [
   {
     name: "Existential deposit PureProxy",
     value: existentialDeposit,
@@ -97,7 +102,15 @@ export function MultisigMembers() {
         )
       })}
       {errors.members && <InputError msg={errors.members.message} />}
-      <FeesTable fees={multisigCreationFees} />
+      <SumTable unit="WND">
+        {multisigCreationFees.map((fee) => (
+          <SumTable.Item
+            name={fee.name}
+            value={formatBalance(fee.value)}
+            info={fee.info}
+          />
+        ))}
+      </SumTable>
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div className="flex justify-between">
         <Button

@@ -21,6 +21,6 @@ async function getProxyDepositFactor() {
     .run()
 }
 
-export const proxyDepositBase = await getProxyDepositBase()
-export const proxyDepositFactor = await getProxyDepositFactor()
-export const existentialDeposit = await getExistentialDeposit()
+export const proxyDepositBase: bigint = await getProxyDepositBase()
+export const proxyDepositFactor: bigint = await getProxyDepositFactor()
+export const existentialDeposit: bigint = await getExistentialDeposit()

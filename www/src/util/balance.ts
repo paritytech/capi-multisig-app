@@ -1,18 +1,10 @@
 import { westend } from "@capi/westend"
 import { ss58 } from "capi"
 
-type Token = "DOT" | "KSM" | "WND"
-
 export function formatBalance(
   balance: bigint,
-  { decimalPoints = 4, tokenSymbol = "WND" as Token, chainDecimals = 12 } = {},
+  { precision = 4, chainDecimals = 12 } = {},
 ) {
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: tokenSymbol,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 4,
-  })
   let units = ""
   let decimals = ""
   const str = balance.toString()
@@ -20,14 +12,14 @@ export function formatBalance(
 
   if (diff > 0) {
     units = str.slice(0, diff)
-    decimals = str.slice(diff, diff + decimalPoints)
+    decimals = str.slice(diff, diff + precision)
   } else {
     units = "0"
-    decimals = "0".repeat(Math.abs(diff)).concat(str.slice(0, decimalPoints))
-      .slice(0, decimalPoints)
+    decimals = "0".repeat(Math.abs(diff)).concat(str.slice(0, precision))
+      .slice(0, precision)
   }
 
-  return formatter.format(Number(`${units}.${decimals}`))
+  return Number(`${units}.${decimals}`).toFixed(precision)
 }
 
 export async function getBalance(address: string) {

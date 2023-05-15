@@ -9,7 +9,7 @@ import { AccountSelect } from "../../AccountSelect.js"
 import { AddressInput } from "../../AddressInput.js"
 import { Button } from "../../Button.js"
 import { Input } from "../../Input.js"
-import { Table } from "../../Table.js"
+import { SumTable } from "../../SumTable.js"
 import { goNext } from "../Wizard.js"
 import {
   formData,
@@ -111,9 +111,9 @@ export function TransactionNew() {
           </div>
         </div>
         <div class="pt-4">
-          <Table unit="WND">
-            <Table.Item name="Send" fee={watch("amount", 0)} />
-          </Table>
+          <SumTable unit="WND">
+            <SumTable.Item name="Send" value={watch("amount", 0)} />
+          </SumTable>
         </div>
         <div class="pt-4 flex justify-end">
           <Button type="submit" disabled={!isValid}>
