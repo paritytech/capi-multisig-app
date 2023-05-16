@@ -1,6 +1,19 @@
+import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { ss58 } from "capi"
+import { pjsSender } from "capi/patterns/compat/pjs_sender"
+import { MultisigRune } from "capi/patterns/multisig"
+import {
+  filterPureCreatedEvents,
+  replaceDelegateCalls,
+} from "capi/patterns/proxy"
+import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
-import { accounts } from "../../../signals/accounts.js"
+import {
+  accounts,
+  defaultAccount,
+  defaultExtension,
+} from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
 import {
   existentialDeposit,
@@ -41,6 +54,8 @@ const multisigCreationFees: Fee[] = [
       "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
 ]
+// TODO copied from new-transaction.tsx
+const sender = pjsSender(westend, defaultExtension.value?.signer)
 
 export function MultisigMembers() {
   const {
@@ -52,11 +67,6 @@ export function MultisigMembers() {
     resolver: zodResolver(multisigMemberSchema),
     mode: "onChange",
   })
-
-  const onSubmit = (formDataNew: MultisigMemberEntity) => {
-    updateFormData(formDataNew)
-    goNext()
-  }
 
   const onBack = (formDataNew: MultisigMemberEntity) => {
     updateFormData(formDataNew)
@@ -70,7 +80,88 @@ export function MultisigMembers() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(async (formDataNew: MultisigMemberEntity) => {
+        const { threshold } = formData.value
+        const { members } = formDataNew
+
+        const signatories = members.map((member) => {
+          const [_, addr] = ss58.decode(member?.address!)
+          return addr
+        })
+
+        const multisig: MultisigRune<Westend, never> = MultisigRune.from(
+          westend,
+          {
+            signatories,
+            threshold,
+          },
+        )
+        const multisigAddress = ss58.encode(
+          await westend.addressPrefix().run(),
+          await multisig.accountId.run(),
+        )
+        console.log({ multisigAddress })
+        const defaultSender = sender(defaultAccount.value!.address)
+
+        const existentialDepositMultisig = multisig
+          .fund(existentialDeposit)
+          .signed(signature({ sender: defaultSender }))
+          .sent()
+          .dbgStatus("Funding Multisig:")
+          .transactionStatuses((txStatus: any) => {
+            console.log("txStatus", txStatus)
+            // TODO handle form state here
+            return false
+          })
+
+        const createPureProxy = westend.Proxy.createPure({
+          proxyType: "Any",
+          delay: 0,
+          index: 0,
+        }).signed(signature({ sender: defaultSender }))
+          .sent()
+          .dbgStatus("Create Stash:")
+          .finalizedEvents()
+          .unhandleFailed()
+          .pipe(filterPureCreatedEvents)
+          // TODO typing is broken of capi
+          .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
+          .access(0)
+
+        await existentialDepositMultisig.run()
+        const stash = await createPureProxy.run()
+
+        const depositToPureProxy = westend.Balances
+          .transfer({
+            value: 1_000_000_000_000n,
+            dest: MultiAddress.Id(stash),
+          })
+          .signed(signature({ sender: defaultSender }))
+          .sent()
+          .dbgStatus("Transfer:")
+          .finalized()
+
+        // await depositToPureProxy.run()
+
+        // const replaceDelegates = westend.Utility.batchAll({
+        //   calls: Rune.array(replaceDelegateCalls(
+        //     westend,
+        //     MultiAddress.Id(stash),
+        //     defaultAccount.address,
+        //     multisig.address,
+        //   )),
+        // }).signed(signature({ sender: alexa }))
+        //   .sent()
+        //   .dbgStatus("Ownership swaps:")
+        //   .finalized()
+
+        // await replaceDelegates.run()
+
+        // updateFormData(formDataNew)
+        // goNext()
+      })}
+    >
       <h1 className="text-xl leading-8">2. Members</h1>
       <hr className="border-t border-gray-300 mt-6 mb-4" />
 
