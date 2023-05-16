@@ -53,7 +53,7 @@ Build for production
 pnpm build
 ```
 
-## Run server and/or dynamodb locally as docker services
+## Run server and/or dynamodb locally as docker
 
 Install docker compose
 
