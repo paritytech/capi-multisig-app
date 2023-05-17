@@ -39,7 +39,7 @@
     "build": "npm run compile && npm run build -w www",
     "build:server": "npm run compile -w server",
     "start:docker": "sudo docker-compose up --build --abort-on-container-exit",
-    "start:docker:db": "docker-compose up  --build dynamodb --abort-on-container-exit",
+    "start:docker:db": "docker-compose up  --build --abort-on-container-exit dynamodb",
     "clean:docker": "docker-compose down --rmi all",
     "sync": "capi sync --package-json package.json"
   }
