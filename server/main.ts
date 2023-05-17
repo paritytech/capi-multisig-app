@@ -1,4 +1,4 @@
-import { $input, $result, MultisigSetup, Submit } from "common"
+import { $input, $result, MultisigSetup } from "common"
 import express from "express"
 import * as http from "http"
 import * as ws from "ws"
