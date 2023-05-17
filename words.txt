@@ -38,6 +38,7 @@ trpc
 tsbuildinfo
 twind
 typesafe
+unhandle
 vite
 vmirror
 westend
