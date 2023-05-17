@@ -23,3 +23,5 @@ tsconfig.tsbuildinfo
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+target
