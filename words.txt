@@ -41,3 +41,4 @@ typesafe
 vite
 vmirror
 westend
+dynamodblocal
