@@ -1,6 +1,6 @@
-import { MultiAddress, Westend, westend } from "@capi/westend"
+import { MultiAddress, Westend, westend, WestendProxyRune } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { ss58 } from "capi"
+import { Rune, ss58 } from "capi"
 import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { MultisigRune } from "capi/patterns/multisig"
 import {
@@ -16,9 +16,9 @@ import {
 } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
 import {
-  existentialDeposit,
-  proxyDepositBase,
-  proxyDepositFactor,
+  EXISTENTIAL_DEPOSIT,
+  PROXY_DEPOSIT_BASE,
+  PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
@@ -36,26 +36,26 @@ import {
 const multisigCreationFees: Fee[] = [
   {
     name: "Existential deposit PureProxy",
-    value: existentialDeposit,
-    displayValue: `${formatBalance(existentialDeposit)} WND`,
+    value: EXISTENTIAL_DEPOSIT,
+    displayValue: `${formatBalance(EXISTENTIAL_DEPOSIT)} WND`,
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Existential deposit Multisig",
-    value: existentialDeposit,
-    displayValue: `${formatBalance(existentialDeposit)} WND`,
+    value: EXISTENTIAL_DEPOSIT,
+    displayValue: `${formatBalance(EXISTENTIAL_DEPOSIT)} WND`,
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Proxy fee",
-    value: proxyDepositBase + proxyDepositFactor,
-    displayValue: `${formatBalance(proxyDepositBase + proxyDepositFactor)} WND`,
+    value: PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR,
+    displayValue: `${
+      formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR)
+    } WND`,
     info:
       "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
 ]
-// TODO copied from new-transaction.tsx
-const sender = pjsSender(westend, defaultExtension.value?.signer)
 
 export function MultisigMembers() {
   const {
@@ -82,8 +82,20 @@ export function MultisigMembers() {
   return (
     <form
       onSubmit={handleSubmit(async (formDataNew: MultisigMemberEntity) => {
+        const { signer } = defaultExtension.value || {}
+        const { address: userAddress } = defaultAccount.value || {}
+        if (!signer || !userAddress) {
+          console.error(
+            "No Signer available, make sure wallet is connected and a valid address is selected",
+          )
+          return
+        }
+        const [_, userAddressRaw] = ss58.decode(userAddress)
+        const userSender = pjsSender(westend, signer)(userAddress)
+
         const { threshold } = formData.value
         const { members } = formDataNew
+        console.log({ members: members.map((m) => m?.name) })
 
         const signatories = members.map((member) => {
           const [_, addr] = ss58.decode(member?.address!)
@@ -97,29 +109,47 @@ export function MultisigMembers() {
             threshold,
           },
         )
+
         const multisigAddress = ss58.encode(
           await westend.addressPrefix().run(),
           await multisig.accountId.run(),
         )
-        console.log({ multisigAddress })
-        const defaultSender = sender(defaultAccount.value!.address)
 
-        const existentialDepositMultisig = multisig
-          .fund(existentialDeposit)
-          .signed(signature({ sender: defaultSender }))
-          .sent()
-          .dbgStatus("Funding Multisig:")
-          .transactionStatuses((txStatus: any) => {
-            console.log("txStatus", txStatus)
-            // TODO handle form state here
-            return false
-          })
+        const multisigInfo = await westend.System.Account.value(
+          multisig.accountId,
+        ).run()
+        // `multisigInfo` is undefined for blank accounts
+        const multisigExists = !!multisigInfo
+        if (multisigExists) {
+          // TODO not sure what happens if account value falls
+          // below existential deposit, can this even happen?
+          console.info(
+            `Multisig is already funded ${multisigAddress}`,
+          )
+          console.log({ multisigAddress, multisigInfo })
+        } else {
+          const existentialDepositMultisigCall = multisig
+            .fund(EXISTENTIAL_DEPOSIT)
+            .signed(signature({ sender: userSender }))
+            .sent()
+            .dbgStatus("Funding Multisig:")
+            .transactionStatuses((txStatus: any) => {
+              console.log("txStatus", txStatus)
+              // TODO handle form state here
+              return false
+            })
 
-        const createPureProxy = westend.Proxy.createPure({
+          console.log("Funding Multisig...")
+          await existentialDepositMultisigCall.run()
+          console.log("Multisig funded")
+        }
+
+        // TODO can we check if stash already created? previously?
+        const createStashCall = westend.Proxy.createPure({
           proxyType: "Any",
           delay: 0,
           index: 0,
-        }).signed(signature({ sender: defaultSender }))
+        }).signed(signature({ sender: userSender }))
           .sent()
           .dbgStatus("Create Stash:")
           .finalizedEvents()
@@ -129,37 +159,37 @@ export function MultisigMembers() {
           .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
           .access(0)
 
-        await existentialDepositMultisig.run()
-        const stash = await createPureProxy.run()
+        console.log("Creating Stash...")
+        const stashRaw = await createStashCall.run()
+        const stashAddress = ss58.encode(
+          await westend.addressPrefix().run(),
+          stashRaw,
+        )
+        console.log("New Stash created:", { stashRaw, stashAddress })
 
-        const depositToPureProxy = westend.Balances
-          .transfer({
-            value: 1_000_000_000_000n,
-            dest: MultiAddress.Id(stash),
-          })
-          .signed(signature({ sender: defaultSender }))
+        // TODO can we somehow check if the delegation has already been done?
+        const replaceDelegates = westend.Utility.batchAll({
+          calls: Rune.array(replaceDelegateCalls(
+            westend,
+            MultiAddress.Id(stashRaw), // effecting account
+            MultiAddress.Id(userAddressRaw), // from
+            multisig.address, // to
+          )),
+        }).signed(signature({ sender: userSender }))
           .sent()
-          .dbgStatus("Transfer:")
+          .dbgStatus("Ownership swaps:")
           .finalized()
 
-        // await depositToPureProxy.run()
+        console.log("Replacing delegate...")
+        await replaceDelegates.run()
+        console.log("Delegate replaced!")
 
-        // const replaceDelegates = westend.Utility.batchAll({
-        //   calls: Rune.array(replaceDelegateCalls(
-        //     westend,
-        //     MultiAddress.Id(stash),
-        //     defaultAccount.address,
-        //     multisig.address,
-        //   )),
-        // }).signed(signature({ sender: alexa }))
-        //   .sent()
-        //   .dbgStatus("Ownership swaps:")
-        //   .finalized()
-
-        // await replaceDelegates.run()
-
-        // updateFormData(formDataNew)
-        // goNext()
+        updateFormData({
+          ...formDataNew,
+          address: multisigAddress,
+          stash: stashAddress,
+        })
+        goNext()
       })}
     >
       <h1 className="text-xl leading-8">2. Members</h1>
