@@ -6,6 +6,7 @@ bradlc
 capi
 clsx
 compat
+compressable
 csstools
 dbaeumer
 deno
@@ -38,6 +39,7 @@ trpc
 tsbuildinfo
 twind
 typesafe
+unhandle
 vite
 vmirror
 westend
