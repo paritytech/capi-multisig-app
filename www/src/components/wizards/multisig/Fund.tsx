@@ -24,6 +24,24 @@ export function MultisigFund() {
   const { value: { fund } } = formData
 
   const onSubmit = (formDataNew: MultisigFundEntity) => {
+    const { stash } = formData.value
+    if (!stash) {
+      console.error("No stash account found")
+      return
+    }
+    // TODO needs to be implemented
+    // const fundStashCall = westend.Balances
+    //   .transfer({
+    //     value: amount,
+    //     dest: MultiAddress.Id(stash),
+    //   })
+    //   .signed(signature({ sender: userSender }))
+    //   .sent()
+    //   .dbgStatus("Transfer:")
+    //   .finalized()
+
+    // await fundStashCall.run()
+
     updateFormData(formDataNew)
     goNext()
   }
