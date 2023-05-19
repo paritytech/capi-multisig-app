@@ -157,6 +157,7 @@ export function MultisigMembers() {
 
     await replaceDelegates.run();
 
+    // TODO save to database instead of localstorage
     const multisigSetup = $setup.encode({
       type: "setup",
       id: multisigAddress,
