@@ -5,6 +5,7 @@ import { pjsSender } from "capi/patterns/compat/pjs_sender";
 import { MultisigRune } from "capi/patterns/multisig";
 import { filterPureCreatedEvents, replaceDelegateCalls } from "capi/patterns/proxy";
 import { signature } from "capi/patterns/signature/polkadot";
+import { $setup } from "common";
 import { Controller, useForm } from "react-hook-form";
 import { accounts, defaultAccount, defaultExtension } from "../../../signals/accounts.js";
 import { formatBalance } from "../../../util/balance.js";
@@ -16,16 +17,15 @@ import {
 import { AccountSelect } from "../../AccountSelect.js";
 import { Button } from "../../Button.js";
 import { Fee, FeesTable } from "../../FeesTable.js";
-import { IconChevronLeft } from "../../icons/IconChevronLeft.js";
 import { InputError } from "../../InputError.js";
+import { IconChevronLeft } from "../../icons/IconChevronLeft.js";
 import { goNext, goPrev } from "../Wizard.js";
 import {
-  formData,
   MultisigMemberEntity,
+  formData,
   multisigMemberSchema,
   updateFormData,
 } from "./formData.js";
-import { $setup, Setup } from "common";
 
 const multisigCreationFees: Fee[] = [
   {
