@@ -19,18 +19,18 @@ function Sidebar() {
         <a
           href="/"
           className={clsx(
-            'bg-menu-bg text-menu-active',
-            'group flex items-center rounded-md p-2 text-base font-medium'
+            "bg-menu-bg text-menu-active",
+            "group flex items-center rounded-md p-2 text-base font-medium",
           )}
         >
           <IconMenuMultisig
-            className='mr-3 h-6 w-6 flex-shrink-0'
+            className="mr-3 h-6 w-6 flex-shrink-0"
             aria-hidden="true"
           />
           Multisig
         </a>
       </nav>
-    </div >
+    </div>
   )
 }
 
@@ -41,7 +41,9 @@ export function Page({ children }: Props) {
       <Sidebar />
       <div className="bg-gray-100 w-full">
         <TopBar />
-        {children}
+        <div className="p-4">
+          {children}
+        </div>
       </div>
     </div>
   )

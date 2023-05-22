@@ -19,9 +19,11 @@ export function AccountId(
         className="mr-2"
       />
 
-      <span className="font-bold mr-2">
-        {name}
-      </span>
+      {name && (
+        <span className="font-bold mr-2">
+          {name}
+        </span>
+      )}
 
       <span
         title={address}

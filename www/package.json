@@ -11,6 +11,7 @@
     "preact": "^10.12.1",
     "prettier-plugin-tailwindcss": "^0.2.4",
     "react-hook-form": "^7.43.3",
+    "react-number-format": "^5.1.4",
     "react-router-dom": "^6.8.1",
     "react-tooltip": "^5.10.5",
     "tailwind-merge": "^1.10.0",

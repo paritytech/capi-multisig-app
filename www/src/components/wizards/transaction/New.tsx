@@ -1,14 +1,14 @@
-import { MultiAddress, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { signal } from "@preact/signals"
-import { hex, ss58 } from "capi"
+import { hex } from "capi"
+import { useEffect } from "preact/hooks"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { accounts, defaultAccount } from "../../../signals/index.js"
+import { accounts } from "../../../signals/index.js"
+import { formatBalance } from "../../../util/balance.js"
 import { AccountId } from "../../AccountId.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { AddressInput } from "../../AddressInput.js"
+import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
-import { Input } from "../../Input.js"
 import { Table } from "../../Table.js"
 import { goNext } from "../Wizard.js"
 import {
@@ -17,8 +17,7 @@ import {
   transactionSchema,
   updateFormData,
 } from "./formData.js"
-
-const selectedAccount = signal(defaultAccount.value)
+import { call, fee, selectedAccount } from "./signals.js"
 
 export function TransactionNew() {
   const {
@@ -32,17 +31,19 @@ export function TransactionNew() {
   })
 
   const onSubmit: SubmitHandler<TransactionData> = async (formDataNew) => {
-    const addressPubKey = ss58.decode(formDataNew.to)[1]
-    const call = westend.Balances
-      .transferKeepAlive({
-        value: BigInt(formDataNew.amount),
-        dest: MultiAddress.Id(addressPubKey),
-      })
-    const callHash = hex.encode(await call.callHash.run())
-    const callData = hex.encode(await call.callData.run())
+    if (!call.value) return
+    const callHash = hex.encode(await call.value.callHash.run())
+    const callData = hex.encode(await call.value.callData.run())
     updateFormData({ ...formDataNew, callHash, callData })
     goNext()
   }
+
+  useEffect(() => {
+    const subscription = watch((data) => {
+      updateFormData(data as TransactionData)
+    })
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
@@ -62,12 +63,11 @@ export function TransactionNew() {
               defaultValue={formData.value.amount}
               name="amount"
               render={({ field }) => (
-                <Input
+                <BalanceInput
                   {...field}
                   label="Send"
                   required
                   error={errors.amount?.message}
-                  type="number"
                   className="w-1/3"
                 />
               )}
@@ -112,7 +112,8 @@ export function TransactionNew() {
         </div>
         <div class="pt-4">
           <Table unit="WND">
-            <Table.Item name="Send" fee={watch("amount", 0)} />
+            <Table.Item name="Send" fee={formData.value.amount} />
+            <Table.Item name="Transaction Fee" fee={formatBalance(fee.value)} />
           </Table>
         </div>
         <div class="pt-4 flex justify-end">

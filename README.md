@@ -37,20 +37,39 @@ TypeScript, Capi, Preact, Tailwind, Vite, DynamoDB
 
 Install dependencies
 
-```
+```bash
 pnpm install
 ```
 
 Start the dev server
 
-```
+```bash
 pnpm watch:www
 ```
 
 Build for production
 
-```
+```bash
 pnpm build
+```
+
+## Run server and/or dynamodb locally as docker
+
+Install docker compose
+
+To run the server and dynamodb:
+```bash
+pnpm start:docker 
+```
+
+To only run dynamodb:
+```bash
+pnpm start:docker:db
+```
+
+To clean up composed docker services and remove the created containers and images:
+```bash
+pnpm clean:docker
 ```
 
 ## References and Links
