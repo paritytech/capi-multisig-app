@@ -25,7 +25,10 @@ export function Dashboard() {
             </div>
             <div className="mt-14 flex flex-wrap items-center">
               <p className="leading-8 mr-2">Create a Multisig with address</p>
-              <AccountId account={defaultAccount.value} />
+              <AccountId
+                address={defaultAccount.value?.address}
+                name={defaultAccount.value?.name}
+              />
             </div>
             <p className="leading-8">
               Multi-signature wallets require authorization of transactions
