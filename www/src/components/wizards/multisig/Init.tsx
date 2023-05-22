@@ -1,13 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
-import { accounts, defaultAccount } from "../../signals/accounts.js"
-import { AccountId } from "../AccountId.js"
-import { Button } from "../Button.js"
-import { IconChevronRight } from "../icons/IconChevronRight.js"
-import { Input } from "../Input.js"
-import { InputNumber } from "../InputNumber.js"
-import { MultisigInitEntity, multisigInitSchema } from "./schemas.js"
-import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
+import { accounts, defaultAccount } from "../../../signals/accounts.js"
+import { AccountId } from "../../AccountId.js"
+import { Button } from "../../Button.js"
+import { IconChevronRight } from "../../icons/IconChevronRight.js"
+import { Input } from "../../Input.js"
+import { InputNumber } from "../../InputNumber.js"
+import { goNext } from "../Wizard.js"
+import {
+  formData,
+  MultisigInitEntity,
+  multisigInitSchema,
+  updateFormData,
+} from "./formData.js"
 
 export function MultisigInit() {
   const {
@@ -18,11 +23,8 @@ export function MultisigInit() {
     resolver: zodResolver(multisigInitSchema),
     mode: "onChange",
   })
-  const { goNext } = useWizardNavigation()
-  const {
-    formData: { value: { members, name, memberCount, threshold } },
-    updateFormData,
-  } = useWizardFormData()
+
+  const { value: { members, name, memberCount, threshold } } = formData
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
     if (!members) return
@@ -48,7 +50,7 @@ export function MultisigInit() {
             {...field}
             placeholder="Enter the name..."
             className="w-64"
-            error={errors.name && errors.name.message}
+            error={errors.name?.message}
             label="Multisig name"
             required
           />
@@ -71,7 +73,7 @@ export function MultisigInit() {
               {...field}
               label="Members"
               required
-              error={errors.memberCount && errors.memberCount.message}
+              error={errors.memberCount?.message}
             />
           )}
         />
@@ -85,7 +87,7 @@ export function MultisigInit() {
               {...field}
               label="Threshold"
               required
-              error={errors.threshold && errors.threshold.message}
+              error={errors.threshold?.message}
             />
           )}
         />

@@ -39,7 +39,7 @@ export const Button = ({
         "font-semibold rounded-full",
         "outline-none focus:outline-none",
         {
-          "py-3 px-8": size === "md",
+          "min-w-[160px] py-3 px-8": size === "md",
         },
         {
           "min-w-[300px] h-20 font-bold py-5 px-16 text-2xl": size === "xl",
@@ -59,7 +59,7 @@ export const Button = ({
         {
           "bg-button hover:bg-button/90 text-white": variant === "primary",
         },
-        { "cursor-not-allowed opacity-70": disabled },
+        { "bg-gray-400 hover:bg-gray-300 cursor-not-allowed ": disabled },
         className,
       )}
       disabled={disabled}

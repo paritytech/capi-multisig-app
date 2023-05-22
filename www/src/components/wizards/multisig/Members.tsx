@@ -1,19 +1,24 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
-import { accounts } from "../../signals/accounts.js"
-import { formatBalance } from "../../util/balance.js"
+import { accounts } from "../../../signals/accounts.js"
+import { formatBalance } from "../../../util/balance.js"
 import {
   existentialDeposit,
   proxyDepositBase,
   proxyDepositFactor,
-} from "../../util/chain-constants.js"
-import { AccountSelect } from "../AccountSelect.js"
-import { Button } from "../Button.js"
-import { Fee, FeesTable } from "../FeesTable.js"
-import { IconChevronLeft } from "../icons/IconChevronLeft.js"
-import { InputError } from "../InputError.js"
-import { MultisigMemberEntity, multisigMemberSchema } from "./schemas.js"
-import { useWizardFormData, useWizardNavigation } from "./Wizard.js"
+} from "../../../util/chain-constants.js"
+import { AccountSelect } from "../../AccountSelect.js"
+import { Button } from "../../Button.js"
+import { Fee, FeesTable } from "../../FeesTable.js"
+import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
+import { InputError } from "../../InputError.js"
+import { goNext, goPrev } from "../Wizard.js"
+import {
+  formData,
+  MultisigMemberEntity,
+  multisigMemberSchema,
+  updateFormData,
+} from "./formData.js"
 
 const multisigCreationFees: Fee[] = [
   {
@@ -47,8 +52,6 @@ export function MultisigMembers() {
     resolver: zodResolver(multisigMemberSchema),
     mode: "onChange",
   })
-  const { goNext, goPrev } = useWizardNavigation()
-  const { formData, updateFormData } = useWizardFormData()
 
   const onSubmit = (formDataNew: MultisigMemberEntity) => {
     updateFormData(formDataNew)
