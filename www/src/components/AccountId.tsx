@@ -24,7 +24,7 @@ export function AccountId({ account, shortenAddress = true }: Props) {
           {account.name}
         </span>
       )}
-
+        
       <span
         title={account.address}
         className={clsx({ truncate: shortAddress })}
