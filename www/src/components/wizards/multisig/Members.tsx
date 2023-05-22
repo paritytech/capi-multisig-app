@@ -8,7 +8,6 @@ import {
   replaceDelegateCalls,
 } from "capi/patterns/proxy"
 import { signature } from "capi/patterns/signature/polkadot"
-import { $setup } from "common"
 import { Controller, useForm } from "react-hook-form"
 import {
   accounts,
@@ -21,6 +20,7 @@ import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
+import { storeSetup } from "../../../util/local-storage.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { Fee, FeesTable } from "../../FeesTable.js"
@@ -175,7 +175,7 @@ export function MultisigMembers() {
     await replaceDelegates.run()
 
     // TODO save to database instead of localStorage
-    const multisigSetup = $setup.encode({
+    storeSetup(members.map((m) => m?.address) as string[], {
       type: "setup",
       id: multisigAddress,
       genesisHash: "0x0",
@@ -185,9 +185,6 @@ export function MultisigMembers() {
       multisig: multisigAddress,
       stash: stashAddress,
       history: [],
-    })
-    members.forEach((member) => {
-      localStorage.setItem(member!.address, JSON.stringify(multisigSetup))
     })
 
     updateFormData({
