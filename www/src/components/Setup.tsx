@@ -1,4 +1,3 @@
-import { WalletAccount } from "@talisman-connect/wallets"
 import { Setup as SetupType } from "common"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
@@ -46,10 +45,8 @@ export function Setup({ setup }: Props) {
             {setup.members.map((member, index) => (
               <AccountId
                 shortenAddress={false}
-                account={{
-                  address: member[0],
-                  name: "Member " + (index + 1),
-                } as WalletAccount}
+                address={member[0]}
+                name={"Member " + (index + 1)}
               />
             ))}
           </div>

@@ -55,7 +55,10 @@ export function TransactionNew() {
         <div class="flex flex-col gap-4">
           <div className="space-y-2">
             <p className="mt-4 text-[#321D47]">Initiated by:</p>
-            <AccountId account={selectedAccount.value} />
+            <AccountId
+              address={selectedAccount.value?.address}
+              name={selectedAccount.value?.name}
+            />
           </div>
           <div className="space-y-2">
             <Controller

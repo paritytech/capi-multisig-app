@@ -42,3 +42,4 @@ unhandle
 vite
 vmirror
 westend
+dynamodblocal

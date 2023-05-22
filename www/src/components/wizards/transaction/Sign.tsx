@@ -34,16 +34,16 @@ export function TransactionSign() {
       <div className="pt-6">Existing approvals: 0/?</div>
       <div className="flex flex-wrap pt-6">
         <div className="mr-2">{`Sending ${amount} WND from `}</div>
-        <AccountId account={from} />
+        <AccountId address={from?.address} name={from?.name} />
         <div>to {to}</div>
       </div>
       <div className="flex flex-wrap pt-6">
         <div className="mr-2">Creator</div>
-        <AccountId account={from} />
+        <AccountId address={from?.address} name={from?.name} />
       </div>
       <div className="flex flex-wrap pt-6">
         <div className="mr-2">Signing as:</div>
-        <AccountId account={from} />
+        <AccountId address={from?.address} name={from?.name} />
       </div>
       <div>
         <div class="pt-4 flex justify-end">
