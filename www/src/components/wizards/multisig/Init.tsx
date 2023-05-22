@@ -58,7 +58,10 @@ export function MultisigInit() {
       />
       <label className="mb-2 inline-block">Creator</label>
       <div className="mb-4">
-        <AccountId account={defaultAccount.value} />
+        <AccountId
+          address={defaultAccount.value?.address}
+          name={defaultAccount.value?.name}
+        />
       </div>
       <div className="flex gap-8 justify-start">
         <Controller
