@@ -1,31 +1,38 @@
-import { AccountInfo, MultiAddress, Westend, westend } from "@capi/westend";
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import { Rune, ss58 } from "capi";
-import { pjsSender } from "capi/patterns/compat/pjs_sender";
-import { MultisigRune } from "capi/patterns/multisig";
-import { filterPureCreatedEvents, replaceDelegateCalls } from "capi/patterns/proxy";
-import { signature } from "capi/patterns/signature/polkadot";
-import { $setup } from "common";
-import { Controller, useForm } from "react-hook-form";
-import { accounts, defaultAccount, defaultExtension } from "../../../signals/accounts.js";
-import { formatBalance } from "../../../util/balance.js";
+import { AccountInfo, MultiAddress, Westend, westend } from "@capi/westend"
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { Rune, ss58 } from "capi"
+import { pjsSender } from "capi/patterns/compat/pjs_sender"
+import { MultisigRune } from "capi/patterns/multisig"
+import {
+  filterPureCreatedEvents,
+  replaceDelegateCalls,
+} from "capi/patterns/proxy"
+import { signature } from "capi/patterns/signature/polkadot"
+import { $setup } from "common"
+import { Controller, useForm } from "react-hook-form"
+import {
+  accounts,
+  defaultAccount,
+  defaultExtension,
+} from "../../../signals/accounts.js"
+import { formatBalance } from "../../../util/balance.js"
 import {
   EXISTENTIAL_DEPOSIT,
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
-} from "../../../util/chain-constants.js";
-import { AccountSelect } from "../../AccountSelect.js";
-import { Button } from "../../Button.js";
-import { Fee, FeesTable } from "../../FeesTable.js";
-import { InputError } from "../../InputError.js";
-import { IconChevronLeft } from "../../icons/IconChevronLeft.js";
-import { goNext, goPrev } from "../Wizard.js";
+} from "../../../util/chain-constants.js"
+import { AccountSelect } from "../../AccountSelect.js"
+import { Button } from "../../Button.js"
+import { Fee, FeesTable } from "../../FeesTable.js"
+import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
+import { InputError } from "../../InputError.js"
+import { goNext, goPrev } from "../Wizard.js"
 import {
-  MultisigMemberEntity,
   formData,
+  MultisigMemberEntity,
   multisigMemberSchema,
   updateFormData,
-} from "./formData.js";
+} from "./formData.js"
 
 const multisigCreationFees: Fee[] = [
   {
@@ -43,10 +50,13 @@ const multisigCreationFees: Fee[] = [
   {
     name: "Proxy fee",
     value: PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR,
-    displayValue: `${formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR)} WND`,
-    info: "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
+    displayValue: `${
+      formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR)
+    } WND`,
+    info:
+      "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
-];
+]
 
 export function MultisigMembers() {
   const {
@@ -57,65 +67,69 @@ export function MultisigMembers() {
   } = useForm<MultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
     mode: "onChange",
-  });
+  })
 
   const onBack = (formDataNew: MultisigMemberEntity) => {
-    updateFormData(formDataNew);
-    goPrev();
-  };
+    updateFormData(formDataNew)
+    goPrev()
+  }
 
   const onErrorBack = () => {
-    const formDataWithErrors = getValues();
-    updateFormData(formDataWithErrors);
-    goPrev();
-  };
+    const formDataWithErrors = getValues()
+    updateFormData(formDataWithErrors)
+    goPrev()
+  }
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
-    const { signer } = defaultExtension.value || {};
-    const { address: userAddress } = defaultAccount.value || {};
+    const { signer } = defaultExtension.value || {}
+    const { address: userAddress } = defaultAccount.value || {}
     if (!signer || !userAddress) {
       console.error(
-        "No Signer available, make sure wallet is connected and a valid address is selected"
-      );
-      return;
+        "No Signer available, make sure wallet is connected and a valid address is selected",
+      )
+      return
     }
-    const userSender = pjsSender(westend, signer)(userAddress);
+    const userSender = pjsSender(westend, signer)(userAddress)
 
-    const { threshold } = formData.value;
-    const { members } = formDataNew;
+    const { threshold } = formData.value
+    const { members } = formDataNew
 
     const signatories = members.map((member) => {
-      const [_, addr] = ss58.decode(member?.address!);
-      return addr;
-    });
+      const [_, addr] = ss58.decode(member?.address!)
+      return addr
+    })
 
     const multisig: MultisigRune<Westend, never> = MultisigRune.from(westend, {
       signatories,
       threshold,
-    });
+    })
 
     const multisigAddress = ss58.encode(
       await westend.addressPrefix().run(),
-      await multisig.accountId.run()
-    );
+      await multisig.accountId.run(),
+    )
 
-    const multisigInfo: AccountInfo = await westend.System.Account.value(multisig.accountId).run();
+    const multisigInfo: AccountInfo = await westend.System.Account.value(
+      multisig.accountId,
+    ).run()
     // `multisigInfo` is undefined for blank accounts
-    const multisigExists = !!multisigInfo;
+    const multisigExists = !!multisigInfo
     if (multisigExists) {
       // TODO not sure what happens if account value falls
       // below existential deposit, can this even happen?
 
-      console.info(`Multisig ${multisigAddress} is already funded, skipping existential funding.`);
+      console.info(
+        `Multisig ${multisigAddress} is already funded, skipping existential funding.`,
+      )
     } else {
       const existentialDepositMultisigCall = multisig
         .fund(EXISTENTIAL_DEPOSIT)
         .signed(signature({ sender: userSender }))
         .sent()
         .dbgStatus("Funding Multisig Account:")
-        .finalized();
+        .finalized()
 
-      await existentialDepositMultisigCall.run();
+      await existentialDepositMultisigCall.run()
     }
 
     // TODO can we check if stash already created? previously?
@@ -132,13 +146,16 @@ export function MultisigMembers() {
       .pipe(filterPureCreatedEvents)
       // TODO typing is broken of capi
       .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
-      .access(0);
+      .access(0)
 
-    const stashBytes = await createStashCall.run();
-    const stashAddress = ss58.encode(await westend.addressPrefix().run(), stashBytes);
-    console.info("New Stash created at:", stashAddress);
+    const stashBytes = await createStashCall.run()
+    const stashAddress = ss58.encode(
+      await westend.addressPrefix().run(),
+      stashBytes,
+    )
+    console.info("New Stash created at:", stashAddress)
 
-    const [_, userAddressBytes] = ss58.decode(userAddress);
+    const [_, userAddressBytes] = ss58.decode(userAddress)
     // TODO can we somehow check if the delegation has already been done?
     const replaceDelegates = westend.Utility.batchAll({
       calls: Rune.array(
@@ -146,16 +163,16 @@ export function MultisigMembers() {
           westend,
           MultiAddress.Id(stashBytes), // effected account
           MultiAddress.Id(userAddressBytes), // from
-          multisig.address // to
-        )
+          multisig.address, // to
+        ),
       ),
     })
       .signed(signature({ sender: userSender }))
       .sent()
       .dbgStatus("Replacing Proxy Delegates:")
-      .finalized();
+      .finalized()
 
-    await replaceDelegates.run();
+    await replaceDelegates.run()
 
     // TODO save to database instead of localStorage
     const multisigSetup = $setup.encode({
@@ -168,19 +185,19 @@ export function MultisigMembers() {
       multisig: multisigAddress,
       stash: stashAddress,
       history: [],
-    });
+    })
     members.forEach((member) => {
-      localStorage.setItem(member!.address, JSON.stringify(multisigSetup));
-    });
+      localStorage.setItem(member!.address, JSON.stringify(multisigSetup))
+    })
 
     updateFormData({
       ...formDataNew,
       address: multisigAddress,
       stash: stashAddress,
-    });
+    })
 
-    goNext();
-  };
+    goNext()
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -195,12 +212,14 @@ export function MultisigMembers() {
               control={control}
               name={`members.${i}`}
               defaultValue={member}
-              render={({ field }) => <AccountSelect {...field} accounts={accounts.value} />}
+              render={({ field }) => (
+                <AccountSelect {...field} accounts={accounts.value} />
+              )}
             />
 
             {errors.members && <InputError msg={errors.members[i]?.message} />}
           </div>
-        );
+        )
       })}
       {errors.members && <InputError msg={errors.members.message} />}
       <FeesTable fees={multisigCreationFees} />
@@ -219,5 +238,5 @@ export function MultisigMembers() {
         </Button>
       </div>
     </form>
-  );
+  )
 }
