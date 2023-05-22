@@ -43,24 +43,6 @@ export function Dashboard() {
                 </a>
               </p>
             </div>
-            <div className="mt-14 flex flex-wrap items-center">
-              <p className="leading-8 mr-2">Create a Multisig with address</p>
-              <AccountId
-                address={defaultAccount.value?.address}
-                name={defaultAccount.value?.name}
-              />
-            </div>
-            <p className="leading-8">
-              Multi-signature wallets require authorization of transactions
-              through multiple keys.&nbsp;
-              <a
-                href="https://wiki.polkadot.network/docs/learn-account-multisig"
-                target="_blank"
-                className="text-link hover:text-link/80 underline"
-              >
-                Learn more about multisigs.
-              </a>
-            </p>
           </div>
         </CenteredCard>
       </div>
