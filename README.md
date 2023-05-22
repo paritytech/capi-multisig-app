@@ -58,16 +58,20 @@ pnpm build
 Install docker compose
 
 To run the server and dynamodb:
+
 ```bash
-pnpm start:docker 
+pnpm start:docker
 ```
 
 To only run dynamodb:
+
 ```bash
 pnpm start:docker:db
 ```
 
-To clean up composed docker services and remove the created containers and images:
+To clean up composed docker services and remove the created containers and
+images:
+
 ```bash
 pnpm clean:docker
 ```
