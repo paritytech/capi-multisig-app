@@ -11,7 +11,6 @@ import { transactionData } from "./formData.js"
 
 export function TransactionSign() {
   const { value: { from, to, amount, callHash, setup } } = transactionData
-  console.log({ setup })
 
   function sign() {
     if (!setup || !defaultSender.value || !defaultAccount.value) return
@@ -29,14 +28,12 @@ export function TransactionSign() {
 
     const userAddressBytes = ss58.decode(defaultAccount.value.address)[1]
 
-    const ratify = multisig.ratify(MultiAddress.Id(userAddressBytes), call)
+    multisig.ratify(MultiAddress.Id(userAddressBytes), call)
       .signed(signature({ sender: defaultSender.value }))
       .hex()
       .run().then((result: unknown) => {
         console.log({ result })
       })
-
-    console.log({ ratify })
   }
 
   return (

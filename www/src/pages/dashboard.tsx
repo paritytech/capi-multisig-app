@@ -9,10 +9,6 @@ import { setups } from "../signals/setups.js"
 import { Page } from "./templates/base.js"
 
 export function Dashboard() {
-  const setups = defaultAccount.value
-    ? getStoredSetups(defaultAccount.value.address)
-    : []
-
   return (
     <Page>
       <div className="flex flex-col gap-4">
