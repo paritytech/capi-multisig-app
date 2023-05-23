@@ -13,6 +13,7 @@ import {
   accounts,
   defaultAccount,
   defaultExtension,
+  defaultSender,
 } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
 import {
@@ -81,15 +82,7 @@ export function MultisigMembers() {
   }
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
-    const { signer } = defaultExtension.value || {}
-    const { address: userAddress } = defaultAccount.value || {}
-    if (!signer || !userAddress) {
-      console.error(
-        "No Signer available, make sure wallet is connected and a valid address is selected",
-      )
-      return
-    }
-    const userSender = pjsSender(westend, signer)(userAddress)
+    if (!defaultSender.value || !defaultAccount.value) return
 
     const { threshold } = formData.value
     const { members } = formDataNew
@@ -124,7 +117,7 @@ export function MultisigMembers() {
     } else {
       const existentialDepositMultisigCall = multisig
         .fund(EXISTENTIAL_DEPOSIT)
-        .signed(signature({ sender: userSender }))
+        .signed(signature({ sender: defaultSender.value }))
         .sent()
         .dbgStatus("Funding Multisig Account:")
         .finalized()
@@ -138,7 +131,7 @@ export function MultisigMembers() {
       delay: 0,
       index: 0,
     })
-      .signed(signature({ sender: userSender }))
+      .signed(signature({ sender: defaultSender.value }))
       .sent()
       .dbgStatus("Creating Pure Proxy:")
       .finalizedEvents()
@@ -155,7 +148,7 @@ export function MultisigMembers() {
     )
     console.info("New Stash created at:", stashAddress)
 
-    const [_, userAddressBytes] = ss58.decode(userAddress)
+    const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
     // TODO can we somehow check if the delegation has already been done?
     const replaceDelegates = westend.Utility.batchAll({
       calls: Rune.array(
@@ -167,7 +160,7 @@ export function MultisigMembers() {
         ),
       ),
     })
-      .signed(signature({ sender: userSender }))
+      .signed(signature({ sender: defaultSender.value }))
       .sent()
       .dbgStatus("Replacing Proxy Delegates:")
       .finalized()
