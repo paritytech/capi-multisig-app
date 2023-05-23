@@ -142,6 +142,9 @@ importers:
       '@babel/core':
         specifier: '>=7.12.10 <8.0.0'
         version: 7.12.10
+      '@babel/plugin-transform-react-jsx':
+        specifier: ^7.21.5
+        version: 7.21.5(@babel/core@7.12.10)
       '@preact/preset-vite':
         specifier: ^2.5.0
         version: 2.5.0(@babel/core@7.12.10)(preact@10.12.1)(vite@4.1.4)
