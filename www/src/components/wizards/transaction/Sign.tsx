@@ -1,31 +1,42 @@
 import { MultiAddress, westend } from "@capi/westend"
 import { ss58 } from "capi"
-import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { signature } from "capi/patterns/signature/polkadot"
-import { defaultAccount, defaultExtension } from "../../../signals/accounts.js"
+import { defaultAccount, defaultSender } from "../../../signals/accounts.js"
+import { toMultisigRune } from "../../../util/setup.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
 import { goPrev } from "../Wizard.js"
 import { transactionData } from "./formData.js"
 
-const sender = pjsSender(westend, defaultExtension.value?.signer)
-
 export function TransactionSign() {
   const { value: { from, to, amount, callHash, setup } } = transactionData
   console.log({ setup })
 
-  async function sign() {
-    const destPubKey = ss58.decode(to)[1]
-    await westend.Balances
-      .transfer({
+  function sign() {
+    if (!setup || !defaultSender.value || !defaultAccount.value) return
+
+    const multisig = toMultisigRune(setup)
+
+    // Transfer Call from Stash
+    const call = westend.Proxy.proxy({
+      real: MultiAddress.Id(ss58.decode(setup.stash)[1]),
+      call: westend.Balances.transfer({
+        dest: MultiAddress.Id(ss58.decode(to)[1]),
         value: BigInt(amount),
-        dest: MultiAddress.Id(destPubKey),
-      }).signed(signature({ sender: sender(from?.address!) }))
-      .sent()
-      .dbgStatus("Transfer:")
-      .finalizedEvents()
-      .run()
+      }),
+    })
+
+    const userAddressBytes = ss58.decode(defaultAccount.value.address)[1]
+
+    const ratify = multisig.ratify(MultiAddress.Id(userAddressBytes), call)
+      .signed(signature({ sender: defaultSender.value }))
+      .hex()
+      .run().then((result: unknown) => {
+        console.log({ result })
+      })
+
+    console.log({ ratify })
   }
 
   return (
