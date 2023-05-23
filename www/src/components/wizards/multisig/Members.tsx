@@ -1,7 +1,6 @@
 import { AccountInfo, MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Rune, ss58 } from "capi"
-import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { MultisigRune } from "capi/patterns/multisig"
 import {
   filterPureCreatedEvents,
@@ -12,7 +11,6 @@ import { Controller, useForm } from "react-hook-form"
 import {
   accounts,
   defaultAccount,
-  defaultExtension,
   defaultSender,
 } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
