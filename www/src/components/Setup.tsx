@@ -66,7 +66,9 @@ export function Setup({ setup }: Props) {
             variant="ghost"
             type="submit"
             iconLeft={<IconPlus />}
-            onClick={() => window.location.href = "/new-transaction"}
+            onClick={() =>
+              window.location.href = "/new-transaction?multisig="
+                + setup.multisig}
           >
             New Transaction
           </Button>
