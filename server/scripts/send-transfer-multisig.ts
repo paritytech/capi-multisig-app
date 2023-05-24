@@ -6,8 +6,8 @@ import { $input, $result, deferred } from "common"
 import WebSocket from "ws"
 
 const args = process.argv.slice(2)
-if (args.length < 6) {
-  throw new Error("4 secret keys, threshold and endpoint are required")
+if (args.length < 7) {
+  throw new Error("4 secret keys, threshold, stash and endpoint are required")
 }
 const secret1 = hex.decode(args[0]!)
 const secret2 = hex.decode(args[1]!)
@@ -27,8 +27,7 @@ const multisig: MultisigRune<Westend, never> = MultisigRune.from(westend, {
   threshold,
 })
 
-const davidFree = westend.System.Account
-  .value(david.publicKey)
+const davidFree = westend.System.Account.value(david.publicKey)
   .unhandle(undefined)
   .access("data", "free")
 
@@ -45,7 +44,8 @@ const call = westend.Proxy.proxy({
 
 const encoded: string = await multisig.hex.run()
 
-const bobRatify = await multisig.ratify(bob.address, call)
+const bobRatify = await multisig
+  .ratify(bob.address, call)
   .signed(signature({ sender: bob }))
   .hex()
   .run()
@@ -54,29 +54,36 @@ const bobRatifySuccess = deferred()
 const ws = new WebSocket(endpoint)
 
 ws.on("open", async () => {
-  ws.send($input.encode({
-    type: "subscribe",
-    channel: encoded,
-  }))
+  ws.send(
+    $input.encode({
+      type: "subscribe",
+      channel: encoded,
+    }),
+  )
 
-  ws.send($input.encode({
-    type: "submit",
-    multisigHash: encoded,
-    signedExtrinsic: bobRatify,
-  }))
+  ws.send(
+    $input.encode({
+      type: "submit",
+      multisigHash: encoded,
+      signedExtrinsic: bobRatify,
+    }),
+  )
 
   await bobRatifySuccess
 
-  const charlieRatify = await multisig.ratify(charlie.address, call)
+  const charlieRatify = await multisig
+    .ratify(charlie.address, call)
     .signed(signature({ sender: charlie }))
     .hex()
     .run()
 
-  ws.send($input.encode({
-    type: "submit",
-    multisigHash: encoded,
-    signedExtrinsic: charlieRatify,
-  }))
+  ws.send(
+    $input.encode({
+      type: "submit",
+      multisigHash: encoded,
+      signedExtrinsic: charlieRatify,
+    }),
+  )
 })
 
 ws.on("message", async (message) => {
