@@ -1,8 +1,11 @@
-import { MultiAddress, westend } from "@capi/westend"
-import { ss58 } from "capi"
+import { westend } from "@capi/westend"
 import { signature } from "capi/patterns/signature/polkadot"
 import { defaultAccount, defaultSender } from "../../../signals/accounts.js"
-import { toMultisigRune } from "../../../util/setup.js"
+import {
+  toMultiAddressIdRune,
+  toMultisigRune,
+} from "../../../util/capi-helpers.js"
+
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
@@ -10,30 +13,39 @@ import { goPrev } from "../Wizard.js"
 import { transactionData } from "./formData.js"
 
 export function TransactionSign() {
-  const { value: { from, to, amount, callHash, setup } } = transactionData
+  const { from, to, amount, callHash, setup } = transactionData.peek()
 
   function sign() {
-    if (!setup || !defaultSender.value || !defaultAccount.value) return
-
+    const sender = defaultSender.peek()
+    const account = defaultAccount.peek()
+    if (!setup || !sender || !account) return
     const multisig = toMultisigRune(setup)
+
+    const destination = toMultiAddressIdRune(to)
+    const user = toMultiAddressIdRune(account.address)
+    const stash = toMultiAddressIdRune(setup.stash)
+    const value = BigInt(amount)
 
     // Transfer Call from Stash
     const call = westend.Proxy.proxy({
-      real: MultiAddress.Id(ss58.decode(setup.stash)[1]),
+      real: stash,
       call: westend.Balances.transfer({
-        dest: MultiAddress.Id(ss58.decode(to)[1]),
-        value: BigInt(amount),
+        dest: destination,
+        value: value,
       }),
     })
 
-    const userAddressBytes = ss58.decode(defaultAccount.value.address)[1]
+    console.log({ destination, user, stash, value, call })
 
-    multisig.ratify(MultiAddress.Id(userAddressBytes), call)
-      .signed(signature({ sender: defaultSender.value }))
-      .hex()
-      .run().then((result: unknown) => {
-        console.log({ result })
-      })
+    const ratifyCall = multisig.ratify(user, call)
+      .signed(signature({ sender }))
+      .sent()
+      .dbgStatus("Ratify")
+
+    console.log({ ratifyCall })
+    ratifyCall.run().then((result: unknown) => {
+      console.log({ result })
+    })
   }
 
   return (
