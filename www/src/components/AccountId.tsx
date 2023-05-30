@@ -1,25 +1,36 @@
-import { WalletAccount } from "@talisman-connect/wallets"
+import { clsx } from "clsx"
 import { Identicon } from "../components/identicon/Identicon.js"
 import { shortAddress } from "../util/address.js"
 
 interface Props {
-  account: WalletAccount | undefined
+  name?: string
+  address?: string
+  shortenAddress?: boolean
 }
 
-export function AccountId({ account }: Props) {
-  return account
-    ? (
-      <div className="flex">
-        <Identicon
-          size={24}
-          value={account.address}
-          className="mr-2"
-        />
+export function AccountId(
+  { name = "", address = "", shortenAddress = true }: Props,
+) {
+  return (
+    <div className="flex">
+      <Identicon
+        size={24}
+        value={address}
+        className="mr-2"
+      />
+
+      {name && (
         <span className="font-bold mr-2">
-          {account.name}
+          {name}
         </span>
-        <span>{shortAddress(account.address)}</span>
-      </div>
-    )
-    : null
+      )}
+
+      <span
+        title={address}
+        className={clsx({ truncate: shortenAddress })}
+      >
+        {shortenAddress ? shortAddress(address) : address}
+      </span>
+    </div>
+  )
 }

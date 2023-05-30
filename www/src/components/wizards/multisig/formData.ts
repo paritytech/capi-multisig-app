@@ -10,6 +10,8 @@ export type MultisigData =
 
 export const multisigInitSchema = z.object({
   name: z.string().min(1, "Please enter a name for the multisig setup"),
+  address: z.string().optional(),
+  stash: z.string().optional(),
   memberCount: z.number().gte(2, "The minimum is 2"),
   threshold: z.number().gte(
     2,
@@ -19,14 +21,13 @@ export const multisigInitSchema = z.object({
   (data) => data.memberCount >= data.threshold,
   {
     path: ["threshold"],
-    message: "Value too high.",
+    message: "The threshold must be less or equal to the number of members",
   },
 ).refine(
   (data) => data.memberCount >= data.threshold,
   {
     path: ["members"],
-    message:
-      "The number of members should should not be lesser than the threshold",
+    message: "The number of members must be greater than the threshold",
   },
 )
 

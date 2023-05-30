@@ -1,24 +1,18 @@
-import { MultiAddress, westend } from "@capi/westend"
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { signal } from "@preact/signals"
-import { hex, ss58 } from "capi"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { accounts, defaultAccount } from "../../../signals/index.js"
-import { AccountId } from "../../AccountId.js"
-import { AccountSelect } from "../../AccountSelect.js"
-import { AddressInput } from "../../AddressInput.js"
-import { BalanceInput } from "../../BalanceInput.js"
-import { Button } from "../../Button.js"
-import { SumTable } from "../../SumTable.js"
-import { goNext } from "../Wizard.js"
-import {
-  formData,
-  TransactionData,
-  transactionSchema,
-  updateFormData,
-} from "./formData.js"
-
-const selectedAccount = signal(defaultAccount.value)
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { hex } from "capi";
+import { useEffect } from "preact/hooks";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { accounts } from "../../../signals/index.js";
+import { formatBalance } from "../../../util/balance.js";
+import { AccountId } from "../../AccountId.js";
+import { AccountSelect } from "../../AccountSelect.js";
+import { AddressInput } from "../../AddressInput.js";
+import { BalanceInput } from "../../BalanceInput.js";
+import { Button } from "../../Button.js";
+import { SumTable } from "../../SumTable.js";
+import { goNext } from "../Wizard.js";
+import { formData, TransactionData, transactionSchema, updateFormData } from "./formData.js";
+import { call, fee, selectedAccount } from "./signals.js";
 
 export function TransactionNew() {
   const {
@@ -29,20 +23,22 @@ export function TransactionNew() {
   } = useForm<TransactionData>({
     resolver: zodResolver(transactionSchema),
     mode: "onChange",
-  })
+  });
 
   const onSubmit: SubmitHandler<TransactionData> = async (formDataNew) => {
-    const addressPubKey = ss58.decode(formDataNew.to)[1]
-    const call = westend.Balances
-      .transferKeepAlive({
-        value: BigInt(formDataNew.amount),
-        dest: MultiAddress.Id(addressPubKey),
-      })
-    const callHash = hex.encode(await call.callHash.run())
-    const callData = hex.encode(await call.callData.run())
-    updateFormData({ ...formDataNew, callHash, callData })
-    goNext()
-  }
+    if (!call.value) return;
+    const callHash = hex.encode(await call.value.callHash.run());
+    const callData = hex.encode(await call.value.callData.run());
+    updateFormData({ ...formDataNew, callHash, callData });
+    goNext();
+  };
+
+  useEffect(() => {
+    const subscription = watch((data) => {
+      updateFormData(data as TransactionData);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
@@ -54,7 +50,10 @@ export function TransactionNew() {
         <div class="flex flex-col gap-4">
           <div className="space-y-2">
             <p className="mt-4 text-[#321D47]">Initiated by:</p>
-            <AccountId account={selectedAccount.value} />
+            <AccountId
+              address={selectedAccount.value?.address}
+              name={selectedAccount.value?.name}
+            />
           </div>
           <div className="space-y-2">
             <Controller
@@ -78,12 +77,7 @@ export function TransactionNew() {
               control={control}
               name={`from`}
               defaultValue={formData.value.from}
-              render={({ field }) => (
-                <AccountSelect
-                  {...field}
-                  accounts={accounts.value}
-                />
-              )}
+              render={({ field }) => <AccountSelect {...field} accounts={accounts.value} />}
             />
           </div>
           <div className="space-y-2">
@@ -93,25 +87,16 @@ export function TransactionNew() {
               defaultValue={formData.value.to}
               name="to"
               rules={{ required: true }}
-              render={({
-                field,
-              }) => (
-                <AddressInput
-                  {...field}
-                  placeholder="Address"
-                />
-              )}
+              render={({ field }) => <AddressInput {...field} placeholder="Address" />}
             />
-            {errors.to && (
-              <p className="text-xs text-red-500">
-                {errors.to?.message}
-              </p>
-            )}
+            {errors.to && <p className="text-xs text-red-500">{errors.to?.message}</p>}
           </div>
         </div>
         <div class="pt-4">
           <SumTable unit="WND">
             <SumTable.Item name="Send" value={watch("amount", 0).toString()} />
+            <SumTable.Item name="Send" value={formData.value.amount.toFixed(4)} />
+            <SumTable.Item name="Transaction Fee" value={formatBalance(fee.value)} />
           </SumTable>
         </div>
         <div class="pt-4 flex justify-end">
@@ -121,5 +106,5 @@ export function TransactionNew() {
         </div>
       </form>
     </div>
-  )
+  );
 }
