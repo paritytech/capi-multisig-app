@@ -1,4 +1,4 @@
-import { AccountInfo, MultiAddress, Westend, westend } from "@capi/westend"
+import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
@@ -14,6 +14,7 @@ import {
   defaultSender,
 } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
+import { toPubKey } from "../../../util/capi-helpers.js"
 import {
   EXISTENTIAL_DEPOSIT,
   PROXY_DEPOSIT_BASE,
@@ -85,10 +86,7 @@ export function MultisigMembers() {
     const { threshold } = formData.value
     const { members } = formDataNew
 
-    const signatories = members.map((member) => {
-      const [_, addr] = ss58.decode(member?.address!)
-      return addr
-    })
+    const signatories = members.map((member) => toPubKey(member!.address))
 
     const multisig: MultisigRune<Westend, never> = MultisigRune.from(westend, {
       signatories,
@@ -100,7 +98,7 @@ export function MultisigMembers() {
       await multisig.accountId.run(),
     )
 
-    const multisigInfo: AccountInfo = await westend.System.Account.value(
+    const multisigInfo = await westend.System.Account.value(
       multisig.accountId,
     ).run()
     // `multisigInfo` is undefined for blank accounts
@@ -139,7 +137,7 @@ export function MultisigMembers() {
       .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
       .access(0)
 
-    const stashBytes = await createStashCall.run()
+    const stashBytes = await createStashCall.run() as Uint8Array
     const stashAddress = ss58.encode(
       await westend.addressPrefix().run(),
       stashBytes,

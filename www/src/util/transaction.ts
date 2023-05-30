@@ -11,5 +11,5 @@ export async function estimateFee(address: string, value: bigint) {
   })
     .estimate()
     .run()
-  return fee.partialFee
+  return fee
 }

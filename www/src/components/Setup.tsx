@@ -1,4 +1,6 @@
 import { Setup as SetupType } from "common"
+
+import { toMultisigRune } from "../util/capi-helpers.js"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
@@ -11,6 +13,11 @@ interface Props {
 }
 
 export function Setup({ setup }: Props) {
+  const multisig = toMultisigRune(setup)
+  multisig.proposals(5).run().then((proposals: unknown) => {
+    console.log({ proposals })
+  })
+
   return (
     <CenteredCard>
       <div className="flex flex-col gap-4">
