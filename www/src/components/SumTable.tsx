@@ -6,12 +6,12 @@ import { IconInfo } from "./icons/IconInfo.js"
 
 type SumTableProps = {
   unit: string
-  children: VNode<ItemProps>[] | VNode<ItemProps>
+  children: VNode<RowProps>[] | VNode<RowProps>
 }
 
 export function SumTable({ unit, children }: SumTableProps) {
   const [items, totalFee] = useMemo(() => {
-    let items = toChildArray(children) as VNode<ItemProps>[]
+    let items = toChildArray(children) as VNode<RowProps>[]
     const totalFee = items.reduce(
       (total: number, { props: { value } }) => {
         return total + Number(value)
@@ -43,14 +43,16 @@ export function SumTable({ unit, children }: SumTableProps) {
   )
 }
 
-type ItemProps = {
+export interface Row {
   name: string
   value: string
   info?: string
   unit?: string
 }
 
-function Item({ name, value, info, unit }: ItemProps) {
+interface RowProps extends Row {}
+
+function Row({ name, value, info, unit }: RowProps) {
   return (
     <div className="pb-4 px-6 flex justify-between">
       <dt className={"flex flex-row justify-center items-center"}>
@@ -70,4 +72,4 @@ function Item({ name, value, info, unit }: ItemProps) {
   )
 }
 
-SumTable.Item = Item
+SumTable.Row = Row

@@ -25,7 +25,7 @@ import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { InputError } from "../../InputError.js"
-import { SumTable } from "../../SumTable.js"
+import { Row, SumTable } from "../../SumTable.js"
 import { goNext, goPrev } from "../Wizard.js"
 import {
   formData,
@@ -34,30 +34,22 @@ import {
   updateFormData,
 } from "./formData.js"
 
-const multisigCreationFees: {
-  name: string
-  value: bigint
-  displayValue: string
-  info?: string
-}[] = [
+const multisigCreationFees: Row[] = [
   {
     name: "Existential deposit PureProxy",
-    value: EXISTENTIAL_DEPOSIT,
-    displayValue: `${formatBalance(EXISTENTIAL_DEPOSIT)} WND`,
+
+    value: formatBalance(EXISTENTIAL_DEPOSIT),
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Existential deposit Multisig",
-    value: EXISTENTIAL_DEPOSIT,
-    displayValue: `${formatBalance(EXISTENTIAL_DEPOSIT)} WND`,
+
+    value: formatBalance(EXISTENTIAL_DEPOSIT),
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Proxy fee",
-    value: PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR,
-    displayValue: `${
-      formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR)
-    } WND`,
+    value: formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR),
     info:
       "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
@@ -226,10 +218,8 @@ export function MultisigMembers() {
       {errors.members && <InputError msg={errors.members.message} />}
       <SumTable unit="WND">
         {multisigCreationFees.map((fee) => (
-          <SumTable.Item
-            name={fee.name}
-            value={formatBalance(fee.value)}
-            info={fee.info}
+          <SumTable.Row
+            {...fee}
           />
         ))}
       </SumTable>
