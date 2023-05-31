@@ -37,12 +37,13 @@ export function TransactionSign() {
 
     console.log({ destination, user, stash, value, call })
 
-    const ratifyCall = multisig.ratify(user, call)
+    const ratifyCall = multisig
+      .ratify(user, call)
       .signed(signature({ sender }))
       .sent()
       .dbgStatus("Ratify")
+      .finalized()
 
-    console.log({ ratifyCall })
     ratifyCall.run().then((result: unknown) => {
       console.log({ result })
     })
