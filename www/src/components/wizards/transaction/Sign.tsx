@@ -6,6 +6,8 @@ import {
   toMultisigRune,
 } from "../../../util/capi-helpers.js"
 
+import { useState } from "preact/hooks"
+import { useNavigate } from "react-router-dom"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
@@ -13,14 +15,17 @@ import { goPrev } from "../Wizard.js"
 import { transactionData } from "./formData.js"
 
 export function TransactionSign() {
+  const [isSubmitting, setSubmitting] = useState(false)
   const { from, to, amount, callHash, setup } = transactionData.peek()
+  const navigate = useNavigate()
 
   function sign() {
     const sender = defaultSender.peek()
     const account = defaultAccount.peek()
     if (!setup || !sender || !account) return
-    const multisig = toMultisigRune(setup)
+    setSubmitting(true)
 
+    const multisig = toMultisigRune(setup)
     const destination = toMultiAddressIdRune(to)
     const user = toMultiAddressIdRune(account.address)
     const stash = toMultiAddressIdRune(setup.stash)
@@ -35,8 +40,6 @@ export function TransactionSign() {
       }),
     })
 
-    console.log({ destination, user, stash, value, call })
-
     const ratifyCall = multisig
       .ratify(user, call)
       .signed(signature({ sender }))
@@ -44,9 +47,16 @@ export function TransactionSign() {
       .dbgStatus("Ratify")
       .finalized()
 
-    ratifyCall.run().then((result: unknown) => {
-      console.log({ result })
-    })
+    ratifyCall
+      .run()
+      .then(() => {
+        setSubmitting(false)
+        navigate("/")
+      })
+      .catch((exception) => {
+        console.error(exception)
+        setSubmitting(false)
+      })
   }
 
   return (
@@ -74,13 +84,14 @@ export function TransactionSign() {
         <div class="pt-4 flex justify-end">
           <Button
             variant="danger"
-            onClick={() => goPrev()}
+            onClick={goPrev}
             iconLeft={<IconTrash className="w-6" />}
             className="mr-4"
+            disabled={isSubmitting}
           >
             Discard
           </Button>
-          <Button variant="primary" onClick={() => sign()}>
+          <Button variant="primary" onClick={sign} disabled={isSubmitting}>
             Sign
           </Button>
         </div>
