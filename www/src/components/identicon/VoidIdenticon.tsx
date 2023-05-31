@@ -1,4 +1,4 @@
-import type { JSX } from 'preact/jsx-runtime'
+import type { JSX } from "preact/jsx-runtime"
 
 export const VoidIdenticon = (
   props: JSX.IntrinsicAttributes & JSX.SVGAttributes<SVGSVGElement>,
