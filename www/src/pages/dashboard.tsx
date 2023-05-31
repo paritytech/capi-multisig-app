@@ -3,10 +3,16 @@ import { AccountId } from "../components/AccountId.js"
 import { Button } from "../components/Button.js"
 import { CenteredCard } from "../components/CenteredCard.js"
 import { IconPlus } from "../components/icons/IconPlus.js"
+import { Setup } from "../components/Setup.js"
 import { defaultAccount } from "../signals/accounts.js"
+import { getStoredSetups } from "../util/local-storage.js"
 import { Page } from "./templates/base.js"
 
 export function Dashboard() {
+  const setups = defaultAccount.value
+    ? getStoredSetups(defaultAccount.value.address)
+    : []
+
   return (
     <Page>
       <div className="flex flex-col gap-4">
@@ -26,7 +32,10 @@ export function Dashboard() {
               </div>
               <div className="mt-14 flex flex-wrap items-center">
                 <p className="leading-8 mr-2">Create a Multisig with address</p>
-                <AccountId account={defaultAccount.value} />
+                <AccountId
+                  address={defaultAccount.value?.address}
+                  name={defaultAccount.value?.name}
+                />
               </div>
               <p className="leading-8">
                 Multi-signature wallets require authorization of transactions
@@ -42,6 +51,10 @@ export function Dashboard() {
             </div>
           </div>
         </CenteredCard>
+
+        <div className="flex flex-col gap-4">
+          {setups.map((setup) => <Setup setup={setup} />)}
+        </div>
       </div>
     </Page>
   )

@@ -62,6 +62,10 @@ export const $setup: $.Codec<Setup> = $.object(
   $.field("history", $.array($historyItem)),
 )
 
+export function isSetup(setup: unknown): setup is Setup {
+  return $.is($setup, setup)
+}
+
 export interface Account {
   type: "account"
   /** hex-encoded accountId */
