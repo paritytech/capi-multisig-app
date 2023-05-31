@@ -1,6 +1,5 @@
 import { Setup as SetupType } from "common"
 
-import { toMultisigRune } from "../util/capi-helpers.js"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
@@ -13,11 +12,6 @@ interface Props {
 }
 
 export function Setup({ setup }: Props) {
-  const multisig = toMultisigRune(setup)
-  multisig.proposals(5).run().then((proposals: unknown) => {
-    console.log({ proposals })
-  })
-
   return (
     <CenteredCard>
       <div className="flex flex-col gap-4">
@@ -62,10 +56,7 @@ export function Setup({ setup }: Props) {
         <hr className="divide-x-0 divide-gray-300 m-2" />
 
         <div className="flex flex-row justify-between">
-          <Button
-            variant="ghost"
-            type="submit"
-          >
+          <Button variant="ghost" type="submit">
             Contract
           </Button>
 
@@ -73,9 +64,8 @@ export function Setup({ setup }: Props) {
             variant="ghost"
             type="submit"
             iconLeft={<IconPlus />}
-            onClick={() =>
-              window.location.href = "/new-transaction?multisig="
-                + setup.multisig}
+            onClick={() => (window.location.href = "/new-transaction?multisig="
+              + setup.multisig)}
           >
             New Transaction
           </Button>
