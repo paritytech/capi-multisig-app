@@ -23,9 +23,9 @@ import {
 import { storeSetup } from "../../../util/local-storage.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
-import { Fee, FeesTable } from "../../FeesTable.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { InputError } from "../../InputError.js"
+import { Row, SumTable } from "../../SumTable.js"
 import { goNext, goPrev } from "../Wizard.js"
 import {
   formData,
@@ -34,25 +34,22 @@ import {
   updateFormData,
 } from "./formData.js"
 
-const multisigCreationFees: Fee[] = [
+const multisigCreationFees: Row[] = [
   {
     name: "Existential deposit PureProxy",
-    value: EXISTENTIAL_DEPOSIT,
-    displayValue: `${formatBalance(EXISTENTIAL_DEPOSIT)} WND`,
+
+    value: formatBalance(EXISTENTIAL_DEPOSIT),
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Existential deposit Multisig",
-    value: EXISTENTIAL_DEPOSIT,
-    displayValue: `${formatBalance(EXISTENTIAL_DEPOSIT)} WND`,
+
+    value: formatBalance(EXISTENTIAL_DEPOSIT),
     info: "Amount to pay in order to keep the account alive",
   },
   {
     name: "Proxy fee",
-    value: PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR,
-    displayValue: `${
-      formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR)
-    } WND`,
+    value: formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR),
     info:
       "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
@@ -208,7 +205,13 @@ export function MultisigMembers() {
         )
       })}
       {errors.members && <InputError msg={errors.members.message} />}
-      <FeesTable fees={multisigCreationFees} />
+      <SumTable unit="WND">
+        {multisigCreationFees.map((fee) => (
+          <SumTable.Row
+            {...fee}
+          />
+        ))}
+      </SumTable>
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div className="flex justify-between">
         <Button
