@@ -9,7 +9,7 @@ import { AccountSelect } from "../../AccountSelect.js"
 import { AddressInput } from "../../AddressInput.js"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
-import { Table } from "../../Table.js"
+import { SumTable } from "../../SumTable.js"
 import { goNext } from "../Wizard.js"
 import {
   formData,
@@ -83,10 +83,7 @@ export function TransactionNew() {
               name={`from`}
               defaultValue={formData.value.from}
               render={({ field }) => (
-                <AccountSelect
-                  {...field}
-                  accounts={accounts.value}
-                />
+                <AccountSelect {...field} accounts={accounts.value} />
               )}
             />
           </div>
@@ -97,27 +94,27 @@ export function TransactionNew() {
               defaultValue={formData.value.to}
               name="to"
               rules={{ required: true }}
-              render={({
-                field,
-              }) => (
-                <AddressInput
-                  {...field}
-                  placeholder="Address"
-                />
+              render={({ field }) => (
+                <AddressInput {...field} placeholder="Address" />
               )}
             />
             {errors.to && (
-              <p className="text-xs text-red-500">
-                {errors.to?.message}
-              </p>
+              <p className="text-xs text-red-500">{errors.to?.message}</p>
             )}
           </div>
         </div>
         <div class="pt-4">
-          <Table unit="WND">
-            <Table.Item name="Send" fee={formData.value.amount} />
-            <Table.Item name="Transaction Fee" fee={formatBalance(fee.value)} />
-          </Table>
+          <SumTable unit="WND">
+            <SumTable.Row name="Send" value={watch("amount", 0).toString()} />
+            <SumTable.Row
+              name="Send"
+              value={formData.value.amount.toFixed(4)}
+            />
+            <SumTable.Row
+              name="Transaction Fee"
+              value={formatBalance(fee.value)}
+            />
+          </SumTable>
         </div>
         <div class="pt-4 flex justify-end">
           <Button type="submit" disabled={!isValid}>
