@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     target: "esnext",
     rollupOptions: {
-      external: ["node:fs/promises", "node:stream"],
+      shimMissingExports: true,
     },
   },
   optimizeDeps: {
