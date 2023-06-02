@@ -13,4 +13,7 @@ export default defineConfig({
   optimizeDeps: {
     esbuildOptions: { target: "es2022" },
   },
+  define: {
+    process: { env: {} },
+  },
 });
