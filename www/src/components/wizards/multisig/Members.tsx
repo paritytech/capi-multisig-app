@@ -16,7 +16,6 @@ import {
 } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
 import {
-  EXISTENTIAL_DEPOSIT,
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
@@ -35,18 +34,6 @@ import {
 } from "./formData.js"
 
 const multisigCreationFees: Row[] = [
-  {
-    name: "Existential deposit PureProxy",
-
-    value: formatBalance(EXISTENTIAL_DEPOSIT),
-    info: "Amount to pay in order to keep the account alive",
-  },
-  {
-    name: "Existential deposit Multisig",
-
-    value: formatBalance(EXISTENTIAL_DEPOSIT),
-    info: "Amount to pay in order to keep the account alive",
-  },
   {
     name: "Proxy fee",
     value: formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR),
