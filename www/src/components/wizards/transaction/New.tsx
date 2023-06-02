@@ -60,10 +60,10 @@ export function TransactionNew() {
     address: s.multisig,
     source: "",
   }))
-  let [searchParams] = useSearchParams()
-  const defaultFromAccount = !searchParams.get("multisig")
-    ? undefined
-    : fromAccounts.find((a) => a.address === searchParams.get("multisig"))
+  let queryMultisig = useSearchParams()[0].get("multisig")
+  const defaultFromAccount = queryMultisig
+    ? fromAccounts.find((a) => a.address === queryMultisig)
+    : undefined
 
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
