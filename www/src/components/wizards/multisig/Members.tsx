@@ -106,29 +106,6 @@ export function MultisigMembers() {
       await multisig.accountId.run(),
     )
 
-    const multisigInfo = (await westend.System.Account.value(
-      multisig.accountId,
-    ).run()) as AccountInfo
-    // `multisigInfo` is undefined for blank accounts
-    const multisigExists = !!multisigInfo
-    if (multisigExists) {
-      // TODO not sure what happens if account value falls
-      // below existential deposit, can this even happen?
-
-      console.info(
-        `Multisig ${multisigAddress} is already funded, skipping existential funding.`,
-      )
-    } else {
-      const existentialDepositMultisigCall = multisig
-        .fund(EXISTENTIAL_DEPOSIT)
-        .signed(signature({ sender: userSender }))
-        .sent()
-        .dbgStatus("Funding Multisig Account:")
-        .finalized()
-
-      await existentialDepositMultisigCall.run()
-    }
-
     // TODO can we check if stash already created? previously?
     const createStashCall = westend.Proxy.createPure({
       proxyType: "Any",
