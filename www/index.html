@@ -15,6 +15,11 @@
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      // TODO remove once closed https://github.com/paritytech/capi/issues/1038
+      // temporary capi workaround
+      window.process = { env: {} };
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

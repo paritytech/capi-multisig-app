@@ -106,9 +106,9 @@ export function MultisigMembers() {
       await multisig.accountId.run(),
     )
 
-    const multisigInfo: AccountInfo = await westend.System.Account.value(
+    const multisigInfo = (await westend.System.Account.value(
       multisig.accountId,
-    ).run()
+    ).run()) as AccountInfo
     // `multisigInfo` is undefined for blank accounts
     const multisigExists = !!multisigInfo
     if (multisigExists) {
@@ -145,7 +145,7 @@ export function MultisigMembers() {
       .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
       .access(0)
 
-    const stashBytes = await createStashCall.run()
+    const stashBytes = (await createStashCall.run()) as Uint8Array
     const stashAddress = ss58.encode(
       await westend.addressPrefix().run(),
       stashBytes,
@@ -217,11 +217,7 @@ export function MultisigMembers() {
       })}
       {errors.members && <InputError msg={errors.members.message} />}
       <SumTable unit="WND">
-        {multisigCreationFees.map((fee) => (
-          <SumTable.Row
-            {...fee}
-          />
-        ))}
+        {multisigCreationFees.map((fee) => <SumTable.Row {...fee} />)}
       </SumTable>
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div className="flex justify-between">
