@@ -25,3 +25,6 @@ tsconfig.tsbuildinfo
 !.elasticbeanstalk/*.global.yml
 
 target
+
+#docker
+.docker

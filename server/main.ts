@@ -4,12 +4,25 @@ import { $input, $result, Submit } from "common"
 import express from "express"
 import * as http from "http"
 import * as ws from "ws"
+import { ApiController } from "./controllers.js"
+import { createTablesIfNotExist } from "./dynamoDB/table.js"
 
 const app = express()
 
-app.get("/", (_, res) => {
-  res.status(200)
-  res.send()
+app.get("/", async (_, res) => {
+  try {
+    await createTablesIfNotExist()
+    await ApiController.createAccount({
+      type: "account",
+      id: "mine",
+      setups: ["setup"],
+    })
+    res.status(200)
+    res.send("happy!")
+  } catch (err) {
+    res.status(500)
+    res.send(err)
+  }
 })
 
 const httpServer = http.createServer(app)
