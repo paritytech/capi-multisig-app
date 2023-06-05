@@ -1,5 +1,7 @@
-import { effect, signal } from "@preact/signals"
+import { westend } from "@capi/westend"
+import { computed, effect, signal } from "@preact/signals"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
+import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { retrieveStored } from "../util/local-storage.js"
 import { retry } from "../util/retry.js"
 
@@ -12,7 +14,13 @@ const storedAccount = retrieveStored("defaultAccount")
 const storedExtension = retrieveStored("defaultExtension")
 const defaultAccount = signal(storedAccount)
 const defaultExtension = signal(storedExtension)
+const defaultSender = computed(() => {
+  const { signer } = defaultExtension.value || {}
+  const { address: userAddress } = defaultAccount.value || {}
+  if (!signer || !userAddress) return
 
+  return pjsSender(westend, signer)(userAddress)
+})
 effect(
   () =>
     defaultAccount.value
@@ -62,4 +70,4 @@ await retry(maybeInjectedAccounts, {
   retryIntervalMs: 300,
 })
 
-export { accounts, defaultAccount, defaultExtension }
+export { accounts, defaultAccount, defaultExtension, defaultSender }

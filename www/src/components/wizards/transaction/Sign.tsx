@@ -1,37 +1,69 @@
-import { MultiAddress, westend } from "@capi/westend"
-import { ss58 } from "capi"
-import { pjsSender } from "capi/patterns/compat/pjs_sender"
+import { westend } from "@capi/westend"
 import { signature } from "capi/patterns/signature/polkadot"
-import { defaultExtension } from "../../../signals/accounts.js"
+import { defaultAccount, defaultSender } from "../../../signals/accounts.js"
+import {
+  toMultiAddressIdRune,
+  toMultisigRune,
+} from "../../../util/capi-helpers.js"
+
+import { useState } from "preact/hooks"
+import { useNavigate } from "react-router-dom"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
 import { goPrev } from "../Wizard.js"
-import { formData } from "./formData.js"
-
-const sender = pjsSender(westend, defaultExtension.value?.signer)
+import { transactionData } from "./formData.js"
 
 export function TransactionSign() {
-  const { value: { from, to, amount, callHash } } = formData
+  const [isSubmitting, setSubmitting] = useState(false)
+  const { from, to, amount, callHash, setup } = transactionData.peek()
+  const navigate = useNavigate()
 
-  async function sign() {
-    const destPubKey = ss58.decode(to)[1]
-    await westend.Balances
-      .transfer({
-        value: BigInt(amount),
-        dest: MultiAddress.Id(destPubKey),
-      }).signed(signature({ sender: sender(from?.address!) }))
+  function sign() {
+    const sender = defaultSender.peek()
+    const account = defaultAccount.peek()
+    if (!setup || !sender || !account) return
+    setSubmitting(true)
+
+    const multisig = toMultisigRune(setup)
+    const destination = toMultiAddressIdRune(to)
+    const user = toMultiAddressIdRune(account.address)
+    const stash = toMultiAddressIdRune(setup.stash)
+    const value = BigInt(amount)
+
+    // Transfer Call from Stash
+    const call = westend.Proxy.proxy({
+      real: stash,
+      call: westend.Balances.transfer({
+        dest: destination,
+        value: value,
+      }),
+    })
+
+    const ratifyCall = multisig
+      .ratify(user, call)
+      .signed(signature({ sender }))
       .sent()
-      .dbgStatus("Transfer:")
-      .finalizedEvents()
+      .dbgStatus("Ratify")
+      .finalized()
+
+    ratifyCall
       .run()
+      .then(() => {
+        setSubmitting(false)
+        navigate("/")
+      })
+      .catch((exception) => {
+        console.error(exception)
+        setSubmitting(false)
+      })
   }
 
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
       <h2 className="text-black text-xl ">Sign transaction</h2>
       <div className="pt-6">{`0x${callHash}`}</div>
-      <div className="pt-6">Existing approvals: 0/?</div>
+      <div className="pt-6">{`Existing approvals: 0/${setup?.threshold}`}</div>
       <div className="flex flex-wrap pt-6">
         <div className="mr-2">{`Sending ${amount} WND from `}</div>
         <AccountId address={from?.address} name={from?.name} />
@@ -43,19 +75,23 @@ export function TransactionSign() {
       </div>
       <div className="flex flex-wrap pt-6">
         <div className="mr-2">Signing as:</div>
-        <AccountId address={from?.address} name={from?.name} />
+        <AccountId
+          address={defaultAccount.value?.address}
+          name={defaultAccount.value?.name}
+        />
       </div>
       <div>
         <div class="pt-4 flex justify-end">
           <Button
             variant="danger"
-            onClick={() => goPrev()}
+            onClick={goPrev}
             iconLeft={<IconTrash className="w-6" />}
             className="mr-4"
+            disabled={isSubmitting}
           >
             Discard
           </Button>
-          <Button variant="primary" onClick={() => sign()}>
+          <Button variant="primary" onClick={sign} disabled={isSubmitting}>
             Sign
           </Button>
         </div>
