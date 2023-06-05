@@ -1,59 +1,65 @@
-import { Setup as SetupType } from "common";
+import { Setup as SetupType } from "common"
 
-import { $weight, westend } from "@capi/westend";
-import { useQuery } from "@tanstack/react-query";
-import { hex } from "capi";
-import { signature } from "capi/patterns/signature/polkadot";
-import { Link } from "react-router-dom";
-import { defaultAccount, defaultSender } from "../signals/accounts.js";
-import { toMultisigRune, toPubKey } from "../util/capi-helpers.js";
-import { AccountId } from "./AccountId.js";
-import { Button } from "./Button.js";
-import { CenteredCard } from "./CenteredCard.js";
-import { IconBell } from "./icons/IconBell.js";
-import { IconPlus } from "./icons/IconPlus.js";
-import { Identicon } from "./identicon/Identicon.js";
+import {
+  $runtimeCall,
+  $timepoint,
+  $weight,
+  RuntimeCall,
+  westend,
+} from "@capi/westend"
+import { useQuery } from "@tanstack/react-query"
+import { hex } from "capi"
+import { signature } from "capi/patterns/signature/polkadot"
+import { Link } from "react-router-dom"
+import { useAccountInfo } from "../hooks/useAccountInfo.js"
+import { useProposals } from "../hooks/useProposals.js"
+import { defaultAccount, defaultSender } from "../signals/accounts.js"
+import { formatBalance } from "../util/balance.js"
+import {
+  toMultiAddressIdRune,
+  toMultisigRune,
+  toPubKey,
+} from "../util/capi-helpers.js"
+import { AccountId } from "./AccountId.js"
+import { Button } from "./Button.js"
+import { CenteredCard } from "./CenteredCard.js"
+import { IconBell } from "./icons/IconBell.js"
+import { IconPlus } from "./icons/IconPlus.js"
+import { Identicon } from "./identicon/Identicon.js"
 
 interface Props {
-  setup: SetupType;
+  setup: SetupType
 }
 
 export function Setup({ setup }: Props) {
-  const {
-    isLoading,
-    data: proposals,
-    isError,
-  } = useQuery({
-    queryKey: ["proposals", setup.id],
-    queryFn: async () => {
-      const multisig = toMultisigRune(setup);
-      const proposals: Array<Array<Uint8Array>> = await multisig.proposals(5).run();
+  const { data: balance } = useAccountInfo(setup.stash)
+  const { data: proposals, isLoading, isError } = useProposals(setup)
+  console.log({ proposals, isLoading, isError })
 
-      return proposals.map(([, callHashBytes]) => "0x" + hex.encode(callHashBytes!));
-    },
-  });
+  const ratify = (call: RuntimeCall) => {
+    const sender = defaultSender.peek()
+    const account = defaultAccount.peek()
+    if (!setup || !sender || !account) return
 
-  console.log({ isError, isLoading, proposals });
-  const ratify = (callHash: string) => {
-    console.log({ defaultAccount: defaultAccount.value?.address });
-    westend.Multisig.approveAsMulti({
-      callHash: hex.decode(callHash),
-      threshold: setup.threshold,
-      // 1. do not include sender
-      // 2. signatories in correct order
-      otherSignatories: setup.members
-        .filter(([address]) => address !== defaultAccount.value?.address)
-        .map(([address]) => toPubKey(address)),
-      // how to get correct weight?
-      maxWeight: $weight.decode(Uint8Array.from([64, 64])),
-    })
-      .signed(signature({ sender: defaultSender.value! }))
+    const multisig = toMultisigRune(setup)
+    const user = toMultiAddressIdRune(account.address)
+
+    const ratifyCall = multisig
+      .ratify(user, call)
+      .signed(signature({ sender }))
       .sent()
       .dbgStatus("Ratify")
       .finalized()
-      .run();
-    console.log({ defaultSender, callHash });
-  };
+
+    ratifyCall
+      .run()
+      .then((result) => {
+        console.log("done", result)
+      })
+      .catch((exception) => {
+        console.error("error", exception)
+      })
+  }
 
   return (
     <CenteredCard>
@@ -75,13 +81,16 @@ export function Setup({ setup }: Props) {
               <div>
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
-              <div>Balance XY DOT</div>
+              <div>
+                {`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}
+              </div>
               <Link to={`/multisig/${setup.multisig}`}>
                 <div className="text-gray-300 flex-row flex justify-center items-center space-x-1">
                   <IconBell height={14} />{" "}
                   <span>
-                    {proposals && proposals?.length > 0 ? `${proposals?.length} ` : "No "} Pending
-                    Transactions
+                    {proposals && proposals?.length > 0
+                      ? `${proposals?.length} `
+                      : "No "} Pending Transactions
                   </span>
                 </div>
               </Link>
@@ -109,9 +118,17 @@ export function Setup({ setup }: Props) {
             <div class="flex flex-col">
               <div class="mb-2">Pending Transactions:</div>
               <div className="flex flex-col gap-2">
-                {proposals.map((callHash) => (
-                  <div className="tabular-nums" onClick={() => ratify(callHash)}>
-                    {callHash}
+                {proposals.map(([callHash, call]) => (
+                  <div className="flex flex-row gap-2 justify-between">
+                    <div>{callHash}</div>
+                    {call && (
+                      <div
+                        className="font-bold"
+                        onClick={() => ratify(call)}
+                      >
+                        Ratify
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -134,5 +151,5 @@ export function Setup({ setup }: Props) {
         </div>
       </div>
     </CenteredCard>
-  );
+  )
 }
