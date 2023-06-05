@@ -10,19 +10,25 @@ import { TypeSafeScanDocumentCommand } from "typesafe-dynamodb/lib/scan-document
 import { TypeSafeUpdateDocumentCommand } from "typesafe-dynamodb/lib/update-document-command.js"
 import "dotenv"
 
+const accessKeyId = process.env.NODE_ENV !== "production"
+  ? "accessKey"
+  : process.env.AWS_ACCESS_KEY_ID!
+
+const secretAccessKey = process.env.NODE_ENV !== "production"
+  ? "secretKey"
+  : process.env.AWS_SECRET_ACCESS_KEY!
+
+const endpoint = process.env.NODE_ENV !== "production"
+  ? "http://localhost:8000"
+  : undefined
+
 export const dbClient = new DynamoDBClient({
   region: "us-east-1",
   credentials: {
-    accessKeyId: process.env.NODE_ENV !== "production"
-      ? "accessKey"
-      : process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.NODE_ENV !== "production"
-      ? "secretKey"
-      : process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId,
+    secretAccessKey,
   },
-  endpoint: process.env.NODE_ENV !== "production"
-    ? "http://localhost:8000"
-    : undefined,
+  endpoint,
 })
 
 export const docClient = DynamoDBDocument.from(
