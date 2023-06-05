@@ -1,4 +1,4 @@
-import { AccountInfo, MultiAddress, Westend, westend } from "@capi/westend";
+import { MultiAddress, Westend, westend } from "@capi/westend";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { Rune, ss58 } from "capi";
 import { MultisigRune } from "capi/patterns/multisig";
@@ -8,11 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import { accounts, defaultAccount, defaultSender } from "../../../signals/accounts.js";
 import { formatBalance } from "../../../util/balance.js";
 import { toPubKey } from "../../../util/capi-helpers.js";
-import {
-  EXISTENTIAL_DEPOSIT,
-  PROXY_DEPOSIT_BASE,
-  PROXY_DEPOSIT_FACTOR,
-} from "../../../util/chain-constants.js";
+import { PROXY_DEPOSIT_BASE, PROXY_DEPOSIT_FACTOR } from "../../../util/chain-constants.js";
 import { storeSetup } from "../../../util/local-storage.js";
 import { AccountSelect } from "../../AccountSelect.js";
 import { Button } from "../../Button.js";
@@ -28,18 +24,6 @@ import {
 } from "./formData.js";
 
 const multisigCreationFees: Row[] = [
-  {
-    name: "Existential deposit PureProxy",
-
-    value: formatBalance(EXISTENTIAL_DEPOSIT),
-    info: "Amount to pay in order to keep the account alive",
-  },
-  {
-    name: "Existential deposit Multisig",
-
-    value: formatBalance(EXISTENTIAL_DEPOSIT),
-    info: "Amount to pay in order to keep the account alive",
-  },
   {
     name: "Proxy fee",
     value: formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR),
@@ -86,27 +70,6 @@ export function MultisigMembers() {
       await westend.addressPrefix().run(),
       await multisig.accountId.run()
     );
-
-    const multisigInfo = (await westend.System.Account.value(
-      multisig.accountId
-    ).run()) as AccountInfo;
-    // `multisigInfo` is undefined for blank accounts
-    const multisigExists = !!multisigInfo;
-    if (multisigExists) {
-      // TODO not sure what happens if account value falls
-      // below existential deposit, can this even happen?
-
-      console.info(`Multisig ${multisigAddress} is already funded, skipping existential funding.`);
-    } else {
-      const existentialDepositMultisigCall = multisig
-        .fund(EXISTENTIAL_DEPOSIT)
-        .signed(signature({ sender: defaultSender.value }))
-        .sent()
-        .dbgStatus("Funding Multisig Account:")
-        .finalized();
-
-      await existentialDepositMultisigCall.run();
-    }
 
     // TODO can we check if stash already created? previously?
     const createStashCall = westend.Proxy.createPure({
