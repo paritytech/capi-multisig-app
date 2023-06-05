@@ -9,7 +9,7 @@ import { createTablesIfNotExist } from "./dynamoDB/table.js"
 
 const app = express()
 
-app.get("/", async (_, res) => {
+app.get("/", (_, res) => {
   res.status(200)
   res.send()
 })

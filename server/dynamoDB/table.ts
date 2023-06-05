@@ -53,7 +53,7 @@ export const Schemas: CreateTableCommandInput[] = [
 ]
 
 async function tableExists(dbclient: DynamoDBClient, tableName: string) {
-  // Define the DescribeTable command
+  // DescribeTable command
   const command = new DescribeTableCommand({ TableName: tableName })
   try {
     // Send the DescribeTable command
