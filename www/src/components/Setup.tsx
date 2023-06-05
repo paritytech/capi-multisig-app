@@ -1,4 +1,6 @@
 import { Setup as SetupType } from "common"
+
+import { Link } from "react-router-dom"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
@@ -55,21 +57,15 @@ export function Setup({ setup }: Props) {
         <hr className="divide-x-0 divide-gray-300 m-2" />
 
         <div className="flex flex-row justify-between">
-          <Button
-            variant="ghost"
-            type="submit"
-          >
+          <Button variant="ghost" type="submit">
             Contract
           </Button>
 
-          <Button
-            variant="ghost"
-            type="submit"
-            iconLeft={<IconPlus />}
-            onClick={() => window.location.href = "/new-transaction"}
-          >
-            New Transaction
-          </Button>
+          <Link to={`/new-transaction?multisig=${setup.multisig}`}>
+            <Button variant="ghost" type="submit" iconLeft={<IconPlus />}>
+              New Transaction
+            </Button>
+          </Link>
         </div>
       </div>
     </CenteredCard>
