@@ -68,12 +68,18 @@ importers:
       '@aws-sdk/lib-dynamodb':
         specifier: ^3.288.0
         version: 3.288.0(@aws-sdk/client-dynamodb@3.288.0)(@aws-sdk/smithy-client@3.325.0)(@aws-sdk/types@3.310.0)
+      '@trpc/server':
+        specifier: ^10.28.2
+        version: 10.28.2
       common:
         specifier: workspace:*
         version: link:../common
       cors:
         specifier: ^2.8.5
         version: 2.8.5
+      dotenv:
+        specifier: ^16.0.3
+        version: 16.0.3
       express:
         specifier: ^4.18.2
         version: 4.18.2
@@ -2209,6 +2215,10 @@ packages:
       - '@polkadot/util-crypto'
       - encoding
       - supports-color
+    dev: false
+
+  /@trpc/server@10.28.2:
+    resolution: {integrity: sha512-mCdMzef1NnchYyV11Dg02vu8HDyXl0elvrs2Noi261eLRIU5TwQjiSRxbw/YrDupOKKjaG4iz2i8mHR7jhlvWQ==}
     dev: false
 
   /@tsconfig/node10@1.0.9:
