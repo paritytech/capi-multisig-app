@@ -33,3 +33,7 @@ export async function getBalance(address: string) {
 
   return balance.data.free
 }
+
+export function toBalance(value: bigint, chainDecimals = 12): bigint {
+  return value * 10n ** BigInt(chainDecimals)
+}
