@@ -30,7 +30,7 @@ export function TransactionSign() {
     const dest = toMultiAddressIdRune(to)
     const user = toMultiAddressIdRune(account.address)
     const stash = toMultiAddressIdRune(setup.stash)
-    const value = toBalance(BigInt(amount))
+    const value = toBalance(amount)
 
     // Transfer Call from Stash
     const call = westend.Proxy.proxy({
