@@ -63,6 +63,10 @@ export async function storeCall(call: ExtrinsicRune<Westend, never>) {
 export function getCall(callHash: string) {
   const callData = localStorage.getItem(callHash)
   if (!callData) return undefined
-
-  return $runtimeCall.decode(hex.decode(callHash))
+  try {
+    return $runtimeCall.decode(hex.decode(callData.slice(2)))
+  } catch (exception) {
+    console.error(`Unable to decode call ${callData}`)
+    return undefined
+  }
 }
