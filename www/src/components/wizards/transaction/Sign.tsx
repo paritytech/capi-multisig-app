@@ -8,6 +8,7 @@ import {
 
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
+import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
@@ -49,6 +50,7 @@ export function TransactionSign() {
 
     ratifyCall
       .run()
+      .then(() => storeCall(call))
       .then(() => {
         setSubmitting(false)
         navigate("/")
