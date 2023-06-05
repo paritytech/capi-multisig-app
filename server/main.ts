@@ -10,15 +10,27 @@ import { createTablesIfNotExist } from "./dynamoDB/table.js"
 const app = express()
 
 app.get("/", async (_, res) => {
+  res.status(200)
+  res.send()
+})
+
+app.get("/test/db", async (_, res) => {
   try {
     await createTablesIfNotExist()
+    const id = "5F3sa2TJAWMqDhXG6jhV4N8ko9SxwGy8TpaNS1repo5EYjQX"
+    const setups = [
+      "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+      "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+    ]
     await ApiController.createAccount({
       type: "account",
-      id: "mine",
-      setups: ["setup"],
+      id,
+      setups,
     })
+    const item = await ApiController.getAccount(id)
+    await ApiController.deleteAccount(id)
     res.status(200)
-    res.send("happy!")
+    res.send(item)
   } catch (err) {
     res.status(500)
     res.send(err)
