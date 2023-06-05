@@ -1,22 +1,26 @@
-import { Setup as SetupType } from "common"
+import { Setup as SetupType } from "common";
 
-import { toMultisigRune } from "../util/capi-helpers.js"
-import { AccountId } from "./AccountId.js"
-import { Button } from "./Button.js"
-import { CenteredCard } from "./CenteredCard.js"
-import { IconBell } from "./icons/IconBell.js"
-import { IconPlus } from "./icons/IconPlus.js"
-import { Identicon } from "./identicon/Identicon.js"
+import { toMultisigRune } from "../util/capi-helpers.js";
+import { Link } from "react-router-dom";
+import { AccountId } from "./AccountId.js";
+import { Button } from "./Button.js";
+import { CenteredCard } from "./CenteredCard.js";
+import { IconBell } from "./icons/IconBell.js";
+import { IconPlus } from "./icons/IconPlus.js";
+import { Identicon } from "./identicon/Identicon.js";
 
 interface Props {
-  setup: SetupType
+  setup: SetupType;
 }
 
 export function Setup({ setup }: Props) {
-  const multisig = toMultisigRune(setup)
-  multisig.proposals(5).run().then((proposals: unknown) => {
-    console.log({ proposals })
-  })
+  const multisig = toMultisigRune(setup);
+  multisig
+    .proposals(5)
+    .run()
+    .then((proposals: unknown) => {
+      console.log({ proposals });
+    });
 
   return (
     <CenteredCard>
@@ -62,25 +66,17 @@ export function Setup({ setup }: Props) {
         <hr className="divide-x-0 divide-gray-300 m-2" />
 
         <div className="flex flex-row justify-between">
-          <Button
-            variant="ghost"
-            type="submit"
-          >
+          <Button variant="ghost" type="submit">
             Contract
           </Button>
 
-          <Button
-            variant="ghost"
-            type="submit"
-            iconLeft={<IconPlus />}
-            onClick={() =>
-              window.location.href = "/new-transaction?multisig="
-                + setup.multisig}
-          >
-            New Transaction
-          </Button>
+          <Link to={`/new-transaction?multisig=${setup.multisig}`}>
+            <Button variant="ghost" type="submit" iconLeft={<IconPlus />}>
+              New Transaction
+            </Button>
+          </Link>
         </div>
       </div>
     </CenteredCard>
-  )
+  );
 }
