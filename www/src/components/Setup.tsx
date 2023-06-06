@@ -5,7 +5,7 @@ import { signature } from "capi/patterns/signature/polkadot"
 import { Link } from "react-router-dom"
 import { useAccountInfo } from "../hooks/useAccountInfo.js"
 import { useProposals } from "../hooks/useProposals.js"
-import { defaultAccount, defaultSender } from "../signals/accounts.js"
+import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
 import { formatBalance } from "../util/balance.js"
 import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
 import { AccountId } from "./AccountId.js"
@@ -54,14 +54,14 @@ export function Setup({ setup }: Props) {
       <div className="flex flex-col gap-4">
         <div className="flex flex-row items-center space-x-2">
           <div>
-            <Identicon size={48} value={setup.multisig} />
+            <Identicon size={48} value={setup.stash} />
           </div>
 
           <div className="flex flex-col">
             <div className="flex flex-row flex-wrap">
               <div className="font-bold pr-2">{setup.name}</div>
-              <div className="truncate" title={setup.multisig}>
-                {setup.multisig}
+              <div className="truncate" title={setup.stash}>
+                {setup.stash}
               </div>
             </div>
 
@@ -93,7 +93,8 @@ export function Setup({ setup }: Props) {
               <AccountId
                 shortenAddress={false}
                 address={member[0]}
-                name={"Member " + (index + 1)}
+                name={accounts.value.find((a) => a.address === member[0])?.name
+                  || "Member " + (index + 1)}
               />
             ))}
           </div>

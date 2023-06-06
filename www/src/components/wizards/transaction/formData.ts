@@ -9,7 +9,7 @@ export const formDataSchema = z.object({
     .number({
       required_error: "Amount is required",
     })
-    .min(1),
+    .min(0.0001),
   from: z
     .object({
       address: z.string(),

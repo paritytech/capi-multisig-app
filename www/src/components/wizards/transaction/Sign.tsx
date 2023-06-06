@@ -8,6 +8,7 @@ import {
 
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
+import { toBalance } from "../../../util/balance.js"
 import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
@@ -27,17 +28,17 @@ export function TransactionSign() {
     setSubmitting(true)
 
     const multisig = toMultisigRune(setup)
-    const destination = toMultiAddressIdRune(to)
+    const dest = toMultiAddressIdRune(to)
     const user = toMultiAddressIdRune(account.address)
     const stash = toMultiAddressIdRune(setup.stash)
-    const value = BigInt(amount)
+    const value = toBalance(amount)
 
     // Transfer Call from Stash
     const call = westend.Proxy.proxy({
       real: stash,
       call: westend.Balances.transfer({
-        dest: destination,
-        value: value,
+        dest,
+        value,
       }),
     })
 
