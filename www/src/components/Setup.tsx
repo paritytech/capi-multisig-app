@@ -1,6 +1,7 @@
 import { Setup as SetupType } from "common";
 
 import { RuntimeCall } from "@capi/westend";
+import { useMutation } from "@tanstack/react-query";
 import { signature } from "capi/patterns/signature/polkadot";
 import { Link } from "react-router-dom";
 import { useAccountInfo } from "../hooks/useAccountInfo.js";
@@ -14,40 +15,63 @@ import { CenteredCard } from "./CenteredCard.js";
 import { IconBell } from "./icons/IconBell.js";
 import { IconPlus } from "./icons/IconPlus.js";
 import { Identicon } from "./identicon/Identicon.js";
+import { useMemo } from "preact/hooks";
+import { hex } from "capi";
 
 interface Props {
   setup: SetupType;
 }
 
 export function Setup({ setup }: Props) {
+  const multisig = useMemo(() => toMultisigRune(setup), [setup]);
   const { data: balance } = useAccountInfo(setup.stash);
-  const { data: proposals, isLoading, isError } = useProposals(setup);
-  console.log({ proposals, isLoading, isError });
+  const { data: proposals, refetch: refetchProposals } = useProposals(setup);
 
-  const ratify = (call: RuntimeCall) => {
-    const sender = defaultSender.peek();
-    const account = defaultAccount.peek();
-    if (!setup || !sender || !account) return;
+  const { mutate: ratify, isLoading: isRatifying } = useMutation({
+    mutationFn: async (call: RuntimeCall) => {
+      const sender = defaultSender.value;
+      const account = defaultAccount.value;
+      if (!setup || !sender || !account) throw new Error("Missing setup, sender or account");
 
-    const multisig = toMultisigRune(setup);
-    const user = toMultiAddressIdRune(account.address);
+      const user = toMultiAddressIdRune(account.address);
+      const ratifyCall = multisig
+        .ratify(user, call)
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Ratify")
+        .finalized();
 
-    const ratifyCall = multisig
-      .ratify(user, call)
-      .signed(signature({ sender }))
-      .sent()
-      .dbgStatus("Ratify")
-      .finalized();
+      return ratifyCall.run();
+    },
+    onSuccess: (result) => {
+      console.log({ result });
+      refetchProposals();
+    },
+    onError: (error) => console.error(error),
+  });
 
-    ratifyCall
-      .run()
-      .then((result) => {
-        console.log("Done", result);
-      })
-      .catch((exception) => {
-        console.error("Error", exception);
-      });
-  };
+  const { mutate: cancel, isLoading: isCanceling } = useMutation({
+    mutationFn: async (callHash: string) => {
+      const sender = defaultSender.value;
+      const account = defaultAccount.value;
+      if (!setup || !sender || !account) throw new Error("Missing setup, sender or account");
+
+      const user = toMultiAddressIdRune(account.address);
+      const cancelCall = multisig
+        .cancel(user, hex.decode(callHash))
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Cancel")
+        .finalized();
+
+      return cancelCall.run();
+    },
+    onSuccess: (result) => {
+      console.log({ result });
+      refetchProposals();
+    },
+    onError: (error) => console.error(error),
+  });
 
   return (
     <CenteredCard>
@@ -123,9 +147,20 @@ export function Setup({ setup }: Props) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <div>{callHash}</div>
-
-                  {call && (
-                    <Button className="self-end" onClick={() => ratify(call)}>
+                  {approvals.includes(defaultAccount.value?.address!) ? (
+                    <Button
+                      className="self-end"
+                      onClick={() => cancel(callHash)}
+                      disabled={isCanceling}
+                    >
+                      Cancel
+                    </Button>
+                  ) : (
+                    <Button
+                      className="self-end"
+                      onClick={() => ratify(call!)}
+                      disabled={!call || isRatifying}
+                    >
                       (View &) Sign
                     </Button>
                   )}
