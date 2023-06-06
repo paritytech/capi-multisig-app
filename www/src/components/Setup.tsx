@@ -1,77 +1,82 @@
-import { Setup as SetupType } from "common";
+import { Setup as SetupType } from "common"
 
-import { RuntimeCall } from "@capi/westend";
-import { useMutation } from "@tanstack/react-query";
-import { signature } from "capi/patterns/signature/polkadot";
-import { Link } from "react-router-dom";
-import { useAccountInfo } from "../hooks/useAccountInfo.js";
-import { useProposals } from "../hooks/useProposals.js";
-import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js";
-import { formatBalance } from "../util/balance.js";
-import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js";
-import { AccountId } from "./AccountId.js";
-import { Button } from "./Button.js";
-import { CenteredCard } from "./CenteredCard.js";
-import { IconBell } from "./icons/IconBell.js";
-import { IconPlus } from "./icons/IconPlus.js";
-import { Identicon } from "./identicon/Identicon.js";
-import { useMemo } from "preact/hooks";
-import { hex } from "capi";
+import { RuntimeCall } from "@capi/westend"
+import { useMutation } from "@tanstack/react-query"
+import { hex } from "capi"
+import { signature } from "capi/patterns/signature/polkadot"
+import { useMemo } from "preact/hooks"
+import { Link } from "react-router-dom"
+import { useAccountInfo } from "../hooks/useAccountInfo.js"
+import { useProposals } from "../hooks/useProposals.js"
+import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
+import { formatBalance } from "../util/balance.js"
+import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
+import { AccountId } from "./AccountId.js"
+import { Button } from "./Button.js"
+import { CenteredCard } from "./CenteredCard.js"
+import { IconBell } from "./icons/IconBell.js"
+import { IconPlus } from "./icons/IconPlus.js"
+import { IconTrash } from "./icons/IconTrash.js"
+import { Identicon } from "./identicon/Identicon.js"
 
 interface Props {
-  setup: SetupType;
+  setup: SetupType
 }
 
 export function Setup({ setup }: Props) {
-  const multisig = useMemo(() => toMultisigRune(setup), [setup]);
-  const { data: balance } = useAccountInfo(setup.stash);
-  const { data: proposals, refetch: refetchProposals } = useProposals(setup);
+  const multisig = useMemo(() => toMultisigRune(setup), [setup])
+  const { data: balance } = useAccountInfo(setup.stash)
+  const { data: proposals, refetch: refetchProposals } = useProposals(setup)
 
   const { mutate: ratify, isLoading: isRatifying } = useMutation({
     mutationFn: async (call: RuntimeCall) => {
-      const sender = defaultSender.value;
-      const account = defaultAccount.value;
-      if (!setup || !sender || !account) throw new Error("Missing setup, sender or account");
+      const sender = defaultSender.value
+      const account = defaultAccount.value
+      if (!setup || !sender || !account) {
+        throw new Error("Missing setup, sender or account")
+      }
 
-      const user = toMultiAddressIdRune(account.address);
+      const user = toMultiAddressIdRune(account.address)
       const ratifyCall = multisig
         .ratify(user, call)
         .signed(signature({ sender }))
         .sent()
         .dbgStatus("Ratify")
-        .finalized();
+        .finalized()
 
-      return ratifyCall.run();
+      return ratifyCall.run()
     },
     onSuccess: (result) => {
-      console.log({ result });
-      refetchProposals();
+      console.log({ result })
+      refetchProposals()
     },
     onError: (error) => console.error(error),
-  });
+  })
 
   const { mutate: cancel, isLoading: isCanceling } = useMutation({
     mutationFn: async (callHash: string) => {
-      const sender = defaultSender.value;
-      const account = defaultAccount.value;
-      if (!setup || !sender || !account) throw new Error("Missing setup, sender or account");
+      const sender = defaultSender.value
+      const account = defaultAccount.value
+      if (!setup || !sender || !account) {
+        throw new Error("Missing setup, sender or account")
+      }
 
-      const user = toMultiAddressIdRune(account.address);
+      const user = toMultiAddressIdRune(account.address)
       const cancelCall = multisig
         .cancel(user, hex.decode(callHash))
         .signed(signature({ sender }))
         .sent()
         .dbgStatus("Cancel")
-        .finalized();
+        .finalized()
 
-      return cancelCall.run();
+      return cancelCall.run()
     },
     onSuccess: (result) => {
-      console.log({ result });
-      refetchProposals();
+      console.log({ result })
+      refetchProposals()
     },
     onError: (error) => console.error(error),
-  });
+  })
 
   return (
     <CenteredCard>
@@ -93,7 +98,9 @@ export function Setup({ setup }: Props) {
               <div>
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
-              <div>{`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}</div>
+              <div>
+                {`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}
+              </div>
               <Link to={`/multisig/${setup.multisig}`}>
                 <div
                   className={`flex-row flex justify-center items-center space-x-1 ${
@@ -102,17 +109,21 @@ export function Setup({ setup }: Props) {
                 >
                   <div
                     className={`p-1 ${
-                      proposals && proposals.length > 0 && "bg-green-500 text-white rounded-sm"
+                      proposals && proposals.length > 0
+                      && "bg-green-500 text-white rounded-sm"
                     }`}
                   >
                     <IconBell
                       height={14}
-                      fill={proposals && proposals.length > 0 ? "white" : undefined}
+                      fill={proposals && proposals.length > 0
+                        ? "white"
+                        : undefined}
                     />
                   </div>
                   <span>
-                    {proposals && proposals?.length > 0 ? `${proposals?.length} ` : "No "} Pending
-                    Transactions
+                    {proposals && proposals?.length > 0
+                      ? `${proposals?.length} `
+                      : "No "} Pending Transactions
                   </span>
                 </div>
               </Link>
@@ -127,17 +138,15 @@ export function Setup({ setup }: Props) {
               <AccountId
                 shortenAddress={false}
                 address={member[0]}
-                name={
-                  accounts.value.find((a) => a.address === member[0])?.name ||
-                  "Member " + (index + 1)
-                }
+                name={accounts.value.find((a) => a.address === member[0])?.name
+                  || "Member " + (index + 1)}
               />
             ))}
           </div>
         </div>
 
-        {proposals &&
-          proposals.map(({ callHash, call, approvals }) => (
+        {proposals
+          && proposals.map(({ callHash, call, approvals }) => (
             <>
               <hr className="divide-x-0 divide-gray-300 m-2" />
 
@@ -147,23 +156,28 @@ export function Setup({ setup }: Props) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <div>{callHash}</div>
-                  {approvals.includes(defaultAccount.value?.address!) ? (
-                    <Button
-                      className="self-end"
-                      onClick={() => cancel(callHash)}
-                      disabled={isCanceling}
-                    >
-                      Cancel
-                    </Button>
-                  ) : (
-                    <Button
-                      className="self-end"
-                      onClick={() => ratify(call!)}
-                      disabled={!call || isRatifying}
-                    >
-                      (View &) Sign
-                    </Button>
-                  )}
+
+                  <div className="flex flex-row gap-2 justify-end">
+                    {!approvals.includes(defaultAccount.value?.address!)
+                      ? (
+                        <Button
+                          onClick={() => ratify(call!)}
+                          disabled={!call || isRatifying}
+                        >
+                          (View &) Sign
+                        </Button>
+                      )
+                      : (
+                        <Button
+                          variant="danger"
+                          iconLeft={<IconTrash className="w-6" />}
+                          onClick={() => cancel(callHash)}
+                          disabled={isCanceling}
+                        >
+                          Discard
+                        </Button>
+                      )}
+                  </div>
                 </div>
               </div>
             </>
@@ -184,5 +198,5 @@ export function Setup({ setup }: Props) {
         </div>
       </div>
     </CenteredCard>
-  );
+  )
 }

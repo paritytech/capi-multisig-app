@@ -10,6 +10,7 @@ type Proposal = {
   callHash: string
   call?: RuntimeCall
   approvals: string[]
+  // depositor: string; TODO add once released: https://github.com/paritytech/capi/pull/1045
 }
 
 export function useProposals(setup: Setup) {
@@ -24,6 +25,7 @@ export function useProposals(setup: Setup) {
       return Promise.all(
         proposals.map(async ([, callHashBytes]) => {
           const callHash = "0x" + hex.encode(callHashBytes!)
+
           return {
             callHash,
             call: getCall(callHash),
