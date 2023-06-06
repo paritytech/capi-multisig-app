@@ -34,7 +34,6 @@ export interface Setup {
   type: "setup"
   id: string
   name: string
-  multisigHex: string
   stash?: string
   //  TODO: history: HistoryItem[]
 }
@@ -43,7 +42,6 @@ export const $setup: $.Codec<Setup> = $.object(
   $.field("type", $.constant<"setup">("setup", $.str)),
   $.field("id", $.str),
   $.field("name", $.str),
-  $.field("multisigHex", $.str),
   $.optionalField("stash", $.str),
 )
 

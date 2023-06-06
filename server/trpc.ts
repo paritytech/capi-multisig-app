@@ -5,7 +5,6 @@ import * as trpcStandAlone from "@trpc/server/adapters/standalone"
 import { Sr25519 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
 import * as $ from "scale-codec"
-import { v4 as uuid } from "uuid"
 import { client, Put } from "./db.js"
 
 export async function createContext(
@@ -56,19 +55,18 @@ export const router = t.router({
       throw new Error("invalid signature")
     }
 
-    const id = uuid()
     await client.send(
       new Put({
         TableName: "setups",
         Item: {
           type: "setup",
-          id,
+          id: payload.multisigHex,
           name: payload.name,
-          multisigHex: payload.multisigHex,
+          stash: payload.stash,
         },
       }),
     )
 
-    return id
+    return payload.multisigHex
   }),
 })
