@@ -50,7 +50,10 @@ export function TransactionNew() {
 
   useEffect(() => {
     const subscription = watch((data) => {
-      updateTransactionData(data as TransactionData)
+      updateTransactionData({
+        ...data as TransactionData,
+        amount: data.amount ?? 0,
+      })
     })
     return () => subscription.unsubscribe()
   }, [watch])

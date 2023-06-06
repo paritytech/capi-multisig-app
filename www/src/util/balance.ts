@@ -3,12 +3,12 @@ import { ss58 } from "capi"
 
 export function formatBalance(
   balance: bigint,
-  { precision = 4, chainDecimals = 12 } = {},
+  { precision = 4, tokenDecimals = 12 } = {},
 ) {
   let units = ""
   let decimals = ""
   const str = balance.toString()
-  const diff = str.length - chainDecimals
+  const diff = str.length - tokenDecimals
 
   if (diff > 0) {
     units = str.slice(0, diff)
@@ -32,4 +32,15 @@ export async function getBalance(address: string) {
   if (!balance) throw new Error("Could not retrieve balance")
 
   return balance.data.free
+}
+
+export function toBalance(value: number, tokenDecimals = 12): bigint {
+  if (Number.isInteger(value)) {
+    return BigInt(value) * 10n ** BigInt(tokenDecimals)
+  }
+
+  const [integer = "0", _ = "0"] = String(value).split(".")
+  const decimal = _.substring(0, tokenDecimals)
+  return BigInt(integer) * 10n ** BigInt(tokenDecimals)
+    + BigInt(decimal) * 10n ** BigInt(tokenDecimals - decimal.length)
 }
