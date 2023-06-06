@@ -1,6 +1,7 @@
 import { Setup as SetupType } from "common"
 
 import { Link } from "react-router-dom"
+import { accounts } from "../signals/accounts.js"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
@@ -48,7 +49,8 @@ export function Setup({ setup }: Props) {
               <AccountId
                 shortenAddress={false}
                 address={member[0]}
-                name={"Member " + (index + 1)}
+                name={accounts.value.find((a) => a.address === member[0])?.name
+                  || "Member " + (index + 1)}
               />
             ))}
           </div>
