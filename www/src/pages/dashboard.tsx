@@ -1,27 +1,30 @@
-import { Link } from "react-router-dom"
-import { AccountId } from "../components/AccountId.js"
-import { Button } from "../components/Button.js"
-import { CenteredCard } from "../components/CenteredCard.js"
-import { IconPlus } from "../components/icons/IconPlus.js"
-import { Setup } from "../components/Setup.js"
-import { defaultAccount } from "../signals/accounts.js"
-import { setups } from "../signals/setups.js"
-import { Page } from "./templates/base.js"
+import { Link } from "react-router-dom";
+import { AccountId } from "../components/AccountId.js";
+import { Button } from "../components/Button.js";
+import { CenteredCard } from "../components/CenteredCard.js";
+import { IconPlus } from "../components/icons/IconPlus.js";
+import { Setup } from "../components/Setup.js";
+import { defaultAccount } from "../signals/accounts.js";
+import { setups } from "../signals/setups.js";
+import { Page } from "./templates/base.js";
 
 export function Dashboard() {
   return (
     <Page>
       <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
+          {setups.value.map((setup) => (
+            <Setup setup={setup} />
+          ))}
+        </div>
+
         <CenteredCard>
           <div className="flex flex-col gap-6 divide-y divide-divider">
             <h2 className="text-black text-xl">Create a multisig</h2>
             <div className="">
               <div className="mt-32 flex justify-center">
                 <Link to="/create-multisig">
-                  <Button
-                    iconLeft={<IconPlus className="w-6 h-6" />}
-                    size="xl"
-                  >
+                  <Button iconLeft={<IconPlus className="w-6 h-6" />} size="xl">
                     New multisig
                   </Button>
                 </Link>
@@ -34,8 +37,8 @@ export function Dashboard() {
                 />
               </div>
               <p className="leading-8">
-                Multi-signature wallets require authorization of transactions
-                through multiple keys.&nbsp;
+                Multi-signature wallets require authorization of transactions through multiple
+                keys.&nbsp;
                 <a
                   href="https://wiki.polkadot.network/docs/learn-account-multisig"
                   target="_blank"
@@ -47,11 +50,7 @@ export function Dashboard() {
             </div>
           </div>
         </CenteredCard>
-
-        <div className="flex flex-col gap-4">
-          {setups.value.map((setup) => <Setup setup={setup} />)}
-        </div>
       </div>
     </Page>
-  )
+  );
 }
