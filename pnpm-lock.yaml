@@ -89,6 +89,9 @@ importers:
       typesafe-dynamodb:
         specifier: ^0.2.3
         version: 0.2.3
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.0
       ws:
         specifier: ^8.13.0
         version: 8.13.0
@@ -99,6 +102,9 @@ importers:
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.17
+      '@types/uuid':
+        specifier: ^9.0.1
+        version: 9.0.1
       '@types/ws':
         specifier: ^8.5.4
         version: 8.5.4
@@ -2324,6 +2330,10 @@ packages:
       '@types/node': 18.16.0
     dev: true
 
+  /@types/uuid@9.0.1:
+    resolution: {integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==}
+    dev: true
+
   /@types/websocket@1.0.5:
     resolution: {integrity: sha512-NbsqiNX9CnEfC1Z0Vf4mE1SgAJ07JnRYcNex7AJ9zAVzmiGHmjKFEk7O4TJIsgv2B1sLEb6owKFZrACwdYngsQ==}
     dependencies:
@@ -4196,6 +4206,11 @@ packages:
 
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
+
+  /uuid@9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
     hasBin: true
     dev: false
 

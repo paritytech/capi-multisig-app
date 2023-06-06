@@ -5,6 +5,8 @@ import { MultisigRune } from "capi/patterns/multisig";
 import * as trpcStandAlone from "@trpc/server/adapters/standalone";
 import { inferAsyncReturnType } from "@trpc/server";
 import { Sr25519 } from "capi";
+import { Put, client } from "./db.js";
+import { v4 as uuid } from "uuid";
 
 export async function createContext({}: trpcStandAlone.CreateHTTPContextOptions) {
   return {};
@@ -17,7 +19,8 @@ const t = initTRPC.context<Context>().create();
 export const $addMultisigPayload = $.object(
   $.field("name", $.str),
   $.field("multisigHex", $.str),
-  $.field("timestamp", $.u64)
+  $.field("timestamp", $.u64),
+  $.optionalField("stash", $.str)
 );
 
 export const $addMultisigParams = $.object(
@@ -47,7 +50,19 @@ export const router = t.router({
       throw new Error("invalid signature");
     }
 
-    console.log(payload.multisigHex, name);
-    return `${payload.multisigHex} ${name}`;
+    const id = uuid();
+    await client.send(
+      new Put({
+        TableName: "setups",
+        Item: {
+          type: "setup",
+          id,
+          name: payload.name,
+          multisigHex: payload.multisigHex,
+        },
+      })
+    );
+
+    return id;
   }),
 });
