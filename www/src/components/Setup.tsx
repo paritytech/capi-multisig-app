@@ -1,25 +1,13 @@
 import { Setup as SetupType } from "common"
 
-import {
-  $runtimeCall,
-  $timepoint,
-  $weight,
-  RuntimeCall,
-  westend,
-} from "@capi/westend"
-import { useQuery } from "@tanstack/react-query"
-import { hex } from "capi"
+import { RuntimeCall } from "@capi/westend"
 import { signature } from "capi/patterns/signature/polkadot"
 import { Link } from "react-router-dom"
 import { useAccountInfo } from "../hooks/useAccountInfo.js"
 import { useProposals } from "../hooks/useProposals.js"
 import { defaultAccount, defaultSender } from "../signals/accounts.js"
 import { formatBalance } from "../util/balance.js"
-import {
-  toMultiAddressIdRune,
-  toMultisigRune,
-  toPubKey,
-} from "../util/capi-helpers.js"
+import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
@@ -54,10 +42,10 @@ export function Setup({ setup }: Props) {
     ratifyCall
       .run()
       .then((result) => {
-        console.log("done", result)
+        console.log("Done", result)
       })
       .catch((exception) => {
-        console.error("error", exception)
+        console.error("Error", exception)
       })
   }
 
@@ -111,30 +99,30 @@ export function Setup({ setup }: Props) {
           </div>
         </div>
 
-        {proposals && proposals.length > 0 && (
-          <>
-            <hr className="divide-x-0 divide-gray-300 m-2" />
+        {proposals
+          && proposals.map(({ callHash, call, approvals }) => (
+            <>
+              <hr className="divide-x-0 divide-gray-300 m-2" />
 
-            <div class="flex flex-col">
-              <div class="mb-2">Pending Transactions:</div>
-              <div className="flex flex-col gap-2">
-                {proposals.map(([callHash, call]) => (
-                  <div className="flex flex-row gap-2 justify-between">
-                    <div>{callHash}</div>
-                    {call && (
-                      <div
-                        className="font-bold"
-                        onClick={() => ratify(call)}
-                      >
-                        Ratify
-                      </div>
-                    )}
-                  </div>
-                ))}
+              <div class="flex flex-col">
+                <div class="mb-2">
+                  {`Pending transaction (Signed ${approvals.length}/ ${setup.threshold})`}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div>{callHash}</div>
+
+                  {call && (
+                    <Button
+                      className="self-end"
+                      onClick={() => ratify(call)}
+                    >
+                      (View &) Sign
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          ))}
 
         <hr className="divide-x-0 divide-gray-300 m-2" />
 

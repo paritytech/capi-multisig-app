@@ -13,6 +13,10 @@ export function toPrefix(address: string): number {
   return prefix
 }
 
+export function toAddress(bytes: Uint8Array, prefix = 42): string {
+  return ss58.encode(prefix, bytes)
+}
+
 export function toMultisigRune(setup: Setup): MultisigRune<Westend, never> {
   const signatories = setup.members.map(([address]) => {
     return toPubKey(address)
