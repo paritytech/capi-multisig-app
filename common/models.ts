@@ -1,41 +1,41 @@
-import * as $ from "scale-codec";
+import * as $ from "scale-codec"
 
 export interface Approvals {
   /** The block at which the approval was finalized */
-  blockHash: string;
+  blockHash: string
   /** The accountId of the voting user */
-  member: string;
+  member: string
 }
 
 export const $approvals: $.Codec<Approvals> = $.object(
   $.field("blockHash", $.str),
-  $.field("member", $.str)
-);
+  $.field("member", $.str),
+)
 
 export interface HistoryItem {
   /** The scale-encoded call data */
-  callData: string;
+  callData: string
   /** Time point of the first approval */
-  timePoint: [blockNumber: number, txIndex: number];
+  timePoint: [blockNumber: number, txIndex: number]
   /** All votes, the first of which is the initiator */
-  approvals: Approvals[];
+  approvals: Approvals[]
   /** Whether the proposal was cancelled */
-  cancelled?: string;
+  cancelled?: string
 }
 
 export const $historyItem: $.Codec<HistoryItem> = $.object(
   $.field("callData", $.str),
   $.field("timePoint", $.tuple($.u32, $.u32)),
   $.field("approvals", $.array($approvals)),
-  $.optionalField("cancelled", $.str)
-);
+  $.optionalField("cancelled", $.str),
+)
 
 export interface Setup {
-  type: "setup";
-  id: string;
-  name: string;
-  multisigHex: string;
-  stash?: string;
+  type: "setup"
+  id: string
+  name: string
+  multisigHex: string
+  stash?: string
   //  TODO: history: HistoryItem[]
 }
 
@@ -44,19 +44,19 @@ export const $setup: $.Codec<Setup> = $.object(
   $.field("id", $.str),
   $.field("name", $.str),
   $.field("multisigHex", $.str),
-  $.optionalField("stash", $.str)
-);
+  $.optionalField("stash", $.str),
+)
 
 export function isSetup(setup: unknown): setup is Setup {
-  return $.is($setup, setup);
+  return $.is($setup, setup)
 }
 
 export interface Account {
-  type: "account";
+  type: "account"
   /** hex-encoded accountId */
-  id: string;
+  id: string
   /** The setups of which the account is member */
-  setups: string[];
+  setups: string[]
 }
 
-export type Model = Setup | Account;
+export type Model = Setup | Account

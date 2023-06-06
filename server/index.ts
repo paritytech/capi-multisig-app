@@ -1,1 +1,1 @@
-export * as trpc from "./trpc.js";
+export * as trpc from "./trpc.js"
