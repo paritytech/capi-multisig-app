@@ -1,53 +1,53 @@
-import { Setup as SetupType } from "common"
+import { Setup as SetupType } from "common";
 
-import { RuntimeCall } from "@capi/westend"
-import { signature } from "capi/patterns/signature/polkadot"
-import { Link } from "react-router-dom"
-import { useAccountInfo } from "../hooks/useAccountInfo.js"
-import { useProposals } from "../hooks/useProposals.js"
-import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
-import { formatBalance } from "../util/balance.js"
-import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
-import { AccountId } from "./AccountId.js"
-import { Button } from "./Button.js"
-import { CenteredCard } from "./CenteredCard.js"
-import { IconBell } from "./icons/IconBell.js"
-import { IconPlus } from "./icons/IconPlus.js"
-import { Identicon } from "./identicon/Identicon.js"
+import { RuntimeCall } from "@capi/westend";
+import { signature } from "capi/patterns/signature/polkadot";
+import { Link } from "react-router-dom";
+import { useAccountInfo } from "../hooks/useAccountInfo.js";
+import { useProposals } from "../hooks/useProposals.js";
+import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js";
+import { formatBalance } from "../util/balance.js";
+import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js";
+import { AccountId } from "./AccountId.js";
+import { Button } from "./Button.js";
+import { CenteredCard } from "./CenteredCard.js";
+import { IconBell } from "./icons/IconBell.js";
+import { IconPlus } from "./icons/IconPlus.js";
+import { Identicon } from "./identicon/Identicon.js";
 
 interface Props {
-  setup: SetupType
+  setup: SetupType;
 }
 
 export function Setup({ setup }: Props) {
-  const { data: balance } = useAccountInfo(setup.stash)
-  const { data: proposals, isLoading, isError } = useProposals(setup)
-  console.log({ proposals, isLoading, isError })
+  const { data: balance } = useAccountInfo(setup.stash);
+  const { data: proposals, isLoading, isError } = useProposals(setup);
+  console.log({ proposals, isLoading, isError });
 
   const ratify = (call: RuntimeCall) => {
-    const sender = defaultSender.peek()
-    const account = defaultAccount.peek()
-    if (!setup || !sender || !account) return
+    const sender = defaultSender.peek();
+    const account = defaultAccount.peek();
+    if (!setup || !sender || !account) return;
 
-    const multisig = toMultisigRune(setup)
-    const user = toMultiAddressIdRune(account.address)
+    const multisig = toMultisigRune(setup);
+    const user = toMultiAddressIdRune(account.address);
 
     const ratifyCall = multisig
       .ratify(user, call)
       .signed(signature({ sender }))
       .sent()
       .dbgStatus("Ratify")
-      .finalized()
+      .finalized();
 
     ratifyCall
       .run()
       .then((result) => {
-        console.log("Done", result)
+        console.log("Done", result);
       })
       .catch((exception) => {
-        console.error("Error", exception)
-      })
-  }
+        console.error("Error", exception);
+      });
+  };
 
   return (
     <CenteredCard>
@@ -65,20 +65,30 @@ export function Setup({ setup }: Props) {
               </div>
             </div>
 
-            <div className="flex flex-row flex-wrap text-sm space-x-2">
+            <div className="flex flex-row flex-wrap text-sm space-x-2 text-gray-500 gap-2">
               <div>
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
-              <div>
-                {`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}
-              </div>
+              <div>{`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}</div>
               <Link to={`/multisig/${setup.multisig}`}>
-                <div className="text-gray-300 flex-row flex justify-center items-center space-x-1">
-                  <IconBell height={14} />{" "}
+                <div
+                  className={`flex-row flex justify-center items-center space-x-1 ${
+                    proposals && proposals.length === 0 && "text-gray-300"
+                  }`}
+                >
+                  <div
+                    className={`p-1 ${
+                      proposals && proposals.length > 0 && "bg-green-500 text-white rounded-sm"
+                    }`}
+                  >
+                    <IconBell
+                      height={14}
+                      fill={proposals && proposals.length > 0 ? "white" : undefined}
+                    />
+                  </div>
                   <span>
-                    {proposals && proposals?.length > 0
-                      ? `${proposals?.length} `
-                      : "No "} Pending Transactions
+                    {proposals && proposals?.length > 0 ? `${proposals?.length} ` : "No "} Pending
+                    Transactions
                   </span>
                 </div>
               </Link>
@@ -93,15 +103,17 @@ export function Setup({ setup }: Props) {
               <AccountId
                 shortenAddress={false}
                 address={member[0]}
-                name={accounts.value.find((a) => a.address === member[0])?.name
-                  || "Member " + (index + 1)}
+                name={
+                  accounts.value.find((a) => a.address === member[0])?.name ||
+                  "Member " + (index + 1)
+                }
               />
             ))}
           </div>
         </div>
 
-        {proposals
-          && proposals.map(({ callHash, call, approvals }) => (
+        {proposals &&
+          proposals.map(({ callHash, call, approvals }) => (
             <>
               <hr className="divide-x-0 divide-gray-300 m-2" />
 
@@ -113,10 +125,7 @@ export function Setup({ setup }: Props) {
                   <div>{callHash}</div>
 
                   {call && (
-                    <Button
-                      className="self-end"
-                      onClick={() => ratify(call)}
-                    >
+                    <Button className="self-end" onClick={() => ratify(call)}>
                       (View &) Sign
                     </Button>
                   )}
@@ -140,5 +149,5 @@ export function Setup({ setup }: Props) {
         </div>
       </div>
     </CenteredCard>
-  )
+  );
 }
