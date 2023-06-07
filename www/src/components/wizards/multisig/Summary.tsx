@@ -1,10 +1,10 @@
+import { Link } from "react-router-dom"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
-import { goPrev } from "../Wizard.js"
-import { formData } from "./formData.js"
+import { wizardData } from "./wizardData.js"
 
 export function MultisigSummary() {
-  const { value: { name, fund, members } } = formData
+  const { value: { name, fundingAmount, members, isFunded } } = wizardData
 
   return (
     <div>
@@ -23,23 +23,23 @@ export function MultisigSummary() {
             {members.map((v, i)=><li key={i}>{v?.address}</li>)}
           </ul>
         </div>
-        <div className="flex items-center">
+        {isFunded &&<div className="flex items-center">
           <span className="font-bold text-gray-800">Multisig fund:</span>
           <span className="font-mono text-gray-900">
-            {fund}
+            {fundingAmount}
           </span>
-        </div>
+        </div>}
       </pre>
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
-      <div className="flex justify-start">
-        <Button
-          variant="ghost"
-          type="submit"
-          onClick={goPrev}
-          iconLeft={<IconChevronLeft />}
-        >
-          Back
-        </Button>
+      <div className="flex justify-end">
+        <Link to="/">
+          <Button
+            type="submit"
+            variant="primary"
+          >
+            Done
+          </Button>
+        </Link>
       </div>
     </div>
   )

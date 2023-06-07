@@ -1,50 +1,53 @@
+import { westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { defaultSender } from "../../../signals/accounts.js"
+import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
-import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { goNext } from "../Wizard.js"
 import {
-  formData,
   MultisigFundEntity,
   multisigFundSchema,
-  updateFormData,
-} from "./formData.js"
+  updateWizardData,
+  wizardData,
+} from "./wizardData.js"
 
 export function MultisigFund() {
   const {
     control,
     handleSubmit,
-    getValues,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<MultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
   })
-  const { value: { fund } } = formData
+  const { value: { fundingAmount } } = wizardData
 
-  const onSubmit = (formDataNew: MultisigFundEntity) => {
-    const { stash } = formData.value
-    if (!stash) {
-      console.error("No stash account found")
-      return
+  const onSubmit = async (formDataNew: MultisigFundEntity) => {
+    try {
+      const sender = defaultSender.value
+      const { fundingAmount } = formDataNew
+      let { stash } = wizardData.value
+      if (!sender || !stash) return
+
+      const fundStashCall = westend.Balances
+        .transfer({
+          value: BigInt(fundingAmount), // TODO properly scale the amount
+          dest: toMultiAddressIdRune(stash),
+        })
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Transfer:")
+        .finalized()
+
+      await fundStashCall.run()
+      updateWizardData({ ...formDataNew, isFunded: true })
+      goNext()
+    } catch (exception) {
+      console.error("Something went wrong:", exception)
     }
-    // TODO needs to be implemented
-    // const fundStashCall = westend.Balances
-    //   .transfer({
-    //     value: amount,
-    //     dest: MultiAddress.Id(stash),
-    //   })
-    //   .signed(signature({ sender: userSender }))
-    //   .sent()
-    //   .dbgStatus("Transfer:")
-    //   .finalized()
-
-    // await fundStashCall.run()
-
-    updateFormData(formDataNew)
-    goNext()
   }
 
   return (
@@ -53,30 +56,27 @@ export function MultisigFund() {
       <hr className="border-t border-gray-300 mt-6 mb-4" />
       <Controller
         control={control}
-        name="fund"
-        defaultValue={fund}
+        name="fundingAmount"
+        defaultValue={fundingAmount}
         render={({ field }) => (
           <BalanceInput
             {...field}
             placeholder="0 DOT"
             className="w-48"
-            error={errors.fund?.message}
+            error={errors.fundingAmount?.message}
             label="Fund the Multisig"
           />
         )}
       />
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
-      <div className="flex justify-between">
-        <Link to="/">
-          <Button
-            variant="ghost"
-            iconLeft={<IconChevronLeft />}
-          >
-            Fund later
-          </Button>
-        </Link>
+      <div className="flex flex-row gap-4 justify-end">
+        <Button variant="secondary" disabled={isSubmitting} onClick={goNext}>
+          Fund later
+        </Button>
 
-        <Button type="submit">Sign &amp; fund</Button>
+        <Button type="submit" variant="primary" disabled={isSubmitting}>
+          Sign &amp; fund
+        </Button>
       </div>
     </form>
   )
