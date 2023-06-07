@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import { Button } from "../../Button.js"
-import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { wizardData } from "./wizardData.js"
 
 export function MultisigSummary() {
