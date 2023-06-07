@@ -12,6 +12,7 @@ deno
 denoland
 deployctl
 dprint
+dynamodblocal
 esbenp
 eslint
 hasher
@@ -42,4 +43,3 @@ unhandle
 vite
 vmirror
 westend
-dynamodblocal
