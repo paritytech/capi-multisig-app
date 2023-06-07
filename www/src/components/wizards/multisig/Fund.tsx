@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
+import { Link } from "react-router-dom"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
-import { goNext, goPrev } from "../Wizard.js"
+import { goNext } from "../Wizard.js"
 import {
   formData,
   MultisigFundEntity,
@@ -46,17 +47,6 @@ export function MultisigFund() {
     goNext()
   }
 
-  const onBack = (formDataNew: MultisigFundEntity) => {
-    updateFormData(formDataNew)
-    goPrev()
-  }
-
-  const onErrorBack = () => {
-    const formDataWithErrors = getValues()
-    updateFormData(formDataWithErrors)
-    goPrev()
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1 className="text-xl leading-8">3. Fund the multisig</h1>
@@ -77,13 +67,15 @@ export function MultisigFund() {
       />
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div className="flex justify-between">
-        <Button
-          variant="ghost"
-          onClick={handleSubmit(onBack, onErrorBack)}
-          iconLeft={<IconChevronLeft />}
-        >
-          Back
-        </Button>
+        <Link to="/">
+          <Button
+            variant="ghost"
+            iconLeft={<IconChevronLeft />}
+          >
+            Fund later
+          </Button>
+        </Link>
+
         <Button type="submit">Sign &amp; fund</Button>
       </div>
     </form>
