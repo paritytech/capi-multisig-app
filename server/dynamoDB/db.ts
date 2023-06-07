@@ -1,6 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb"
-import { Model } from "common/models.js"
+import { Model, PartitionKey, SortKey } from "common/models.js"
 import { TypeSafeDeleteDocumentCommand } from "typesafe-dynamodb/lib/delete-document-command.js"
 import { TypeSafeDocumentClientV3 } from "typesafe-dynamodb/lib/document-client-v3.js"
 import { TypeSafeGetDocumentCommand } from "typesafe-dynamodb/lib/get-document-command.js"
@@ -35,11 +35,27 @@ export const dbClient = new DynamoDBClient({
 
 export const docClient = DynamoDBDocument.from(
   dbClient,
-) as unknown as TypeSafeDocumentClientV3<Model, "id">
+) as unknown as TypeSafeDocumentClientV3<
+  Model,
+  PartitionKey,
+  SortKey | undefined
+>
 
 export const Put = TypeSafePutDocumentCommand<Model>()
-export const Delete = TypeSafeDeleteDocumentCommand<Model, "id", undefined>()
+export const Delete = TypeSafeDeleteDocumentCommand<
+  Model,
+  PartitionKey,
+  SortKey | undefined
+>()
 export const Query = TypeSafeQueryDocumentCommand<Model>()
 export const Scan = TypeSafeScanDocumentCommand<Model>()
-export const Update = TypeSafeUpdateDocumentCommand<Model, "id", undefined>()
-export const Get = TypeSafeGetDocumentCommand<Model, "id", undefined>()
+export const Update = TypeSafeUpdateDocumentCommand<
+  Model,
+  PartitionKey,
+  SortKey | undefined
+>()
+export const Get = TypeSafeGetDocumentCommand<
+  Model,
+  PartitionKey,
+  SortKey | undefined
+>()

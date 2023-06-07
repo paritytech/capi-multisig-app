@@ -1,5 +1,10 @@
 import * as $ from "scale-codec"
 
+export type PartitionKey = "pk"
+export type SortKey = "sk"
+export type ItemKeys = PartitionKey | SortKey
+
+// Approvals
 export interface Approvals {
   /** The block at which the approval was finalized */
   blockHash: string
@@ -12,7 +17,10 @@ export const $approvals: $.Codec<Approvals> = $.object(
   $.field("member", $.str),
 )
 
+// Call history
 export interface HistoryItem {
+  pk: string
+  sk: string
   /** The scale-encoded call data */
   callData: string
   /** Time point of the first approval */
@@ -23,38 +31,45 @@ export interface HistoryItem {
   cancelled?: string
 }
 
-export const $historyItem: $.Codec<HistoryItem> = $.object(
+export type History = Omit<HistoryItem, ItemKeys>
+
+export const $historyItem: $.Codec<History> = $.object(
   $.field("callData", $.str),
   $.field("timePoint", $.tuple($.u32, $.u32)),
   $.field("approvals", $.array($approvals)),
   $.optionalField("cancelled", $.str),
 )
 
-export interface Setup {
-  type: "setup"
-  id: string
+// Multisig Setup
+export interface SetupItem {
+  pk: string
+  sk?: string
+  multisig: string
   name: string
   stash?: string
-  //  TODO: history: HistoryItem[]
 }
 
+export type Setup = Omit<SetupItem, ItemKeys>
+
 export const $setup: $.Codec<Setup> = $.object(
-  $.field("type", $.constant<"setup">("setup", $.str)),
-  $.field("id", $.str),
+  $.field("multisig", $.str),
   $.field("name", $.str),
   $.optionalField("stash", $.str),
 )
-
 export function isSetup(setup: unknown): setup is Setup {
   return $.is($setup, setup)
 }
 
-export interface Account {
-  type: "account"
+// Account
+export interface AccountItem {
+  pk: string
+  sk?: string
   /** hex-encoded accountId */
-  id: string
+  accountId: string
   /** The setups of which the account is member */
   setups: string[]
 }
+export type Account = Omit<AccountItem, ItemKeys>
 
-export type Model = Setup | Account
+// Model
+export type Model = HistoryItem | SetupItem | AccountItem

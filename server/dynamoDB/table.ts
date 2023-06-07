@@ -9,6 +9,7 @@ import { dbClient } from "./db.js"
 export const TableNames = {
   multisig: "capi_multisig",
   account: "capi_account",
+  history: "capi_history",
 } as const
 
 export const Schemas: CreateTableCommandInput[] = [
@@ -16,13 +17,13 @@ export const Schemas: CreateTableCommandInput[] = [
     TableName: TableNames.multisig,
     AttributeDefinitions: [
       {
-        AttributeName: "id",
+        AttributeName: "pk",
         AttributeType: "S",
       },
     ],
     KeySchema: [
       {
-        AttributeName: "id",
+        AttributeName: "pk",
         KeyType: "HASH",
       },
     ],
@@ -35,14 +36,41 @@ export const Schemas: CreateTableCommandInput[] = [
     TableName: TableNames.account,
     AttributeDefinitions: [
       {
-        AttributeName: "id",
+        AttributeName: "pk",
         AttributeType: "S",
       },
     ],
     KeySchema: [
       {
-        AttributeName: "id",
+        AttributeName: "pk",
         KeyType: "HASH",
+      },
+    ],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 1,
+      WriteCapacityUnits: 1,
+    },
+  },
+  {
+    TableName: TableNames.history,
+    AttributeDefinitions: [
+      {
+        AttributeName: "pk",
+        AttributeType: "S",
+      },
+      {
+        AttributeName: "sk",
+        AttributeType: "S",
+      },
+    ],
+    KeySchema: [
+      {
+        AttributeName: "pk",
+        KeyType: "HASH",
+      },
+      {
+        AttributeName: "sk",
+        KeyType: "RANGE",
       },
     ],
     ProvisionedThroughput: {
