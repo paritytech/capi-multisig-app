@@ -25,6 +25,5 @@
     "MD033": false,
     "MD041": false
   },
-  "prettier.printWidth": 2,
-  "deno.enable": false
+  "prettier.printWidth": 2
 }
