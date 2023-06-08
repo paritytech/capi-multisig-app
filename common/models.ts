@@ -44,7 +44,7 @@ export const $historyItem: $.Codec<History> = $.object(
 export interface SetupItem {
   pk: string
   sk?: string
-  multisig: string
+  multisigHex: string
   name: string
   stash?: string
 }
@@ -52,7 +52,7 @@ export interface SetupItem {
 export type Setup = Omit<SetupItem, ItemKeys>
 
 export const $setup: $.Codec<Setup> = $.object(
-  $.field("multisig", $.str),
+  $.field("multisigHex", $.str),
   $.field("name", $.str),
   $.optionalField("stash", $.str),
 )
@@ -65,7 +65,7 @@ export interface AccountItem {
   pk: string
   sk?: string
   /** hex-encoded accountId */
-  accountId: string
+  id: string
   /** The setups of which the account is member */
   setups: string[]
 }
