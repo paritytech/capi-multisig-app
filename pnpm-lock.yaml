@@ -8,21 +8,18 @@ importers:
 
   .:
     dependencies:
-      '@capi/westend':
-        specifier: https://capi.dev/b33e3e53689c9ad6/westend.tar
-        version: '@capi.dev/b33e3e53689c9ad6/westend.tar(capi@0.1.0-beta.40)'
       '@headlessui/react':
         specifier: ^1.7.11
-        version: 1.7.11(react-dom@18.2.0)(react@18.2.0)
+        version: 1.7.11
       '@preact/signals':
         specifier: ^1.1.3
         version: 1.1.3(preact@10.12.1)
       '@talisman-connect/wallets':
         specifier: ^1.1.3
-        version: 1.1.3(@polkadot/util-crypto@12.1.2)(@polkadot/util@12.1.2)
+        version: 1.1.3
       capi:
-        specifier: 0.1.0-beta.40
-        version: 0.1.0-beta.40
+        specifier: 0.1.0-beta.42
+        version: 0.1.0-beta.42
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
@@ -31,10 +28,10 @@ importers:
         version: 10.12.1
       react-hook-form:
         specifier: ^7.43.3
-        version: 7.43.3(react@18.2.0)
+        version: 7.43.3
       react-router-dom:
         specifier: ^6.8.1
-        version: 6.8.1(react-dom@18.2.0)(react@18.2.0)
+        version: 6.8.1
       scale-codec:
         specifier: 0.11.2
         version: 0.11.2
@@ -67,7 +64,7 @@ importers:
         version: 3.288.0
       '@aws-sdk/lib-dynamodb':
         specifier: ^3.288.0
-        version: 3.288.0(@aws-sdk/client-dynamodb@3.288.0)(@aws-sdk/smithy-client@3.325.0)(@aws-sdk/types@3.310.0)
+        version: 3.288.0(@aws-sdk/client-dynamodb@3.288.0)
       common:
         specifier: workspace:*
         version: link:../common
@@ -101,7 +98,7 @@ importers:
     dependencies:
       '@headlessui/react':
         specifier: ^1.7.11
-        version: 1.7.11(react-dom@18.2.0)(react@18.2.0)
+        version: 1.7.11
       '@hookform/resolvers':
         specifier: ^2.9.11
         version: 2.9.11(react-hook-form@7.43.3)
@@ -110,7 +107,7 @@ importers:
         version: 1.1.3(preact@10.12.1)
       '@talisman-connect/wallets':
         specifier: ^1.1.3
-        version: 1.1.3(@polkadot/util-crypto@12.1.2)(@polkadot/util@12.1.2)
+        version: 1.1.3
       common:
         specifier: workspace:*
         version: link:../common
@@ -122,22 +119,22 @@ importers:
         version: 0.2.4(prettier@2.8.4)
       react-hook-form:
         specifier: ^7.43.3
-        version: 7.43.3(react@18.2.0)
+        version: 7.43.3
       react-number-format:
         specifier: ^5.1.4
-        version: 5.1.4(react-dom@18.2.0)(react@18.2.0)
+        version: 5.1.4
       react-router-dom:
         specifier: ^6.8.1
-        version: 6.8.1(react-dom@18.2.0)(react@18.2.0)
+        version: 6.8.1
       react-tooltip:
         specifier: ^5.10.5
-        version: 5.10.5(react-dom@18.2.0)(react@18.2.0)
+        version: 5.10.5
       tailwind-merge:
         specifier: ^1.10.0
         version: 1.10.0
       vite-tsconfig-paths:
         specifier: ^4.0.5
-        version: 4.0.5(typescript@4.9.5)
+        version: 4.0.5
     devDependencies:
       '@babel/core':
         specifier: '>=7.12.10 <8.0.0'
@@ -162,10 +159,10 @@ importers:
         version: 2.8.4
       tailwindcss:
         specifier: ^3.3.2
-        version: 3.3.2(ts-node@10.9.1)
+        version: 3.3.2
       vite:
         specifier: ^4.1.4
-        version: 4.1.4(@types/node@18.16.0)
+        version: 4.1.4
 
 packages:
 
@@ -531,6 +528,19 @@ packages:
     resolution: {integrity: sha512-UPez5qLh3dNgt0DYnPD/q0mVJY84rA17QE26hVNOW3fAji8W2wrwrxdacWOxyXvlxWsVRcKmr+lay1MDqpAMfg==}
     engines: {node: '>=14.0.0'}
     dependencies:
+      tslib: 2.5.0
+    dev: false
+
+  /@aws-sdk/lib-dynamodb@3.288.0(@aws-sdk/client-dynamodb@3.288.0):
+    resolution: {integrity: sha512-OWQnKzOgTyl+QmCmfKHMpgiIDYqZ+XkS1tCbZ+6v1+w+QEH24MpIBmPQIRAMxdipLJC7R1DJ2uAAOvrbTE6ljQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@aws-sdk/client-dynamodb': ^3.0.0
+      '@aws-sdk/smithy-client': ^3.0.0
+      '@aws-sdk/types': ^3.0.0
+    dependencies:
+      '@aws-sdk/client-dynamodb': 3.288.0
+      '@aws-sdk/util-dynamodb': 3.288.0
       tslib: 2.5.0
     dev: false
 
@@ -1421,7 +1431,7 @@ packages:
       '@floating-ui/core': 1.2.6
     dev: false
 
-  /@headlessui/react@1.7.11(react-dom@18.2.0)(react@18.2.0):
+  /@headlessui/react@1.7.11:
     resolution: {integrity: sha512-EaDbVgcyiylhtskZZf4Qb/JiiByY7cYbd0qgZ9xm2pm2X7hKojG0P4TaQYKgPOV3vojPhd/pZyQh3nmRkkcSyw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -1429,8 +1439,6 @@ packages:
       react-dom: ^16 || ^17 || ^18
     dependencies:
       client-only: 0.0.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@hookform/resolvers@2.9.11(react-hook-form@7.43.3):
@@ -1438,7 +1446,7 @@ packages:
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.43.3(react@18.2.0)
+      react-hook-form: 7.43.3
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -1487,22 +1495,12 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@noble/curves@1.0.0:
-    resolution: {integrity: sha512-2upgEu0iLiDVDZkNLeFV2+ht0BAVgQnEmCk6JsOch9Rp8xfkMCbvbAZlA2pBHQc73dbl+vFOXfqkf4uemdn0bw==}
-    dependencies:
-      '@noble/hashes': 1.3.0
-    dev: false
-
   /@noble/ed25519@2.0.0:
     resolution: {integrity: sha512-/extjhkwFupyopDrt80OMWKdLgP429qLZj+z6sYJz90rF2Iz0gjZh2ArMKPImUl13Kx+0EXI2hN9T/KJV0/Zng==}
     dev: false
 
   /@noble/hashes@1.0.0:
     resolution: {integrity: sha512-DZVbtY62kc3kkBtMHqwCOfXrT/hnoORy5BJ4+HU1IR59X0KWAOqsfzQPcUl/lQLlG7qXbe/fZ3r/emxtAl+sqg==}
-    dev: false
-
-  /@noble/hashes@1.3.0:
-    resolution: {integrity: sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==}
     dev: false
 
   /@noble/secp256k1@1.5.5:
@@ -1572,7 +1570,7 @@ packages:
       '@polkadot/types': 7.15.1
       '@polkadot/types-codec': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
+      '@polkadot/util-crypto': 8.7.1
       rxjs: 7.8.1
     transitivePeerDependencies:
       - encoding
@@ -1587,7 +1585,7 @@ packages:
       '@polkadot/api-augment': 7.15.1
       '@polkadot/api-base': 7.15.1
       '@polkadot/api-derive': 7.15.1
-      '@polkadot/keyring': 8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
+      '@polkadot/keyring': 8.7.1
       '@polkadot/rpc-augment': 7.15.1
       '@polkadot/rpc-core': 7.15.1
       '@polkadot/rpc-provider': 7.15.1
@@ -1597,7 +1595,7 @@ packages:
       '@polkadot/types-create': 7.15.1
       '@polkadot/types-known': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
+      '@polkadot/util-crypto': 8.7.1
       eventemitter3: 4.0.7
       rxjs: 7.8.1
     transitivePeerDependencies:
@@ -1605,18 +1603,16 @@ packages:
       - supports-color
     dev: false
 
-  /@polkadot/extension-dapp@0.42.10(@polkadot/api@7.15.1)(@polkadot/util-crypto@12.1.2)(@polkadot/util@12.1.2):
+  /@polkadot/extension-dapp@0.42.10(@polkadot/api@7.15.1):
     resolution: {integrity: sha512-ad3qwl62V2WwggmQdB5C9HmmF4aOfD8m+eJYvBnqkl0Xc/ZANgIwt0u5kViImacyiuvrtKR/VCyMOGn9zrzicQ==}
     peerDependencies:
       '@polkadot/api': '*'
-      '@polkadot/util': '*'
-      '@polkadot/util-crypto': '*'
     dependencies:
       '@babel/runtime': 7.21.5
       '@polkadot/api': 7.15.1
       '@polkadot/extension-inject': 0.42.10(@polkadot/api@7.15.1)
-      '@polkadot/util': 12.1.2
-      '@polkadot/util-crypto': 12.1.2(@polkadot/util@12.1.2)
+      '@polkadot/util': 8.7.1
+      '@polkadot/util-crypto': 8.7.1
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -1632,32 +1628,20 @@ packages:
       '@polkadot/rpc-provider': 7.15.1
       '@polkadot/types': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
+      '@polkadot/util-crypto': 8.7.1
       '@polkadot/x-global': 8.7.1
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: false
 
-  /@polkadot/keyring@8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1):
+  /@polkadot/keyring@8.7.1:
     resolution: {integrity: sha512-t6ZgQVC+nQT7XwbWtEhkDpiAzxKVJw8Xd/gWdww6xIrawHu7jo3SGB4QNdPgkf8TvDHYAAJiupzVQYAlOIq3GA==}
     engines: {node: '>=14.0.0'}
-    peerDependencies:
-      '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
     dependencies:
       '@babel/runtime': 7.21.5
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
-    dev: false
-
-  /@polkadot/networks@12.1.2:
-    resolution: {integrity: sha512-9gC5GYGFKXHY4oQaMfYvLLxGJ55slT3V8Zc6uk96KKysEvpSMDXdPUAKZJ3SXN9Iz3KaEa9x6RD5ZEf5j6BJ6g==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@polkadot/util': 12.1.2
-      '@substrate/ss58-registry': 1.40.0
-      tslib: 2.5.0
+      '@polkadot/util-crypto': 8.7.1
     dev: false
 
   /@polkadot/networks@8.7.1:
@@ -1703,11 +1687,11 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.21.5
-      '@polkadot/keyring': 8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
+      '@polkadot/keyring': 8.7.1
       '@polkadot/types': 7.15.1
       '@polkadot/types-support': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
+      '@polkadot/util-crypto': 8.7.1
       '@polkadot/x-fetch': 8.7.1
       '@polkadot/x-global': 8.7.1
       '@polkadot/x-ws': 8.7.1
@@ -1772,38 +1756,18 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.21.5
-      '@polkadot/keyring': 8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
+      '@polkadot/keyring': 8.7.1
       '@polkadot/types-augment': 7.15.1
       '@polkadot/types-codec': 7.15.1
       '@polkadot/types-create': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
+      '@polkadot/util-crypto': 8.7.1
       rxjs: 7.8.1
     dev: false
 
-  /@polkadot/util-crypto@12.1.2(@polkadot/util@12.1.2):
-    resolution: {integrity: sha512-xV5P7auvs2Qck+HGGk2uaJWyujbJSFc+VDlM/giqM2xKgfmkRUTgGtcBuLLLZq5R1A9tGW5DUQg0VgVHYJaNvw==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': 12.1.2
-    dependencies:
-      '@noble/curves': 1.0.0
-      '@noble/hashes': 1.3.0
-      '@polkadot/networks': 12.1.2
-      '@polkadot/util': 12.1.2
-      '@polkadot/wasm-crypto': 7.1.2(@polkadot/util@12.1.2)(@polkadot/x-randomvalues@12.1.2)
-      '@polkadot/wasm-util': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/x-bigint': 12.1.2
-      '@polkadot/x-randomvalues': 12.1.2(@polkadot/util@12.1.2)(@polkadot/wasm-util@7.1.2)
-      '@scure/base': 1.1.1
-      tslib: 2.5.0
-    dev: false
-
-  /@polkadot/util-crypto@8.7.1(@polkadot/util@8.7.1):
+  /@polkadot/util-crypto@8.7.1:
     resolution: {integrity: sha512-TaSuJ2aNrB5sYK7YXszkEv24nYJKRFqjF2OrggoMg6uYxUAECvTkldFnhtgeizMweRMxJIBu6bMHlSIutbWgjw==}
     engines: {node: '>=14.0.0'}
-    peerDependencies:
-      '@polkadot/util': 8.7.1
     dependencies:
       '@babel/runtime': 7.21.5
       '@noble/hashes': 1.0.0
@@ -1816,19 +1780,6 @@ packages:
       '@scure/base': 1.0.0
       ed2curve: 0.3.0
       tweetnacl: 1.0.3
-    dev: false
-
-  /@polkadot/util@12.1.2:
-    resolution: {integrity: sha512-Da8q+0WVWSuMMS3hLAwnIid8FKRGLmwhD69jikye47zeEXCtvp4e/bjD0YbINNKHoeIRsApchJtqmbaEoxXjIQ==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@polkadot/x-bigint': 12.1.2
-      '@polkadot/x-global': 12.1.2
-      '@polkadot/x-textdecoder': 12.1.2
-      '@polkadot/x-textencoder': 12.1.2
-      '@types/bn.js': 5.1.1
-      bn.js: 5.2.1
-      tslib: 2.5.0
     dev: false
 
   /@polkadot/util@8.7.1:
@@ -1845,19 +1796,6 @@ packages:
       ip-regex: 4.3.0
     dev: false
 
-  /@polkadot/wasm-bridge@7.1.2(@polkadot/util@12.1.2)(@polkadot/x-randomvalues@12.1.2):
-    resolution: {integrity: sha512-6t8b1el/03b30ZFKVFYU5pQEx9OeDZ3GBndgZ5b6fMNFRoowFWTwx74HLqhXlQb+hOTjGJA70jHdxkplh1sO3A==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': '*'
-      '@polkadot/x-randomvalues': '*'
-    dependencies:
-      '@polkadot/util': 12.1.2
-      '@polkadot/wasm-util': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/x-randomvalues': 12.1.2(@polkadot/util@12.1.2)(@polkadot/wasm-util@7.1.2)
-      tslib: 2.5.0
-    dev: false
-
   /@polkadot/wasm-crypto-asmjs@5.1.1(@polkadot/util@8.7.1):
     resolution: {integrity: sha512-1WBwc2G3pZMKW1T01uXzKE30Sg22MXmF3RbbZiWWk3H2d/Er4jZQRpjumxO5YGWan+xOb7HQQdwnrUnrPgbDhg==}
     engines: {node: '>=14.0.0'}
@@ -1868,32 +1806,6 @@ packages:
       '@polkadot/util': 8.7.1
     dev: false
 
-  /@polkadot/wasm-crypto-asmjs@7.1.2(@polkadot/util@12.1.2):
-    resolution: {integrity: sha512-Gdb824MoeWjESv7fu57Dqpvmx7FR2zhM2Os34/H8s1LcZ8m5qUxvm22kjtq+6DRJlGo7KxpS0OA4xCbSDDe0rA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': '*'
-    dependencies:
-      '@polkadot/util': 12.1.2
-      tslib: 2.5.0
-    dev: false
-
-  /@polkadot/wasm-crypto-init@7.1.2(@polkadot/util@12.1.2)(@polkadot/x-randomvalues@12.1.2):
-    resolution: {integrity: sha512-jqeK04MYofvCU7kFMJDoKUM9SjfDEBDizIxgurxAZZvF4jMOhgStZTLTr9QkKTOMTrMUE9PWRMzrnDM/Od3kzA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': '*'
-      '@polkadot/x-randomvalues': '*'
-    dependencies:
-      '@polkadot/util': 12.1.2
-      '@polkadot/wasm-bridge': 7.1.2(@polkadot/util@12.1.2)(@polkadot/x-randomvalues@12.1.2)
-      '@polkadot/wasm-crypto-asmjs': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/wasm-crypto-wasm': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/wasm-util': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/x-randomvalues': 12.1.2(@polkadot/util@12.1.2)(@polkadot/wasm-util@7.1.2)
-      tslib: 2.5.0
-    dev: false
-
   /@polkadot/wasm-crypto-wasm@5.1.1(@polkadot/util@8.7.1):
     resolution: {integrity: sha512-F9PZ30J2S8vUNl2oY7Myow5Xsx5z5uNVpnNlJwlmY8IXBvyucvyQ4HSdhJsrbs4W1BfFc0mHghxgp0FbBCnf/Q==}
     engines: {node: '>=14.0.0'}
@@ -1902,17 +1814,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.5
       '@polkadot/util': 8.7.1
-    dev: false
-
-  /@polkadot/wasm-crypto-wasm@7.1.2(@polkadot/util@12.1.2):
-    resolution: {integrity: sha512-p2RBfXc43r6rXkFo811LboSfRQFpCgOC6+ByqMs/geTA/+/I4l2ajz95aL6cQ20AA3W5x/ZwHxhwvmJ0HBjJ6A==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': '*'
-    dependencies:
-      '@polkadot/util': 12.1.2
-      '@polkadot/wasm-util': 7.1.2(@polkadot/util@12.1.2)
-      tslib: 2.5.0
     dev: false
 
   /@polkadot/wasm-crypto@5.1.1(@polkadot/util@8.7.1)(@polkadot/x-randomvalues@8.7.1):
@@ -1927,41 +1828,6 @@ packages:
       '@polkadot/wasm-crypto-asmjs': 5.1.1(@polkadot/util@8.7.1)
       '@polkadot/wasm-crypto-wasm': 5.1.1(@polkadot/util@8.7.1)
       '@polkadot/x-randomvalues': 8.7.1
-    dev: false
-
-  /@polkadot/wasm-crypto@7.1.2(@polkadot/util@12.1.2)(@polkadot/x-randomvalues@12.1.2):
-    resolution: {integrity: sha512-DO5Xf5nA2mSVdWnRM+PLAVE/wcg9vZAQkSHHSE+/qDmDVCQYygksHOA8ecRvn8nGfMNZQ0rmlIlsgyvAEtX1pw==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': '*'
-      '@polkadot/x-randomvalues': '*'
-    dependencies:
-      '@polkadot/util': 12.1.2
-      '@polkadot/wasm-bridge': 7.1.2(@polkadot/util@12.1.2)(@polkadot/x-randomvalues@12.1.2)
-      '@polkadot/wasm-crypto-asmjs': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/wasm-crypto-init': 7.1.2(@polkadot/util@12.1.2)(@polkadot/x-randomvalues@12.1.2)
-      '@polkadot/wasm-crypto-wasm': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/wasm-util': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/x-randomvalues': 12.1.2(@polkadot/util@12.1.2)(@polkadot/wasm-util@7.1.2)
-      tslib: 2.5.0
-    dev: false
-
-  /@polkadot/wasm-util@7.1.2(@polkadot/util@12.1.2):
-    resolution: {integrity: sha512-lHQJFG0iotgmUovXYcw/HM3QhGxtze6ozAgRMd0/maTQjYwbV/7z1NzEle9fBwxX6GijTnpWc1vzW+YU0O1lLw==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': '*'
-    dependencies:
-      '@polkadot/util': 12.1.2
-      tslib: 2.5.0
-    dev: false
-
-  /@polkadot/x-bigint@12.1.2:
-    resolution: {integrity: sha512-KU7C8HlJ2kO6Igg2Jq2Q/eAdll3HuVoylYcyVQxevcrC2fXhC2PDIEa+iWHBPz40p2TvI9sBZKrCsDDGz9K6sw==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@polkadot/x-global': 12.1.2
-      tslib: 2.5.0
     dev: false
 
   /@polkadot/x-bigint@8.7.1:
@@ -1984,31 +1850,11 @@ packages:
       - encoding
     dev: false
 
-  /@polkadot/x-global@12.1.2:
-    resolution: {integrity: sha512-WGwPQN27hpwhVOQGUizJfmNJRxkijMwECMPUAYtSSgJhkV5MwWeFuVebfUjgHceakEvDRQWzEX6JjV6TttnPZw==}
-    engines: {node: '>=16'}
-    dependencies:
-      tslib: 2.5.0
-    dev: false
-
   /@polkadot/x-global@8.7.1:
     resolution: {integrity: sha512-WOgUor16IihgNVdiTVGAWksYLUAlqjmODmIK1cuWrLOZtV1VBomWcb3obkO9sh5P6iWziAvCB/i+L0vnTN9ZCA==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.21.5
-    dev: false
-
-  /@polkadot/x-randomvalues@12.1.2(@polkadot/util@12.1.2)(@polkadot/wasm-util@7.1.2):
-    resolution: {integrity: sha512-Jqwftgl+t8egG5miwI3f+MUNp3GIJUxZ0mcYbGDc3dY8LueY3yhKs94MQF/S6h8XPpRFI5/8mUZnmMgmNXsX6Q==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      '@polkadot/util': 12.1.2
-      '@polkadot/wasm-util': '*'
-    dependencies:
-      '@polkadot/util': 12.1.2
-      '@polkadot/wasm-util': 7.1.2(@polkadot/util@12.1.2)
-      '@polkadot/x-global': 12.1.2
-      tslib: 2.5.0
     dev: false
 
   /@polkadot/x-randomvalues@8.7.1:
@@ -2019,28 +1865,12 @@ packages:
       '@polkadot/x-global': 8.7.1
     dev: false
 
-  /@polkadot/x-textdecoder@12.1.2:
-    resolution: {integrity: sha512-O5ygxEHdPCIQVzH7T+xVALBfCwrT5tVms7Yjp6EMT697A9gpD3U2aPr4YinsQO6JFwYpQNzvm2wjW+7EEzYitw==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@polkadot/x-global': 12.1.2
-      tslib: 2.5.0
-    dev: false
-
   /@polkadot/x-textdecoder@8.7.1:
     resolution: {integrity: sha512-ia0Ie2zi4VdQdNVD2GE2FZzBMfX//hEL4w546RMJfZM2LqDS674LofHmcyrsv5zscLnnRyCxZC1+J2dt+6MDIA==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.21.5
       '@polkadot/x-global': 8.7.1
-    dev: false
-
-  /@polkadot/x-textencoder@12.1.2:
-    resolution: {integrity: sha512-N+9HIXT0eUQbfg/SfGrNRK8aLFpd2QngJzTxo8CljpjCvQ2ddqzBVFA8o/lKTaXVzX84EmPDzjIV+yJlOXnglA==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@polkadot/x-global': 12.1.2
-      tslib: 2.5.0
     dev: false
 
   /@polkadot/x-textencoder@8.7.1:
@@ -2078,7 +1908,7 @@ packages:
       debug: 4.3.4
       kolorist: 1.8.0
       resolve: 1.22.2
-      vite: 4.1.4(@types/node@18.16.0)
+      vite: 4.1.4
     transitivePeerDependencies:
       - preact
       - supports-color
@@ -2125,7 +1955,7 @@ packages:
       '@prefresh/utils': 1.1.3
       '@rollup/pluginutils': 4.2.1
       preact: 10.12.1
-      vite: 4.1.4(@types/node@18.16.0)
+      vite: 4.1.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2145,10 +1975,6 @@ packages:
 
   /@scure/base@1.0.0:
     resolution: {integrity: sha512-gIVaYhUsy+9s58m/ETjSJVKHhKTBMmcRb9cEV5/5dwvfDlfORjKrFsDeDHWRrm6RjcPvCLZFwGJjAjLj1gg4HA==}
-    dev: false
-
-  /@scure/base@1.1.1:
-    resolution: {integrity: sha512-ZxOhsSyxYwLJj3pLZCefNitxsj093tb2vq90mp2txoYeBqbcjDjqFhyM8eUjq/uFm6zJ+mUuqxlS2FkuSY1MTA==}
     dev: false
 
   /@substrate/connect-extension-protocol@1.0.1:
@@ -2195,18 +2021,16 @@ packages:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.3.2(ts-node@10.9.1)
+      tailwindcss: 3.3.2
     dev: true
 
-  /@talisman-connect/wallets@1.1.3(@polkadot/util-crypto@12.1.2)(@polkadot/util@12.1.2):
+  /@talisman-connect/wallets@1.1.3:
     resolution: {integrity: sha512-RMphb1PgBjImdinEZvxvN8XmhVZrIXV2SLfsqOl2HJcEeLGC7vJazny8sc/Qm6t29ZRDIdtXp/L3uoMEf+5Mpg==}
     dependencies:
       '@polkadot/api': 7.15.1
-      '@polkadot/extension-dapp': 0.42.10(@polkadot/api@7.15.1)(@polkadot/util-crypto@12.1.2)(@polkadot/util@12.1.2)
+      '@polkadot/extension-dapp': 0.42.10(@polkadot/api@7.15.1)
       '@polkadot/extension-inject': 0.42.10(@polkadot/api@7.15.1)
     transitivePeerDependencies:
-      - '@polkadot/util'
-      - '@polkadot/util-crypto'
       - encoding
       - supports-color
     dev: false
@@ -2348,10 +2172,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
-
-  /ansi-sequence-parser@1.1.0:
-    resolution: {integrity: sha512-lEm8mt52to2fT8GhciPCGeCXACSz2UwIN4X2e2LJSnZ5uAbn2/dsYdOmUXq0AtWS5cpAupysIneExOgH0Vd2TQ==}
-    dev: false
 
   /ansi-styles@3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
@@ -2538,28 +2358,27 @@ packages:
     resolution: {integrity: sha512-uv7/gXuHi10Whlj0pp5q/tsK/32J2QSqVRKQhs2j8VsDCjgyruAh/eEXHF822VqO9yT6iZKw3nRwZRSPBE9OQg==}
     dev: true
 
-  /capi@0.1.0-beta.40:
-    resolution: {integrity: sha512-5OlTn+uCarPqBJhfDCwczzu/fu6cLu+sxgSq3wRrhA2phBcovd+URzgS2bPfjo0rlyxoA7xmkOYbm9w7uhUFMw==}
+  /capi@0.1.0-beta.42:
+    resolution: {integrity: sha512-P14h5HrxoECV13eZy4Zy5oGaK+PxEXDqBofwSTUgMpofV+xGBLous3HpCg1AkkTqTfm1QwkxZ6hyvq0Ze0JYmA==}
     hasBin: true
     dependencies:
-      '@capi/contracts-dev': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/contracts-dev.tar(capi@0.1.0-beta.40)'
-      '@capi/polkadot': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot.tar(capi@0.1.0-beta.40)'
-      '@capi/polkadot-dev': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot-dev.tar(capi@0.1.0-beta.40)'
-      '@capi/rococo-dev': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev.tar(capi@0.1.0-beta.40)'
-      '@capi/rococo-dev-contracts': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-contracts.tar(capi@0.1.0-beta.40)'
-      '@capi/rococo-dev-westmint': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-westmint.tar(capi@0.1.0-beta.40)'
-      '@capi/rococo-dev-xcm': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm.tar(capi@0.1.0-beta.40)'
-      '@capi/rococo-dev-xcm-statemine': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-statemine.tar(capi@0.1.0-beta.40)'
-      '@capi/rococo-dev-xcm-trappist': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-trappist.tar(capi@0.1.0-beta.40)'
-      '@capi/statemint': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/statemint.tar(capi@0.1.0-beta.40)'
-      '@capi/westend': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend.tar(capi@0.1.0-beta.40)'
-      '@capi/westend-dev': '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend-dev.tar(capi@0.1.0-beta.40)'
+      '@capi/contracts-dev': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/contracts-dev.tar(capi@0.1.0-beta.42)'
+      '@capi/polkadot': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot.tar(capi@0.1.0-beta.42)'
+      '@capi/polkadot-dev': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot-dev.tar(capi@0.1.0-beta.42)'
+      '@capi/rococo-dev': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev.tar(capi@0.1.0-beta.42)'
+      '@capi/rococo-dev-contracts': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-contracts.tar(capi@0.1.0-beta.42)'
+      '@capi/rococo-dev-westmint': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-westmint.tar(capi@0.1.0-beta.42)'
+      '@capi/rococo-dev-xcm': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm.tar(capi@0.1.0-beta.42)'
+      '@capi/rococo-dev-xcm-statemine': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-statemine.tar(capi@0.1.0-beta.42)'
+      '@capi/rococo-dev-xcm-trappist': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-trappist.tar(capi@0.1.0-beta.42)'
+      '@capi/statemint': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/statemint.tar(capi@0.1.0-beta.42)'
+      '@capi/westend': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend.tar(capi@0.1.0-beta.42)'
+      '@capi/westend-dev': '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend-dev.tar(capi@0.1.0-beta.42)'
       '@deno/shim-deno': 0.14.0
       '@noble/ed25519': 2.0.0
       '@substrate/smoldot-light': 0.7.6
       isomorphic-ws: 5.0.0(ws@8.13.0)
       scale-codec: 0.11.2
-      shiki: 0.14.1
       tslib: 2.5.0
       wat-the-crypto: 0.0.2
       ws: 8.13.0
@@ -3215,10 +3034,6 @@ packages:
     hasBin: true
     dev: true
 
-  /jsonc-parser@3.2.0:
-    resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
-    dev: false
-
   /kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
     dev: true
@@ -3504,7 +3319,7 @@ packages:
       postcss: 8.4.24
     dev: true
 
-  /postcss-load-config@4.0.1(postcss@8.4.24)(ts-node@10.9.1):
+  /postcss-load-config@4.0.1(postcss@8.4.24):
     resolution: {integrity: sha512-vEJIc8RdiBRu3oRAI0ymerOn+7rPuMvRXslTvZUKZonDHFIczxztIyJ1urxM1x9JXEikvpWWTUUqal5j/8QgvA==}
     engines: {node: '>= 14'}
     peerDependencies:
@@ -3518,7 +3333,6 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.24
-      ts-node: 10.9.1(@types/node@18.16.0)(typescript@4.9.5)
       yaml: 2.3.1
     dev: true
 
@@ -3686,41 +3500,27 @@ packages:
       unpipe: 1.0.0
     dev: false
 
-  /react-dom@18.2.0(react@18.2.0):
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
-    peerDependencies:
-      react: ^18.2.0
-    dependencies:
-      loose-envify: 1.4.0
-      react: 18.2.0
-      scheduler: 0.23.0
-    dev: false
-
-  /react-hook-form@7.43.3(react@18.2.0):
+  /react-hook-form@7.43.3:
     resolution: {integrity: sha512-LV6Fixh+hirrl6dXbM78aB6n//82aKbsNbcofF3wc6nx1UJLu3Jj/gsg1E5C9iISnLX+du8VTUyBUz2aCy+H7w==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
-  /react-number-format@5.1.4(react-dom@18.2.0)(react@18.2.0):
+  /react-number-format@5.1.4:
     resolution: {integrity: sha512-QV7QHzHrk9ZS9V0bWkIwu6ywiXJt0www4/cXWEVEgwaNqthmOZl/Cf5O0ukEPlGZJJr06Jh3+CM4rZsvXn8cOg==}
     peerDependencies:
       react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     dependencies:
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /react-router-dom@6.8.1(react-dom@18.2.0)(react@18.2.0):
+  /react-router-dom@6.8.1:
     resolution: {integrity: sha512-67EXNfkQgf34P7+PSb6VlBuaacGhkKn3kpE51+P6zYSG2kiRoumXEL6e27zTa9+PGF2MNXbgIUHTVlleLbIcHQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -3728,22 +3528,19 @@ packages:
       react-dom: '>=16.8'
     dependencies:
       '@remix-run/router': 1.3.2
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-router: 6.8.1(react@18.2.0)
+      react-router: 6.8.1
     dev: false
 
-  /react-router@6.8.1(react@18.2.0):
+  /react-router@6.8.1:
     resolution: {integrity: sha512-Jgi8BzAJQ8MkPt8ipXnR73rnD7EmZ0HFFb7jdQU24TynGW1Ooqin2KVDN9voSC+7xhqbbCd2cjGUepb6RObnyg==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.3.2
-      react: 18.2.0
     dev: false
 
-  /react-tooltip@5.10.5(react-dom@18.2.0)(react@18.2.0):
+  /react-tooltip@5.10.5:
     resolution: {integrity: sha512-3bi4UtoPSdaQh0R17B3vMPhNFiATpAbXIV8AqlHqrrIdqo33OJyxuPHtgborw3KXVQ5a6iyyAmCY8ztjUB4CrA==}
     peerDependencies:
       react: '>=16.14.0'
@@ -3751,15 +3548,6 @@ packages:
     dependencies:
       '@floating-ui/dom': 1.2.7
       classnames: 2.3.2
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /react@18.2.0:
-    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      loose-envify: 1.4.0
     dev: false
 
   /read-cache@1.0.0:
@@ -3828,12 +3616,6 @@ packages:
     resolution: {integrity: sha512-foVDx4QomwIgCssCbsLEfKIzalDZIbJ3FFyAml9hxN1GHb/Ppd/9SDgTeSabuc6uRwoSnFNRrSjA8Uxykk4+VA==}
     dev: false
 
-  /scheduler@0.23.0:
-    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
-    dependencies:
-      loose-envify: 1.4.0
-    dev: false
-
   /semver@5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
     hasBin: true
@@ -3878,15 +3660,6 @@ packages:
 
   /setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
-    dev: false
-
-  /shiki@0.14.1:
-    resolution: {integrity: sha512-+Jz4nBkCBe0mEDqo1eKRcCdjRtrCjozmcbTUjbPTX7OOJfEbTZzlUWlZtGe3Gb5oV1/jnojhG//YZc3rs9zSEw==}
-    dependencies:
-      ansi-sequence-parser: 1.1.0
-      jsonc-parser: 3.2.0
-      vscode-oniguruma: 1.7.0
-      vscode-textmate: 8.0.0
     dev: false
 
   /side-channel@1.0.4:
@@ -3952,7 +3725,7 @@ packages:
     resolution: {integrity: sha512-WFnDXSS4kFTZwjKg5/oZSGzBRU/l+qcbv5NVTzLUQvJ9yovDAP05h0F2+ZFW0Lw9EcgRoc2AfURUdZvnEFrXKg==}
     dev: false
 
-  /tailwindcss@3.3.2(ts-node@10.9.1):
+  /tailwindcss@3.3.2:
     resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -3974,7 +3747,7 @@ packages:
       postcss: 8.4.24
       postcss-import: 15.1.0(postcss@8.4.24)
       postcss-js: 4.0.1(postcss@8.4.24)
-      postcss-load-config: 4.0.1(postcss@8.4.24)(ts-node@10.9.1)
+      postcss-load-config: 4.0.1(postcss@8.4.24)
       postcss-nested: 6.0.1(postcss@8.4.24)
       postcss-selector-parser: 6.0.12
       postcss-value-parser: 4.2.0
@@ -4058,6 +3831,17 @@ packages:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true
+
+  /tsconfck@2.1.1:
+    resolution: {integrity: sha512-ZPCkJBKASZBmBUNqGHmRhdhM8pJYDdOXp4nRgj/O0JwUwsMq50lCDRQP/M5GBNAA0elPrq4gAeu4dkaVCuKWww==}
+    engines: {node: ^14.13.1 || ^16 || >=18}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.3.5 || ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dev: false
 
   /tsconfck@2.1.1(typescript@4.9.5):
     resolution: {integrity: sha512-ZPCkJBKASZBmBUNqGHmRhdhM8pJYDdOXp4nRgj/O0JwUwsMq50lCDRQP/M5GBNAA0elPrq4gAeu4dkaVCuKWww==}
@@ -4198,6 +3982,17 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
+  /vite-tsconfig-paths@4.0.5:
+    resolution: {integrity: sha512-/L/eHwySFYjwxoYt1WRJniuK/jPv+WGwgRGBYx3leciR5wBeqntQpUE6Js6+TJemChc+ter7fDBKieyEWDx4yQ==}
+    dependencies:
+      debug: 4.3.4
+      globrex: 0.1.2
+      tsconfck: 2.1.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: false
+
   /vite-tsconfig-paths@4.0.5(typescript@4.9.5):
     resolution: {integrity: sha512-/L/eHwySFYjwxoYt1WRJniuK/jPv+WGwgRGBYx3leciR5wBeqntQpUE6Js6+TJemChc+ter7fDBKieyEWDx4yQ==}
     dependencies:
@@ -4209,7 +4004,7 @@ packages:
       - typescript
     dev: false
 
-  /vite@4.1.4(@types/node@18.16.0):
+  /vite@4.1.4:
     resolution: {integrity: sha512-3knk/HsbSTKEin43zHu7jTwYWv81f8kgAL99G5NWBcA1LKvtvcVAC4JjBH1arBunO9kQka+1oGbrMKOjk4ZrBg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -4234,7 +4029,6 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.16.0
       esbuild: 0.16.17
       postcss: 8.4.21
       resolve: 1.22.2
@@ -4242,14 +4036,6 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
-
-  /vscode-oniguruma@1.7.0:
-    resolution: {integrity: sha512-L9WMGRfrjOhgHSdOYgCt/yRMsXzLDJSL7BPrOZt73gU0iWO4mpqzqQzOz5srxqTvMBaR0XZTSrVWo4j55Rc6cA==}
-    dev: false
-
-  /vscode-textmate@8.0.0:
-    resolution: {integrity: sha512-AFbieoL7a5LMqcnOF04ji+rpXadgOXnZsxQr//r83kLPr7biP7am3g9zbaZIaBGwBRWeSvoMD4mgPdX3e4NWBg==}
-    dev: false
 
   /wat-the-crypto@0.0.2:
     resolution: {integrity: sha512-LfIvUR5LjijsyZ8ZhVxrkeM4l3sYZ2W6EW4SO7s6dlQijQbK6z1q45sp0ijRWyI8Tc7WGmJVtJcoNZ+g13mo/g==}
@@ -4349,145 +4135,134 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/contracts-dev.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/contracts-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/contracts-dev.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/contracts-dev.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/contracts-dev.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/contracts-dev.tar'
     name: contracts-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot-dev.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot-dev.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot-dev.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot-dev.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot-dev.tar'
     name: polkadot-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/polkadot.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/polkadot.tar'
     name: polkadot
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-contracts.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-contracts.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-contracts.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-contracts.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-contracts.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-contracts.tar'
     name: rococo-dev-contracts
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-westmint.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-westmint.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-westmint.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-westmint.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-westmint.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-westmint.tar'
     name: rococo-dev-westmint
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-statemine.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-statemine.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-statemine.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-statemine.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-statemine.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-statemine.tar'
     name: rococo-dev-xcm-statemine
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-trappist.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-trappist.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm-trappist.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-trappist.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-trappist.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm-trappist.tar'
     name: rococo-dev-xcm-trappist
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev-xcm.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev-xcm.tar'
     name: rococo-dev-xcm
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/rococo-dev.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/rococo-dev.tar'
     name: rococo-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/statemint.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/statemint.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/statemint.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/statemint.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/statemint.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/statemint.tar'
     name: statemint
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend-dev.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend-dev.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend-dev.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend-dev.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend-dev.tar'
     name: westend-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend.tar}
-    id: '@capi.dev/@v0.1.0-beta.40/a6371dd9c3e070f3/westend.tar'
+  '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend.tar}
+    id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend.tar'
     name: westend
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.40
-    dev: false
-
-  '@capi.dev/b33e3e53689c9ad6/westend.tar(capi@0.1.0-beta.40)':
-    resolution: {tarball: https://capi.dev/b33e3e53689c9ad6/westend.tar}
-    id: '@capi.dev/b33e3e53689c9ad6/westend.tar'
-    name: westend
-    version: 0.0.0-TODO
-    peerDependencies:
-      capi: '*'
-    dependencies:
-      capi: 0.1.0-beta.40
+      capi: 0.1.0-beta.42
     dev: false
