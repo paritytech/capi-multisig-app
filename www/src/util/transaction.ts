@@ -1,4 +1,4 @@
-import { MultiAddress, westend } from "@capi/westend"
+import { MultiAddress, westendDev as westend } from "@capi/westend-dev"
 import { ss58 } from "capi"
 import { isValidAddress } from "./address.js"
 

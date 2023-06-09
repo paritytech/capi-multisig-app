@@ -1,4 +1,4 @@
-import { westend } from "@capi/westend"
+import { westendDev as westend } from "@capi/westend-dev"
 import { signature } from "capi/patterns/signature/polkadot"
 import { defaultAccount, defaultSender } from "../../../signals/accounts.js"
 import {

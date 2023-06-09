@@ -1,6 +1,6 @@
 import { Setup as SetupType } from "common"
 
-import { RuntimeCall } from "@capi/westend"
+import { RuntimeCall } from "@capi/westend-dev"
 import { useMutation } from "@tanstack/react-query"
 import { hex } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"

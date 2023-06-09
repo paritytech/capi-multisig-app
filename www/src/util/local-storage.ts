@@ -1,4 +1,4 @@
-import { $runtimeCall, Westend } from "@capi/westend"
+import { $runtimeCall, WestendDev as Westend } from "@capi/westend-dev"
 import { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import { ExtrinsicRune, hex, Rune } from "capi"
 import { isSetup, Setup } from "common"

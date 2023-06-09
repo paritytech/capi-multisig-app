@@ -1,4 +1,8 @@
-import { MultiAddress, Westend, westend } from "@capi/westend"
+import {
+  MultiAddress,
+  WestendDev as Westend,
+  westendDev as westend,
+} from "@capi/westend-dev"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"

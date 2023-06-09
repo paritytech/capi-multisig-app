@@ -1,4 +1,4 @@
-import { westend } from "@capi/westend"
+import { westendDev as westend } from "@capi/westend-dev"
 
 async function getExistentialDeposit() {
   return await westend.pallet("Balances").constant("ExistentialDeposit").decoded

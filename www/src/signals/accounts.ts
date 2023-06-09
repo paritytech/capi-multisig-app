@@ -1,4 +1,4 @@
-import { westend } from "@capi/westend"
+import { westendDev as westend } from "@capi/westend-dev"
 import { computed, effect, signal } from "@preact/signals"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
 import { pjsSender } from "capi/patterns/compat/pjs_sender"
