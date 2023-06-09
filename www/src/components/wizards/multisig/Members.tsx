@@ -1,7 +1,6 @@
-import { AccountInfo, MultiAddress, Westend, westend } from "@capi/westend"
+import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Rune, ss58 } from "capi"
-import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { MultisigRune } from "capi/patterns/multisig"
 import {
   filterPureCreatedEvents,
@@ -12,11 +11,11 @@ import { Controller, useForm } from "react-hook-form"
 import {
   accounts,
   defaultAccount,
-  defaultExtension,
+  defaultSender,
 } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
+import { toPubKey } from "../../../util/capi-helpers.js"
 import {
-  EXISTENTIAL_DEPOSIT,
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
@@ -35,18 +34,6 @@ import {
 } from "./formData.js"
 
 const multisigCreationFees: Row[] = [
-  {
-    name: "Existential deposit PureProxy",
-
-    value: formatBalance(EXISTENTIAL_DEPOSIT),
-    info: "Amount to pay in order to keep the account alive",
-  },
-  {
-    name: "Existential deposit Multisig",
-
-    value: formatBalance(EXISTENTIAL_DEPOSIT),
-    info: "Amount to pay in order to keep the account alive",
-  },
   {
     name: "Proxy fee",
     value: formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR),
@@ -78,23 +65,12 @@ export function MultisigMembers() {
   }
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
-    const { signer } = defaultExtension.value || {}
-    const { address: userAddress } = defaultAccount.value || {}
-    if (!signer || !userAddress) {
-      console.error(
-        "No Signer available, make sure wallet is connected and a valid address is selected",
-      )
-      return
-    }
-    const userSender = pjsSender(westend, signer)(userAddress)
+    if (!defaultSender.value || !defaultAccount.value) return
 
     const { threshold } = formData.value
     const { members } = formDataNew
 
-    const signatories = members.map((member) => {
-      const [_, addr] = ss58.decode(member?.address!)
-      return addr
-    })
+    const signatories = members.map((member) => toPubKey(member!.address))
 
     const multisig: MultisigRune<Westend, never> = MultisigRune.from(westend, {
       signatories,
@@ -106,36 +82,13 @@ export function MultisigMembers() {
       await multisig.accountId.run(),
     )
 
-    const multisigInfo = (await westend.System.Account.value(
-      multisig.accountId,
-    ).run()) as AccountInfo
-    // `multisigInfo` is undefined for blank accounts
-    const multisigExists = !!multisigInfo
-    if (multisigExists) {
-      // TODO not sure what happens if account value falls
-      // below existential deposit, can this even happen?
-
-      console.info(
-        `Multisig ${multisigAddress} is already funded, skipping existential funding.`,
-      )
-    } else {
-      const existentialDepositMultisigCall = multisig
-        .fund(EXISTENTIAL_DEPOSIT)
-        .signed(signature({ sender: userSender }))
-        .sent()
-        .dbgStatus("Funding Multisig Account:")
-        .finalized()
-
-      await existentialDepositMultisigCall.run()
-    }
-
     // TODO can we check if stash already created? previously?
     const createStashCall = westend.Proxy.createPure({
       proxyType: "Any",
       delay: 0,
       index: 0,
     })
-      .signed(signature({ sender: userSender }))
+      .signed(signature({ sender: defaultSender.value }))
       .sent()
       .dbgStatus("Creating Pure Proxy:")
       .finalizedEvents()
@@ -152,7 +105,7 @@ export function MultisigMembers() {
     )
     console.info("New Stash created at:", stashAddress)
 
-    const [_, userAddressBytes] = ss58.decode(userAddress)
+    const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
     // TODO can we somehow check if the delegation has already been done?
     const replaceDelegates = westend.Utility.batchAll({
       calls: Rune.array(
@@ -164,7 +117,7 @@ export function MultisigMembers() {
         ),
       ),
     })
-      .signed(signature({ sender: userSender }))
+      .signed(signature({ sender: defaultSender.value }))
       .sent()
       .dbgStatus("Replacing Proxy Delegates:")
       .finalized()

@@ -2,7 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { hex } from "capi"
 import { useEffect } from "preact/hooks"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { accounts } from "../../../signals/index.js"
+import { useSearchParams } from "react-router-dom"
+import { setups } from "../../../signals/setups.js"
 import { formatBalance } from "../../../util/balance.js"
 import { AccountId } from "../../AccountId.js"
 import { AccountSelect } from "../../AccountSelect.js"
@@ -12,10 +13,11 @@ import { Button } from "../../Button.js"
 import { SumTable } from "../../SumTable.js"
 import { goNext } from "../Wizard.js"
 import {
-  formData,
+  FormData,
+  formDataSchema,
   TransactionData,
-  transactionSchema,
-  updateFormData,
+  transactionData,
+  updateTransactionData,
 } from "./formData.js"
 import { call, fee, selectedAccount } from "./signals.js"
 
@@ -25,25 +27,46 @@ export function TransactionNew() {
     formState: { errors, isValid },
     control,
     watch,
-  } = useForm<TransactionData>({
-    resolver: zodResolver(transactionSchema),
+  } = useForm<FormData>({
+    resolver: zodResolver(formDataSchema),
     mode: "onChange",
   })
 
-  const onSubmit: SubmitHandler<TransactionData> = async (formDataNew) => {
+  const onSubmit: SubmitHandler<FormData> = async (formDataNew) => {
     if (!call.value) return
     const callHash = hex.encode(await call.value.callHash.run())
     const callData = hex.encode(await call.value.callData.run())
-    updateFormData({ ...formDataNew, callHash, callData })
+    const selectedSetup = setups.peek().find((s) =>
+      s.multisig === formDataNew.from?.address
+    )
+    updateTransactionData({
+      ...formDataNew,
+      callHash,
+      callData,
+      setup: selectedSetup,
+    })
     goNext()
   }
 
   useEffect(() => {
     const subscription = watch((data) => {
-      updateFormData(data as TransactionData)
+      updateTransactionData({
+        ...data as TransactionData,
+        amount: data.amount ?? 0,
+      })
     })
     return () => subscription.unsubscribe()
   }, [watch])
+
+  const fromAccounts = setups.value.map((s) => ({
+    name: s.name,
+    address: s.multisig,
+    source: "",
+  }))
+  let queryMultisig = useSearchParams()[0].get("multisig")
+  const defaultFromAccount = queryMultisig
+    ? fromAccounts.find((a) => a.address === queryMultisig)
+    : undefined
 
   return (
     <div className="flex flex-col gap-6 divide-y divide-divider">
@@ -63,7 +86,7 @@ export function TransactionNew() {
           <div className="space-y-2">
             <Controller
               control={control}
-              defaultValue={formData.value.amount}
+              defaultValue={transactionData.value.amount}
               name="amount"
               render={({ field }) => (
                 <BalanceInput
@@ -81,9 +104,9 @@ export function TransactionNew() {
             <Controller
               control={control}
               name={`from`}
-              defaultValue={formData.value.from}
+              defaultValue={defaultFromAccount}
               render={({ field }) => (
-                <AccountSelect {...field} accounts={accounts.value} />
+                <AccountSelect {...field} accounts={fromAccounts} />
               )}
             />
           </div>
@@ -91,7 +114,7 @@ export function TransactionNew() {
             <p>To:</p>
             <Controller
               control={control}
-              defaultValue={formData.value.to}
+              defaultValue={transactionData.value.to}
               name="to"
               rules={{ required: true }}
               render={({ field }) => (
@@ -105,10 +128,9 @@ export function TransactionNew() {
         </div>
         <div class="pt-4">
           <SumTable unit="WND">
-            <SumTable.Row name="Send" value={watch("amount", 0).toString()} />
             <SumTable.Row
               name="Send"
-              value={formData.value.amount.toFixed(4)}
+              value={transactionData.value.amount.toFixed(4)}
             />
             <SumTable.Row
               name="Transaction Fee"
