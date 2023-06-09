@@ -32,7 +32,7 @@ export const router = t.router({
     MultisigController.createSetup(req.input)
   }),
   testDb: t.procedure.query(async () => {
-    await createTablesIfNotExist()
+    // await createTablesIfNotExist()
     console.log(process.env.CAPI_SERVER)
     /*const id = "5F3sa2TJAWMqDhXG6jhV4N8ko9SxwGy8TpaNS1repo5EYjQX"
     const setups = [
@@ -59,9 +59,10 @@ export const router = t.router({
       name: "hamid",
       multisigHex: await multisig.hex.run(),
     }
-    MultisigController.createSetup({
+
+    /*MultisigController.createSetup({
       payload: setup,
       signature: new Uint8Array(),
-    })
+    })*/
   }),
 })
