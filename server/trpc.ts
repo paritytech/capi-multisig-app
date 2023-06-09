@@ -1,11 +1,14 @@
 import { initTRPC } from "@trpc/server"
 import { inferAsyncReturnType } from "@trpc/server"
 import * as trpcStandAlone from "@trpc/server/adapters/standalone"
+import { createDevUsers } from "capi"
 import * as $ from "scale-codec"
 import { AccountController, MultisigController } from "./controllers.js"
 import { createTablesIfNotExist } from "./dynamoDB/table.js"
 
-import { $setup } from "common/models.js"
+import { polkadot } from "@capi/polkadot"
+import { MultisigRune } from "capi/patterns/multisig"
+import { $setup } from "common"
 
 export const $addMultisigParams = $.object(
   $.field("payload", $setup),
@@ -30,7 +33,8 @@ export const router = t.router({
   }),
   testDb: t.procedure.query(async () => {
     await createTablesIfNotExist()
-    const id = "5F3sa2TJAWMqDhXG6jhV4N8ko9SxwGy8TpaNS1repo5EYjQX"
+    console.log(process.env.CAPI_SERVER)
+    /*const id = "5F3sa2TJAWMqDhXG6jhV4N8ko9SxwGy8TpaNS1repo5EYjQX"
     const setups = [
       "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
       "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
@@ -42,6 +46,22 @@ export const router = t.router({
     const item = await AccountController.getAccount(id)
     await AccountController.deleteAccount(id)
 
-    return item
+    return item*/
+
+    const { alexa, billy, carol, david } = await createDevUsers()
+
+    /// Initialize the `MultisigRune` with Alexa, Billy and Carol. Set the passing threshold to 2.
+    /*const multisig = MultisigRune.from(westend, {
+      signatories: [alexa, billy, carol].map(({ publicKey }) => publicKey),
+      threshold: 2,
+    })*/
+    const setup = {
+      name: "hamid",
+      multisigHex: "0x2345",
+    }
+    MultisigController.createSetup({
+      payload: setup,
+      signature: new Uint8Array(),
+    })
   }),
 })

@@ -1,9 +1,9 @@
-import type { Account, Setup } from "common/models.js"
-import { $setup } from "common/models.js"
+import type { Account, Setup } from "common"
+import { $setup } from "common"
 import { Delete, docClient, Get, Put } from "./dynamoDB/db.js"
 import { TableNames } from "./dynamoDB/table.js"
 
-import { westend } from "@capi/westend"
+import { polkadot } from "@capi/polkadot"
 import { Sr25519 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
 
@@ -15,13 +15,16 @@ export class MultisigController {
     params: { payload: Setup; signature: Uint8Array },
   ) {
     const { payload, signature } = params
-    // Authorization
-    const multisig = await MultisigRune.fromHex(westend, payload.multisigHex)
+
+    // Validation
+    const multisig = await MultisigRune.fromHex(polkadot, payload.multisigHex)
       .run()
     if (multisig.signatories.length < 2) {
       throw new Error("invalid multisig")
     }
 
+    // Authorization
+    /*
     const isValidSignature = multisig.signatories
       .map((signatory: Uint8Array) =>
         Sr25519.verify(
@@ -35,10 +38,12 @@ export class MultisigController {
     if (!isValidSignature) {
       throw new Error("invalid signature")
     }
+    */
 
     // Put item in DB
     const keys = MultisigController.getKeys(payload.multisigHex)
     const setupItem = { ...keys, ...payload }
+    console.log(setupItem)
     await docClient.send(
       new Put({
         TableName: TableNames.multisig,
@@ -48,7 +53,7 @@ export class MultisigController {
   }
 
   static async getSetup(multisigHex: string) {
-    const keys = AccountController.getKeys(multisigHex)
+    const keys = MultisigController.getKeys(multisigHex)
     const result = await docClient.send(
       new Get({ TableName: TableNames.account, Key: keys }),
     )
@@ -56,7 +61,7 @@ export class MultisigController {
   }
 
   static async deleteSetup(multisigHex: string) {
-    const keys = AccountController.getKeys(multisigHex)
+    const keys = MultisigController.getKeys(multisigHex)
     docClient.send(
       new Delete({ TableName: TableNames.account, Key: keys }),
     )

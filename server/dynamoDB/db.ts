@@ -1,6 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb"
-import { Model, PartitionKey, SortKey } from "common/models.js"
+import type { Model, PartitionKey, SortKey } from "common"
 import { TypeSafeDeleteDocumentCommand } from "typesafe-dynamodb/lib/delete-document-command.js"
 import { TypeSafeDocumentClientV3 } from "typesafe-dynamodb/lib/document-client-v3.js"
 import { TypeSafeGetDocumentCommand } from "typesafe-dynamodb/lib/get-document-command.js"
