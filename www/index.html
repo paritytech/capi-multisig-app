@@ -18,7 +18,7 @@
     <script>
       // TODO remove once closed https://github.com/paritytech/capi/issues/1038
       // temporary capi workaround
-      window.process = { env: {} };
+      window.process = { env: { CAPI_SERVER: "http://localhost:4646" } };
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
