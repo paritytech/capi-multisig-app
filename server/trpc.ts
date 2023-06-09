@@ -51,13 +51,13 @@ export const router = t.router({
     const { alexa, billy, carol, david } = await createDevUsers()
 
     /// Initialize the `MultisigRune` with Alexa, Billy and Carol. Set the passing threshold to 2.
-    /*const multisig = MultisigRune.from(westend, {
+    const multisig = MultisigRune.from(polkadot, {
       signatories: [alexa, billy, carol].map(({ publicKey }) => publicKey),
       threshold: 2,
-    })*/
+    })
     const setup = {
       name: "hamid",
-      multisigHex: "0x2345",
+      multisigHex: await multisig.hex.run(),
     }
     MultisigController.createSetup({
       payload: setup,
