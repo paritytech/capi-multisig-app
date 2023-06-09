@@ -1,8 +1,4 @@
-import {
-  MultiAddress,
-  WestendDev as Westend,
-  westendDev as westend,
-} from "@capi/westend-dev"
+import { MultiAddress, Westend, westend } from "@capi/westend"
 import { effect, Signal, signal } from "@preact/signals"
 import { ExtrinsicRune, ss58 } from "capi"
 import { defaultAccount } from "../../../signals/index.js"

@@ -1,4 +1,4 @@
-import { RuntimeCall } from "@capi/westend-dev"
+import { RuntimeCall } from "@capi/westend"
 import { useQuery } from "@tanstack/react-query"
 import { hex } from "capi"
 import { Setup } from "common"

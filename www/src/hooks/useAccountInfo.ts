@@ -1,4 +1,4 @@
-import { westendDev as westend } from "@capi/westend-dev"
+import { westend } from "@capi/westend"
 import { useQuery } from "@tanstack/react-query"
 import { toPubKey } from "../util/capi-helpers.js"
 

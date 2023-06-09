@@ -1,4 +1,4 @@
-import { westendDev as westend } from "@capi/westend-dev"
+import { westend } from "@capi/westend"
 import { ss58 } from "capi"
 
 export function formatBalance(
