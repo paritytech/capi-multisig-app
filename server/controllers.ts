@@ -1,27 +1,37 @@
-import type { Account, Setup } from "common/models.js"
-import { $setup } from "common/models.js"
+import type { Account, Setup } from "common"
+import { $setup, u8aToHex } from "common"
 import { Delete, docClient, Get, Put } from "./dynamoDB/db.js"
 import { TableNames } from "./dynamoDB/table.js"
 
 import { westend } from "@capi/westend"
 import { Sr25519 } from "capi"
-import { MultisigRune } from "capi/patterns/multisig"
+import {
+  Multisig,
+  multisigAccountId,
+  MultisigRune,
+} from "capi/patterns/multisig"
 
 export class MultisigController {
-  static getKeys(multisigHex: string) {
-    return { pk: multisigHex }
+  static getKeys(multisigId: string) {
+    return { pk: multisigId }
   }
   static async createSetup(
     params: { payload: Setup; signature: Uint8Array },
   ) {
     const { payload, signature } = params
-    // Authorization
+
+    // Validation
     const multisig = await MultisigRune.fromHex(westend, payload.multisigHex)
       .run()
-    if (multisig.signatories.length < 2) {
+    if (
+      multisig.signatories.length < 2 || !multisig.threshold
+      || multisig.threshold < 2
+    ) {
       throw new Error("invalid multisig")
     }
 
+    // ToDo: Authorization
+    /*
     const isValidSignature = multisig.signatories
       .map((signatory: Uint8Array) =>
         Sr25519.verify(
@@ -35,10 +45,15 @@ export class MultisigController {
     if (!isValidSignature) {
       throw new Error("invalid signature")
     }
+    */
 
     // Put item in DB
-    const keys = MultisigController.getKeys(payload.multisigHex)
+    const multisigId = u8aToHex(
+      multisigAccountId(multisig.signatories, multisig.threshold),
+    )
+    const keys = MultisigController.getKeys(multisigId)
     const setupItem = { ...keys, ...payload }
+    console.log(setupItem)
     await docClient.send(
       new Put({
         TableName: TableNames.multisig,
@@ -47,16 +62,16 @@ export class MultisigController {
     )
   }
 
-  static async getSetup(multisigHex: string) {
-    const keys = AccountController.getKeys(multisigHex)
+  static async getSetup(multisigId: string) {
+    const keys = MultisigController.getKeys(multisigId)
     const result = await docClient.send(
       new Get({ TableName: TableNames.account, Key: keys }),
     )
     return result.Item
   }
 
-  static async deleteSetup(multisigHex: string) {
-    const keys = AccountController.getKeys(multisigHex)
+  static async deleteSetup(multisigId: string) {
+    const keys = MultisigController.getKeys(multisigId)
     docClient.send(
       new Delete({ TableName: TableNames.account, Key: keys }),
     )
