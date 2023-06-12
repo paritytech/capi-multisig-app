@@ -1,27 +1,21 @@
-import type { Account, Setup } from "common"
+import type { Account, Calldata, Setup } from "common"
 import { $setup, u8aToHex } from "common"
 import { Delete, docClient, Get, Put } from "./dynamoDB/db.js"
 import { TableNames } from "./dynamoDB/table.js"
 
 import { westend } from "@capi/westend"
 import { Sr25519 } from "capi"
-import {
-  Multisig,
-  multisigAccountId,
-  MultisigRune,
-} from "capi/patterns/multisig"
+import { MultisigRune } from "capi/patterns/multisig"
 
 export class MultisigController {
   static getKeys(multisigId: string) {
     return { pk: multisigId }
   }
   static async createSetup(
-    params: { payload: Setup; signature: Uint8Array },
+    setup: Setup,
   ) {
-    const { payload, signature } = params
-
     // Validation
-    const multisig = await MultisigRune.fromHex(westend, payload.multisigHex)
+    const multisig = await MultisigRune.fromHex(westend, setup.multisigHex)
       .run()
     if (
       multisig.signatories.length < 2 || !multisig.threshold
@@ -31,28 +25,11 @@ export class MultisigController {
     }
 
     // ToDo: Authorization
-    /*
-    const isValidSignature = multisig.signatories
-      .map((signatory: Uint8Array) =>
-        Sr25519.verify(
-          signatory,
-          $setup.encode(payload),
-          signature,
-        )
-      )
-      .find((result: unknown) => result) ?? false
-
-    if (!isValidSignature) {
-      throw new Error("invalid signature")
-    }
-    */
+    // Check the account submitting the call is in signatories
 
     // Put item in DB
-    const multisigId = u8aToHex(
-      multisigAccountId(multisig.signatories, multisig.threshold),
-    )
-    const keys = MultisigController.getKeys(multisigId)
-    const setupItem = { ...keys, ...payload }
+    const keys = MultisigController.getKeys(setup.id)
+    const setupItem = { ...keys, ...setup }
     console.log(setupItem)
     await docClient.send(
       new Put({
@@ -62,16 +39,16 @@ export class MultisigController {
     )
   }
 
-  static async getSetup(multisigId: string) {
-    const keys = MultisigController.getKeys(multisigId)
+  static async getSetup(id: string) {
+    const keys = MultisigController.getKeys(id)
     const result = await docClient.send(
       new Get({ TableName: TableNames.account, Key: keys }),
     )
     return result.Item
   }
 
-  static async deleteSetup(multisigId: string) {
-    const keys = MultisigController.getKeys(multisigId)
+  static async deleteSetup(id: string) {
+    const keys = MultisigController.getKeys(id)
     docClient.send(
       new Delete({ TableName: TableNames.account, Key: keys }),
     )
@@ -104,6 +81,36 @@ export class AccountController {
     const keys = AccountController.getKeys(id)
     docClient.send(
       new Delete({ TableName: TableNames.account, Key: keys }),
+    )
+  }
+}
+
+export class CalldataController {
+  static getKeys(callHash: string) {
+    return { pk: callHash }
+  }
+  static async addCalldata(calldata: Calldata) {
+    const keys = CalldataController.getKeys(calldata.hash)
+    const item = { ...keys, ...calldata }
+    await docClient.send(
+      new Put({
+        TableName: TableNames.calldata,
+        Item: item,
+      }),
+    )
+  }
+  static async getCalldata(hash: string) {
+    const keys = CalldataController.getKeys(hash)
+    const result = await docClient.send(
+      new Get({ TableName: TableNames.calldata, Key: keys }),
+    )
+    return result.Item
+  }
+
+  static async deleteCalldata(hash: string) {
+    const keys = AccountController.getKeys(hash)
+    docClient.send(
+      new Delete({ TableName: TableNames.calldata, Key: keys }),
     )
   }
 }

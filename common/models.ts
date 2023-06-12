@@ -40,10 +40,27 @@ export const $historyItem: $.Codec<History> = $.object(
   $.optionalField("cancelled", $.str),
 )
 
+// Calldata
+export interface CalldataItem {
+  /** partition key is callhash */
+  pk: string
+  sk?: string
+  hash: string
+  /** The scale-encoded calldata */
+  data: string
+}
+
+export type Calldata = Omit<CalldataItem, ItemKeys>
+export const $calldata = $.object(
+  $.field("hash", $.str),
+  $.field("data", $.str),
+)
+
 // Multisig Setup
 export interface SetupItem {
   pk: string
   sk?: string
+  id: string
   multisigHex: string
   name: string
   stash?: string
@@ -52,6 +69,7 @@ export interface SetupItem {
 export type Setup = Omit<SetupItem, ItemKeys>
 
 export const $setup: $.Codec<Setup> = $.object(
+  $.field("id", $.str),
   $.field("multisigHex", $.str),
   $.field("name", $.str),
   $.optionalField("stash", $.str),
@@ -70,6 +88,10 @@ export interface AccountItem {
   setups: string[]
 }
 export type Account = Omit<AccountItem, ItemKeys>
+export const $account: $.Codec<Account> = $.object(
+  $.field("id", $.str),
+  $.field("setups", $.array($.str)),
+)
 
 // Model
-export type Model = HistoryItem | SetupItem | AccountItem
+export type Model = HistoryItem | SetupItem | AccountItem | CalldataItem

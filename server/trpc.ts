@@ -4,15 +4,14 @@ import { inferAsyncReturnType } from "@trpc/server"
 import * as trpcStandAlone from "@trpc/server/adapters/standalone"
 import { createDevUsers, ss58 } from "capi"
 import { multisigAccountId, MultisigRune } from "capi/patterns/multisig"
-import { $setup, u8aToHex } from "common"
+import { $account, $calldata, $setup, u8aToHex } from "common"
 import * as $ from "scale-codec"
-import { AccountController, MultisigController } from "./controllers.js"
+import {
+  AccountController,
+  CalldataController,
+  MultisigController,
+} from "./controllers.js"
 import { createTablesIfNotExist } from "./dynamoDB/table.js"
-
-export const $addMultisigParams = $.object(
-  $.field("payload", $setup),
-  $.field("signature", $.uint8Array),
-)
 
 export async function createContext(
   {}: trpcStandAlone.CreateHTTPContextOptions,
@@ -26,13 +25,46 @@ const t = initTRPC.context<Context>().create()
 
 export type router = typeof router
 export const router = t.router({
+  // health check
   "": t.procedure.query(() => undefined),
-  addMultisig: t.procedure.input($addMultisigParams).mutation(async (req) => {
+
+  // multisig
+  addMultisig: t.procedure.input($setup).mutation(async (req) => {
     MultisigController.createSetup(req.input)
   }),
+  getMultisig: t.procedure.input($.str).query(async (req) => {
+    MultisigController.getSetup(req.input)
+  }),
+  deleteMultisig: t.procedure.input($.str).mutation(async (req) => {
+    MultisigController.deleteSetup(req.input)
+  }),
+
+  // account
+  addAccount: t.procedure.input($account).mutation(async (req) => {
+    AccountController.createAccount(req.input)
+  }),
+  getAccount: t.procedure.input($.str).query(async (req) => {
+    AccountController.getAccount(req.input)
+  }),
+  deleteAccount: t.procedure.input($.str).mutation(async (req) => {
+    AccountController.deleteAccount(req.input)
+  }),
+
+  // calldata
+  addCalldata: t.procedure.input($calldata).mutation(async (req) => {
+    CalldataController.addCalldata(req.input)
+  }),
+  getCalldata: t.procedure.input($.str).query(async (req) => {
+    CalldataController.getCalldata(req.input)
+  }),
+  deleteCalldata: t.procedure.input($.str).mutation(async (req) => {
+    CalldataController.deleteCalldata(req.input)
+  }),
+
+  //
   testDb: t.procedure.query(async () => {
-    await createTablesIfNotExist()
     console.log(process.env.CAPI_SERVER)
+    await createTablesIfNotExist()
     /*const id = "5F3sa2TJAWMqDhXG6jhV4N8ko9SxwGy8TpaNS1repo5EYjQX"
     const setups = [
       "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
@@ -45,7 +77,8 @@ export const router = t.router({
     const item = await AccountController.getAccount(id)
     await AccountController.deleteAccount(id)
 
-    return item*/
+    return item
+    */
 
     const { alexa, billy, carol, david } = await createDevUsers()
 
@@ -54,21 +87,26 @@ export const router = t.router({
       signatories: [alexa, billy, carol].map(({ publicKey }) => publicKey),
       threshold: 2,
     })
+
+    // generate multisigID:
+    const idRaw = await multisig.accountId.run()
+    const id = u8aToHex(idRaw)
+    // const address = ss58.encode(await westend.addressPrefix().run(), idRaw)
+    console.log(`id: ${id}`)
+
     const setup = {
       name: "hamid",
+      id,
       multisigHex: await multisig.hex.run(),
     }
-    MultisigController.createSetup({
+    await MultisigController.createSetup({
       payload: setup,
       signature: new Uint8Array(),
     })
 
     // get
-    const idRaw = await multisig.accountId.run()
-    const id = u8aToHex(idRaw)
-    const address = ss58.encode(await westend.addressPrefix().run(), idRaw)
-    console.log(address)
     const item = await MultisigController.getSetup(id)
+    console.log(item)
     return item
   }),
 })

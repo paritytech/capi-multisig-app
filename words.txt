@@ -4,6 +4,7 @@ asynciterable
 azuretools
 bradlc
 capi
+callhash
 clsx
 compat
 csstools

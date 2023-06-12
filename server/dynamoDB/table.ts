@@ -10,6 +10,7 @@ export const TableNames = {
   multisig: "capi_multisig",
   account: "capi_account",
   history: "capi_history",
+  calldata: "capi_calldata",
 } as const
 
 export const Schemas: CreateTableCommandInput[] = [
@@ -34,6 +35,25 @@ export const Schemas: CreateTableCommandInput[] = [
   },
   {
     TableName: TableNames.account,
+    AttributeDefinitions: [
+      {
+        AttributeName: "pk",
+        AttributeType: "S",
+      },
+    ],
+    KeySchema: [
+      {
+        AttributeName: "pk",
+        KeyType: "HASH",
+      },
+    ],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 1,
+      WriteCapacityUnits: 1,
+    },
+  },
+  {
+    TableName: TableNames.calldata,
     AttributeDefinitions: [
       {
         AttributeName: "pk",
