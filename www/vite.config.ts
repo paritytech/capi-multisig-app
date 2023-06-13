@@ -17,8 +17,8 @@ export default defineConfig({
     // TODO remove once closed https://github.com/paritytech/capi/issues/1038
     // temporary capi workaround
     "process.env": {
-      CAPI_SERVER: process.env.CAPI_SERVER,
-      CAPI_TARGET: process.env.CAPI_TARGET,
+      CAPI_SERVER: "http://localhost:4646/",
+      CAPI_TARGET: "dev",
     },
   },
 })
