@@ -1,9 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { httpBatchLink } from "@trpc/client"
+import { ComponentChildren } from "preact"
 import { useState } from "preact/hooks"
 import { trpc } from "./trpc.js"
 
-export function ApiProvider({ children }) {
+type Props = {
+  children: ComponentChildren
+}
+
+export function ApiProvider({ children }: Props) {
   const [queryClient] = useState(() => new QueryClient())
   const [trpcClient] = useState(() =>
     trpc.createClient({
