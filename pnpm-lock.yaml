@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 overrides:
   react: preact/compat
   react-dom: preact/compat
@@ -9,20 +13,20 @@ importers:
   .:
     dependencies:
       '@capi/westend':
-        specifier: https://capi.dev/5d85ae3b73838214/westend.tar
-        version: '@capi.dev/5d85ae3b73838214/westend.tar(capi@0.1.0-beta.42)'
+        specifier: https://capi.dev/c598a2afe3502c21/westend.tar
+        version: '@capi.dev/c598a2afe3502c21/westend.tar(capi@0.1.0-beta.42)'
       '@capi/westend-dev':
-        specifier: https://capi.dev/5d85ae3b73838214/westend-dev.tar
-        version: '@capi.dev/5d85ae3b73838214/westend-dev.tar(capi@0.1.0-beta.42)'
+        specifier: https://capi.dev/c598a2afe3502c21/westend-dev.tar
+        version: '@capi.dev/c598a2afe3502c21/westend-dev.tar(capi@0.1.0-beta.42)'
       '@headlessui/react':
         specifier: ^1.7.11
-        version: 1.7.11
+        version: 1.7.11(react-dom@18.2.0)(react@18.2.0)
       '@preact/signals':
         specifier: ^1.1.3
         version: 1.1.3(preact@10.12.1)
       '@talisman-connect/wallets':
         specifier: ^1.1.3
-        version: 1.1.3
+        version: 1.1.3(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
       capi:
         specifier: 0.1.0-beta.42
         version: 0.1.0-beta.42
@@ -34,10 +38,10 @@ importers:
         version: 10.12.1
       react-hook-form:
         specifier: ^7.43.3
-        version: 7.43.3
+        version: 7.43.3(react@18.2.0)
       react-router-dom:
         specifier: ^6.8.1
-        version: 6.8.1
+        version: 6.8.1(react-dom@18.2.0)(react@18.2.0)
       scale-codec:
         specifier: 0.11.2
         version: 0.11.2
@@ -70,7 +74,7 @@ importers:
         version: 3.288.0
       '@aws-sdk/lib-dynamodb':
         specifier: ^3.288.0
-        version: 3.288.0(@aws-sdk/client-dynamodb@3.288.0)
+        version: 3.288.0(@aws-sdk/client-dynamodb@3.288.0)(@aws-sdk/smithy-client@3.325.0)(@aws-sdk/types@3.310.0)
       common:
         specifier: workspace:*
         version: link:../common
@@ -104,7 +108,7 @@ importers:
     dependencies:
       '@headlessui/react':
         specifier: ^1.7.11
-        version: 1.7.11
+        version: 1.7.11(react-dom@18.2.0)(react@18.2.0)
       '@hookform/resolvers':
         specifier: ^2.9.11
         version: 2.9.11(react-hook-form@7.43.3)
@@ -113,10 +117,10 @@ importers:
         version: 1.1.3(preact@10.12.1)
       '@talisman-connect/wallets':
         specifier: ^1.1.3
-        version: 1.1.3
+        version: 1.1.3(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
       '@tanstack/react-query':
         specifier: ^4.29.12
-        version: 4.29.12
+        version: 4.29.12(react-dom@18.2.0)(react@18.2.0)
       common:
         specifier: workspace:*
         version: link:../common
@@ -128,22 +132,22 @@ importers:
         version: 0.2.4(prettier@2.8.4)
       react-hook-form:
         specifier: ^7.43.3
-        version: 7.43.3
+        version: 7.43.3(react@18.2.0)
       react-number-format:
         specifier: ^5.1.4
-        version: 5.1.4
+        version: 5.1.4(react-dom@18.2.0)(react@18.2.0)
       react-router-dom:
         specifier: ^6.8.1
-        version: 6.8.1
+        version: 6.8.1(react-dom@18.2.0)(react@18.2.0)
       react-tooltip:
         specifier: ^5.10.5
-        version: 5.10.5
+        version: 5.10.5(react-dom@18.2.0)(react@18.2.0)
       tailwind-merge:
         specifier: ^1.10.0
         version: 1.10.0
       vite-tsconfig-paths:
         specifier: ^4.0.5
-        version: 4.0.5
+        version: 4.0.5(typescript@4.9.5)
     devDependencies:
       '@babel/core':
         specifier: '>=7.12.10 <8.0.0'
@@ -168,10 +172,10 @@ importers:
         version: 2.8.4
       tailwindcss:
         specifier: ^3.3.2
-        version: 3.3.2
+        version: 3.3.2(ts-node@10.9.1)
       vite:
         specifier: ^4.1.4
-        version: 4.1.4
+        version: 4.1.4(@types/node@18.16.0)
 
 packages:
 
@@ -537,19 +541,6 @@ packages:
     resolution: {integrity: sha512-UPez5qLh3dNgt0DYnPD/q0mVJY84rA17QE26hVNOW3fAji8W2wrwrxdacWOxyXvlxWsVRcKmr+lay1MDqpAMfg==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      tslib: 2.5.0
-    dev: false
-
-  /@aws-sdk/lib-dynamodb@3.288.0(@aws-sdk/client-dynamodb@3.288.0):
-    resolution: {integrity: sha512-OWQnKzOgTyl+QmCmfKHMpgiIDYqZ+XkS1tCbZ+6v1+w+QEH24MpIBmPQIRAMxdipLJC7R1DJ2uAAOvrbTE6ljQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      '@aws-sdk/client-dynamodb': ^3.0.0
-      '@aws-sdk/smithy-client': ^3.0.0
-      '@aws-sdk/types': ^3.0.0
-    dependencies:
-      '@aws-sdk/client-dynamodb': 3.288.0
-      '@aws-sdk/util-dynamodb': 3.288.0
       tslib: 2.5.0
     dev: false
 
@@ -1440,7 +1431,7 @@ packages:
       '@floating-ui/core': 1.2.6
     dev: false
 
-  /@headlessui/react@1.7.11:
+  /@headlessui/react@1.7.11(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-EaDbVgcyiylhtskZZf4Qb/JiiByY7cYbd0qgZ9xm2pm2X7hKojG0P4TaQYKgPOV3vojPhd/pZyQh3nmRkkcSyw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -1448,6 +1439,8 @@ packages:
       react-dom: ^16 || ^17 || ^18
     dependencies:
       client-only: 0.0.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@hookform/resolvers@2.9.11(react-hook-form@7.43.3):
@@ -1455,7 +1448,7 @@ packages:
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.43.3
+      react-hook-form: 7.43.3(react@18.2.0)
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -1579,7 +1572,7 @@ packages:
       '@polkadot/types': 7.15.1
       '@polkadot/types-codec': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
+      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
       rxjs: 7.8.1
     transitivePeerDependencies:
       - encoding
@@ -1594,7 +1587,7 @@ packages:
       '@polkadot/api-augment': 7.15.1
       '@polkadot/api-base': 7.15.1
       '@polkadot/api-derive': 7.15.1
-      '@polkadot/keyring': 8.7.1
+      '@polkadot/keyring': 8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
       '@polkadot/rpc-augment': 7.15.1
       '@polkadot/rpc-core': 7.15.1
       '@polkadot/rpc-provider': 7.15.1
@@ -1604,7 +1597,7 @@ packages:
       '@polkadot/types-create': 7.15.1
       '@polkadot/types-known': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
+      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
       eventemitter3: 4.0.7
       rxjs: 7.8.1
     transitivePeerDependencies:
@@ -1612,16 +1605,18 @@ packages:
       - supports-color
     dev: false
 
-  /@polkadot/extension-dapp@0.42.10(@polkadot/api@7.15.1):
+  /@polkadot/extension-dapp@0.42.10(@polkadot/api@7.15.1)(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1):
     resolution: {integrity: sha512-ad3qwl62V2WwggmQdB5C9HmmF4aOfD8m+eJYvBnqkl0Xc/ZANgIwt0u5kViImacyiuvrtKR/VCyMOGn9zrzicQ==}
     peerDependencies:
       '@polkadot/api': '*'
+      '@polkadot/util': '*'
+      '@polkadot/util-crypto': '*'
     dependencies:
       '@babel/runtime': 7.21.5
       '@polkadot/api': 7.15.1
       '@polkadot/extension-inject': 0.42.10(@polkadot/api@7.15.1)
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
+      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -1637,20 +1632,23 @@ packages:
       '@polkadot/rpc-provider': 7.15.1
       '@polkadot/types': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
+      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
       '@polkadot/x-global': 8.7.1
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: false
 
-  /@polkadot/keyring@8.7.1:
+  /@polkadot/keyring@8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1):
     resolution: {integrity: sha512-t6ZgQVC+nQT7XwbWtEhkDpiAzxKVJw8Xd/gWdww6xIrawHu7jo3SGB4QNdPgkf8TvDHYAAJiupzVQYAlOIq3GA==}
     engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@polkadot/util': 8.7.1
+      '@polkadot/util-crypto': 8.7.1
     dependencies:
       '@babel/runtime': 7.21.5
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
+      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
     dev: false
 
   /@polkadot/networks@8.7.1:
@@ -1696,11 +1694,11 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.21.5
-      '@polkadot/keyring': 8.7.1
+      '@polkadot/keyring': 8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
       '@polkadot/types': 7.15.1
       '@polkadot/types-support': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
+      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
       '@polkadot/x-fetch': 8.7.1
       '@polkadot/x-global': 8.7.1
       '@polkadot/x-ws': 8.7.1
@@ -1765,18 +1763,20 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/runtime': 7.21.5
-      '@polkadot/keyring': 8.7.1
+      '@polkadot/keyring': 8.7.1(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
       '@polkadot/types-augment': 7.15.1
       '@polkadot/types-codec': 7.15.1
       '@polkadot/types-create': 7.15.1
       '@polkadot/util': 8.7.1
-      '@polkadot/util-crypto': 8.7.1
+      '@polkadot/util-crypto': 8.7.1(@polkadot/util@8.7.1)
       rxjs: 7.8.1
     dev: false
 
-  /@polkadot/util-crypto@8.7.1:
+  /@polkadot/util-crypto@8.7.1(@polkadot/util@8.7.1):
     resolution: {integrity: sha512-TaSuJ2aNrB5sYK7YXszkEv24nYJKRFqjF2OrggoMg6uYxUAECvTkldFnhtgeizMweRMxJIBu6bMHlSIutbWgjw==}
     engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@polkadot/util': 8.7.1
     dependencies:
       '@babel/runtime': 7.21.5
       '@noble/hashes': 1.0.0
@@ -1917,7 +1917,7 @@ packages:
       debug: 4.3.4
       kolorist: 1.8.0
       resolve: 1.22.2
-      vite: 4.1.4
+      vite: 4.1.4(@types/node@18.16.0)
     transitivePeerDependencies:
       - preact
       - supports-color
@@ -1964,7 +1964,7 @@ packages:
       '@prefresh/utils': 1.1.3
       '@rollup/pluginutils': 4.2.1
       preact: 10.12.1
-      vite: 4.1.4
+      vite: 4.1.4(@types/node@18.16.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2030,16 +2030,18 @@ packages:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.3.2
+      tailwindcss: 3.3.2(ts-node@10.9.1)
     dev: true
 
-  /@talisman-connect/wallets@1.1.3:
+  /@talisman-connect/wallets@1.1.3(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1):
     resolution: {integrity: sha512-RMphb1PgBjImdinEZvxvN8XmhVZrIXV2SLfsqOl2HJcEeLGC7vJazny8sc/Qm6t29ZRDIdtXp/L3uoMEf+5Mpg==}
     dependencies:
       '@polkadot/api': 7.15.1
-      '@polkadot/extension-dapp': 0.42.10(@polkadot/api@7.15.1)
+      '@polkadot/extension-dapp': 0.42.10(@polkadot/api@7.15.1)(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
       '@polkadot/extension-inject': 0.42.10(@polkadot/api@7.15.1)
     transitivePeerDependencies:
+      - '@polkadot/util'
+      - '@polkadot/util-crypto'
       - encoding
       - supports-color
     dev: false
@@ -2048,7 +2050,7 @@ packages:
     resolution: {integrity: sha512-8C+hF6SFAb/TlFZyS9FItgNwrw4PMa7YeX+KQYe2ZAiEz6uzg6yIr+QBzPkUwZ/L0bXvGd1sufTm3wotoz+GwQ==}
     dev: false
 
-  /@tanstack/react-query@4.29.12:
+  /@tanstack/react-query@4.29.12(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-zhcN6+zF6cxprxhTHQajHGlvxgK8npnp9uLe9yaWhGc6sYcPWXzyO4raL4HomUzQOPzu3jLvkriJQ7BOrDM8vA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -2061,7 +2063,9 @@ packages:
         optional: true
     dependencies:
       '@tanstack/query-core': 4.29.11
-      use-sync-external-store: 1.2.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -3348,7 +3352,7 @@ packages:
       postcss: 8.4.24
     dev: true
 
-  /postcss-load-config@4.0.1(postcss@8.4.24):
+  /postcss-load-config@4.0.1(postcss@8.4.24)(ts-node@10.9.1):
     resolution: {integrity: sha512-vEJIc8RdiBRu3oRAI0ymerOn+7rPuMvRXslTvZUKZonDHFIczxztIyJ1urxM1x9JXEikvpWWTUUqal5j/8QgvA==}
     engines: {node: '>= 14'}
     peerDependencies:
@@ -3362,6 +3366,7 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.24
+      ts-node: 10.9.1(@types/node@18.16.0)(typescript@4.9.5)
       yaml: 2.3.1
     dev: true
 
@@ -3529,27 +3534,41 @@ packages:
       unpipe: 1.0.0
     dev: false
 
-  /react-hook-form@7.43.3:
+  /react-dom@18.2.0(react@18.2.0):
+    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.2.0
+      scheduler: 0.23.0
+    dev: false
+
+  /react-hook-form@7.43.3(react@18.2.0):
     resolution: {integrity: sha512-LV6Fixh+hirrl6dXbM78aB6n//82aKbsNbcofF3wc6nx1UJLu3Jj/gsg1E5C9iISnLX+du8VTUyBUz2aCy+H7w==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
-  /react-number-format@5.1.4:
+  /react-number-format@5.1.4(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-QV7QHzHrk9ZS9V0bWkIwu6ywiXJt0www4/cXWEVEgwaNqthmOZl/Cf5O0ukEPlGZJJr06Jh3+CM4rZsvXn8cOg==}
     peerDependencies:
       react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     dependencies:
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /react-router-dom@6.8.1:
+  /react-router-dom@6.8.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-67EXNfkQgf34P7+PSb6VlBuaacGhkKn3kpE51+P6zYSG2kiRoumXEL6e27zTa9+PGF2MNXbgIUHTVlleLbIcHQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -3557,19 +3576,22 @@ packages:
       react-dom: '>=16.8'
     dependencies:
       '@remix-run/router': 1.3.2
-      react-router: 6.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-router: 6.8.1(react@18.2.0)
     dev: false
 
-  /react-router@6.8.1:
+  /react-router@6.8.1(react@18.2.0):
     resolution: {integrity: sha512-Jgi8BzAJQ8MkPt8ipXnR73rnD7EmZ0HFFb7jdQU24TynGW1Ooqin2KVDN9voSC+7xhqbbCd2cjGUepb6RObnyg==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.3.2
+      react: 18.2.0
     dev: false
 
-  /react-tooltip@5.10.5:
+  /react-tooltip@5.10.5(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-3bi4UtoPSdaQh0R17B3vMPhNFiATpAbXIV8AqlHqrrIdqo33OJyxuPHtgborw3KXVQ5a6iyyAmCY8ztjUB4CrA==}
     peerDependencies:
       react: '>=16.14.0'
@@ -3577,6 +3599,15 @@ packages:
     dependencies:
       '@floating-ui/dom': 1.2.7
       classnames: 2.3.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react@18.2.0:
+    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
     dev: false
 
   /read-cache@1.0.0:
@@ -3643,6 +3674,12 @@ packages:
 
   /scale-codec@0.11.2:
     resolution: {integrity: sha512-foVDx4QomwIgCssCbsLEfKIzalDZIbJ3FFyAml9hxN1GHb/Ppd/9SDgTeSabuc6uRwoSnFNRrSjA8Uxykk4+VA==}
+    dev: false
+
+  /scheduler@0.23.0:
+    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+    dependencies:
+      loose-envify: 1.4.0
     dev: false
 
   /semver@5.7.1:
@@ -3754,7 +3791,7 @@ packages:
     resolution: {integrity: sha512-WFnDXSS4kFTZwjKg5/oZSGzBRU/l+qcbv5NVTzLUQvJ9yovDAP05h0F2+ZFW0Lw9EcgRoc2AfURUdZvnEFrXKg==}
     dev: false
 
-  /tailwindcss@3.3.2:
+  /tailwindcss@3.3.2(ts-node@10.9.1):
     resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -3776,7 +3813,7 @@ packages:
       postcss: 8.4.24
       postcss-import: 15.1.0(postcss@8.4.24)
       postcss-js: 4.0.1(postcss@8.4.24)
-      postcss-load-config: 4.0.1(postcss@8.4.24)
+      postcss-load-config: 4.0.1(postcss@8.4.24)(ts-node@10.9.1)
       postcss-nested: 6.0.1(postcss@8.4.24)
       postcss-selector-parser: 6.0.12
       postcss-value-parser: 4.2.0
@@ -3860,17 +3897,6 @@ packages:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true
-
-  /tsconfck@2.1.1:
-    resolution: {integrity: sha512-ZPCkJBKASZBmBUNqGHmRhdhM8pJYDdOXp4nRgj/O0JwUwsMq50lCDRQP/M5GBNAA0elPrq4gAeu4dkaVCuKWww==}
-    engines: {node: ^14.13.1 || ^16 || >=18}
-    hasBin: true
-    peerDependencies:
-      typescript: ^4.3.5 || ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dev: false
 
   /tsconfck@2.1.1(typescript@4.9.5):
     resolution: {integrity: sha512-ZPCkJBKASZBmBUNqGHmRhdhM8pJYDdOXp4nRgj/O0JwUwsMq50lCDRQP/M5GBNAA0elPrq4gAeu4dkaVCuKWww==}
@@ -3965,10 +3991,12 @@ packages:
       querystring: 0.2.0
     dev: false
 
-  /use-sync-external-store@1.2.0:
+  /use-sync-external-store@1.2.0(react@18.2.0):
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /utf-8-validate@5.0.10:
@@ -4017,17 +4045,6 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /vite-tsconfig-paths@4.0.5:
-    resolution: {integrity: sha512-/L/eHwySFYjwxoYt1WRJniuK/jPv+WGwgRGBYx3leciR5wBeqntQpUE6Js6+TJemChc+ter7fDBKieyEWDx4yQ==}
-    dependencies:
-      debug: 4.3.4
-      globrex: 0.1.2
-      tsconfck: 2.1.1
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-    dev: false
-
   /vite-tsconfig-paths@4.0.5(typescript@4.9.5):
     resolution: {integrity: sha512-/L/eHwySFYjwxoYt1WRJniuK/jPv+WGwgRGBYx3leciR5wBeqntQpUE6Js6+TJemChc+ter7fDBKieyEWDx4yQ==}
     dependencies:
@@ -4039,7 +4056,7 @@ packages:
       - typescript
     dev: false
 
-  /vite@4.1.4:
+  /vite@4.1.4(@types/node@18.16.0):
     resolution: {integrity: sha512-3knk/HsbSTKEin43zHu7jTwYWv81f8kgAL99G5NWBcA1LKvtvcVAC4JjBH1arBunO9kQka+1oGbrMKOjk4ZrBg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -4064,6 +4081,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 18.16.0
       esbuild: 0.16.17
       postcss: 8.4.21
       resolve: 1.22.2
@@ -4168,28 +4186,6 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
-    dev: false
-
-  '@capi.dev/5d85ae3b73838214/westend-dev.tar(capi@0.1.0-beta.42)':
-    resolution: {tarball: https://capi.dev/5d85ae3b73838214/westend-dev.tar}
-    id: '@capi.dev/5d85ae3b73838214/westend-dev.tar'
-    name: westend-dev
-    version: 0.0.0-TODO
-    peerDependencies:
-      capi: '*'
-    dependencies:
-      capi: 0.1.0-beta.42
-    dev: false
-
-  '@capi.dev/5d85ae3b73838214/westend.tar(capi@0.1.0-beta.42)':
-    resolution: {tarball: https://capi.dev/5d85ae3b73838214/westend.tar}
-    id: '@capi.dev/5d85ae3b73838214/westend.tar'
-    name: westend
-    version: 0.0.0-TODO
-    peerDependencies:
-      capi: '*'
-    dependencies:
-      capi: 0.1.0-beta.42
     dev: false
 
   '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/contracts-dev.tar(capi@0.1.0-beta.42)':
@@ -4316,6 +4312,28 @@ packages:
   '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend.tar(capi@0.1.0-beta.42)':
     resolution: {tarball: https://capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend.tar}
     id: '@capi.dev/@v0.1.0-beta.42/371568ef82e78f0c/westend.tar'
+    name: westend
+    version: 0.0.0-TODO
+    peerDependencies:
+      capi: '*'
+    dependencies:
+      capi: 0.1.0-beta.42
+    dev: false
+
+  '@capi.dev/c598a2afe3502c21/westend-dev.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/c598a2afe3502c21/westend-dev.tar}
+    id: '@capi.dev/c598a2afe3502c21/westend-dev.tar'
+    name: westend-dev
+    version: 0.0.0-TODO
+    peerDependencies:
+      capi: '*'
+    dependencies:
+      capi: 0.1.0-beta.42
+    dev: false
+
+  '@capi.dev/c598a2afe3502c21/westend.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/c598a2afe3502c21/westend.tar}
+    id: '@capi.dev/c598a2afe3502c21/westend.tar'
     name: westend
     version: 0.0.0-TODO
     peerDependencies:

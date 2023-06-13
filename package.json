@@ -8,7 +8,8 @@
     "www"
   ],
   "dependencies": {
-    "@capi/westend": "https://capi.dev/5d85ae3b73838214/westend.tar",
+    "@capi/westend-dev": "https://capi.dev/c598a2afe3502c21/westend-dev.tar",
+    "@capi/westend": "https://capi.dev/c598a2afe3502c21/westend.tar",
     "@headlessui/react": "^1.7.11",
     "@preact/signals": "^1.1.3",
     "@talisman-connect/wallets": "^1.1.3",
@@ -20,8 +21,7 @@
     "scale-codec": "0.11.2",
     "tailwind-merge": "^1.10.0",
     "vite-tsconfig-paths": "^4.0.5",
-    "zod": "^3.21.4",
-    "@capi/westend-dev": "https://capi.dev/5d85ae3b73838214/westend-dev.tar"
+    "zod": "^3.21.4"
   },
   "resolutions": {
     "react": "preact/compat",

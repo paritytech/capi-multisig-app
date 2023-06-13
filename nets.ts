@@ -11,5 +11,4 @@ export const westendDev = net.dev({
 
 export const westend = net.ws({
   url: "wss://westend-rpc.polkadot.io/",
-  targets: { dev: westendDev },
 })

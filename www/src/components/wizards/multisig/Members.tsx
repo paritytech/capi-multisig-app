@@ -1,4 +1,4 @@
-import { MultiAddress, Westend, westend } from "@capi/westend"
+import { MultiAddress, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
@@ -13,6 +13,7 @@ import {
   defaultAccount,
   defaultSender,
 } from "../../../signals/accounts.js"
+import { currentChain, SupportedChain } from "../../../signals/chain.js"
 import { formatBalance } from "../../../util/balance.js"
 import { toPubKey } from "../../../util/capi-helpers.js"
 import {
@@ -72,18 +73,21 @@ export function MultisigMembers() {
 
     const signatories = members.map((member) => toPubKey(member!.address))
 
-    const multisig: MultisigRune<Westend, never> = MultisigRune.from(westend, {
-      signatories,
-      threshold,
-    })
+    const multisig: MultisigRune<SupportedChain, never> = MultisigRune.from(
+      currentChain.value,
+      {
+        signatories,
+        threshold,
+      },
+    )
 
     const multisigAddress = ss58.encode(
-      await westend.addressPrefix().run(),
+      await currentChain.value.addressPrefix().run(),
       await multisig.accountId.run(),
     )
 
     // TODO can we check if stash already created? previously?
-    const createStashCall = westend.Proxy.createPure({
+    const createStashCall = currentChain.value.Proxy.createPure({
       proxyType: "Any",
       delay: 0,
       index: 0,
@@ -100,17 +104,17 @@ export function MultisigMembers() {
 
     const stashBytes = (await createStashCall.run()) as Uint8Array
     const stashAddress = ss58.encode(
-      await westend.addressPrefix().run(),
+      await currentChain.value.addressPrefix().run(),
       stashBytes,
     )
     console.info("New Stash created at:", stashAddress)
 
     const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
     // TODO can we somehow check if the delegation has already been done?
-    const replaceDelegates = westend.Utility.batchAll({
+    const replaceDelegates = currentChain.value.Utility.batchAll({
       calls: Rune.array(
         replaceDelegateCalls(
-          westend,
+          currentChain.value,
           MultiAddress.Id(stashBytes), // effected account
           MultiAddress.Id(userAddressBytes), // from
           multisig.address, // to

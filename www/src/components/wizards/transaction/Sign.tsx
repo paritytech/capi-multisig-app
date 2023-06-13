@@ -1,4 +1,3 @@
-import { westend } from "@capi/westend"
 import { signature } from "capi/patterns/signature/polkadot"
 import { defaultAccount, defaultSender } from "../../../signals/accounts.js"
 import {
@@ -8,6 +7,7 @@ import {
 
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
+import { currentChain } from "../../../signals/chain.js"
 import { toBalance } from "../../../util/balance.js"
 import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
@@ -34,9 +34,9 @@ export function TransactionSign() {
     const value = toBalance(amount)
 
     // Transfer Call from Stash
-    const call = westend.Proxy.proxy({
+    const call = currentChain.value.Proxy.proxy({
       real: stash,
-      call: westend.Balances.transfer({
+      call: currentChain.value.Balances.transfer({
         dest,
         value,
       }),

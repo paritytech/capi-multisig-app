@@ -1,7 +1,8 @@
-import { $runtimeCall, Westend } from "@capi/westend"
+import { $runtimeCall } from "@capi/westend"
 import { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import { ExtrinsicRune, hex, Rune } from "capi"
 import { isSetup, Setup } from "common"
+import { SupportedChain } from "../signals/chain.js"
 
 export function retrieveStored(key: "defaultAccount"): WalletAccount | undefined
 export function retrieveStored(key: "defaultExtension"): Wallet | undefined
@@ -48,7 +49,7 @@ export function storeSetup(members: string[], setup: Setup) {
 }
 
 // TODO temporary solution to persist CALLS until saved in backend db
-export async function storeCall(call: ExtrinsicRune<Westend, never>) {
+export async function storeCall(call: ExtrinsicRune<SupportedChain, never>) {
   const collection = await Rune.array([
     call.callHash.access(),
     call.callData.access(),

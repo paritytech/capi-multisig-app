@@ -1,18 +1,21 @@
-import { MultiAddress, Westend, westend } from "@capi/westend"
+import { MultiAddress } from "@capi/westend"
 import { effect, Signal, signal } from "@preact/signals"
 import { ExtrinsicRune, ss58 } from "capi"
+import { currentChain, SupportedChain } from "../../../signals/chain.js"
 import { defaultAccount } from "../../../signals/index.js"
 import { toBalance } from "../../../util/balance.js"
 import { transactionData } from "./formData.js"
 
 export const selectedAccount = signal(defaultAccount.value)
-export const call = signal<ExtrinsicRune<Westend, never> | undefined>(undefined)
+export const call = signal<ExtrinsicRune<SupportedChain, never> | undefined>(
+  undefined,
+)
 export const fee: Signal<bigint> = signal(0n)
 
 effect(() => {
   if (!transactionData.value.to) return
   const addressPubKey = ss58.decode(transactionData.value.to)[1]
-  call.value = westend.Balances.transferKeepAlive({
+  call.value = currentChain.value.Balances.transferKeepAlive({
     value: toBalance(transactionData.value.amount),
     dest: MultiAddress.Id(addressPubKey),
   })

@@ -1,18 +1,19 @@
-import { westend } from "@capi/westend"
+import { currentChain } from "../signals/chain.js"
 
 async function getExistentialDeposit() {
-  return await westend.pallet("Balances").constant("ExistentialDeposit").decoded
-    .run()
+  return await currentChain.value.pallet("Balances").constant(
+    "ExistentialDeposit",
+  ).decoded.run()
 }
 
 async function getProxyDepositBase() {
-  return await westend.pallet("Proxy").constant("ProxyDepositBase").decoded
-    .run()
+  return await currentChain.value.pallet("Proxy").constant("ProxyDepositBase")
+    .decoded.run()
 }
 
 async function getProxyDepositFactor() {
-  return await westend.pallet("Proxy").constant("ProxyDepositFactor").decoded
-    .run()
+  return await currentChain.value.pallet("Proxy").constant("ProxyDepositFactor")
+    .decoded.run()
 }
 
 export const PROXY_DEPOSIT_BASE = await getProxyDepositBase()
