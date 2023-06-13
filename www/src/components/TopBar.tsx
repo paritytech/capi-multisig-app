@@ -1,7 +1,11 @@
+import { westend } from "@capi/westend"
+import { westendDev } from "@capi/westend-dev"
+import { switchChain } from "../signals/chain.js"
 import { accounts, defaultAccount } from "../signals/index.js"
 import { AccountSelect } from "./AccountSelect.js"
-import { Tabs } from "./Tabs.js"
+import { Button } from "./Button.js"
 import type { Tab } from "./Tabs.js"
+import { Tabs } from "./Tabs.js"
 
 const tabs: Tab[] = [
   { name: "Dashboard", href: "/" },
@@ -16,6 +20,15 @@ export function TopBar() {
         <div className="py-2 px-7 bg-menu-bg text-gray-500 rounded-full">
           Soon
         </div>
+      </div>
+
+      <div className="flex flex-row">
+        <Button onClick={() => switchChain(westendDev)} variant="ghost">
+          Westend Dev
+        </Button>
+        <Button onClick={() => switchChain(westend)} variant="ghost">
+          Westend
+        </Button>
       </div>
 
       <div className="w-60 my-2">

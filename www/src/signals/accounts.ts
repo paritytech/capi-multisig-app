@@ -1,9 +1,9 @@
-import { westend } from "@capi/westend"
 import { computed, effect, signal } from "@preact/signals"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
 import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { retrieveStored } from "../util/local-storage.js"
 import { retry } from "../util/retry.js"
+import { currentChain } from "./chain.js"
 
 interface InjectedWindow extends Window {
   injectedWeb3: unknown
@@ -19,7 +19,7 @@ const defaultSender = computed(() => {
   const { address: userAddress } = defaultAccount.value || {}
   if (!signer || !userAddress) return
 
-  return pjsSender(westend, signer)(userAddress)
+  return pjsSender(currentChain.value, signer)(userAddress)
 })
 effect(
   () =>
