@@ -1,9 +1,9 @@
 import { clsx } from "clsx"
 import { ComponentChildren } from "preact"
+import polkadotLogo from "../../assets/polkadot.svg"
 import { IconMenuMultisig } from "../../components/icons/IconMenuMultisig.js"
 import { Notifications } from "../../components/Notifications.js"
 import { TopBar } from "../../components/TopBar.js"
-
 type Props = {
   children: ComponentChildren
 }
@@ -12,11 +12,7 @@ function Sidebar() {
   return (
     <div className="bg-white border-r border-border">
       <div className="w-64 p-4">
-        <img
-          src="../../assets/polkadot.svg"
-          alt="Polkadot logo"
-          className="h-8"
-        />
+        <img src={polkadotLogo} alt="Polkadot logo" className="h-8" />
       </div>
       <nav className="px-2 space-y-1">
         <a
