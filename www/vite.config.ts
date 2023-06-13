@@ -18,7 +18,7 @@ export default defineConfig({
     // temporary capi workaround
     "process.env": {
       CAPI_SERVER: "http://localhost:4646/",
-      CAPI_TARGET: "dev",
+      CAPI_TARGET: undefined,
     },
   },
 })
