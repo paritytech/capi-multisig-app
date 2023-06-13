@@ -13,11 +13,11 @@ importers:
   .:
     dependencies:
       '@capi/westend':
-        specifier: https://capi.dev/c598a2afe3502c21/westend.tar
-        version: '@capi.dev/c598a2afe3502c21/westend.tar(capi@0.1.0-beta.42)'
+        specifier: https://capi.dev/c474e0e768550767/westend.tar
+        version: '@capi.dev/c474e0e768550767/westend.tar(capi@0.1.0-beta.42)'
       '@capi/westend-dev':
-        specifier: https://capi.dev/c598a2afe3502c21/westend-dev.tar
-        version: '@capi.dev/c598a2afe3502c21/westend-dev.tar(capi@0.1.0-beta.42)'
+        specifier: https://capi.dev/c474e0e768550767/westend-dev.tar
+        version: '@capi.dev/c474e0e768550767/westend-dev.tar(capi@0.1.0-beta.42)'
       '@headlessui/react':
         specifier: ^1.7.11
         version: 1.7.11(react-dom@18.2.0)(react@18.2.0)
@@ -4320,9 +4320,9 @@ packages:
       capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/c598a2afe3502c21/westend-dev.tar(capi@0.1.0-beta.42)':
-    resolution: {tarball: https://capi.dev/c598a2afe3502c21/westend-dev.tar}
-    id: '@capi.dev/c598a2afe3502c21/westend-dev.tar'
+  '@capi.dev/c474e0e768550767/westend-dev.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/c474e0e768550767/westend-dev.tar}
+    id: '@capi.dev/c474e0e768550767/westend-dev.tar'
     name: westend-dev
     version: 0.0.0-TODO
     peerDependencies:
@@ -4331,9 +4331,9 @@ packages:
       capi: 0.1.0-beta.42
     dev: false
 
-  '@capi.dev/c598a2afe3502c21/westend.tar(capi@0.1.0-beta.42)':
-    resolution: {tarball: https://capi.dev/c598a2afe3502c21/westend.tar}
-    id: '@capi.dev/c598a2afe3502c21/westend.tar'
+  '@capi.dev/c474e0e768550767/westend.tar(capi@0.1.0-beta.42)':
+    resolution: {tarball: https://capi.dev/c474e0e768550767/westend.tar}
+    id: '@capi.dev/c474e0e768550767/westend.tar'
     name: westend
     version: 0.0.0-TODO
     peerDependencies:

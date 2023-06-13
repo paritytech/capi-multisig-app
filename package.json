@@ -8,8 +8,8 @@
     "www"
   ],
   "dependencies": {
-    "@capi/westend-dev": "https://capi.dev/c598a2afe3502c21/westend-dev.tar",
-    "@capi/westend": "https://capi.dev/c598a2afe3502c21/westend.tar",
+    "@capi/westend-dev": "https://capi.dev/c474e0e768550767/westend-dev.tar",
+    "@capi/westend": "https://capi.dev/c474e0e768550767/westend.tar",
     "@headlessui/react": "^1.7.11",
     "@preact/signals": "^1.1.3",
     "@talisman-connect/wallets": "^1.1.3",
