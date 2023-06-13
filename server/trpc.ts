@@ -23,7 +23,6 @@ export type Context = inferAsyncReturnType<typeof createContext>
 
 const t = initTRPC.context<Context>().create()
 
-export type router = typeof router
 export const router = t.router({
   // health check
   "": t.procedure.query(() => undefined),
@@ -99,10 +98,9 @@ export const router = t.router({
       id,
       multisigHex: await multisig.hex.run(),
     }
-    await MultisigController.createSetup({
-      payload: setup,
-      signature: new Uint8Array(),
-    })
+    await MultisigController.createSetup(
+      setup,
+    )
 
     // get
     const item = await MultisigController.getSetup(id)
@@ -110,3 +108,5 @@ export const router = t.router({
     return item
   }),
 })
+
+export type AppRouter = typeof router

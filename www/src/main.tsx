@@ -4,10 +4,15 @@ import { CreateMultisig } from "./pages/create-multisig.js"
 import { Dashboard } from "./pages/dashboard.js"
 import { PageError } from "./pages/error.js"
 import { NewTransaction } from "./pages/new-transaction.js"
+import { ApiProvider } from "./trpc/provider.js"
 import "./index.css"
 
 function Main() {
-  return <RouterProvider router={router} />
+  return (
+    <ApiProvider>
+      <RouterProvider router={router} />
+    </ApiProvider>
+  )
 }
 
 const router = createBrowserRouter([
