@@ -29,10 +29,6 @@
     "tailwindcss": "^3.3.2",
     "vite": "^4.1.4"
   },
-  "resolutions": {
-    "react": "preact/compat",
-    "react-dom": "preact/compat"
-  },
   "scripts": {
     "watch": "vite",
     "build": "vite build",
