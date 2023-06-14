@@ -27,11 +27,11 @@ import { InputError } from "../../InputError.js"
 import { Row, SumTable } from "../../SumTable.js"
 import { goNext, goPrev } from "../Wizard.js"
 import {
-  formData,
   MultisigMemberEntity,
   multisigMemberSchema,
-  updateFormData,
-} from "./formData.js"
+  updateWizardData,
+  wizardData,
+} from "./wizardData.js"
 
 const multisigCreationFees: Row[] = [
   {
@@ -54,96 +54,103 @@ export function MultisigMembers() {
   })
 
   const onBack = (formDataNew: MultisigMemberEntity) => {
-    updateFormData(formDataNew)
+    updateWizardData(formDataNew)
     goPrev()
   }
 
   const onErrorBack = () => {
     const formDataWithErrors = getValues()
-    updateFormData(formDataWithErrors)
+    updateWizardData(formDataWithErrors)
     goPrev()
   }
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
-    if (!defaultSender.value || !defaultAccount.value) return
+    try {
+      if (!defaultSender.value || !defaultAccount.value) return
 
-    const { threshold } = formData.value
-    const { members } = formDataNew
+      const { threshold } = wizardData.value
+      const { members } = formDataNew
 
-    const signatories = members.map((member) => toPubKey(member!.address))
+      const signatories = members.map((member) => toPubKey(member!.address))
 
-    const multisig: MultisigRune<Westend, never> = MultisigRune.from(westend, {
-      signatories,
-      threshold,
-    })
+      const multisig: MultisigRune<Westend, never> = MultisigRune.from(
+        westend,
+        {
+          signatories,
+          threshold,
+        },
+      )
 
-    const multisigAddress = ss58.encode(
-      await westend.addressPrefix().run(),
-      await multisig.accountId.run(),
-    )
+      const multisigAddress = ss58.encode(
+        await westend.addressPrefix().run(),
+        await multisig.accountId.run(),
+      )
 
-    // TODO can we check if stash already created? previously?
-    const createStashCall = westend.Proxy.createPure({
-      proxyType: "Any",
-      delay: 0,
-      index: 0,
-    })
-      .signed(signature({ sender: defaultSender.value }))
-      .sent()
-      .dbgStatus("Creating Pure Proxy:")
-      .finalizedEvents()
-      .unhandleFailed()
-      .pipe(filterPureCreatedEvents)
-      // TODO typing is broken of capi
-      .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
-      .access(0)
+      // TODO can we check if stash already created? previously?
+      const createStashCall = westend.Proxy.createPure({
+        proxyType: "Any",
+        delay: 0,
+        index: 0,
+      })
+        .signed(signature({ sender: defaultSender.value }))
+        .sent()
+        .dbgStatus("Creating Pure Proxy:")
+        .finalizedEvents()
+        .unhandleFailed()
+        .pipe(filterPureCreatedEvents)
+        // TODO typing is broken in capi
+        .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
+        .access(0)
 
-    const stashBytes = (await createStashCall.run()) as Uint8Array
-    const stashAddress = ss58.encode(
-      await westend.addressPrefix().run(),
-      stashBytes,
-    )
-    console.info("New Stash created at:", stashAddress)
+      const stashBytes = (await createStashCall.run()) as Uint8Array
+      const stashAddress = ss58.encode(
+        await westend.addressPrefix().run(),
+        stashBytes,
+      )
+      console.info("New Stash created at:", stashAddress)
 
-    const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
-    // TODO can we somehow check if the delegation has already been done?
-    const replaceDelegates = westend.Utility.batchAll({
-      calls: Rune.array(
-        replaceDelegateCalls(
-          westend,
-          MultiAddress.Id(stashBytes), // effected account
-          MultiAddress.Id(userAddressBytes), // from
-          multisig.address, // to
+      const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
+      // TODO can we somehow check if the delegation has already been done?
+      const replaceDelegates = westend.Utility.batchAll({
+        calls: Rune.array(
+          replaceDelegateCalls(
+            westend,
+            MultiAddress.Id(stashBytes), // effected account
+            MultiAddress.Id(userAddressBytes), // from
+            multisig.address, // to
+          ),
         ),
-      ),
-    })
-      .signed(signature({ sender: defaultSender.value }))
-      .sent()
-      .dbgStatus("Replacing Proxy Delegates:")
-      .finalized()
+      })
+        .signed(signature({ sender: defaultSender.value }))
+        .sent()
+        .dbgStatus("Replacing Proxy Delegates:")
+        .finalized()
 
-    await replaceDelegates.run()
+      await replaceDelegates.run()
 
-    // TODO save to database instead of localStorage
-    storeSetup(members.map((m) => m?.address) as string[], {
-      type: "setup",
-      id: multisigAddress,
-      genesisHash: "0x0",
-      name: formData.value.name,
-      members: members.map((member) => [member!.address, ""]),
-      threshold: threshold,
-      multisig: multisigAddress,
-      stash: stashAddress,
-      history: [],
-    })
+      // TODO save to database instead of localStorage
+      storeSetup(members.map((m) => m?.address) as string[], {
+        type: "setup",
+        id: multisigAddress,
+        genesisHash: "0x0",
+        name: wizardData.value.name,
+        members: members.map((member) => [member!.address, ""]),
+        threshold: threshold,
+        multisig: multisigAddress,
+        stash: stashAddress,
+        history: [],
+      })
 
-    updateFormData({
-      ...formDataNew,
-      address: multisigAddress,
-      stash: stashAddress,
-    })
+      updateWizardData({
+        ...formDataNew,
+        address: multisigAddress,
+        stash: stashAddress,
+      })
 
-    goNext()
+      goNext()
+    } catch (exception) {
+      console.error("Something went wrong:", exception)
+    }
   }
 
   return (
@@ -151,7 +158,7 @@ export function MultisigMembers() {
       <h1 className="text-xl leading-8">2. Members</h1>
       <hr className="border-t border-gray-300 mt-6 mb-4" />
 
-      {formData.value.members.map((member, i) => {
+      {wizardData.value.members.map((member, i) => {
         return (
           <div className="mb-3">
             <label className="leading-6 mb-2 block">Member {i + 1}</label>

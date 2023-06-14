@@ -18,12 +18,12 @@ import { transactionData } from "./formData.js"
 
 export function TransactionSign() {
   const [isSubmitting, setSubmitting] = useState(false)
-  const { from, to, amount, callHash, setup } = transactionData.peek()
+  const { from, to, amount, callHash, setup } = transactionData.value
   const navigate = useNavigate()
 
   function sign() {
-    const sender = defaultSender.peek()
-    const account = defaultAccount.peek()
+    const sender = defaultSender.value
+    const account = defaultAccount.value
     if (!setup || !sender || !account) return
     setSubmitting(true)
 
