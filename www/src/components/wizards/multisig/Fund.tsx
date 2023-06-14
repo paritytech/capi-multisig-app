@@ -23,13 +23,13 @@ export function MultisigFund() {
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
   })
-  const { value: { fundingAmount } } = wizardData
+  const { value: { fundingAmount, stash } } = wizardData
 
   const onSubmit = async (formDataNew: MultisigFundEntity) => {
     try {
       const sender = defaultSender.value
       const { fundingAmount } = formDataNew
-      let { stash } = wizardData.value
+
       if (!sender || !stash) return
 
       const fundStashCall = westend.Balances
