@@ -43,7 +43,7 @@ export function MultisigFund() {
         .finalized()
 
       await fundStashCall.run()
-      updateWizardData({ ...formDataNew, isFunded: true })
+      updateWizardData({ ...formDataNew })
       goNext()
     } catch (exception) {
       console.error("Something went wrong:", exception)

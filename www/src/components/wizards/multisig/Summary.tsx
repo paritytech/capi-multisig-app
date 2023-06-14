@@ -3,7 +3,7 @@ import { Button } from "../../Button.js"
 import { wizardData } from "./wizardData.js"
 
 export function MultisigSummary() {
-  const { value: { name, fundingAmount, members, isFunded } } = wizardData
+  const { value: { name, fundingAmount, members } } = wizardData
 
   return (
     <div>
@@ -22,12 +22,12 @@ export function MultisigSummary() {
             {members.map((v, i)=><li key={i}>{v?.address}</li>)}
           </ul>
         </div>
-        {isFunded &&<div className="flex items-center">
+        <div className="flex items-center">
           <span className="font-bold text-gray-800">Multisig fund:</span>
           <span className="font-mono text-gray-900">
             {fundingAmount}
           </span>
-        </div>}
+        </div>
       </pre>
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div className="flex justify-end">

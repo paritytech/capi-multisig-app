@@ -57,7 +57,6 @@ export type MultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
 export const multisigFundSchema = z.object({
   fundingAmount: z.number().min(1, { message: "Fund must be greater than 0" }),
-  isFunded: z.boolean().default(false).optional(),
 })
 
 export type MultisigFundEntity = z.infer<typeof multisigFundSchema>
@@ -68,7 +67,6 @@ const initialValues = {
   threshold: 2,
   members: [],
   fundingAmount: 1,
-  isFunded: false,
 }
 
 export const wizardData: Signal<MultisigData> = signal(initialValues)
