@@ -4,8 +4,8 @@ export const IconBell = (
   props: JSX.IntrinsicAttributes & JSX.SVGAttributes<SVGSVGElement>,
 ) => (
   <svg
-    fill="none"
-    stroke="currentColor"
+    // fill="none"
+    stroke="none"
     viewBox="0 0 12 14"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"

@@ -3,6 +3,7 @@ import { hex } from "capi"
 import { useEffect } from "preact/hooks"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { useSearchParams } from "react-router-dom"
+import { defaultAccount } from "../../../signals/accounts.js"
 import { setups } from "../../../signals/setups.js"
 import { formatBalance } from "../../../util/balance.js"
 import { AccountId } from "../../AccountId.js"
@@ -19,7 +20,7 @@ import {
   transactionData,
   updateTransactionData,
 } from "./formData.js"
-import { call, fee, selectedAccount } from "./signals.js"
+import { call, fee } from "./signals.js"
 
 export function TransactionNew() {
   const {
@@ -51,7 +52,7 @@ export function TransactionNew() {
   useEffect(() => {
     const subscription = watch((data) => {
       updateTransactionData({
-        ...data as TransactionData,
+        ...(data as TransactionData),
         amount: data.amount ?? 0,
       })
     })
@@ -79,8 +80,8 @@ export function TransactionNew() {
           <div className="space-y-2">
             <p className="mt-4 text-[#321D47]">Initiated by:</p>
             <AccountId
-              address={selectedAccount.value?.address}
-              name={selectedAccount.value?.name}
+              address={defaultAccount.value?.address}
+              name={defaultAccount.value?.name}
             />
           </div>
           <div className="space-y-2">
