@@ -11,7 +11,7 @@ import { useProposals } from "../hooks/useProposals.js"
 import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
 import { formatBalance } from "../util/balance.js"
 import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
-import { filterEvents } from "../util/events.js"
+import { filterEvents, handleException } from "../util/events.js"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
@@ -80,7 +80,9 @@ export function Setup({ setup }: Props) {
       console.log({ result })
       refetchProposals()
     },
-    onError: (error) => console.error(error),
+    onError: (error: any) => {
+      handleException(error)
+    },
   })
 
   return (

@@ -16,7 +16,11 @@ import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
-import { filterEvents, filterPureCreatedEvents } from "../../../util/events.js"
+import {
+  filterEvents,
+  filterPureCreatedEvents,
+  handleException,
+} from "../../../util/events.js"
 import { storeSetup } from "../../../util/local-storage.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
@@ -149,7 +153,7 @@ export function MultisigMembers() {
 
       goNext()
     } catch (exception) {
-      console.error("Something went wrong:", exception)
+      handleException(exception)
     }
   }
 

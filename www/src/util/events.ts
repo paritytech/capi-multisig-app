@@ -5,30 +5,41 @@ import { useNotifications } from "../components/Notifications.js"
 
 const { addNotification } = useNotifications()
 
-export function filterPureCreatedEvents<X>(...[events]: RunicArgs<X, [any[]]>) {
-  return Rune.resolve(events).map((events) =>
-    events
-      .map((e) => {
-        const message = `${e.event.type}:${e.event.value.type}`
-        addNotification({ id: uuid(), message, type: "success" })
-        return e.event
-      })
-      .filter((event): event is RuntimeEvent.Proxy => event.type === "Proxy")
+function filterPureCreatedEvents<X>(...[events]: RunicArgs<X, [any[]]>) {
+  return Rune.resolve(events).map((events) => {
+    const eventNames = events.map((e) =>
+      `${e.event.type}:${e.event.value.type}`
+    )
+    addNotification({ id: uuid(), message: eventNames, type: "info" })
+
+    return events
+      .map((e) => e.event).filter((event): event is RuntimeEvent.Proxy =>
+        event.type === "Proxy"
+      )
       .map((e) => e.value)
       .filter((event): event is PalletProxyEvent.PureCreated =>
         event.type === "PureCreated"
       )
-  )
-}
-
-export function filterEvents<X>(...[events]: RunicArgs<X, [any[]]>) {
-  addNotification({ id: uuid(), message: "Queued", type: "success" })
-  return Rune.resolve(events).map((events) => {
-    addNotification({ id: uuid(), message: "InBlock", type: "success" })
-    events.map((e) => {
-      const message = `${e.event.type}:${e.event.value.type}`
-      addNotification({ id: uuid(), message, type: "success" })
-      return e.event
-    })
   })
 }
+
+function filterEvents<X>(...[events]: RunicArgs<X, [any[]]>) {
+  return Rune.resolve(events).map((events) => {
+    addNotification({ id: uuid(), message: "InBlock", type: "success" })
+    const eventNames = events.map((e) =>
+      `${e.event.type}:${e.event.value.type}`
+    )
+    addNotification({ id: uuid(), message: eventNames, type: "info" })
+  })
+}
+
+function handleException(exception: any) {
+  console.error("Something went wrong:", exception)
+  addNotification({
+    id: uuid(),
+    message: `${exception.value.name}:${exception.value.message}`,
+    type: "error",
+  })
+}
+
+export { filterEvents, filterPureCreatedEvents, handleException }

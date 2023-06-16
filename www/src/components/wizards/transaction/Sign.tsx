@@ -8,18 +8,14 @@ import {
 
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
-import { v4 as uuid } from "uuid"
 import { toBalance } from "../../../util/balance.js"
-import { filterEvents } from "../../../util/events.js"
+import { filterEvents, handleException } from "../../../util/events.js"
 import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
-import { useNotifications } from "../../Notifications.js"
 import { goPrev } from "../Wizard.js"
 import { transactionData } from "./formData.js"
-
-const { addNotification } = useNotifications()
 
 export function TransactionSign() {
   const [isSubmitting, setSubmitting] = useState(false)
@@ -64,12 +60,7 @@ export function TransactionSign() {
         navigate("/")
       })
       .catch((exception) => {
-        console.error(exception)
-        addNotification({
-          id: uuid(),
-          message: `${exception.value.name}:${exception.value.message}`,
-          type: "error",
-        })
+        handleException(exception)
         setSubmitting(false)
       })
   }

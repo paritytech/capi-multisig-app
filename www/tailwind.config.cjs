@@ -41,6 +41,7 @@ module.exports = {
         notification: {
           success: "#56F3CE",
           error: "#FE8D81",
+          info: "#F9F9FB",
         },
         table: {
           text: "rgba(18, 17, 39, 0.7)",
