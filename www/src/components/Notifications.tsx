@@ -20,8 +20,11 @@ export const notificationsState: NotificationsState = {
 export function useNotifications() {
   const { notifications } = notificationsState
 
-  const addNotification = (newNotification: Notification) => {
+  const addNotification = (newNotification: Notification, delayMs = 10000) => {
     notifications.value = [...notifications.value, newNotification]
+    setTimeout(() => {
+      closeNotification(newNotification.id)
+    }, delayMs)
   }
 
   const closeNotification = (id: string) => {

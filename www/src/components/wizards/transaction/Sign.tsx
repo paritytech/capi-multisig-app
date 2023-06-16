@@ -6,15 +6,32 @@ import {
   toMultisigRune,
 } from "../../../util/capi-helpers.js"
 
+import { Rune, RunicArgs } from "capi"
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
+import { v4 as uuid } from "uuid"
 import { toBalance } from "../../../util/balance.js"
 import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
+import { useNotifications } from "../../Notifications.js"
 import { goPrev } from "../Wizard.js"
 import { transactionData } from "./formData.js"
+
+const { addNotification } = useNotifications()
+
+function filterEvents<X>(...[events]: RunicArgs<X, [any[]]>) {
+  addNotification({ id: uuid(), message: "Queued", type: "success" })
+  return Rune.resolve(events).map((events) => {
+    addNotification({ id: uuid(), message: "Ready", type: "success" })
+    events.map((e) => {
+      const message = `${e.event.type}:${e.event.value.type}`
+      addNotification({ id: uuid(), message, type: "success" })
+      return message
+    })
+  })
+}
 
 export function TransactionSign() {
   const [isSubmitting, setSubmitting] = useState(false)
@@ -47,7 +64,9 @@ export function TransactionSign() {
       .signed(signature({ sender }))
       .sent()
       .dbgStatus("Ratify")
-      .finalized()
+      .inBlockEvents()
+      .unhandleFailed()
+      .pipe(filterEvents)
 
     ratifyCall
       .run()
@@ -58,6 +77,11 @@ export function TransactionSign() {
       })
       .catch((exception) => {
         console.error(exception)
+        addNotification({
+          id: uuid(),
+          message: `${exception.value.name}:${exception.value.message}`,
+          type: "error",
+        })
         setSubmitting(false)
       })
   }
