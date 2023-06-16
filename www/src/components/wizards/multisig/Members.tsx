@@ -13,7 +13,7 @@ import {
   defaultAccount,
   defaultSender,
 } from "../../../signals/accounts.js"
-import { currentChain, SupportedChain } from "../../../signals/chain.js"
+import { currentChain } from "../../../signals/chain.js"
 import { formatBalance } from "../../../util/balance.js"
 import { toPubKey } from "../../../util/capi-helpers.js"
 import {

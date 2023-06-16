@@ -1,5 +1,5 @@
 import { Westend, westend, WestendRune } from "@capi/westend"
-import { WestendDev, westendDev } from "@capi/westend-dev"
+import { WestendDev } from "@capi/westend-dev"
 import { effect, Signal, signal } from "@preact/signals"
 import { ChainRune } from "capi"
 
