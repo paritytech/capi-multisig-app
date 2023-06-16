@@ -1,5 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
-  "files": [],
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "files": ["nets.ts"],
   "references": [{ "path": "www" }, { "path": "server" }, { "path": "common" }]
 }
