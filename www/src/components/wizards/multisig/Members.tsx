@@ -2,10 +2,7 @@ import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
-import {
-  filterPureCreatedEvents,
-  replaceDelegateCalls,
-} from "capi/patterns/proxy"
+import { replaceDelegateCalls } from "capi/patterns/proxy"
 import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
 import {
@@ -19,6 +16,7 @@ import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
+import { filterEvents, filterPureCreatedEvents } from "../../../util/events.js"
 import { storeSetup } from "../../../util/local-storage.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
@@ -95,7 +93,7 @@ export function MultisigMembers() {
         .signed(signature({ sender: defaultSender.value }))
         .sent()
         .dbgStatus("Creating Pure Proxy:")
-        .finalizedEvents()
+        .inBlockEvents()
         .unhandleFailed()
         .pipe(filterPureCreatedEvents)
         // TODO typing is broken in capi
@@ -124,7 +122,9 @@ export function MultisigMembers() {
         .signed(signature({ sender: defaultSender.value }))
         .sent()
         .dbgStatus("Replacing Proxy Delegates:")
-        .finalized()
+        .inBlockEvents()
+        .unhandleFailed()
+        .pipe(filterEvents)
 
       await replaceDelegates.run()
 

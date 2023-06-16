@@ -1,11 +1,15 @@
 import { westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { ValueRune } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
+import { v4 as uuid } from "uuid"
 import { defaultSender } from "../../../signals/accounts.js"
 import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
+import { filterEvents } from "../../../util/events.js"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
+import { useNotifications } from "../../Notifications.js"
 import { goNext } from "../Wizard.js"
 import {
   MultisigFundEntity,
@@ -13,6 +17,8 @@ import {
   updateWizardData,
   wizardData,
 } from "./wizardData.js"
+
+const { addNotification } = useNotifications()
 
 export function MultisigFund() {
   const {
@@ -40,13 +46,21 @@ export function MultisigFund() {
         .signed(signature({ sender }))
         .sent()
         .dbgStatus("Transfer:")
-        .finalized()
+        .inBlockEvents()
+        .unhandleFailed()
+        .pipe(filterEvents)
 
       await fundStashCall.run()
       updateWizardData({ ...formDataNew })
       goNext()
-    } catch (exception) {
+    } catch (exception: any) {
       console.error("Something went wrong:", exception)
+
+      addNotification({
+        id: uuid(),
+        message: `${exception.value.name}:${exception?.value.message}`,
+        type: "error",
+      })
     }
   }
 
