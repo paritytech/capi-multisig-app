@@ -2,11 +2,11 @@ import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
+import { signature } from "capi/patterns/signature/polkadot"
 import {
   filterPureCreatedEvents,
   replaceDelegateCalls,
-} from "capi/patterns/proxy"
-import { signature } from "capi/patterns/signature/polkadot"
+} from "capi/patterns/unstable/proxy"
 import { Controller, useForm } from "react-hook-form"
 import {
   accounts,
