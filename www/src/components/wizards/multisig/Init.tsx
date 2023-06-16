@@ -8,11 +8,11 @@ import { Input } from "../../Input.js"
 import { InputNumber } from "../../InputNumber.js"
 import { goNext } from "../Wizard.js"
 import {
-  formData,
   MultisigInitEntity,
   multisigInitSchema,
-  updateFormData,
-} from "./formData.js"
+  updateWizardData,
+  wizardData,
+} from "./wizardData.js"
 
 export function MultisigInit() {
   const {
@@ -24,7 +24,7 @@ export function MultisigInit() {
     mode: "onChange",
   })
 
-  const { value: { members, name, memberCount, threshold } } = formData
+  const { value: { members, name, memberCount, threshold } } = wizardData
 
   const onSubmit = (formDataNew: MultisigInitEntity) => {
     if (!members) return
@@ -33,7 +33,7 @@ export function MultisigInit() {
       { length: formDataNew.memberCount },
       (_, i) => members[i] ?? initialAccounts[i],
     )
-    updateFormData({ ...formDataNew, members: newMembers })
+    updateWizardData({ ...formDataNew, members: newMembers })
     goNext()
   }
 

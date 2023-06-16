@@ -87,10 +87,13 @@ export function Setup({ setup }: Props) {
           </div>
 
           <div className="flex flex-col">
-            <div className="flex flex-row flex-wrap">
+            <div className="flex flex-col flex-wrap">
               <div className="font-bold pr-2">{setup.name}</div>
-              <div className="truncate" title={setup.stash}>
-                {setup.stash}
+              <div className="truncate text-sm" title={setup.stash}>
+                {`Stash: ${setup.stash}`}
+              </div>
+              <div className="truncate text-sm" title={setup.multisig}>
+                {`Address: ${setup.multisig}`}
               </div>
             </div>
 
