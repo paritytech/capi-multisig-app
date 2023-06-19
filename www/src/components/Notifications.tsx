@@ -1,12 +1,13 @@
 import { Signal, signal } from "@preact/signals"
 import { clsx } from "clsx"
-import { useCallback, useEffect } from "preact/hooks"
+import { useCallback, useId } from "preact/hooks"
 import { IconClose } from "./icons/IconClose.js"
+import { Spinner } from "./icons/Spinner.js"
 
 export type Notification = {
   id: string
-  type: "success" | "error"
-  message: string
+  type: "success" | "error" | "info" | "loading"
+  message: string | string[]
 }
 
 export type NotificationsState = {
@@ -20,8 +21,13 @@ export const notificationsState: NotificationsState = {
 export function useNotifications() {
   const { notifications } = notificationsState
 
-  const addNotification = (newNotification: Notification) => {
+  const addNotification = (newNotification: Notification, delayMs = 6000) => {
     notifications.value = [...notifications.value, newNotification]
+    if (newNotification.type !== "loading") {
+      setTimeout(() => {
+        closeNotification(newNotification.id)
+      }, delayMs)
+    }
   }
 
   const closeNotification = (id: string) => {
@@ -40,28 +46,11 @@ export function useNotifications() {
   }
 }
 
-function useBeforeUnload(callback: () => void) {
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      callback()
-    }
-    window.addEventListener("beforeunload", handleBeforeUnload)
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload)
-    }
-  }, [callback])
-}
-
 export function Notifications() {
   const {
     notifications,
-    clearNotifications,
     closeNotification,
   } = useNotifications()
-
-  useBeforeUnload(() => {
-    clearNotifications()
-  })
 
   return (
     <div className="pointer-events-none fixed inset-0 mx-4 my-1 z-50">
@@ -99,10 +88,26 @@ function NotificationItem({ notification, onClose }: PropsNotificationItem) {
         {
           "bg-notification-error": notification.type === "error",
         },
+        {
+          "bg-notification-info": notification.type === "info",
+        },
+        {
+          "bg-notification-loading": notification.type === "loading",
+        },
       )}
     >
       <div className="flex p-4 justify-between">
-        <span>{notification.message}</span>
+        <div className="flex justify-start">
+          {notification.type === "loading" && <Spinner />}
+          <div>
+            {Array.isArray(notification.message)
+              ? notification.message.map((message) => (
+                <p id={useId()}>{message}</p>
+              ))
+              : <p>{notification.message}</p>}
+          </div>
+        </div>
+
         <button
           type="button"
           className="focus:outline-none hover:opacity-60"

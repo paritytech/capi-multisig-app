@@ -1,19 +1,21 @@
-import { westend } from "@capi/westend"
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { signature } from "capi/patterns/signature/polkadot"
-import { Controller, useForm } from "react-hook-form"
-import { defaultSender } from "../../../signals/accounts.js"
-import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
-import { scope } from "../../../util/scope.js"
-import { BalanceInput } from "../../BalanceInput.js"
-import { Button } from "../../Button.js"
-import { goNext } from "../Wizard.js"
+import { westend } from "@capi/westend";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { signature } from "capi/patterns/signature/polkadot";
+import { Controller, useForm } from "react-hook-form";
+import { defaultSender } from "../../../signals/accounts.js";
+import { toBalance } from "../../../util/balance.js";
+import { toMultiAddressIdRune } from "../../../util/capi-helpers.js";
+import { filterEvents, handleException } from "../../../util/events.js";
+import { scope } from "../../../util/scope.js";
+import { BalanceInput } from "../../BalanceInput.js";
+import { Button } from "../../Button.js";
+import { goNext } from "../Wizard.js";
 import {
   MultisigFundEntity,
   multisigFundSchema,
   updateWizardData,
   wizardData,
-} from "./wizardData.js"
+} from "./wizardData.js";
 
 export function MultisigFund() {
   const {
@@ -23,34 +25,36 @@ export function MultisigFund() {
   } = useForm<MultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
-  })
+  });
   const {
     value: { fundingAmount, stash },
-  } = wizardData
+  } = wizardData;
 
   const onSubmit = async (formDataNew: MultisigFundEntity) => {
     try {
-      const sender = defaultSender.value
-      const { fundingAmount } = formDataNew
+      const sender = defaultSender.value;
+      const { fundingAmount } = formDataNew;
 
-      if (!sender || !stash) return
+      if (!sender || !stash) return;
 
       const fundStashCall = westend.Balances.transfer({
-        value: BigInt(fundingAmount), // TODO properly scale the amount
+        value: toBalance(fundingAmount),
         dest: toMultiAddressIdRune(stash),
       })
         .signed(signature({ sender }))
         .sent()
         .dbgStatus("Transfer:")
-        .finalized()
+        .inBlockEvents()
+        .unhandleFailed()
+        .pipe(filterEvents);
 
-      await fundStashCall.run(scope.value)
-      updateWizardData({ ...formDataNew })
-      goNext()
-    } catch (exception) {
-      console.error("Something went wrong:", exception)
+      await fundStashCall.run(scope);
+      updateWizardData({ ...formDataNew });
+      goNext();
+    } catch (exception: any) {
+      handleException(exception);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -81,5 +85,5 @@ export function MultisigFund() {
         </Button>
       </div>
     </form>
-  )
+  );
 }
