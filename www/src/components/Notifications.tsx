@@ -2,10 +2,11 @@ import { Signal, signal } from "@preact/signals"
 import { clsx } from "clsx"
 import { useCallback, useId } from "preact/hooks"
 import { IconClose } from "./icons/IconClose.js"
+import { Spinner } from "./icons/Spinner.js"
 
 export type Notification = {
   id: string
-  type: "success" | "error" | "info"
+  type: "success" | "error" | "info" | "loading"
   message: string | string[]
 }
 
@@ -22,9 +23,11 @@ export function useNotifications() {
 
   const addNotification = (newNotification: Notification, delayMs = 6000) => {
     notifications.value = [...notifications.value, newNotification]
-    setTimeout(() => {
-      closeNotification(newNotification.id)
-    }, delayMs)
+    if (newNotification.type !== "loading") {
+      setTimeout(() => {
+        closeNotification(newNotification.id)
+      }, delayMs)
+    }
   }
 
   const closeNotification = (id: string) => {
@@ -88,18 +91,22 @@ function NotificationItem({ notification, onClose }: PropsNotificationItem) {
         {
           "bg-notification-info": notification.type === "info",
         },
+        {
+          "bg-notification-loading": notification.type === "loading",
+        },
       )}
     >
       <div className="flex p-4 justify-between">
-        {Array.isArray(notification.message)
-          ? (
-            <div>
-              {notification.message.map((message) => (
+        <div className="flex justify-start">
+          {notification.type === "loading" && <Spinner />}
+          <div>
+            {Array.isArray(notification.message)
+              ? notification.message.map((message) => (
                 <p id={useId()}>{message}</p>
-              ))}
-            </div>
-          )
-          : <div>{notification.message}</div>}
+              ))
+              : <p>{notification.message}</p>}
+          </div>
+        </div>
 
         <button
           type="button"
