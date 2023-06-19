@@ -1,6 +1,13 @@
-import { westend } from "@capi/westend"
-import { computed, effect, signal } from "@preact/signals"
+import { Westend, westend } from "@capi/westend"
+import {
+  computed,
+  effect,
+  ReadonlySignal,
+  Signal,
+  signal,
+} from "@preact/signals"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
+import { ExtrinsicSender, ValueRune } from "capi"
 import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { retrieveStored } from "../util/local-storage.js"
 import { retry } from "../util/retry.js"
@@ -9,12 +16,14 @@ interface InjectedWindow extends Window {
   injectedWeb3: unknown
 }
 
-const accounts = signal<WalletAccount[]>([])
+const accounts: Signal<WalletAccount[]> = signal<WalletAccount[]>([])
 const storedAccount = retrieveStored("defaultAccount")
 const storedExtension = retrieveStored("defaultExtension")
 const defaultAccount = signal(storedAccount)
 const defaultExtension = signal(storedExtension)
-const defaultSender = computed(() => {
+const defaultSender: ReadonlySignal<
+  ValueRune<ExtrinsicSender<Westend>, never> | undefined
+> = computed(() => {
   const { signer } = defaultExtension.value || {}
   const { address: userAddress } = defaultAccount.value || {}
   if (!signer || !userAddress) return
