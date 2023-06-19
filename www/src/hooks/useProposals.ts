@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { hex } from "capi"
 import { Setup } from "common"
 import { useMemo } from "preact/hooks"
+import { scope } from "../signals/scope.js"
 import { toAddress, toMultisigRune } from "../util/capi-helpers.js"
 import { getCall } from "../util/local-storage.js"
 
@@ -20,7 +21,7 @@ export function useProposals(setup: Setup) {
     queryKey: ["proposals", setup.id],
     queryFn: async () => {
       const proposals: Array<Array<Uint8Array>> = await multisig.proposals(5)
-        .run()
+        .run(scope.value)
 
       return Promise.all(
         proposals.map(async ([, callHashBytes]) => {
@@ -30,9 +31,10 @@ export function useProposals(setup: Setup) {
             callHash,
             call: getCall(callHash),
             approvals:
-              (await multisig.proposal(callHashBytes!).run())?.approvals.map((
-                approvalBytes,
-              ) => toAddress(approvalBytes)) ?? [],
+              (await multisig.proposal(callHashBytes!).run(scope.value))
+                ?.approvals.map(
+                  (approvalBytes) => toAddress(approvalBytes),
+                ) ?? [],
           } as Proposal
         }),
       )

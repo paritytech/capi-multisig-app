@@ -8,6 +8,7 @@ import {
 
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
+import { scope } from "../../../signals/scope.js"
 import { toBalance } from "../../../util/balance.js"
 import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
@@ -50,7 +51,7 @@ export function TransactionSign() {
       .finalized()
 
     ratifyCall
-      .run()
+      .run(scope.value)
       .then(() => storeCall(call))
       .then(() => {
         setSubmitting(false)

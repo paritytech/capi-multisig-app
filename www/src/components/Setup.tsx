@@ -9,6 +9,7 @@ import { Link } from "react-router-dom"
 import { useAccountInfo } from "../hooks/useAccountInfo.js"
 import { useProposals } from "../hooks/useProposals.js"
 import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
+import { scope } from "../signals/scope.js"
 import { formatBalance } from "../util/balance.js"
 import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
 import { AccountId } from "./AccountId.js"
@@ -44,7 +45,7 @@ export function Setup({ setup }: Props) {
         .dbgStatus("Ratify")
         .finalized()
 
-      return ratifyCall.run()
+      return ratifyCall.run(scope.value)
     },
     onSuccess: (result) => {
       console.log({ result })
@@ -69,7 +70,7 @@ export function Setup({ setup }: Props) {
         .dbgStatus("Cancel")
         .finalized()
 
-      return cancelCall.run()
+      return cancelCall.run(scope.value)
     },
     onSuccess: (result) => {
       console.log({ result })

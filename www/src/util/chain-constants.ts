@@ -1,18 +1,20 @@
 import { westend } from "@capi/westend"
+import { scope } from "../signals/scope.js"
 
 async function getExistentialDeposit() {
   return await westend.pallet("Balances").constant("ExistentialDeposit").decoded
-    .run()
+    .run(scope.value)
 }
 
 async function getProxyDepositBase() {
-  return await westend.pallet("Proxy").constant("ProxyDepositBase").decoded
-    .run()
+  return await westend.pallet("Proxy").constant("ProxyDepositBase").decoded.run(
+    scope.value,
+  )
 }
 
 async function getProxyDepositFactor() {
   return await westend.pallet("Proxy").constant("ProxyDepositFactor").decoded
-    .run()
+    .run(scope.value)
 }
 
 export const PROXY_DEPOSIT_BASE = await getProxyDepositBase()

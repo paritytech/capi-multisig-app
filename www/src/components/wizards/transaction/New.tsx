@@ -4,6 +4,7 @@ import { useEffect } from "preact/hooks"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { useSearchParams } from "react-router-dom"
 import { defaultAccount } from "../../../signals/accounts.js"
+import { scope } from "../../../signals/scope.js"
 import { setups } from "../../../signals/setups.js"
 import { formatBalance } from "../../../util/balance.js"
 import { AccountId } from "../../AccountId.js"
@@ -35,8 +36,8 @@ export function TransactionNew() {
 
   const onSubmit: SubmitHandler<FormData> = async (formDataNew) => {
     if (!call.value) return
-    const callHash = hex.encode(await call.value.callHash.run())
-    const callData = hex.encode(await call.value.callData.run())
+    const callHash = hex.encode(await call.value.callHash.run(scope.value))
+    const callData = hex.encode(await call.value.callData.run(scope.value))
     const selectedSetup = setups.peek().find((s) =>
       s.multisig === formDataNew.from?.address
     )

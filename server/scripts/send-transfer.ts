@@ -1,5 +1,5 @@
 import { westend } from "@capi/westend"
-import { hex, Sr25519 } from "capi"
+import { hex, Scope, Sr25519 } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"
 import { $input, $result } from "common"
 import * as crypto from "crypto"
@@ -16,28 +16,31 @@ const sender = Sr25519.fromSecret(secret)
 
 const recipient = Sr25519.fromSecret(crypto.getRandomValues(new Uint8Array(64)))
 
-const signedExtrinsic = await westend.Balances
-  .transfer({
-    value: 12345n,
-    dest: recipient.address,
-  })
+const signedExtrinsic = await westend.Balances.transfer({
+  value: 12345n,
+  dest: recipient.address,
+})
   .signed(signature({ sender }))
   .hex()
-  .run()
+  .run(new Scope())
 
 const ws = new WebSocket(endpoint)
 
 ws.on("open", () => {
-  ws.send($input.encode({
-    type: "subscribe",
-    channel: "multisig-xyz",
-  }))
+  ws.send(
+    $input.encode({
+      type: "subscribe",
+      channel: "multisig-xyz",
+    }),
+  )
 
-  ws.send($input.encode({
-    type: "submit",
-    channel: "multisig-xyz",
-    signedExtrinsic,
-  }))
+  ws.send(
+    $input.encode({
+      type: "submit",
+      channel: "multisig-xyz",
+      signedExtrinsic,
+    }),
+  )
 })
 
 ws.on("message", (message) => {

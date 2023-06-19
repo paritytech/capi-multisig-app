@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
 import { defaultSender } from "../../../signals/accounts.js"
+import { scope } from "../../../signals/scope.js"
 import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
@@ -23,7 +24,9 @@ export function MultisigFund() {
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
   })
-  const { value: { fundingAmount, stash } } = wizardData
+  const {
+    value: { fundingAmount, stash },
+  } = wizardData
 
   const onSubmit = async (formDataNew: MultisigFundEntity) => {
     try {
@@ -32,17 +35,16 @@ export function MultisigFund() {
 
       if (!sender || !stash) return
 
-      const fundStashCall = westend.Balances
-        .transfer({
-          value: BigInt(fundingAmount), // TODO properly scale the amount
-          dest: toMultiAddressIdRune(stash),
-        })
+      const fundStashCall = westend.Balances.transfer({
+        value: BigInt(fundingAmount), // TODO properly scale the amount
+        dest: toMultiAddressIdRune(stash),
+      })
         .signed(signature({ sender }))
         .sent()
         .dbgStatus("Transfer:")
         .finalized()
 
-      await fundStashCall.run()
+      await fundStashCall.run(scope.value)
       updateWizardData({ ...formDataNew })
       goNext()
     } catch (exception) {

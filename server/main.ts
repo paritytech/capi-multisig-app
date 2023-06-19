@@ -1,5 +1,5 @@
 import { westend } from "@capi/westend"
-import { SignedExtrinsicRune } from "capi"
+import { Scope, SignedExtrinsicRune } from "capi"
 import { $input, $result, Submit } from "common"
 import express from "express"
 import * as http from "http"
@@ -42,19 +42,23 @@ wsServer.on("connection", (ws, _req) => {
             channels[decoded.channel] = new Set()
           }
           channels[decoded.channel]?.add(ws)
-          ws.send($result.encode({
-            type: "subscribe",
-            channel: decoded.channel,
-            result: "ok",
-          }))
+          ws.send(
+            $result.encode({
+              type: "subscribe",
+              channel: decoded.channel,
+              result: "ok",
+            }),
+          )
           break
         case "unsubscribe":
           if (channels[decoded.channel]?.delete(ws)) {
-            ws.send($result.encode({
-              type: "unsubscribe",
-              channel: decoded.channel,
-              result: "ok",
-            }))
+            ws.send(
+              $result.encode({
+                type: "unsubscribe",
+                channel: decoded.channel,
+                result: "ok",
+              }),
+            )
           }
           break
         case "submit":
@@ -79,19 +83,18 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
       channels[submit.channel]?.forEach((ws) => ws.send(data))
     }
 
-    await SignedExtrinsicRune.fromHex(
-      westend,
-      submit.signedExtrinsic,
-    )
+    await SignedExtrinsicRune.fromHex(westend, submit.signedExtrinsic)
       .sent()
       .dbgStatus("tx status")
       .transactionStatuses((txStatus) => {
         if (typeof txStatus === "string") {
-          send($result.encode({
-            type: "submit",
-            channel: submit.channel,
-            result: { status: txStatus },
-          }))
+          send(
+            $result.encode({
+              type: "submit",
+              channel: submit.channel,
+              result: { status: txStatus },
+            }),
+          )
         } else {
           const status = Object.keys(txStatus)[0]!
           switch (status) {
@@ -104,32 +107,38 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
             case "usurped":
             case "dropped":
             case "invalid":
-              send($result.encode({
-                type: "submit",
-                channel: submit.channel,
-                result: { status },
-              }))
+              send(
+                $result.encode({
+                  type: "submit",
+                  channel: submit.channel,
+                  result: { status },
+                }),
+              )
               break
             case "finalized":
               const hash: string = txStatus["finalized"]! as string
-              send($result.encode({
-                type: "submit",
-                channel: submit.channel,
-                result: { status, hash },
-              }))
+              send(
+                $result.encode({
+                  type: "submit",
+                  channel: submit.channel,
+                  result: { status, hash },
+                }),
+              )
               break
           }
         }
 
         return false
       })
-      .run()
+      .run(new Scope())
   } catch (err) {
-    ws.send($result.encode({
-      type: "submit",
-      channel: submit.channel,
-      result: { status: "failed" },
-    }))
+    ws.send(
+      $result.encode({
+        type: "submit",
+        channel: submit.channel,
+        result: { status: "failed" },
+      }),
+    )
     handleError(err)
   }
 }

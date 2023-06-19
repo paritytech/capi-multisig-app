@@ -13,6 +13,7 @@ import {
   defaultAccount,
   defaultSender,
 } from "../../../signals/accounts.js"
+import { scope } from "../../../signals/scope.js"
 import { formatBalance } from "../../../util/balance.js"
 import { toPubKey } from "../../../util/capi-helpers.js"
 import {
@@ -82,8 +83,8 @@ export function MultisigMembers() {
       )
 
       const multisigAddress = ss58.encode(
-        await westend.addressPrefix().run(),
-        await multisig.accountId.run(),
+        await westend.addressPrefix().run(scope.value),
+        await multisig.accountId.run(scope.value),
       )
 
       // TODO can we check if stash already created? previously?
@@ -102,9 +103,9 @@ export function MultisigMembers() {
         .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
         .access(0)
 
-      const stashBytes = (await createStashCall.run()) as Uint8Array
+      const stashBytes = (await createStashCall.run(scope.value)) as Uint8Array
       const stashAddress = ss58.encode(
-        await westend.addressPrefix().run(),
+        await westend.addressPrefix().run(scope.value),
         stashBytes,
       )
       console.info("New Stash created at:", stashAddress)
@@ -126,7 +127,7 @@ export function MultisigMembers() {
         .dbgStatus("Replacing Proxy Delegates:")
         .finalized()
 
-      await replaceDelegates.run()
+      await replaceDelegates.run(scope.value)
 
       // TODO save to database instead of localStorage
       storeSetup(members.map((m) => m?.address) as string[], {

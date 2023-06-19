@@ -1,6 +1,7 @@
 import { MultiAddress, Westend, westend } from "@capi/westend"
 import { effect, Signal, signal } from "@preact/signals"
 import { ExtrinsicRune, ss58 } from "capi"
+import { scope } from "../../../signals/scope.js"
 import { toBalance } from "../../../util/balance.js"
 import { transactionData } from "./formData.js"
 
@@ -19,7 +20,7 @@ effect(() => {
 effect(() => {
   call.value
     ?.estimate()
-    .run()
+    .run(scope.value)
     .then((estimate: bigint) => {
       fee.value = estimate
     })

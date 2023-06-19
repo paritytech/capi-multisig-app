@@ -2,6 +2,7 @@ import { $runtimeCall, Westend } from "@capi/westend"
 import { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import { ExtrinsicRune, hex, Rune } from "capi"
 import { isSetup, Setup } from "common"
+import { scope } from "../signals/scope.js"
 
 export function retrieveStored(key: "defaultAccount"): WalletAccount | undefined
 export function retrieveStored(key: "defaultExtension"): Wallet | undefined
@@ -52,7 +53,9 @@ export async function storeCall(call: ExtrinsicRune<Westend, never>) {
   const collection = await Rune.array([
     call.callHash.access(),
     call.callData.access(),
-  ]).run()
+  ]).run(
+    scope.value,
+  )
   const [hash, data] = collection.map((value) => "0x" + hex.encode(value))
   if (!hash || !data) throw new Error("Could not store call")
 
