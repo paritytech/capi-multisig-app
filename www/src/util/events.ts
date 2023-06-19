@@ -8,7 +8,14 @@ const { addNotification, closeNotification } = useNotifications()
 const initialId = uuid()
 
 function filterPureCreatedEvents<X>(...[events]: RunicArgs<X, [any[]]>) {
+  addNotification({
+    id: initialId,
+    message: "Processing...",
+    type: "loading",
+  })
   return Rune.resolve(events).map((events) => {
+    closeNotification(initialId)
+    addNotification({ id: uuid(), message: "InBlock", type: "success" })
     const eventNames = events.map((e) =>
       `${e.event.type}:${e.event.value.type}`
     )
