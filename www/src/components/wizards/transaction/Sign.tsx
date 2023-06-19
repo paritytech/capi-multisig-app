@@ -54,7 +54,7 @@ export function TransactionSign() {
       .pipe(filterEvents)
 
     ratifyCall
-      .run(scope.value)
+      .run(scope)
       .then(() => storeCall(call))
       .then(() => {
         setSubmitting(false)

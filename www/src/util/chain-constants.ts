@@ -3,18 +3,18 @@ import { scope } from "./scope.js"
 
 async function getExistentialDeposit() {
   return await westend.pallet("Balances").constant("ExistentialDeposit").decoded
-    .run(scope.value)
+    .run(scope)
 }
 
 async function getProxyDepositBase() {
   return await westend.pallet("Proxy").constant("ProxyDepositBase").decoded.run(
-    scope.value,
+    scope,
   )
 }
 
 async function getProxyDepositFactor() {
   return await westend.pallet("Proxy").constant("ProxyDepositFactor").decoded
-    .run(scope.value)
+    .run(scope)
 }
 
 export const PROXY_DEPOSIT_BASE = await getProxyDepositBase()

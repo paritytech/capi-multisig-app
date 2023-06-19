@@ -8,7 +8,7 @@ export function useAccountInfo(address: string) {
     queryKey: ["AccountInfo", address],
     queryFn: async () => {
       const accountInfo = await westend.System.Account.value(toPubKey(address))
-        .run(scope.value)
+        .run(scope)
       if (!accountInfo) return 0n
       return accountInfo.data.free
     },

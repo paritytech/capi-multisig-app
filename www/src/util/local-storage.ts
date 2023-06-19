@@ -53,9 +53,7 @@ export async function storeCall(call: ExtrinsicRune<Westend, never>) {
   const collection = await Rune.array([
     call.callHash.access(),
     call.callData.access(),
-  ]).run(
-    scope.value,
-  )
+  ]).run(scope)
   const [hash, data] = collection.map((value) => "0x" + hex.encode(value))
   if (!hash || !data) throw new Error("Could not store call")
 

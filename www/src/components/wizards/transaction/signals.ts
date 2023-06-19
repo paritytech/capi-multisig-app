@@ -20,7 +20,7 @@ effect(() => {
 effect(() => {
   call.value
     ?.estimate()
-    .run(scope.value)
+    .run(scope)
     .then((estimate: bigint) => {
       fee.value = estimate
     })

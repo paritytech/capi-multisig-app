@@ -28,9 +28,7 @@ export function formatBalance(
 export async function getBalance(address: string) {
   const addressPubKey = ss58.decode(address)[1]
 
-  const balance = await westend.System.Account.value(addressPubKey).run(
-    scope.value,
-  )
+  const balance = await westend.System.Account.value(addressPubKey).run(scope)
 
   if (!balance) throw new Error("Could not retrieve balance")
 

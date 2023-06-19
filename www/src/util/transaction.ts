@@ -11,6 +11,6 @@ export async function estimateFee(address: string, value: bigint) {
     dest: MultiAddress.Id(addressPubKey),
   })
     .estimate()
-    .run(scope.value)
+    .run(scope)
   return fee
 }

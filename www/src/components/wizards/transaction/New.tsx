@@ -36,8 +36,8 @@ export function TransactionNew() {
 
   const onSubmit: SubmitHandler<FormData> = async (formDataNew) => {
     if (!call.value) return
-    const callHash = hex.encode(await call.value.callHash.run(scope.value))
-    const callData = hex.encode(await call.value.callData.run(scope.value))
+    const callHash = hex.encode(await call.value.callHash.run(scope))
+    const callData = hex.encode(await call.value.callData.run(scope))
     const selectedSetup = setups.peek().find((s) =>
       s.multisig === formDataNew.from?.address
     )
