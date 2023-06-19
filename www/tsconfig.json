@@ -8,8 +8,5 @@
     "pages": ["src/pages"],
     "signals": ["src/signals"]
   },
-  "references": [
-    { "path": "../common" },
-    { "path": "../server" }
-  ]
+  "references": [{ "path": "../common" }, { "path": "../server" }]
 }
