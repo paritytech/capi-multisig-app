@@ -42,7 +42,7 @@ module.exports = {
           success: "#56F3CE",
           error: "#FE8D81",
           info: "#F9F9FB",
-          loading: "#E31902"
+          loading: "#D1D1DB"
         },
         table: {
           text: "rgba(18, 17, 39, 0.7)",
