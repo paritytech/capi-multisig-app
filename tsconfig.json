@@ -3,5 +3,6 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "files": ["nets.ts"]
+  "files": [],
+  "references": [{ "path": "www" }, { "path": "server" }, { "path": "common" }]
 }
