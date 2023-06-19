@@ -1,7 +1,7 @@
 import { westend } from "@capi/westend"
 import { useQuery } from "@tanstack/react-query"
-import { scope } from "../signals/scope.js"
 import { toPubKey } from "../util/capi-helpers.js"
+import { scope } from "../util/scope.js"
 
 export function useAccountInfo(address: string) {
   return useQuery({

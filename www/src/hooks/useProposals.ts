@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query"
 import { hex } from "capi"
 import { Setup } from "common"
 import { useMemo } from "preact/hooks"
-import { scope } from "../signals/scope.js"
 import { toAddress, toMultisigRune } from "../util/capi-helpers.js"
 import { getCall } from "../util/local-storage.js"
+import { scope } from "../util/scope.js"
 
 type Proposal = {
   callHash: string

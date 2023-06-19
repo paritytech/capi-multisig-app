@@ -2,7 +2,7 @@ import { $runtimeCall, Westend } from "@capi/westend"
 import { Wallet, WalletAccount } from "@talisman-connect/wallets"
 import { ExtrinsicRune, hex, Rune } from "capi"
 import { isSetup, Setup } from "common"
-import { scope } from "../signals/scope.js"
+import { scope } from "./scope.js"
 
 export function retrieveStored(key: "defaultAccount"): WalletAccount | undefined
 export function retrieveStored(key: "defaultExtension"): Wallet | undefined

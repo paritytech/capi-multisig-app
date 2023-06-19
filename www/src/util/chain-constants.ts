@@ -1,5 +1,5 @@
 import { westend } from "@capi/westend"
-import { scope } from "../signals/scope.js"
+import { scope } from "./scope.js"
 
 async function getExistentialDeposit() {
   return await westend.pallet("Balances").constant("ExistentialDeposit").decoded

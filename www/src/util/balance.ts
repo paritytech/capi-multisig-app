@@ -1,6 +1,6 @@
 import { westend } from "@capi/westend"
 import { ss58 } from "capi"
-import { scope } from "../signals/scope.js"
+import { scope } from "./scope.js"
 
 export function formatBalance(
   balance: bigint,

@@ -13,7 +13,6 @@ import {
   defaultAccount,
   defaultSender,
 } from "../../../signals/accounts.js"
-import { scope } from "../../../signals/scope.js"
 import { formatBalance } from "../../../util/balance.js"
 import { toPubKey } from "../../../util/capi-helpers.js"
 import {
@@ -21,6 +20,7 @@ import {
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
 import { storeSetup } from "../../../util/local-storage.js"
+import { scope } from "../../../util/scope.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
