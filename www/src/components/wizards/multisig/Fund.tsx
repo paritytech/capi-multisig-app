@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
 import { defaultSender } from "../../../signals/accounts.js"
+import { toBalance } from "../../../util/balance.js"
 import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
 import { filterEvents, handleException } from "../../../util/events.js"
 import { BalanceInput } from "../../BalanceInput.js"
@@ -35,7 +36,7 @@ export function MultisigFund() {
 
       const fundStashCall = westend.Balances
         .transfer({
-          value: BigInt(fundingAmount), // TODO properly scale the amount
+          value: toBalance(fundingAmount),
           dest: toMultiAddressIdRune(stash),
         })
         .signed(signature({ sender }))
