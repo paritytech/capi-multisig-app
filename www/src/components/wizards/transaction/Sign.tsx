@@ -9,6 +9,7 @@ import {
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
 import { toBalance } from "../../../util/balance.js"
+import { filterEvents, handleException } from "../../../util/events.js"
 import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
@@ -47,7 +48,9 @@ export function TransactionSign() {
       .signed(signature({ sender }))
       .sent()
       .dbgStatus("Ratify")
-      .finalized()
+      .inBlockEvents()
+      .unhandleFailed()
+      .pipe(filterEvents)
 
     ratifyCall
       .run()
@@ -57,7 +60,7 @@ export function TransactionSign() {
         navigate("/")
       })
       .catch((exception) => {
-        console.error(exception)
+        handleException(exception)
         setSubmitting(false)
       })
   }
