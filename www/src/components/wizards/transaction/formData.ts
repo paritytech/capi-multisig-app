@@ -49,3 +49,7 @@ export const updateTransactionData = (
 ) => {
   transactionData.value = { ...transactionData.value, ...newTransactionData }
 }
+
+export const resetFormData = () => {
+  transactionData.value = initialValues
+}

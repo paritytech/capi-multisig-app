@@ -74,3 +74,6 @@ export const wizardData: Signal<MultisigData> = signal(initialValues)
 export const updateWizardData = (newWizardData: Partial<MultisigData>) => {
   wizardData.value = { ...wizardData.value, ...newWizardData }
 }
+export const resetWizardData = () => {
+  wizardData.value = initialValues
+}
