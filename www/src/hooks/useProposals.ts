@@ -10,7 +10,7 @@ type Proposal = {
   callHash: string
   call?: RuntimeCall
   approvals: string[]
-  // depositor: string; TODO add once released: https://github.com/paritytech/capi/pull/1045
+  depositor: string
 }
 
 export function useProposals(setup: Setup) {
@@ -19,20 +19,24 @@ export function useProposals(setup: Setup) {
   return useQuery<Array<Proposal>>({
     queryKey: ["proposals", setup.id],
     queryFn: async () => {
-      const proposals: Array<Array<Uint8Array>> = await multisig.proposals(5)
-        .run()
+      const proposals: Array<[Uint8Array, Uint8Array]> = await multisig
+        .proposals(5).run()
 
       return Promise.all(
         proposals.map(async ([, callHashBytes]) => {
           const callHash = "0x" + hex.encode(callHashBytes!)
-
           return {
             callHash,
             call: getCall(callHash),
-            approvals:
-              (await multisig.proposal(callHashBytes!).run())?.approvals.map((
-                approvalBytes,
-              ) => toAddress(approvalBytes)) ?? [],
+            ...(await multisig
+              .proposal(callHashBytes!)
+              .map((proposal) => ({
+                approvals: proposal?.approvals.map((approval) =>
+                  toAddress(approval)
+                ) || [],
+                depositor: proposal ? toAddress(proposal?.depositor) : "",
+              }))
+              .run()),
           } as Proposal
         }),
       )

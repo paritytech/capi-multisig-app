@@ -15,6 +15,7 @@ import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
 import { IconBell } from "./icons/IconBell.js"
+import { IconCheck } from "./icons/IconCheck.js"
 import { IconPlus } from "./icons/IconPlus.js"
 import { IconTrash } from "./icons/IconTrash.js"
 import { Identicon } from "./identicon/Identicon.js"
@@ -27,6 +28,7 @@ export function Setup({ setup }: Props) {
   const multisig = useMemo(() => toMultisigRune(setup), [setup])
   const { data: balance } = useAccountInfo(setup.stash)
   const { data: proposals, refetch: refetchProposals } = useProposals(setup)
+  console.log({ proposals })
 
   const { mutate: ratify, isLoading: isRatifying } = useMutation({
     mutationFn: async (call: RuntimeCall) => {
@@ -149,7 +151,7 @@ export function Setup({ setup }: Props) {
         </div>
 
         {proposals
-          && proposals.map(({ callHash, call, approvals }) => (
+          && proposals.map(({ callHash, call, approvals, depositor }) => (
             <>
               <hr className="divide-x-0 divide-gray-300 m-2" />
 
@@ -157,28 +159,34 @@ export function Setup({ setup }: Props) {
                 <div class="mb-2">
                   {`Pending transaction (Signed ${approvals.length}/ ${setup.threshold})`}
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4">
                   <div>{callHash}</div>
 
                   <div className="flex flex-row gap-2 justify-end">
-                    {!approvals.includes(defaultAccount.value?.address!)
+                    {depositor === defaultAccount.value?.address! && (
+                      <Button
+                        variant="danger"
+                        iconLeft={<IconTrash className="w-6" />}
+                        onClick={() => cancel(callHash)}
+                        disabled={isCanceling}
+                      >
+                        Discard
+                      </Button>
+                    )}
+                    {approvals.includes(defaultAccount.value?.address!)
                       ? (
                         <Button
-                          onClick={() => ratify(call!)}
-                          disabled={!call || isRatifying}
+                          disabled
+                          variant="ghost"
+                          iconLeft={<IconCheck className="w-6" />}
                         >
-                          (View &) Sign
+                          Signed
                         </Button>
                       )
                       : (
-                        <Button
-                          variant="danger"
-                          iconLeft={<IconTrash className="w-6" />}
-                          onClick={() => cancel(callHash)}
-                          disabled={isCanceling}
-                        >
-                          Discard
-                        </Button>
+                        <Link to={`/ratify-transaction/${callHash}`}>
+                          <Button>View & Sign</Button>
+                        </Link>
                       )}
                   </div>
                 </div>
