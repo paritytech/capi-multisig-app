@@ -1,5 +1,6 @@
 import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { useMutation } from "@tanstack/react-query"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
 import { replaceDelegateCalls } from "capi/patterns/proxy"
@@ -55,20 +56,13 @@ export function MultisigMembers() {
     mode: "onChange",
   })
 
-  const onBack = (formDataNew: MultisigMemberEntity) => {
-    updateWizardData(formDataNew)
-    goPrev()
-  }
-
-  const onErrorBack = () => {
-    const formDataWithErrors = getValues()
-    updateWizardData(formDataWithErrors)
-    goPrev()
-  }
-
-  const onSubmit = async (formDataNew: MultisigMemberEntity) => {
-    try {
-      if (!defaultSender.value || !defaultAccount.value) return
+  const { mutate: createMultisig } = useMutation({
+    mutationFn: async (formDataNew: MultisigMemberEntity) => {
+      const sender = defaultSender.value
+      const account = defaultAccount.value
+      if (!sender || !account) {
+        throw new Error("Missing  sender or account")
+      }
 
       const { threshold } = wizardData.value
       const { members } = formDataNew
@@ -94,7 +88,7 @@ export function MultisigMembers() {
         delay: 0,
         index: 0,
       })
-        .signed(signature({ sender: defaultSender.value }))
+        .signed(signature({ sender }))
         .sent()
         .dbgStatus("Creating Pure Proxy:")
         .inBlockEvents()
@@ -111,19 +105,24 @@ export function MultisigMembers() {
       )
       console.info("New Stash created at:", stashAddress)
 
-      const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
+      const [_, userAddressBytes] = ss58.decode(account.address)
+
       // TODO can we somehow check if the delegation has already been done?
       const replaceDelegates = westend.Utility.batchAll({
-        calls: Rune.array(
-          replaceDelegateCalls(
+        calls: Rune.array([
+          westend.Balances.transfer({
+            dest: MultiAddress.Id(stashBytes),
+            value: PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR,
+          }),
+          ...replaceDelegateCalls(
             westend,
             MultiAddress.Id(stashBytes), // effected account
             MultiAddress.Id(userAddressBytes), // from
             multisig.address, // to
           ),
-        ),
+        ]),
       })
-        .signed(signature({ sender: defaultSender.value }))
+        .signed(signature({ sender }))
         .sent()
         .dbgStatus("Replacing Proxy Delegates:")
         .inBlockEvents()
@@ -150,15 +149,30 @@ export function MultisigMembers() {
         address: multisigAddress,
         stash: stashAddress,
       })
-
+    },
+    onSuccess: (success) => {
+      console.log({ success })
       goNext()
-    } catch (exception) {
-      handleException(exception)
-    }
+    },
+    onError: (error) => {
+      console.log({ error })
+      handleException(error)
+    },
+  })
+
+  const onBack = (formDataNew: MultisigMemberEntity) => {
+    updateWizardData(formDataNew)
+    goPrev()
+  }
+
+  const onErrorBack = () => {
+    const formDataWithErrors = getValues()
+    updateWizardData(formDataWithErrors)
+    goPrev()
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(createMultisig)}>
       <h1 className="text-xl leading-8">2. Members</h1>
       <hr className="border-t border-gray-300 mt-6 mb-4" />
 
