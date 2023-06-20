@@ -2,7 +2,7 @@ import { Setup as SetupType } from "common"
 
 import { RuntimeCall } from "@capi/westend"
 import { useMutation } from "@tanstack/react-query"
-import { hex } from "capi"
+import { hex, ServerError, Unhandled } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"
 import { useMemo } from "preact/hooks"
 import { Link } from "react-router-dom"
@@ -19,6 +19,7 @@ import { IconBell } from "./icons/IconBell.js"
 import { IconPlus } from "./icons/IconPlus.js"
 import { IconTrash } from "./icons/IconTrash.js"
 import { Identicon } from "./identicon/Identicon.js"
+import { useNotifications } from "./Notifications.js"
 
 interface Props {
   setup: SetupType
@@ -26,6 +27,7 @@ interface Props {
 
 export function Setup({ setup }: Props) {
   const multisig = useMemo(() => toMultisigRune(setup), [setup])
+  const { addNotification, clearNotifications } = useNotifications()
   const { data: balance } = useAccountInfo(setup.stash)
   const { data: proposals, refetch: refetchProposals } = useProposals(setup)
 
@@ -53,7 +55,25 @@ export function Setup({ setup }: Props) {
       console.log({ result })
       refetchProposals()
     },
-    onError: (error) => console.error(error),
+    onError: (error: unknown) => {
+      clearNotifications()
+
+      let message = JSON.stringify(error)
+
+      if (error instanceof Unhandled) {
+        const { value } = error
+        if (value instanceof ServerError) {
+          message = value.data as string
+        }
+      }
+
+      addNotification({
+        id: "ratify-error",
+        type: "error",
+        message: message,
+      })
+      console.error(error)
+    },
   })
 
   const { mutate: cancel, isLoading: isCanceling } = useMutation({
