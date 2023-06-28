@@ -111,7 +111,7 @@ export function Setup({ setup }: Props) {
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
               <div>
-                {`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}
+                Balance: {formatBalance(balance ?? 0n)} WND
               </div>
               <Link to={`/multisig/${setup.multisig}`}>
                 <div

@@ -65,7 +65,7 @@ export function MultisigFund() {
         render={({ field }) => (
           <BalanceInput
             {...field}
-            placeholder="0 DOT"
+            placeholder="0 WND"
             className="w-48"
             error={errors.fundingAmount?.message}
             label="Fund the Multisig"
