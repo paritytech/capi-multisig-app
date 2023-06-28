@@ -126,15 +126,12 @@ export function MultisigMembers() {
 
     // TODO save to database instead of localStorage
     storeSetup(members.map((m) => m?.address) as string[], {
-      type: "setup",
-      id: multisigAddress,
       genesisHash: "0x0",
       name: formData.value.name,
       members: members.map((member) => [member!.address, ""]),
       threshold: threshold,
       multisig: multisigAddress,
       stash: stashAddress,
-      history: [],
     })
 
     updateFormData({

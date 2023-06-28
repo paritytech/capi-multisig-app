@@ -1,5 +1,5 @@
 import { Wallet, WalletAccount } from "@talisman-connect/wallets"
-import { isSetup, Setup } from "common"
+import { SetupType } from "../types/index.js"
 
 export function retrieveStored(key: "defaultAccount"): WalletAccount | undefined
 export function retrieveStored(key: "defaultExtension"): Wallet | undefined
@@ -16,13 +16,13 @@ export function retrieveStored(key: "defaultExtension" | "defaultAccount") {
 }
 
 // TODO temporary solution to persist setups until saved in backend db
-export function getStoredSetups(member: string): Setup[] {
+export function getStoredSetups(member: string): SetupType[] {
   const storedSetups = localStorage.getItem(member)
   if (!storedSetups) return []
 
   const tempParsedSetups = JSON.parse(storedSetups)
   if (Array.isArray(tempParsedSetups)) {
-    return tempParsedSetups.filter((maybeSetup: unknown) => isSetup(maybeSetup))
+    return tempParsedSetups
   } else {
     console.warn(`Stored setups for ${member} is not an array`)
     return []
@@ -30,11 +30,11 @@ export function getStoredSetups(member: string): Setup[] {
 }
 
 // TODO temporary solution to persist setups until saved in backend db
-export function storeSetup(members: string[], setup: Setup) {
+export function storeSetup(members: string[], setup: SetupType) {
   for (const member of members) {
     const setupsOfMember = getStoredSetups(member)
     const indexOfSetup = setupsOfMember.findIndex(
-      (storedSetup: Setup) => storedSetup.multisig === setup.multisig,
+      (storedSetup: SetupType) => storedSetup.multisig === setup.multisig,
     )
     if (indexOfSetup === -1) {
       setupsOfMember.push(setup)

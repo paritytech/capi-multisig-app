@@ -45,6 +45,9 @@ export const router = t.router({
   getAccount: t.procedure.input($.str).query(async (req) => {
     AccountController.getAccount(req.input)
   }),
+  getAccountSetups: t.procedure.input($.str).query(async (req) => {
+    AccountController.getSetups(req.input)
+  }),
   deleteAccount: t.procedure.input($.str).mutation(async (req) => {
     AccountController.deleteAccount(req.input)
   }),

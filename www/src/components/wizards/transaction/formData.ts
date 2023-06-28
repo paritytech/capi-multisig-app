@@ -1,7 +1,7 @@
 import { Signal, signal } from "@preact/signals"
-import { Setup } from "common"
 import { z } from "zod"
 import { defaultAccount } from "../../../signals/accounts.js"
+import { SetupType } from "../../../types/index.js"
 import { isValidAddress } from "../../../util/address.js"
 
 export const formDataSchema = z.object({
@@ -31,7 +31,7 @@ export type FormData = z.infer<typeof formDataSchema>
 type ComputedFormData = {
   callHash?: string
   callData?: string
-  setup?: Setup
+  setup?: SetupType
 }
 
 export type TransactionData = FormData & ComputedFormData

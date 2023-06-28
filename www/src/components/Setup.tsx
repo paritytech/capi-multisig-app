@@ -1,4 +1,4 @@
-import { Setup as SetupType } from "common"
+import { SetupType } from "../types/index.js"
 
 import { Link } from "react-router-dom"
 import { accounts } from "../signals/accounts.js"
