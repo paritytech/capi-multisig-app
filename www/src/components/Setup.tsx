@@ -53,7 +53,9 @@ export function Setup({ setup }: Props) {
       console.log({ result })
       refetchProposals()
     },
-    onError: (error) => console.error(error),
+    onError: (error: unknown) => {
+      handleException(error)
+    },
   })
 
   const { mutate: cancel, isLoading: isCanceling } = useMutation({
@@ -109,7 +111,7 @@ export function Setup({ setup }: Props) {
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
               <div>
-                {`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}
+                Balance: {formatBalance(balance ?? 0n)} WND
               </div>
               <Link to={`/multisig/${setup.multisig}`}>
                 <div
@@ -166,7 +168,6 @@ export function Setup({ setup }: Props) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <div>{callHash}</div>
-
                   <div className="flex flex-row gap-2 justify-end">
                     {!approvals.includes(defaultAccount.value?.address!)
                       ? (
@@ -174,7 +175,7 @@ export function Setup({ setup }: Props) {
                           onClick={() => ratify(call!)}
                           disabled={!call || isRatifying}
                         >
-                          (View &) Sign
+                          Sign
                         </Button>
                       )
                       : (
