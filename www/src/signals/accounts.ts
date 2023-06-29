@@ -1,73 +1,68 @@
-import { westend } from "@capi/westend"
-import { computed, effect, signal } from "@preact/signals"
-import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
-import { pjsSender } from "capi/patterns/compat/pjs_sender"
-import { retrieveStored } from "../util/local-storage.js"
-import { retry } from "../util/retry.js"
+import { westend } from "@capi/westend";
+import { computed, effect, signal, ReadonlySignal, Signal } from "@preact/signals";
+import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets";
+import { pjsSender } from "capi/patterns/compat/pjs_sender";
+import { retrieveStored } from "../util/local-storage.js";
+import { retry } from "../util/retry.js";
 
 interface InjectedWindow extends Window {
-  injectedWeb3: unknown
+  injectedWeb3: unknown;
 }
 
-const accounts = signal<WalletAccount[]>([])
-const storedAccount = retrieveStored("defaultAccount")
-const storedExtension = retrieveStored("defaultExtension")
-const defaultAccount = signal(storedAccount)
-const defaultExtension = signal(storedExtension)
+const accounts: Signal<WalletAccount[]> = signal([]);
+const storedAccount = retrieveStored("defaultAccount");
+const storedExtension = retrieveStored("defaultExtension");
+const defaultAccount = signal(storedAccount);
+const defaultExtension = signal(storedExtension);
 const defaultSender = computed(() => {
-  const { signer } = defaultExtension.value || {}
-  const { address: userAddress } = defaultAccount.value || {}
-  if (!signer || !userAddress) return
+  const { signer } = defaultExtension.value || {};
+  const { address: userAddress } = defaultAccount.value || {};
+  if (!signer || !userAddress) return;
 
-  return pjsSender(westend, signer)(userAddress)
-})
+  return pjsSender(westend, signer)(userAddress);
+});
+defaultSender;
 effect(
   () =>
-    defaultAccount.value
-    && localStorage.setItem(
-      "defaultAccount",
-      JSON.stringify(defaultAccount.value),
-    ),
-)
+    defaultAccount.value &&
+    localStorage.setItem("defaultAccount", JSON.stringify(defaultAccount.value))
+);
 
 effect(
   () =>
-    defaultExtension.value
-    && localStorage.setItem(
-      "defaultExtension",
-      JSON.stringify(defaultExtension.value),
-    ),
-)
+    defaultExtension.value &&
+    localStorage.setItem("defaultExtension", JSON.stringify(defaultExtension.value))
+);
 
 async function maybeInjectedAccounts() {
-  if (!(window as unknown as InjectedWindow).injectedWeb3) throw new Error()
-  await getAccounts()
+  if (!(window as unknown as InjectedWindow).injectedWeb3) throw new Error();
+  await getAccounts();
 }
 
 async function getAccounts() {
-  const wallet = getWalletBySource("polkadot-js")
+  const wallet = getWalletBySource("polkadot-js");
   if (wallet) {
-    defaultExtension.value = wallet
+    defaultExtension.value = wallet;
     try {
-      await wallet.enable("Capi Multisig App")
+      await wallet.enable("Capi Multisig App");
       // TODO unsubscribe unknown
       await wallet.subscribeAccounts((a) => {
-        accounts.value = a ?? []
+        accounts.value = a ?? [];
         if (!storedAccount && accounts.value.length > 0) {
-          defaultAccount.value = accounts.value[0]
+          defaultAccount.value = accounts.value[0];
         }
-      })
+      });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   } else {
-    console.error("Polkadot.js extension is not installed")
+    console.error("Polkadot.js extension is not installed");
   }
 }
 
 await retry(maybeInjectedAccounts, {
   retries: 6,
   retryIntervalMs: 300,
-})
+});
 
-export { accounts, defaultAccount, defaultExtension, defaultSender }
+export { accounts, defaultAccount, defaultExtension, defaultSender };
