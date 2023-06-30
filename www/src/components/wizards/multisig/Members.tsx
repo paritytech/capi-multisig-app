@@ -90,7 +90,7 @@ export function MultisigMembers() {
       const { members } = formDataNew
 
       const stashAddress = await createStashCall(
-        defaultAccount.value!,
+        defaultAccount.value.address,
         notifiacationsCb,
       )
 
@@ -103,7 +103,7 @@ export function MultisigMembers() {
 
       await replaceDelegatesCall(
         stashAddress,
-        defaultAccount.value,
+        defaultAccount.value.address,
         multisigAddress,
         notifiacationsCb,
       )

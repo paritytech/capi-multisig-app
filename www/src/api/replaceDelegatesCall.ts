@@ -1,9 +1,8 @@
 import { MultiAddress, westend } from "@capi/westend"
-import { WalletAccount } from "@talisman-connect/wallets"
 import { Rune, RunicArgs, ss58 } from "capi"
-import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { replaceDelegateCalls } from "capi/patterns/proxy"
 import { signature } from "capi/patterns/signature/polkadot"
+import { createSender } from "./createSender.js"
 
 type Loading = { type: "loading" }
 type Success = { type: "success" }
@@ -12,15 +11,13 @@ export type ReplaceDelegateCallNotification = Loading | Success | Info
 
 export async function replaceDelegatesCall(
   stash: string,
-  prevOwner: WalletAccount,
+  prevOwner: string,
   newOwner: string,
   cb: (value: ReplaceDelegateCallNotification) => void,
 ): Promise<void> {
-  const shittySender = pjsSender(westend, prevOwner.signer as any)(
-    prevOwner.address,
-  )
+  const sender = createSender(prevOwner)
 
-  const [, userAddressBytes] = ss58.decode(prevOwner.address)
+  const [, userAddressBytes] = ss58.decode(prevOwner)
   const [, stashBytes] = ss58.decode(stash)
   const [, newOwnerBytes] = ss58.decode(newOwner)
   // TODO can we somehow check if the delegation has already been done?
@@ -34,7 +31,7 @@ export async function replaceDelegatesCall(
       ),
     ),
   })
-    .signed(signature({ sender: shittySender }))
+    .signed(signature({ sender }))
     .sent()
     .dbgStatus("Replacing Proxy Delegates:")
     .inBlockEvents()

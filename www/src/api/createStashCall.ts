@@ -1,8 +1,7 @@
 import { PalletProxyEvent, RuntimeEvent, westend } from "@capi/westend"
-import { WalletAccount } from "@talisman-connect/wallets"
 import { Rune, RunicArgs, ss58 } from "capi"
-import { pjsSender } from "capi/patterns/compat/pjs_sender"
 import { signature } from "capi/patterns/signature/polkadot"
+import { createSender } from "./createSender.js"
 
 type Loading = { type: "loading" }
 type Success = { type: "success" }
@@ -10,17 +9,17 @@ type Info = { type: "info"; events: string[] }
 export type StashCallNotification = Loading | Success | Info
 
 export async function createStashCall(
-  sender: WalletAccount,
+  address: string,
   cb: (value: StashCallNotification) => void,
 ): Promise<string> {
-  const shittySender = pjsSender(westend, sender.signer as any)(sender.address)
+  const sender = createSender(address)
 
   const createStashCall = westend.Proxy.createPure({
     proxyType: "Any",
     delay: 0,
     index: 0,
   })
-    .signed(signature({ sender: shittySender }))
+    .signed(signature({ sender: sender }))
     .sent()
     .dbgStatus("Creating Pure Proxy:")
     .inBlockEvents()
