@@ -1,3 +1,4 @@
+import { Rune, RunicArgs } from "capi"
 import { v4 as uuid } from "uuid"
 import { useNotifications } from "../components/Notifications.js"
 
@@ -15,4 +16,20 @@ function handleException(exception: any) {
   })
 }
 
-export { handleException }
+function filterEvents<X>(...[events]: RunicArgs<X, [any[]]>) {
+  addNotification({
+    id: initialId,
+    message: "Processing...",
+    type: "loading",
+  })
+  return Rune.resolve(events).map((events) => {
+    closeNotification(initialId)
+    addNotification({ id: uuid(), message: "InBlock", type: "success" })
+    const eventNames = events.map((e) =>
+      `${e.event.type}:${e.event.value.type}`
+    )
+    addNotification({ id: uuid(), message: eventNames, type: "info" })
+  })
+}
+
+export { filterEvents, handleException }
