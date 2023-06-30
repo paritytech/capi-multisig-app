@@ -1,39 +1,47 @@
-import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
-import { Controller, useForm } from "react-hook-form";
-import { accounts, defaultAccount, defaultSender } from "../../../signals/accounts.js";
-import { formatBalance } from "../../../util/balance.js";
-import { PROXY_DEPOSIT_BASE, PROXY_DEPOSIT_FACTOR } from "../../../util/chain-constants.js";
-import { handleException } from "../../../util/events.js";
-import { storeSetup } from "../../../util/local-storage.js";
-import { AccountSelect } from "../../AccountSelect.js";
-import { Button } from "../../Button.js";
-import { IconChevronLeft } from "../../icons/IconChevronLeft.js";
-import { InputError } from "../../InputError.js";
-import { Row, SumTable } from "../../SumTable.js";
-import { goNext, goPrev } from "../Wizard.js";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { Controller, useForm } from "react-hook-form"
+import { v4 as uuid } from "uuid"
+import { getMultisigAddress } from "../../../api/getMultisigAddress.js"
+import {
+  createStashCall,
+  ReplaceDelegateCallNotification,
+  replaceDelegatesCall,
+} from "../../../api/index.js"
+import {
+  accounts,
+  defaultAccount,
+  defaultSender,
+} from "../../../signals/accounts.js"
+import { formatBalance } from "../../../util/balance.js"
+import {
+  PROXY_DEPOSIT_BASE,
+  PROXY_DEPOSIT_FACTOR,
+} from "../../../util/chain-constants.js"
+import { handleException } from "../../../util/events.js"
+import { storeSetup } from "../../../util/local-storage.js"
+import { AccountSelect } from "../../AccountSelect.js"
+import { Button } from "../../Button.js"
+import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
+import { InputError } from "../../InputError.js"
+import { useNotifications } from "../../Notifications.js"
+import { Row, SumTable } from "../../SumTable.js"
+import { goNext, goPrev } from "../Wizard.js"
 import {
   MultisigMemberEntity,
   multisigMemberSchema,
   updateWizardData,
   wizardData,
-} from "./wizardData.js";
-import {
-  ReplaceDelegateCallNotification,
-  createStashCall,
-  replaceDelegatesCall,
-} from "../../../api/index.js";
-import { useNotifications } from "../../Notifications.js";
-import { v4 as uuid } from "uuid";
-import { getMultisigAddress } from "../../../api/getMultisigAddress.js";
-const { addNotification, closeNotification } = useNotifications();
+} from "./wizardData.js"
+const { addNotification, closeNotification } = useNotifications()
 
 const multisigCreationFees: Row[] = [
   {
     name: "Proxy fee",
     value: formatBalance(PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR),
-    info: "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
+    info:
+      "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
-];
+]
 
 const notifiacationsCb = (msg: ReplaceDelegateCallNotification) => {
   if (msg.type === "loading") {
@@ -41,16 +49,16 @@ const notifiacationsCb = (msg: ReplaceDelegateCallNotification) => {
       id: "",
       message: "Processing...",
       type: "loading",
-    });
-    return;
+    })
+    return
   }
   if (msg.type === "success") {
-    closeNotification("");
-    addNotification({ id: uuid(), message: "InBlock", type: "success" });
-    return;
+    closeNotification("")
+    addNotification({ id: uuid(), message: "InBlock", type: "success" })
+    return
   }
-  addNotification({ id: uuid(), message: msg.events, type: "info" });
-};
+  addNotification({ id: uuid(), message: msg.events, type: "info" })
+}
 
 export function MultisigMembers() {
   const {
@@ -61,41 +69,44 @@ export function MultisigMembers() {
   } = useForm<MultisigMemberEntity>({
     resolver: zodResolver(multisigMemberSchema),
     mode: "onChange",
-  });
+  })
 
   const onBack = (formDataNew: MultisigMemberEntity) => {
-    updateWizardData(formDataNew);
-    goPrev();
-  };
+    updateWizardData(formDataNew)
+    goPrev()
+  }
 
   const onErrorBack = () => {
-    const formDataWithErrors = getValues();
-    updateWizardData(formDataWithErrors);
-    goPrev();
-  };
+    const formDataWithErrors = getValues()
+    updateWizardData(formDataWithErrors)
+    goPrev()
+  }
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
     try {
-      if (!defaultSender.value || !defaultAccount.value) return;
+      if (!defaultSender.value || !defaultAccount.value) return
 
-      const { threshold } = wizardData.value;
-      const { members } = formDataNew;
+      const { threshold } = wizardData.value
+      const { members } = formDataNew
 
-      const stashAddress = await createStashCall(defaultAccount.value!, notifiacationsCb);
+      const stashAddress = await createStashCall(
+        defaultAccount.value!,
+        notifiacationsCb,
+      )
 
-      console.info("New Stash created at:", stashAddress);
+      console.info("New Stash created at:", stashAddress)
 
       const multisigAddress = await getMultisigAddress(
         members.map((member) => member!.address),
-        threshold
-      );
+        threshold,
+      )
 
       await replaceDelegatesCall(
         stashAddress,
         defaultAccount.value,
         multisigAddress,
-        notifiacationsCb
-      );
+        notifiacationsCb,
+      )
 
       // TODO save to database instead of localStorage
       storeSetup(members.map((m) => m?.address) as string[], {
@@ -108,19 +119,19 @@ export function MultisigMembers() {
         multisig: multisigAddress,
         stash: stashAddress,
         history: [],
-      });
+      })
 
       updateWizardData({
         ...formDataNew,
         address: multisigAddress,
         stash: stashAddress,
-      });
+      })
 
-      goNext();
+      goNext()
     } catch (exception) {
-      handleException(exception);
+      handleException(exception)
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -135,18 +146,18 @@ export function MultisigMembers() {
               control={control}
               name={`members.${i}`}
               defaultValue={member}
-              render={({ field }) => <AccountSelect {...field} accounts={accounts.value} />}
+              render={({ field }) => (
+                <AccountSelect {...field} accounts={accounts.value} />
+              )}
             />
 
             {errors.members && <InputError msg={errors.members[i]?.message} />}
           </div>
-        );
+        )
       })}
       {errors.members && <InputError msg={errors.members.message} />}
       <SumTable unit="WND">
-        {multisigCreationFees.map((fee) => (
-          <SumTable.Row {...fee} />
-        ))}
+        {multisigCreationFees.map((fee) => <SumTable.Row {...fee} />)}
       </SumTable>
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
       <div className="flex justify-between">
@@ -163,5 +174,5 @@ export function MultisigMembers() {
         </Button>
       </div>
     </form>
-  );
+  )
 }
