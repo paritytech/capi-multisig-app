@@ -2,15 +2,11 @@ import { PalletProxyEvent, RuntimeEvent, westend } from "@capi/westend"
 import { Rune, RunicArgs, ss58 } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"
 import { createSender } from "./createSender.js"
-
-type Loading = { type: "loading" }
-type Success = { type: "success" }
-type Info = { type: "info"; events: string[] }
-export type StashCallNotification = Loading | Success | Info
+import { Message } from "./notificationsCb.js"
 
 export async function createStashCall(
   address: string,
-  cb: (value: StashCallNotification) => void,
+  cb: (value: Message) => void,
 ): Promise<string> {
   const sender = createSender(address)
 

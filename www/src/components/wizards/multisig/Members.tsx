@@ -1,12 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
 import { Controller, useForm } from "react-hook-form"
-import { v4 as uuid } from "uuid"
 import { getMultisigAddress } from "../../../api/getMultisigAddress.js"
-import {
-  createStashCall,
-  ReplaceDelegateCallNotification,
-  replaceDelegatesCall,
-} from "../../../api/index.js"
+import { createStashCall, replaceDelegatesCall } from "../../../api/index.js"
+import { notificationsCb } from "../../../api/notificationsCb.js"
 import {
   accounts,
   defaultAccount,
@@ -23,7 +19,6 @@ import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
 import { InputError } from "../../InputError.js"
-import { useNotifications } from "../../Notifications.js"
 import { Row, SumTable } from "../../SumTable.js"
 import { goNext, goPrev } from "../Wizard.js"
 import {
@@ -32,7 +27,6 @@ import {
   updateWizardData,
   wizardData,
 } from "./wizardData.js"
-const { addNotification, closeNotification } = useNotifications()
 
 const multisigCreationFees: Row[] = [
   {
@@ -42,23 +36,6 @@ const multisigCreationFees: Row[] = [
       "Amount reserved for the creation of a PureProxy that holds the multisig funds. The multisig account acts as AnyProxy for this account.",
   },
 ]
-
-const notifiacationsCb = (msg: ReplaceDelegateCallNotification) => {
-  if (msg.type === "loading") {
-    addNotification({
-      id: "",
-      message: "Processing...",
-      type: "loading",
-    })
-    return
-  }
-  if (msg.type === "success") {
-    closeNotification("")
-    addNotification({ id: uuid(), message: "InBlock", type: "success" })
-    return
-  }
-  addNotification({ id: uuid(), message: msg.events, type: "info" })
-}
 
 export function MultisigMembers() {
   const {
@@ -91,7 +68,7 @@ export function MultisigMembers() {
 
       const stashAddress = await createStashCall(
         defaultAccount.value.address,
-        notifiacationsCb,
+        notificationsCb,
       )
 
       console.info("New Stash created at:", stashAddress)
@@ -105,7 +82,7 @@ export function MultisigMembers() {
         stashAddress,
         defaultAccount.value.address,
         multisigAddress,
-        notifiacationsCb,
+        notificationsCb,
       )
 
       // TODO save to database instead of localStorage

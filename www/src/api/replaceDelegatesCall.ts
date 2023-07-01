@@ -3,17 +3,13 @@ import { Rune, RunicArgs, ss58 } from "capi"
 import { replaceDelegateCalls } from "capi/patterns/proxy"
 import { signature } from "capi/patterns/signature/polkadot"
 import { createSender } from "./createSender.js"
-
-type Loading = { type: "loading" }
-type Success = { type: "success" }
-type Info = { type: "info"; events: string[] }
-export type ReplaceDelegateCallNotification = Loading | Success | Info
+import { Message } from "./notificationsCb.js"
 
 export async function replaceDelegatesCall(
   stash: string,
   prevOwner: string,
   newOwner: string,
-  cb: (value: ReplaceDelegateCallNotification) => void,
+  cb: (value: Message) => void,
 ): Promise<void> {
   const sender = createSender(prevOwner)
 
