@@ -29,38 +29,38 @@ export const router = t.router({
 
   // multisig
   addMultisig: t.procedure.input($setup).mutation(async (req) => {
-    MultisigController.createSetup(req.input)
+    return MultisigController.createSetup(req.input)
   }),
   getMultisig: t.procedure.input($.str).query(async (req) => {
-    MultisigController.getSetup(req.input)
+    return MultisigController.getSetup(req.input)
   }),
   deleteMultisig: t.procedure.input($.str).mutation(async (req) => {
-    MultisigController.deleteSetup(req.input)
+    return MultisigController.deleteSetup(req.input)
   }),
 
   // account
   addAccount: t.procedure.input($account).mutation(async (req) => {
-    AccountController.createAccount(req.input)
+    return AccountController.createAccount(req.input)
   }),
   getAccount: t.procedure.input($.str).query(async (req) => {
-    AccountController.getAccount(req.input)
+    return AccountController.getAccount(req.input)
   }),
   getAccountSetups: t.procedure.input($.str).query(async (req) => {
-    AccountController.getSetups(req.input)
+    return AccountController.getSetups(req.input)
   }),
   deleteAccount: t.procedure.input($.str).mutation(async (req) => {
-    AccountController.deleteAccount(req.input)
+    return AccountController.deleteAccount(req.input)
   }),
 
   // calldata
   addCalldata: t.procedure.input($calldata).mutation(async (req) => {
-    CalldataController.addCalldata(req.input)
+    return CalldataController.addCalldata(req.input)
   }),
   getCalldata: t.procedure.input($.str).query(async (req) => {
-    CalldataController.getCalldata(req.input)
+    return CalldataController.getCalldata(req.input)
   }),
   deleteCalldata: t.procedure.input($.str).mutation(async (req) => {
-    CalldataController.deleteCalldata(req.input)
+    return CalldataController.deleteCalldata(req.input)
   }),
 
   //

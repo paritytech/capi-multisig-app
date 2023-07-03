@@ -29,7 +29,21 @@ export function toMultisigRune(setup: SetupType): MultisigRune<Westend, never> {
   return MultisigRune.from(westend, { signatories, threshold: setup.threshold })
 }
 
-export async function toSetup(
+export async function toSetupHex(
+  setup: SetupType,
+): Promise<Setup> {
+  const multisigRune = toMultisigRune(setup)
+  const multisigHex = await multisigRune.hex.run()
+  const result = {
+    id: setup.multisig,
+    multisigHex,
+    name: setup.name,
+    stash: setup.stash,
+  }
+  return result
+}
+
+export async function fromSetupHex(
   setup: Setup,
 ): Promise<SetupType> {
   const multisig = await MultisigRune.fromHex(westend, setup.multisigHex).run()
@@ -44,7 +58,7 @@ export async function toSetup(
     members,
     threshold: multisig.threshold!,
     multisig: setup.id,
-    stash: setup.stash,
+    stash: setup.stash!,
   }
   return result
 }

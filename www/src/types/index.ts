@@ -10,5 +10,5 @@ export interface SetupType {
   /** The underlying multisig accountId */
   multisig: string
   /** The underlying pure proxy accountId */
-  stash?: string
+  stash: string
 }

@@ -14,7 +14,7 @@ import {
   defaultSender,
 } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
-import { toPubKey } from "../../../util/capi-helpers.js"
+import { toPubKey, toSetupHex } from "../../../util/capi-helpers.js"
 import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
@@ -32,6 +32,10 @@ import {
   multisigMemberSchema,
   updateFormData,
 } from "./formData.js"
+
+import { Setup } from "common"
+import { client } from "../../../trpc/trpc.js"
+import { SetupType } from "../../../types/index.js"
 
 const multisigCreationFees: Row[] = [
   {
@@ -106,8 +110,19 @@ export function MultisigMembers() {
     console.info("New Stash created at:", stashAddress)
 
     const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
+
+    const setup: SetupType = {
+      genesisHash: "0x0",
+      name: formData.value.name,
+      members: members.map((member) => [member!.address, ""]),
+      threshold: threshold,
+      multisig: multisigAddress,
+      stash: stashAddress,
+    }
+    const setupHex = await toSetupHex(setup)
+
     // TODO can we somehow check if the delegation has already been done?
-    const replaceDelegates = westend.Utility.batchAll({
+    const replaceDelegatesTx = westend.Utility.batchAll({
       calls: Rune.array(
         replaceDelegateCalls(
           westend,
@@ -120,19 +135,11 @@ export function MultisigMembers() {
       .signed(signature({ sender: defaultSender.value }))
       .sent()
       .dbgStatus("Replacing Proxy Delegates:")
-      .finalized()
+      .finalized().run()
 
-    await replaceDelegates.run()
-
-    // TODO save to database instead of localStorage
-    storeSetup(members.map((m) => m?.address) as string[], {
-      genesisHash: "0x0",
-      name: formData.value.name,
-      members: members.map((member) => [member!.address, ""]),
-      threshold: threshold,
-      multisig: multisigAddress,
-      stash: stashAddress,
-    })
+    const storeSetupTx = client.addMultisig.mutate(setupHex)
+    await Promise.all([replaceDelegatesTx, storeSetupTx])
+    console.log("set and stored")
 
     updateFormData({
       ...formDataNew,

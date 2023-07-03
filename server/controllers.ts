@@ -30,7 +30,6 @@ export class MultisigController {
     // Put item in DB
     const keys = MultisigController.getKeys(setup.id)
     const setupItem = { ...keys, ...setup }
-    console.log(setupItem)
     const putSetupTx = docClient.send(
       new Put({
         TableName: TableNames.multisig,
@@ -52,7 +51,7 @@ export class MultisigController {
   static async getSetup(id: string) {
     const keys = MultisigController.getKeys(id)
     const result = await docClient.send(
-      new Get({ TableName: TableNames.account, Key: keys }),
+      new Get({ TableName: TableNames.multisig, Key: keys }),
     )
     return result.Item as SetupItem | undefined
   }
@@ -106,13 +105,15 @@ export class AccountController {
 
   static async getSetups(id: string) {
     const account = await AccountController.getAccount(id)
+    console.log(account, id)
     if (!account) return
     const setupTx = []
     for (const sid of account.setups) {
       setupTx.push(MultisigController.getSetup(sid))
     }
     const setups = await Promise.all(setupTx)
-    return setups.filter((setup) => setup)
+    const result = setups.filter((setup) => setup != undefined) as SetupItem[]
+    return result
   }
 
   static async deleteAccount(id: string) {
