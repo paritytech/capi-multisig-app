@@ -1,12 +1,23 @@
 import { SetupType } from "../types/index.js"
 
+import { RuntimeCall } from "@capi/westend"
+import { useMutation } from "@tanstack/react-query"
+import { hex } from "capi"
+import { signature } from "capi/patterns/signature/polkadot"
+import { useMemo } from "preact/hooks"
 import { Link } from "react-router-dom"
-import { accounts } from "../signals/accounts.js"
+import { useAccountInfo } from "../hooks/useAccountInfo.js"
+import { useProposals } from "../hooks/useProposals.js"
+import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
+import { formatBalance } from "../util/balance.js"
+import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
+import { filterEvents, handleException } from "../util/events.js"
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
 import { IconBell } from "./icons/IconBell.js"
 import { IconPlus } from "./icons/IconPlus.js"
+import { IconTrash } from "./icons/IconTrash.js"
 import { Identicon } from "./identicon/Identicon.js"
 
 interface Props {
@@ -14,6 +25,68 @@ interface Props {
 }
 
 export function Setup({ setup }: Props) {
+  const multisig = useMemo(() => toMultisigRune(setup), [setup])
+  const { data: balance } = useAccountInfo(setup.stash)
+  const { data: proposals, refetch: refetchProposals } = useProposals(setup)
+
+  const { mutate: ratify, isLoading: isRatifying } = useMutation({
+    mutationFn: async (call: RuntimeCall) => {
+      const sender = defaultSender.value
+      const account = defaultAccount.value
+      if (!setup || !sender || !account) {
+        throw new Error("Missing setup, sender or account")
+      }
+
+      const user = toMultiAddressIdRune(account.address)
+      const ratifyCall = multisig
+        .ratify(user, call)
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Ratify")
+        .inBlockEvents()
+        .unhandleFailed()
+        .pipe(filterEvents)
+
+      return ratifyCall.run()
+    },
+    onSuccess: (result) => {
+      console.log({ result })
+      refetchProposals()
+    },
+    onError: (error: unknown) => {
+      handleException(error)
+    },
+  })
+
+  const { mutate: cancel, isLoading: isCanceling } = useMutation({
+    mutationFn: async (callHash: string) => {
+      const sender = defaultSender.value
+      const account = defaultAccount.value
+      if (!setup || !sender || !account) {
+        throw new Error("Missing setup, sender or account")
+      }
+
+      const user = toMultiAddressIdRune(account.address)
+      const cancelCall = multisig
+        .cancel(user, hex.decode(callHash))
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Cancel")
+        .inBlockEvents()
+        .unhandleFailed()
+        .pipe(filterEvents)
+
+      return cancelCall.run()
+    },
+    onSuccess: (result) => {
+      console.log({ result })
+      refetchProposals()
+    },
+    onError: (error: any) => {
+      handleException(error)
+    },
+  })
+
   return (
     <CenteredCard>
       <div className="flex flex-col gap-4">
@@ -23,21 +96,49 @@ export function Setup({ setup }: Props) {
           </div>
 
           <div className="flex flex-col">
-            <div className="flex flex-row flex-wrap">
+            <div className="flex flex-col flex-wrap">
               <div className="font-bold pr-2">{setup.name}</div>
-              <div className="truncate" title={setup.stash}>
-                {setup.stash}
+              <div className="truncate text-sm" title={setup.stash}>
+                {`Stash: ${setup.stash}`}
+              </div>
+              <div className="truncate text-sm" title={setup.multisig}>
+                {`Address: ${setup.multisig}`}
               </div>
             </div>
 
-            <div className="flex flex-row flex-wrap text-sm space-x-2">
+            <div className="flex flex-row flex-wrap text-sm space-x-2 text-gray-500 gap-2">
               <div>
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
-              <div>Balance XY DOT</div>
-              <div className="text-gray-300 flex-row flex justify-center items-center space-x-1">
-                <IconBell height={14} /> <span>No Pending Transactions</span>
+              <div>
+                Balance: {formatBalance(balance ?? 0n)} WND
               </div>
+              <Link to={`/multisig/${setup.multisig}`}>
+                <div
+                  className={`flex-row flex justify-center items-center space-x-1 ${
+                    proposals && proposals.length === 0 && "text-gray-300"
+                  }`}
+                >
+                  <div
+                    className={`p-1 ${
+                      proposals && proposals.length > 0
+                      && "bg-green-500 text-white rounded-sm"
+                    }`}
+                  >
+                    <IconBell
+                      height={14}
+                      fill={proposals && proposals.length > 0
+                        ? "white"
+                        : undefined}
+                    />
+                  </div>
+                  <span>
+                    {proposals && proposals?.length > 0
+                      ? `${proposals?.length} `
+                      : "No "} Pending Transactions
+                  </span>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -55,6 +156,43 @@ export function Setup({ setup }: Props) {
             ))}
           </div>
         </div>
+
+        {proposals
+          && proposals.map(({ callHash, call, approvals }) => (
+            <>
+              <hr className="divide-x-0 divide-gray-300 m-2" />
+
+              <div class="flex flex-col">
+                <div class="mb-2">
+                  {`Pending transaction (Signed ${approvals.length}/ ${setup.threshold})`}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div>{callHash}</div>
+                  <div className="flex flex-row gap-2 justify-end">
+                    {!approvals.includes(defaultAccount.value?.address!)
+                      ? (
+                        <Button
+                          onClick={() => ratify(call!)}
+                          disabled={!call || isRatifying}
+                        >
+                          Sign
+                        </Button>
+                      )
+                      : (
+                        <Button
+                          variant="danger"
+                          iconLeft={<IconTrash className="w-6" />}
+                          onClick={() => cancel(callHash)}
+                          disabled={isCanceling}
+                        >
+                          Discard
+                        </Button>
+                      )}
+                  </div>
+                </div>
+              </div>
+            </>
+          ))}
 
         <hr className="divide-x-0 divide-gray-300 m-2" />
 

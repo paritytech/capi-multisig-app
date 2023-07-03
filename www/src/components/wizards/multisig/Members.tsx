@@ -1,11 +1,9 @@
 import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { useMutation } from "@tanstack/react-query"
 import { Rune, ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
-import {
-  filterPureCreatedEvents,
-  replaceDelegateCalls,
-} from "capi/patterns/proxy"
+import { replaceDelegateCalls } from "capi/patterns/proxy"
 import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
 import {
@@ -19,6 +17,11 @@ import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
+import {
+  filterEvents,
+  filterPureCreatedEvents,
+  handleException,
+} from "../../../util/events.js"
 import { storeSetup } from "../../../util/local-storage.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
@@ -27,11 +30,11 @@ import { InputError } from "../../InputError.js"
 import { Row, SumTable } from "../../SumTable.js"
 import { goNext, goPrev } from "../Wizard.js"
 import {
-  formData,
   MultisigMemberEntity,
   multisigMemberSchema,
-  updateFormData,
-} from "./formData.js"
+  updateWizardData,
+  wizardData,
+} from "./wizardData.js"
 
 import { Setup } from "common"
 import { client } from "../../../trpc/trpc.js"
@@ -57,105 +60,126 @@ export function MultisigMembers() {
     mode: "onChange",
   })
 
+  const { mutate: createMultisig } = useMutation({
+    mutationFn: async (formDataNew: MultisigMemberEntity) => {
+      const sender = defaultSender.value
+      const account = defaultAccount.value
+      if (!sender || !account) {
+        throw new Error("Missing  sender or account")
+      }
+
+      const { threshold } = wizardData.value
+      const { members } = formDataNew
+
+      const signatories = members.map((member) => toPubKey(member!.address))
+
+      const multisig: MultisigRune<Westend, never> = MultisigRune.from(
+        westend,
+        {
+          signatories,
+          threshold,
+        },
+      )
+
+      const multisigAddress = ss58.encode(
+        await westend.addressPrefix().run(),
+        await multisig.accountId.run(),
+      )
+
+      // TODO can we check if stash already created? previously?
+      const createStashCall = westend.Proxy.createPure({
+        proxyType: "Any",
+        delay: 0,
+        index: 0,
+      })
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Creating Pure Proxy:")
+        .inBlockEvents()
+        .unhandleFailed()
+        .pipe(filterPureCreatedEvents)
+        // TODO typing is broken in capi
+        .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
+        .access(0)
+
+      const stashBytes = (await createStashCall.run()) as Uint8Array
+      const stashAddress = ss58.encode(
+        await westend.addressPrefix().run(),
+        stashBytes,
+      )
+      console.info("New Stash created at:", stashAddress)
+
+      const [_, userAddressBytes] = ss58.decode(account.address)
+
+      const setup: SetupType = {
+        genesisHash: "0x0",
+        name: wizardData.value.name,
+        members: members.map((member) => [member!.address, ""]),
+        threshold: threshold,
+        multisig: multisigAddress,
+        stash: stashAddress,
+      }
+      const setupHex = await toSetupHex(setup)
+
+      // TODO can we somehow check if the delegation has already been done?
+      const replaceDelegatesTx = westend.Utility.batchAll({
+        calls: Rune.array([
+          westend.Balances.transfer({
+            dest: MultiAddress.Id(stashBytes),
+            value: PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR,
+          }),
+          ...replaceDelegateCalls(
+            westend,
+            MultiAddress.Id(stashBytes), // effected account
+            MultiAddress.Id(userAddressBytes), // from
+            multisig.address, // to
+          ),
+        ]),
+      })
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Replacing Proxy Delegates:")
+        .inBlockEvents()
+        .unhandleFailed().run()
+        .pipe(filterEvents)
+
+      const storeSetupTx = client.addMultisig.mutate(setupHex)
+      await Promise.all([replaceDelegatesTx, storeSetupTx])
+      console.log("set and stored")
+
+      updateWizardData({
+        ...formDataNew,
+        address: multisigAddress,
+        stash: stashAddress,
+      })
+    },
+    onSuccess: (success) => {
+      console.log({ success })
+      goNext()
+    },
+    onError: (error) => {
+      console.log({ error })
+      handleException(error)
+    },
+  })
+
   const onBack = (formDataNew: MultisigMemberEntity) => {
-    updateFormData(formDataNew)
+    updateWizardData(formDataNew)
     goPrev()
   }
 
   const onErrorBack = () => {
     const formDataWithErrors = getValues()
-    updateFormData(formDataWithErrors)
+    updateWizardData(formDataWithErrors)
     goPrev()
   }
 
-  const onSubmit = async (formDataNew: MultisigMemberEntity) => {
-    if (!defaultSender.value || !defaultAccount.value) return
-
-    const { threshold } = formData.value
-    const { members } = formDataNew
-
-    const signatories = members.map((member) => toPubKey(member!.address))
-
-    const multisig: MultisigRune<Westend, never> = MultisigRune.from(westend, {
-      signatories,
-      threshold,
-    })
-
-    const multisigAddress = ss58.encode(
-      await westend.addressPrefix().run(),
-      await multisig.accountId.run(),
-    )
-
-    // TODO can we check if stash already created? previously?
-    const createStashCall = westend.Proxy.createPure({
-      proxyType: "Any",
-      delay: 0,
-      index: 0,
-    })
-      .signed(signature({ sender: defaultSender.value }))
-      .sent()
-      .dbgStatus("Creating Pure Proxy:")
-      .finalizedEvents()
-      .unhandleFailed()
-      .pipe(filterPureCreatedEvents)
-      // TODO typing is broken of capi
-      .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
-      .access(0)
-
-    const stashBytes = (await createStashCall.run()) as Uint8Array
-    const stashAddress = ss58.encode(
-      await westend.addressPrefix().run(),
-      stashBytes,
-    )
-    console.info("New Stash created at:", stashAddress)
-
-    const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
-
-    const setup: SetupType = {
-      genesisHash: "0x0",
-      name: formData.value.name,
-      members: members.map((member) => [member!.address, ""]),
-      threshold: threshold,
-      multisig: multisigAddress,
-      stash: stashAddress,
-    }
-    const setupHex = await toSetupHex(setup)
-
-    // TODO can we somehow check if the delegation has already been done?
-    const replaceDelegatesTx = westend.Utility.batchAll({
-      calls: Rune.array(
-        replaceDelegateCalls(
-          westend,
-          MultiAddress.Id(stashBytes), // effected account
-          MultiAddress.Id(userAddressBytes), // from
-          multisig.address, // to
-        ),
-      ),
-    })
-      .signed(signature({ sender: defaultSender.value }))
-      .sent()
-      .dbgStatus("Replacing Proxy Delegates:")
-      .finalized().run()
-
-    const storeSetupTx = client.addMultisig.mutate(setupHex)
-    await Promise.all([replaceDelegatesTx, storeSetupTx])
-    console.log("set and stored")
-
-    updateFormData({
-      ...formDataNew,
-      address: multisigAddress,
-      stash: stashAddress,
-    })
-
-    goNext()
-  }
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(createMultisig)}>
       <h1 className="text-xl leading-8">2. Members</h1>
       <hr className="border-t border-gray-300 mt-6 mb-4" />
 
-      {formData.value.members.map((member, i) => {
+      {wizardData.value.members.map((member, i) => {
         return (
           <div className="mb-3">
             <label className="leading-6 mb-2 block">Member {i + 1}</label>

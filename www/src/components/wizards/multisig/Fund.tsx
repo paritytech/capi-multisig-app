@@ -1,60 +1,57 @@
+import { westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
+import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
+import { defaultSender } from "../../../signals/accounts.js"
+import { toBalance } from "../../../util/balance.js"
+import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
+import { filterEvents, handleException } from "../../../util/events.js"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
-import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
-import { goNext, goPrev } from "../Wizard.js"
+import { goNext } from "../Wizard.js"
 import {
-  formData,
   MultisigFundEntity,
   multisigFundSchema,
-  updateFormData,
-} from "./formData.js"
+  updateWizardData,
+  wizardData,
+} from "./wizardData.js"
 
 export function MultisigFund() {
   const {
     control,
     handleSubmit,
-    getValues,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<MultisigFundEntity>({
     resolver: zodResolver(multisigFundSchema),
     mode: "onChange",
   })
-  const { value: { fund } } = formData
+  const { value: { fundingAmount, stash } } = wizardData
 
-  const onSubmit = (formDataNew: MultisigFundEntity) => {
-    const { stash } = formData.value
-    if (!stash) {
-      console.error("No stash account found")
-      return
+  const onSubmit = async (formDataNew: MultisigFundEntity) => {
+    try {
+      const sender = defaultSender.value
+      const { fundingAmount } = formDataNew
+
+      if (!sender || !stash) return
+
+      const fundStashCall = westend.Balances
+        .transfer({
+          value: toBalance(fundingAmount),
+          dest: toMultiAddressIdRune(stash),
+        })
+        .signed(signature({ sender }))
+        .sent()
+        .dbgStatus("Transfer:")
+        .inBlockEvents()
+        .unhandleFailed()
+        .pipe(filterEvents)
+
+      await fundStashCall.run()
+      updateWizardData({ ...formDataNew })
+      goNext()
+    } catch (exception: any) {
+      handleException(exception)
     }
-    // TODO needs to be implemented
-    // const fundStashCall = westend.Balances
-    //   .transfer({
-    //     value: amount,
-    //     dest: MultiAddress.Id(stash),
-    //   })
-    //   .signed(signature({ sender: userSender }))
-    //   .sent()
-    //   .dbgStatus("Transfer:")
-    //   .finalized()
-
-    // await fundStashCall.run()
-
-    updateFormData(formDataNew)
-    goNext()
-  }
-
-  const onBack = (formDataNew: MultisigFundEntity) => {
-    updateFormData(formDataNew)
-    goPrev()
-  }
-
-  const onErrorBack = () => {
-    const formDataWithErrors = getValues()
-    updateFormData(formDataWithErrors)
-    goPrev()
   }
 
   return (
@@ -63,28 +60,27 @@ export function MultisigFund() {
       <hr className="border-t border-gray-300 mt-6 mb-4" />
       <Controller
         control={control}
-        name="fund"
-        defaultValue={fund}
+        name="fundingAmount"
+        defaultValue={fundingAmount}
         render={({ field }) => (
           <BalanceInput
             {...field}
-            placeholder="0 DOT"
+            placeholder="0 WND"
             className="w-48"
-            error={errors.fund?.message}
+            error={errors.fundingAmount?.message}
             label="Fund the Multisig"
           />
         )}
       />
       <hr className="divide-x-0 divide-gray-300 mt-4 mb-2" />
-      <div className="flex justify-between">
-        <Button
-          variant="ghost"
-          onClick={handleSubmit(onBack, onErrorBack)}
-          iconLeft={<IconChevronLeft />}
-        >
-          Back
+      <div className="flex flex-row gap-4 justify-end">
+        <Button variant="secondary" disabled={isSubmitting} onClick={goNext}>
+          Fund later
         </Button>
-        <Button type="submit">Sign &amp; fund</Button>
+
+        <Button type="submit" variant="primary" disabled={isSubmitting}>
+          Sign &amp; fund
+        </Button>
       </div>
     </form>
   )

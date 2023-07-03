@@ -12,16 +12,17 @@ export function Dashboard() {
   return (
     <Page>
       <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
+          {setups.value.map((setup) => <Setup setup={setup} />)}
+        </div>
+
         <CenteredCard>
           <div className="flex flex-col gap-6 divide-y divide-divider">
             <h2 className="text-black text-xl">Create a multisig</h2>
             <div className="">
               <div className="mt-32 flex justify-center">
                 <Link to="/create-multisig">
-                  <Button
-                    iconLeft={<IconPlus className="w-6 h-6" />}
-                    size="xl"
-                  >
+                  <Button iconLeft={<IconPlus className="w-6 h-6" />} size="xl">
                     New multisig
                   </Button>
                 </Link>
@@ -47,10 +48,6 @@ export function Dashboard() {
             </div>
           </div>
         </CenteredCard>
-
-        <div className="flex flex-col gap-4">
-          {setups.value.map((setup) => <Setup setup={setup} />)}
-        </div>
       </div>
     </Page>
   )

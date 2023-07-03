@@ -9,6 +9,8 @@ import {
 import { useState } from "preact/hooks"
 import { useNavigate } from "react-router-dom"
 import { toBalance } from "../../../util/balance.js"
+import { filterEvents, handleException } from "../../../util/events.js"
+import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
@@ -17,12 +19,12 @@ import { transactionData } from "./formData.js"
 
 export function TransactionSign() {
   const [isSubmitting, setSubmitting] = useState(false)
-  const { from, to, amount, callHash, setup } = transactionData.peek()
+  const { from, to, amount, callHash, setup } = transactionData.value
   const navigate = useNavigate()
 
   function sign() {
-    const sender = defaultSender.peek()
-    const account = defaultAccount.peek()
+    const sender = defaultSender.value
+    const account = defaultAccount.value
     if (!setup || !sender || !account) return
     setSubmitting(true)
 
@@ -46,16 +48,19 @@ export function TransactionSign() {
       .signed(signature({ sender }))
       .sent()
       .dbgStatus("Ratify")
-      .finalized()
+      .inBlockEvents()
+      .unhandleFailed()
+      .pipe(filterEvents)
 
     ratifyCall
       .run()
+      .then(() => storeCall(call))
       .then(() => {
         setSubmitting(false)
         navigate("/")
       })
       .catch((exception) => {
-        console.error(exception)
+        handleException(exception)
         setSubmitting(false)
       })
   }

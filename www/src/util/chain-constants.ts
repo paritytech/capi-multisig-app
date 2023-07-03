@@ -18,3 +18,4 @@ async function getProxyDepositFactor() {
 export const PROXY_DEPOSIT_BASE = await getProxyDepositBase()
 export const PROXY_DEPOSIT_FACTOR = await getProxyDepositFactor()
 export const EXISTENTIAL_DEPOSIT = await getExistentialDeposit()
+export const MINIMUM_TRANSFER_AMOUNT = 0.0001
