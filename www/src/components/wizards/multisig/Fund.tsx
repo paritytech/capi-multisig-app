@@ -28,7 +28,7 @@ export function MultisigFund() {
     try {
       const { fundingAmount } = formDataNew
       if (!stash) return
-      fundStash(fundingAmount, stash, notificationsCb)
+      await fundStash(fundingAmount, stash, notificationsCb)
       updateWizardData({ ...formDataNew })
       goNext()
     } catch (exception: any) {

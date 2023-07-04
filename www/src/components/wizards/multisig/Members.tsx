@@ -3,11 +3,7 @@ import { Controller, useForm } from "react-hook-form"
 import { getMultisigAddress } from "../../../api/getMultisigAddress.js"
 import { createStashCall, replaceDelegatesCall } from "../../../api/index.js"
 import { notificationsCb } from "../../../api/notificationsCb.js"
-import {
-  accounts,
-  defaultAccount,
-  defaultSender,
-} from "../../../signals/accounts.js"
+import { accounts, defaultAccount } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
 import {
   PROXY_DEPOSIT_BASE,
@@ -61,7 +57,7 @@ export function MultisigMembers() {
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
     try {
-      if (!defaultSender.value || !defaultAccount.value) return
+      if (!defaultAccount.value) return
 
       const { threshold } = wizardData.value
       const { members } = formDataNew
