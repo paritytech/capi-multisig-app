@@ -3,13 +3,14 @@ import { Setup } from "common"
 import { z } from "zod"
 import { defaultAccount } from "../../../signals/accounts.js"
 import { isValidAddress } from "../../../util/address.js"
+import { MINIMUM_TRANSFER_AMOUNT } from "../../../util/chain-constants.js"
 
 export const formDataSchema = z.object({
   amount: z
     .number({
       required_error: "Amount is required",
     })
-    .min(0.0001),
+    .min(MINIMUM_TRANSFER_AMOUNT),
   from: z
     .object({
       address: z.string(),
