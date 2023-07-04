@@ -10,7 +10,7 @@ import { Delete, docClient, Get, Put, Update } from "./dynamoDB/db.js"
 import { TableNames } from "./dynamoDB/table.js"
 
 import { westend } from "@capi/westend"
-import { Sr25519, ss58 } from "capi"
+import { ss58 } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
 
 export class MultisigController {
@@ -64,7 +64,7 @@ export class MultisigController {
 
   static async deleteSetup(id: string) {
     const keys = MultisigController.getKeys(id)
-    docClient.send(
+    await docClient.send(
       new Delete({ TableName: TableNames.account, Key: keys }),
     )
   }
@@ -104,7 +104,7 @@ export class AccountController {
       ExpressionAttributeValues: { ":empty": [], ":setups": [...setups] },
       ExpressionAttributeNames: { "#setups": "setups" },
     })
-    const result = await docClient.send(
+    await docClient.send(
       updateCommand,
     )
   }
@@ -123,7 +123,7 @@ export class AccountController {
 
   static async deleteAccount(id: string) {
     const keys = AccountController.getKeys(id)
-    docClient.send(
+    await docClient.send(
       new Delete({ TableName: TableNames.account, Key: keys }),
     )
   }
@@ -153,7 +153,7 @@ export class CalldataController {
 
   static async deleteCalldata(hash: string) {
     const keys = AccountController.getKeys(hash)
-    docClient.send(
+    await docClient.send(
       new Delete({ TableName: TableNames.calldata, Key: keys }),
     )
   }

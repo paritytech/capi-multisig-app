@@ -14,7 +14,7 @@ import {
 import { storageClient } from "../../../storage/index.js"
 import { SetupType } from "../../../types/index.js"
 import { formatBalance } from "../../../util/balance.js"
-import { toPubKey, toSetupHex } from "../../../util/capi-helpers.js"
+import { toPubKey } from "../../../util/capi-helpers.js"
 import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
@@ -136,7 +136,7 @@ export function MultisigMembers() {
         .sent()
         .dbgStatus("Replacing Proxy Delegates:")
         .inBlockEvents()
-        .unhandleFailed().run()
+        .unhandleFailed()
         .pipe(filterEvents)
 
       const storeSetupTx = storageClient.storeSetup(setup)

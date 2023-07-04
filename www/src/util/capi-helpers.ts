@@ -1,4 +1,4 @@
-import { MultiAddress, Multisig, Westend, westend } from "@capi/westend"
+import { MultiAddress, Westend, westend } from "@capi/westend"
 import { ss58, ValueRune } from "capi"
 import { MultisigRune } from "capi/patterns/multisig"
 import { Setup } from "common"
