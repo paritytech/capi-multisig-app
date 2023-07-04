@@ -2,7 +2,7 @@ import { westend } from "@capi/westend"
 import { computed, effect, signal } from "@preact/signals"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
 import { pjsSender } from "capi/patterns/compat/pjs_sender"
-import { retrieveStored } from "../util/local-storage.js"
+import { retrieveStored } from "../storage/LocalStorageClient.js"
 import { retry } from "../util/retry.js"
 
 interface InjectedWindow extends Window {

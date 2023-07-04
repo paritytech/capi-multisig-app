@@ -5,7 +5,7 @@ import { Page } from "./templates/base.js"
 
 export function Multisig() {
   let { multisigId } = useParams()
-  const setup = setups.peek().find((s) => s.id === multisigId)
+  const setup = setups.peek().find((s) => s.multisig === multisigId)
 
   return (
     <Page>

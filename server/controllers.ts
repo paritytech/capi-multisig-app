@@ -1,5 +1,11 @@
-import type { Account, AccountItem, Calldata, Setup, SetupItem } from "common"
-import { $setup, u8aToHex } from "common"
+import type {
+  Account,
+  AccountItem,
+  Calldata,
+  CalldataItem,
+  Setup,
+  SetupItem,
+} from "common"
 import { Delete, docClient, Get, Put, Update } from "./dynamoDB/db.js"
 import { TableNames } from "./dynamoDB/table.js"
 
@@ -105,7 +111,6 @@ export class AccountController {
 
   static async getSetups(id: string) {
     const account = await AccountController.getAccount(id)
-    console.log(account, id)
     if (!account) return
     const setupTx = []
     for (const sid of account.setups) {
@@ -143,7 +148,7 @@ export class CalldataController {
     const result = await docClient.send(
       new Get({ TableName: TableNames.calldata, Key: keys }),
     )
-    return result.Item
+    return result.Item as CalldataItem | undefined
   }
 
   static async deleteCalldata(hash: string) {

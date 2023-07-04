@@ -11,6 +11,8 @@ import {
   defaultAccount,
   defaultSender,
 } from "../../../signals/accounts.js"
+import { storageClient } from "../../../storage/index.js"
+import { SetupType } from "../../../types/index.js"
 import { formatBalance } from "../../../util/balance.js"
 import { toPubKey, toSetupHex } from "../../../util/capi-helpers.js"
 import {
@@ -22,7 +24,6 @@ import {
   filterPureCreatedEvents,
   handleException,
 } from "../../../util/events.js"
-import { storeSetup } from "../../../util/local-storage.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
@@ -35,10 +36,6 @@ import {
   updateWizardData,
   wizardData,
 } from "./wizardData.js"
-
-import { Setup } from "common"
-import { client } from "../../../trpc/trpc.js"
-import { SetupType } from "../../../types/index.js"
 
 const multisigCreationFees: Row[] = [
   {
@@ -119,7 +116,6 @@ export function MultisigMembers() {
         multisig: multisigAddress,
         stash: stashAddress,
       }
-      const setupHex = await toSetupHex(setup)
 
       // TODO can we somehow check if the delegation has already been done?
       const replaceDelegatesTx = westend.Utility.batchAll({
@@ -143,7 +139,7 @@ export function MultisigMembers() {
         .unhandleFailed().run()
         .pipe(filterEvents)
 
-      const storeSetupTx = client.addMultisig.mutate(setupHex)
+      const storeSetupTx = storageClient.storeSetup(setup)
       await Promise.all([replaceDelegatesTx, storeSetupTx])
       console.log("set and stored")
 
