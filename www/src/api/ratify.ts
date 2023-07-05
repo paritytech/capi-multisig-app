@@ -24,7 +24,7 @@ export async function ratify(
     .signed(signature({ sender }))
     .sent()
     .dbgStatus("Ratify")
-    .inBlockEvents()
+    .finalizedEvents()
     .unhandleFailed()
     .pipe(<X>(...[events]: RunicArgs<X, [any[]]>) => {
       cb({ type: "loading" })

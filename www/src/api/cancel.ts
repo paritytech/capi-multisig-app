@@ -23,7 +23,7 @@ export async function cancel(
     .signed(signature({ sender }))
     .sent()
     .dbgStatus("Cancel")
-    .inBlockEvents()
+    .finalizedEvents()
     .unhandleFailed()
     .pipe(<X>(...[events]: RunicArgs<X, [any[]]>) => {
       cb({ type: "loading" })
