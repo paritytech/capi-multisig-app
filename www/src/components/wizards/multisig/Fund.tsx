@@ -6,7 +6,7 @@ import { defaultSender } from "../../../signals/accounts.js"
 import { toBalance } from "../../../util/balance.js"
 import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
 import { filterEvents, handleException } from "../../../util/events.js"
-import { scope } from "../../../util/scope.js"
+
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
 import { goNext } from "../Wizard.js"
@@ -48,7 +48,7 @@ export function MultisigFund() {
         .unhandleFailed()
         .pipe(filterEvents)
 
-      await fundStashCall.run(scope)
+      await fundStashCall.run()
       updateWizardData({ ...formDataNew })
       goNext()
     } catch (exception: any) {

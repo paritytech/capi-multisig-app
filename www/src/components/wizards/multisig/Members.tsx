@@ -21,7 +21,7 @@ import {
 } from "../../../util/chain-constants.js"
 import { filterEvents, handleException } from "../../../util/events.js"
 import { storeSetup } from "../../../util/local-storage.js"
-import { scope } from "../../../util/scope.js"
+
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
@@ -84,8 +84,8 @@ export function MultisigMembers() {
       )
 
       const multisigAddress = ss58.encode(
-        await westend.addressPrefix().run(scope),
-        await multisig.accountId.run(scope),
+        await westend.addressPrefix().run(),
+        await multisig.accountId.run(),
       )
 
       // TODO can we check if stash already created? previously?
@@ -104,9 +104,9 @@ export function MultisigMembers() {
         .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
         .access(0)
 
-      const stashBytes = (await createStashCall.run(scope)) as Uint8Array
+      const stashBytes = (await createStashCall.run()) as Uint8Array
       const stashAddress = ss58.encode(
-        await westend.addressPrefix().run(scope),
+        await westend.addressPrefix().run(),
         stashBytes,
       )
       console.info("New Stash created at:", stashAddress)
@@ -130,7 +130,7 @@ export function MultisigMembers() {
         .unhandleFailed()
         .pipe(filterEvents)
 
-      await replaceDelegates.run(scope)
+      await replaceDelegates.run()
 
       // TODO save to database instead of localStorage
       storeSetup(members.map((m) => m?.address) as string[], {

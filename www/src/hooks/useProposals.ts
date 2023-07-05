@@ -5,7 +5,6 @@ import { Setup } from "common"
 import { useMemo } from "preact/hooks"
 import { toAddress, toMultisigRune } from "../util/capi-helpers.js"
 import { getCall } from "../util/local-storage.js"
-import { scope } from "../util/scope.js"
 
 type Proposal = {
   callHash: string
@@ -21,7 +20,7 @@ export function useProposals(setup: Setup) {
     queryKey: ["proposals", setup.id],
     queryFn: async () => {
       const proposals: Array<Array<Uint8Array>> = await multisig.proposals(5)
-        .run(scope)
+        .run()
 
       return Promise.all(
         proposals.map(async ([, callHashBytes]) => {
@@ -31,8 +30,9 @@ export function useProposals(setup: Setup) {
             callHash,
             call: getCall(callHash),
             approvals:
-              (await multisig.proposal(callHashBytes!).run(scope))?.approvals
-                .map((approvalBytes) => toAddress(approvalBytes)) ?? [],
+              (await multisig.proposal(callHashBytes!).run())?.approvals.map((
+                approvalBytes,
+              ) => toAddress(approvalBytes)) ?? [],
           } as Proposal
         }),
       )

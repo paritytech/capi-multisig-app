@@ -1,6 +1,5 @@
 import { westend } from "@capi/westend"
 import { ss58 } from "capi"
-import { scope } from "./scope.js"
 
 export function formatBalance(
   balance: bigint,
@@ -28,7 +27,7 @@ export function formatBalance(
 export async function getBalance(address: string) {
   const addressPubKey = ss58.decode(address)[1]
 
-  const balance = await westend.System.Account.value(addressPubKey).run(scope)
+  const balance = await westend.System.Account.value(addressPubKey).run()
 
   if (!balance) throw new Error("Could not retrieve balance")
 

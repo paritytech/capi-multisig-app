@@ -14,7 +14,7 @@ importers:
     dependencies:
       '@capi/westend':
         specifier: https://capi.dev/a416a0563f132155/westend.tar
-        version: '@capi.dev/a416a0563f132155/westend.tar(capi@0.1.0-beta.47)'
+        version: '@capi.dev/a416a0563f132155/westend.tar(capi@0.1.0-gamma.1)'
       '@headlessui/react':
         specifier: ^1.7.15
         version: 1.7.15(react-dom@18.2.0)(react@18.2.0)
@@ -25,8 +25,8 @@ importers:
         specifier: ^1.1.3
         version: 1.1.3(@polkadot/util-crypto@8.7.1)(@polkadot/util@8.7.1)
       capi:
-        specifier: 0.1.0-beta.47
-        version: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+        specifier: 0.1.0-gamma.1
+        version: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
       dotenv:
         specifier: ^16.1.4
         version: 16.1.4
@@ -1218,8 +1218,8 @@ packages:
     resolution: {integrity: sha512-oYWcD7CpERZy/TXMTM9Tgh1HD/POHlbY9WpzmAk+5H8DohcxG415Qws8yLGlim3EaKBT2v3lJv01x4G0BosnaQ==}
     dev: false
 
-  /@deno/shim-deno@0.14.0:
-    resolution: {integrity: sha512-cDUScUb8NI8mKN5qQ+/+sL7Z0bcBdRrzx7DZ6pOvSTyhWweNdRZ1ZtYsdOB5IfhNawdYJ9phQdtbXDuAOvbrIg==}
+  /@deno/shim-deno@0.16.1:
+    resolution: {integrity: sha512-s9v0kzF5bm/o9TgdwvsraHx6QNllYrXXmKzgOG2lh4LFXnVMr2gpjK/c/ve6EflQn1MqImcWmVD8HAv5ahuuZQ==}
     dependencies:
       '@deno/shim-deno-test': 0.4.0
       which: 2.0.2
@@ -1473,10 +1473,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
-
-  /@noble/ed25519@2.0.0:
-    resolution: {integrity: sha512-/extjhkwFupyopDrt80OMWKdLgP429qLZj+z6sYJz90rF2Iz0gjZh2ArMKPImUl13Kx+0EXI2hN9T/KJV0/Zng==}
-    dev: false
 
   /@noble/hashes@1.0.0:
     resolution: {integrity: sha512-DZVbtY62kc3kkBtMHqwCOfXrT/hnoORy5BJ4+HU1IR59X0KWAOqsfzQPcUl/lQLlG7qXbe/fZ3r/emxtAl+sqg==}
@@ -2359,26 +2355,26 @@ packages:
     resolution: {integrity: sha512-uv7/gXuHi10Whlj0pp5q/tsK/32J2QSqVRKQhs2j8VsDCjgyruAh/eEXHF822VqO9yT6iZKw3nRwZRSPBE9OQg==}
     dev: true
 
-  /capi@0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3):
-    resolution: {integrity: sha512-hvTu8cih0zQ1vUCF4kajc+eH5kwP5dlyWlT+mHqSnTzer1KJ+VHyxgFZ/pHCxg9GEmesunYyNsYUXMroZVW9oA==}
+  /capi@0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3):
+    resolution: {integrity: sha512-d1NiNc/h4ttMQ/O5MbMRjn1QmmxvXKUxbk5yuuABV/N+sdd17m1KKWfvxMCHqERWIahzPR+a8DTYb3cBwCVbnw==}
     hasBin: true
     dependencies:
-      '@capi/contracts-dev': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/contracts-dev.tar(capi@0.1.0-beta.47)'
-      '@capi/polkadot': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot.tar(capi@0.1.0-beta.47)'
-      '@capi/polkadot-dev': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot-dev.tar(capi@0.1.0-beta.47)'
-      '@capi/rococo-dev': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev.tar(capi@0.1.0-beta.47)'
-      '@capi/rococo-dev-contracts': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-contracts.tar(capi@0.1.0-beta.47)'
-      '@capi/rococo-dev-westmint': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-westmint.tar(capi@0.1.0-beta.47)'
-      '@capi/rococo-dev-xcm': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm.tar(capi@0.1.0-beta.47)'
-      '@capi/rococo-dev-xcm-statemine': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-statemine.tar(capi@0.1.0-beta.47)'
-      '@capi/rococo-dev-xcm-trappist': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-trappist.tar(capi@0.1.0-beta.47)'
-      '@capi/statemint': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/statemint.tar(capi@0.1.0-beta.47)'
-      '@capi/westend': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend.tar(capi@0.1.0-beta.47)'
-      '@capi/westend-dev': '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend-dev.tar(capi@0.1.0-beta.47)'
-      '@deno/shim-deno': 0.14.0
-      '@noble/ed25519': 2.0.0
+      '@capi/collectives': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/collectives.tar(capi@0.1.0-gamma.1)'
+      '@capi/contracts-dev': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/contracts-dev.tar(capi@0.1.0-gamma.1)'
+      '@capi/polkadot': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot.tar(capi@0.1.0-gamma.1)'
+      '@capi/polkadot-dev': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot-dev.tar(capi@0.1.0-gamma.1)'
+      '@capi/rococo-dev': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev.tar(capi@0.1.0-gamma.1)'
+      '@capi/rococo-dev-contracts': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-contracts.tar(capi@0.1.0-gamma.1)'
+      '@capi/rococo-dev-westmint': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-westmint.tar(capi@0.1.0-gamma.1)'
+      '@capi/rococo-dev-xcm': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm.tar(capi@0.1.0-gamma.1)'
+      '@capi/rococo-dev-xcm-statemine': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-statemine.tar(capi@0.1.0-gamma.1)'
+      '@capi/rococo-dev-xcm-trappist': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-trappist.tar(capi@0.1.0-gamma.1)'
+      '@capi/statemint': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/statemint.tar(capi@0.1.0-gamma.1)'
+      '@capi/westend': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend.tar(capi@0.1.0-gamma.1)'
+      '@capi/westend-dev': '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend-dev.tar(capi@0.1.0-gamma.1)'
+      '@deno/shim-deno': 0.16.1
       isomorphic-ws: 5.0.0(ws@8.13.0)
-      scale-codec: 0.11.2
+      scale-codec: 0.12.2
       smoldot: 1.0.6
       ts-node: 10.9.1(@types/node@20.3.1)(typescript@5.1.3)
       tslib: 2.5.0
@@ -3629,6 +3625,10 @@ packages:
     resolution: {integrity: sha512-foVDx4QomwIgCssCbsLEfKIzalDZIbJ3FFyAml9hxN1GHb/Ppd/9SDgTeSabuc6uRwoSnFNRrSjA8Uxykk4+VA==}
     dev: false
 
+  /scale-codec@0.12.2:
+    resolution: {integrity: sha512-HCZIusTOu8JNTYQZjwyZqG958LjiFZA56Osr4AGXw8h9/QabKiSufdflAdHUoNrdx0iHjSpwGqj+qAEtpmma5w==}
+    dev: false
+
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
@@ -4156,139 +4156,150 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/contracts-dev.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/contracts-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/contracts-dev.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/collectives.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/collectives.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/collectives.tar'
+    name: collectives
+    version: 0.0.0-TODO
+    peerDependencies:
+      capi: '*'
+    dependencies:
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
+    dev: false
+
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/contracts-dev.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/contracts-dev.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/contracts-dev.tar'
     name: contracts-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot-dev.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot-dev.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot-dev.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot-dev.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot-dev.tar'
     name: polkadot-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/polkadot.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/polkadot.tar'
     name: polkadot
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-contracts.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-contracts.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-contracts.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-contracts.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-contracts.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-contracts.tar'
     name: rococo-dev-contracts
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-westmint.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-westmint.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-westmint.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-westmint.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-westmint.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-westmint.tar'
     name: rococo-dev-westmint
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-statemine.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-statemine.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-statemine.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-statemine.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-statemine.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-statemine.tar'
     name: rococo-dev-xcm-statemine
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-trappist.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-trappist.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm-trappist.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-trappist.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-trappist.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm-trappist.tar'
     name: rococo-dev-xcm-trappist
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev-xcm.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev-xcm.tar'
     name: rococo-dev-xcm
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/rococo-dev.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/rococo-dev.tar'
     name: rococo-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/statemint.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/statemint.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/statemint.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/statemint.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/statemint.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/statemint.tar'
     name: statemint
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend-dev.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend-dev.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend-dev.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend-dev.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend-dev.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend-dev.tar'
     name: westend-dev
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend.tar(capi@0.1.0-beta.47)':
-    resolution: {tarball: https://capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend.tar}
-    id: '@capi.dev/@v0.1.0-beta.47/d5de72ca4087cd41/westend.tar'
+  '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend.tar(capi@0.1.0-gamma.1)':
+    resolution: {tarball: https://capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend.tar}
+    id: '@capi.dev/@v0.1.0-gamma.1/ed956cd5bde67584/westend.tar'
     name: westend
     version: 0.0.0-TODO
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false
 
-  '@capi.dev/a416a0563f132155/westend.tar(capi@0.1.0-beta.47)':
+  '@capi.dev/a416a0563f132155/westend.tar(capi@0.1.0-gamma.1)':
     resolution: {tarball: https://capi.dev/a416a0563f132155/westend.tar}
     id: '@capi.dev/a416a0563f132155/westend.tar'
     name: westend
@@ -4296,5 +4307,5 @@ packages:
     peerDependencies:
       capi: '*'
     dependencies:
-      capi: 0.1.0-beta.47(@types/node@20.3.1)(typescript@5.1.3)
+      capi: 0.1.0-gamma.1(@types/node@20.3.1)(typescript@5.1.3)
     dev: false

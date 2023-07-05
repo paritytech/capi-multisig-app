@@ -1,5 +1,5 @@
 import { westend } from "@capi/westend"
-import { Scope, SignedExtrinsicRune } from "capi"
+import { SignedExtrinsicRune } from "capi"
 import { $input, $result, Submit } from "common"
 import express from "express"
 import * as http from "http"
@@ -130,7 +130,7 @@ async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
 
         return false
       })
-      .run(new Scope())
+      .run()
   } catch (err) {
     ws.send(
       $result.encode({

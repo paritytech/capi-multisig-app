@@ -12,7 +12,7 @@ import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
 import { formatBalance } from "../util/balance.js"
 import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
 import { filterEvents, handleException } from "../util/events.js"
-import { scope } from "../util/scope.js"
+
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
 import { CenteredCard } from "./CenteredCard.js"
@@ -48,7 +48,7 @@ export function Setup({ setup }: Props) {
         .unhandleFailed()
         .pipe(filterEvents)
 
-      return ratifyCall.run(scope)
+      return ratifyCall.run()
     },
     onSuccess: (result) => {
       console.log({ result })
@@ -75,7 +75,7 @@ export function Setup({ setup }: Props) {
         .unhandleFailed()
         .pipe(filterEvents)
 
-      return cancelCall.run(scope)
+      return cancelCall.run()
     },
     onSuccess: (result) => {
       console.log({ result })

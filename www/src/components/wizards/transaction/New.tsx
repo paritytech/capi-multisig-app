@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom"
 import { defaultAccount } from "../../../signals/accounts.js"
 import { setups } from "../../../signals/setups.js"
 import { formatBalance } from "../../../util/balance.js"
-import { scope } from "../../../util/scope.js"
+
 import { AccountId } from "../../AccountId.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { AddressInput } from "../../AddressInput.js"
@@ -36,8 +36,8 @@ export function TransactionNew() {
 
   const onSubmit: SubmitHandler<FormData> = async (formDataNew) => {
     if (!call.value) return
-    const callHash = hex.encode(await call.value.callHash.run(scope))
-    const callData = hex.encode(await call.value.callData.run(scope))
+    const callHash = hex.encode(await call.value.callHash.run())
+    const callData = hex.encode(await call.value.callData.run())
     const selectedSetup = setups.peek().find((s) =>
       s.multisig === formDataNew.from?.address
     )
