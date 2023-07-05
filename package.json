@@ -41,6 +41,6 @@
     "start:docker": "sudo docker-compose up --build --abort-on-container-exit",
     "start:docker:db": "docker-compose up  --build --abort-on-container-exit dynamodb",
     "clean:docker": "docker-compose down --rmi all",
-    "sync": "capi sync node --server https://capi.dev"
+    "sync": "capi sync node"
   }
 }
