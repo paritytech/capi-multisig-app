@@ -1,15 +1,10 @@
-import { westend } from "@capi/westend"
-import { signature } from "capi/patterns/signature/polkadot"
-import { defaultAccount, defaultSender } from "../../../signals/accounts.js"
-import {
-  toMultiAddressIdRune,
-  toMultisigRune,
-} from "../../../util/capi-helpers.js"
-
-import { useState } from "preact/hooks"
+import { signal } from "@preact/signals"
 import { useNavigate } from "react-router-dom"
-import { toBalance } from "../../../util/balance.js"
-import { filterEvents, handleException } from "../../../util/events.js"
+import { notificationsCb } from "../../../api/notificationsCb.js"
+import { ratify } from "../../../api/ratify.js"
+import { createTransferCall } from "../../../api/transferCall.js"
+import { defaultAccount } from "../../../signals/accounts.js"
+import { handleException } from "../../../util/events.js"
 import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
@@ -17,52 +12,28 @@ import { IconTrash } from "../../icons/IconTrash.js"
 import { goPrev } from "../Wizard.js"
 import { transactionData } from "./formData.js"
 
+const isSubmitting = signal(false)
+
 export function TransactionSign() {
-  const [isSubmitting, setSubmitting] = useState(false)
   const { from, to, amount, callHash, setup } = transactionData.value
+
   const navigate = useNavigate()
 
-  function sign() {
-    const sender = defaultSender.value
-    const account = defaultAccount.value
-    if (!setup || !sender || !account) return
-    setSubmitting(true)
+  async function sign() {
+    if (!setup) throw new Error("No setup found!")
 
-    const multisig = toMultisigRune(setup)
-    const dest = toMultiAddressIdRune(to)
-    const user = toMultiAddressIdRune(account.address)
-    const stash = toMultiAddressIdRune(setup.stash)
-    const value = toBalance(amount)
+    isSubmitting.value = true
+    const call = createTransferCall(setup.stash, to, amount)
 
-    // Transfer Call from Stash
-    const call = westend.Proxy.proxy({
-      real: stash,
-      call: westend.Balances.transfer({
-        dest,
-        value,
-      }),
-    })
-
-    const ratifyCall = multisig
-      .ratify(user, call)
-      .signed(signature({ sender }))
-      .sent()
-      .dbgStatus("Ratify")
-      .inBlockEvents()
-      .unhandleFailed()
-      .pipe(filterEvents)
-
-    ratifyCall
-      .run()
-      .then(() => storeCall(call))
-      .then(() => {
-        setSubmitting(false)
-        navigate("/")
-      })
-      .catch((exception) => {
-        handleException(exception)
-        setSubmitting(false)
-      })
+    try {
+      await ratify(setup, call, notificationsCb)
+      storeCall(call)
+      navigate("/")
+    } catch (error) {
+      handleException(error)
+    } finally {
+      isSubmitting.value = false
+    }
   }
 
   return (
@@ -93,11 +64,15 @@ export function TransactionSign() {
             onClick={goPrev}
             iconLeft={<IconTrash className="w-6" />}
             className="mr-4"
-            disabled={isSubmitting}
+            disabled={isSubmitting.value}
           >
             Discard
           </Button>
-          <Button variant="primary" onClick={sign} disabled={isSubmitting}>
+          <Button
+            variant="primary"
+            onClick={sign}
+            disabled={isSubmitting.value}
+          >
             Sign
           </Button>
         </div>
