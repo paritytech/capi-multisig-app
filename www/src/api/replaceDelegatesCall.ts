@@ -1,7 +1,7 @@
 import { MultiAddress, westend } from "@capi/westend"
 import { Rune, RunicArgs, ss58 } from "capi"
-import { replaceDelegateCalls } from "capi/patterns/proxy"
 import { signature } from "capi/patterns/signature/polkadot"
+import { replaceDelegateCalls } from "capi/patterns/unstable/proxy"
 import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
