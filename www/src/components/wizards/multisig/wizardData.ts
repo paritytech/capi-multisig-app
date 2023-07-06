@@ -2,6 +2,7 @@ import { Signal, signal } from "@preact/signals"
 
 import { z } from "zod"
 import { isValidAddress } from "../../../util/address.js"
+import { MINIMUM_TRANSFER_AMOUNT } from "../../../util/chain-constants.js"
 
 export type MultisigData =
   & MultisigInitEntity
@@ -56,7 +57,9 @@ export const multisigMemberSchema = z.object({
 export type MultisigMemberEntity = z.infer<typeof multisigMemberSchema>
 
 export const multisigFundSchema = z.object({
-  fundingAmount: z.number().min(1, { message: "Fund must be greater than 0" }),
+  fundingAmount: z
+    .number()
+    .min(MINIMUM_TRANSFER_AMOUNT, { message: "Fund must be greater than 0" }),
 })
 
 export type MultisigFundEntity = z.infer<typeof multisigFundSchema>

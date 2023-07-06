@@ -1,17 +1,15 @@
-import { Setup as SetupType } from "common"
-
 import { RuntimeCall } from "@capi/westend"
 import { useMutation } from "@tanstack/react-query"
-import { hex } from "capi"
-import { signature } from "capi/patterns/signature/polkadot"
-import { useMemo } from "preact/hooks"
+import { Setup as SetupType } from "common"
 import { Link } from "react-router-dom"
+import { cancel as cancelCall } from "../api/cancel.js"
+import { notificationsCb } from "../api/notificationsCb.js"
+import { ratify as ratifyCall } from "../api/ratify.js"
 import { useAccountInfo } from "../hooks/useAccountInfo.js"
 import { useProposals } from "../hooks/useProposals.js"
-import { accounts, defaultAccount, defaultSender } from "../signals/accounts.js"
+import { accounts, defaultAccount } from "../signals/accounts.js"
 import { formatBalance } from "../util/balance.js"
-import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
-import { filterEvents, handleException } from "../util/events.js"
+import { handleException } from "../util/events.js"
 
 import { AccountId } from "./AccountId.js"
 import { Button } from "./Button.js"
@@ -26,56 +24,25 @@ interface Props {
 }
 
 export function Setup({ setup }: Props) {
-  const multisig = useMemo(() => toMultisigRune(setup), [setup])
   const { data: balance } = useAccountInfo(setup.stash)
   const { data: proposals, refetch: refetchProposals } = useProposals(setup)
 
   const { mutate: ratify, isLoading: isRatifying } = useMutation({
     mutationFn: async (call: RuntimeCall) => {
-      const sender = defaultSender.value
-      const account = defaultAccount.value
-      if (!setup || !sender || !account) {
-        throw new Error("Missing setup, sender or account")
-      }
-
-      const user = toMultiAddressIdRune(account.address)
-      const ratifyCall = multisig
-        .ratify(user, call)
-        .signed(signature({ sender }))
-        .sent()
-        .dbgStatus("Ratify")
-        .inBlockEvents()
-        .unhandleFailed()
-        .pipe(filterEvents)
-
-      return ratifyCall.run()
+      await ratifyCall(setup, call, notificationsCb)
     },
     onSuccess: (result) => {
       console.log({ result })
       refetchProposals()
     },
-    onError: (error) => console.error(error),
+    onError: (error: unknown) => {
+      handleException(error)
+    },
   })
 
   const { mutate: cancel, isLoading: isCanceling } = useMutation({
     mutationFn: async (callHash: string) => {
-      const sender = defaultSender.value
-      const account = defaultAccount.value
-      if (!setup || !sender || !account) {
-        throw new Error("Missing setup, sender or account")
-      }
-
-      const user = toMultiAddressIdRune(account.address)
-      const cancelCall = multisig
-        .cancel(user, hex.decode(callHash))
-        .signed(signature({ sender }))
-        .sent()
-        .dbgStatus("Cancel")
-        .inBlockEvents()
-        .unhandleFailed()
-        .pipe(filterEvents)
-
-      return cancelCall.run()
+      await cancelCall(setup, callHash, notificationsCb)
     },
     onSuccess: (result) => {
       console.log({ result })
@@ -109,9 +76,7 @@ export function Setup({ setup }: Props) {
               <div>
                 Multisig {setup.threshold}/{setup.members.length}
               </div>
-              <div>
-                {`Balance: ${balance ? formatBalance(balance) : "N/A"}  DOT`}
-              </div>
+              <div>Balance: {formatBalance(balance ?? 0n)} WND</div>
               <Link to={`/multisig/${setup.multisig}`}>
                 <div
                   className={`flex-row flex justify-center items-center space-x-1 ${
@@ -167,7 +132,6 @@ export function Setup({ setup }: Props) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <div>{callHash}</div>
-
                   <div className="flex flex-row gap-2 justify-end">
                     {!approvals.includes(defaultAccount.value?.address!)
                       ? (
@@ -175,7 +139,7 @@ export function Setup({ setup }: Props) {
                           onClick={() => ratify(call!)}
                           disabled={!call || isRatifying}
                         >
-                          (View &) Sign
+                          Sign
                         </Button>
                       )
                       : (

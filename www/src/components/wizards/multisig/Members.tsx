@@ -1,25 +1,15 @@
-import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { Rune, ss58 } from "capi"
-import { MultisigRune } from "capi/patterns/multisig"
-import { signature } from "capi/patterns/signature/polkadot"
-import {
-  filterPureCreatedEvents,
-  replaceDelegateCalls,
-} from "capi/patterns/unstable/proxy"
 import { Controller, useForm } from "react-hook-form"
-import {
-  accounts,
-  defaultAccount,
-  defaultSender,
-} from "../../../signals/accounts.js"
+import { getMultisigAddress } from "../../../api/getMultisigAddress.js"
+import { createStashCall, replaceDelegatesCall } from "../../../api/index.js"
+import { notificationsCb } from "../../../api/notificationsCb.js"
+import { accounts, defaultAccount } from "../../../signals/accounts.js"
 import { formatBalance } from "../../../util/balance.js"
-import { toPubKey } from "../../../util/capi-helpers.js"
 import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
-import { filterEvents, handleException } from "../../../util/events.js"
+import { handleException } from "../../../util/events.js"
 import { storeSetup } from "../../../util/local-storage.js"
 
 import { AccountSelect } from "../../AccountSelect.js"
@@ -68,69 +58,29 @@ export function MultisigMembers() {
 
   const onSubmit = async (formDataNew: MultisigMemberEntity) => {
     try {
-      if (!defaultSender.value || !defaultAccount.value) return
+      if (!defaultAccount.value) return
 
       const { threshold } = wizardData.value
       const { members } = formDataNew
 
-      const signatories = members.map((member) => toPubKey(member!.address))
-
-      const multisig: MultisigRune<Westend, never> = MultisigRune.from(
-        westend,
-        {
-          signatories,
-          threshold,
-        },
+      const stashAddress = await createStashCall(
+        defaultAccount.value.address,
+        notificationsCb,
       )
 
-      const multisigAddress = ss58.encode(
-        await westend.addressPrefix().run(),
-        await multisig.accountId.run(),
-      )
-
-      // TODO can we check if stash already created? previously?
-      const createStashCall = westend.Proxy.createPure({
-        proxyType: "Any",
-        delay: 0,
-        index: 0,
-      })
-        .signed(signature({ sender: defaultSender.value }))
-        .sent()
-        .dbgStatus("Creating Pure Proxy:")
-        .inBlockEvents()
-        .unhandleFailed()
-        .pipe(filterPureCreatedEvents)
-        // TODO typing is broken in capi
-        .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
-        .access(0)
-
-      const stashBytes = (await createStashCall.run()) as Uint8Array
-      const stashAddress = ss58.encode(
-        await westend.addressPrefix().run(),
-        stashBytes,
-      )
       console.info("New Stash created at:", stashAddress)
 
-      const [_, userAddressBytes] = ss58.decode(defaultAccount.value.address)
-      // TODO can we somehow check if the delegation has already been done?
-      const replaceDelegates = westend.Utility.batchAll({
-        calls: Rune.array(
-          replaceDelegateCalls(
-            westend,
-            MultiAddress.Id(stashBytes), // effected account
-            MultiAddress.Id(userAddressBytes), // from
-            multisig.address, // to
-          ),
-        ),
-      })
-        .signed(signature({ sender: defaultSender.value }))
-        .sent()
-        .dbgStatus("Replacing Proxy Delegates:")
-        .inBlockEvents()
-        .unhandleFailed()
-        .pipe(filterEvents)
+      const multisigAddress = await getMultisigAddress(
+        members.map((member) => member!.address),
+        threshold,
+      )
 
-      await replaceDelegates.run()
+      await replaceDelegatesCall(
+        stashAddress,
+        defaultAccount.value.address,
+        multisigAddress,
+        notificationsCb,
+      )
 
       // TODO save to database instead of localStorage
       storeSetup(members.map((m) => m?.address) as string[], {
