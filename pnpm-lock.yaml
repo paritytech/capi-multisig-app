@@ -4366,3 +4366,14 @@ packages:
     dependencies:
       capi: 0.1.0-beta.42
     dev: false
+
+  '@capi.dev/b33e3e53689c9ad6/westend.tar(capi@0.1.0-beta.39)':
+    resolution: {tarball: https://capi.dev/b33e3e53689c9ad6/westend.tar}
+    id: '@capi.dev/b33e3e53689c9ad6/westend.tar'
+    name: westend
+    version: 0.0.0-TODO
+    peerDependencies:
+      capi: '*'
+    dependencies:
+      capi: 0.1.0-beta.39
+    dev: false

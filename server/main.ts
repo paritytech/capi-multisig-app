@@ -1,9 +1,8 @@
-import { westend } from "@capi/westend"
-import { SignedExtrinsicRune } from "capi"
-import { $input, $result, Submit } from "common"
+import { $input, $result, MultisigSetup } from "common"
 import express from "express"
 import * as http from "http"
 import * as ws from "ws"
+import { handleSubmit } from "./submit.js"
 
 const app = express()
 
@@ -58,7 +57,10 @@ wsServer.on("connection", (ws, _req) => {
           }
           break
         case "submit":
-          await handleSubmit(ws, decoded)
+          await handleSubmit(channels, decoded)
+          break
+        case "multisig_setup":
+          await handleMultisigCreation(ws, decoded)
           break
         default:
           break
@@ -73,63 +75,9 @@ function handleError(err: unknown) {
   console.error(err)
 }
 
-async function handleSubmit(ws: ws.WebSocket, submit: Submit): Promise<void> {
-  try {
-    const send = (data: Uint8Array) => {
-      channels[submit.channel]?.forEach((ws) => ws.send(data))
-    }
-
-    await SignedExtrinsicRune.fromHex(
-      westend,
-      submit.signedExtrinsic,
-    )
-      .sent()
-      .dbgStatus("tx status")
-      .transactionStatuses((txStatus) => {
-        if (typeof txStatus === "string") {
-          send($result.encode({
-            type: "submit",
-            channel: submit.channel,
-            result: { status: txStatus },
-          }))
-        } else {
-          const status = Object.keys(txStatus)[0]!
-          switch (status) {
-            case "future":
-            case "ready":
-            case "broadcast":
-            case "inBlock":
-            case "retracted":
-            case "finalityTimeout":
-            case "usurped":
-            case "dropped":
-            case "invalid":
-              send($result.encode({
-                type: "submit",
-                channel: submit.channel,
-                result: { status },
-              }))
-              break
-            case "finalized":
-              const hash: string = txStatus["finalized"]! as string
-              send($result.encode({
-                type: "submit",
-                channel: submit.channel,
-                result: { status, hash },
-              }))
-              break
-          }
-        }
-
-        return false
-      })
-      .run()
-  } catch (err) {
-    ws.send($result.encode({
-      type: "submit",
-      channel: submit.channel,
-      result: { status: "failed" },
-    }))
-    handleError(err)
-  }
+async function handleMultisigCreation(
+  _ws: ws.WebSocket,
+  _args: MultisigSetup,
+): Promise<void> {
+  // TODO
 }

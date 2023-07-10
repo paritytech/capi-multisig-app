@@ -6,11 +6,12 @@ import * as crypto from "crypto"
 import WebSocket from "ws"
 
 const args = process.argv.slice(2)
-if (args.length < 2) {
-  throw new Error("secret key and endpoint are required")
+if (args.length < 3) {
+  throw new Error("secret key, multisig hash and endpoint are required")
 }
 const secret = hex.decode(args[0]!)
-const endpoint = args[1]!
+const multisigHash = args[1]!
+const endpoint = args[2]!
 
 const sender = Sr25519.fromSecret(secret)
 
@@ -30,12 +31,12 @@ const ws = new WebSocket(endpoint)
 ws.on("open", () => {
   ws.send($input.encode({
     type: "subscribe",
-    channel: "multisig-xyz",
+    channel: multisigHash,
   }))
 
   ws.send($input.encode({
     type: "submit",
-    channel: "multisig-xyz",
+    multisigHash,
     signedExtrinsic,
   }))
 })

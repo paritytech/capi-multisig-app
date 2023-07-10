@@ -1,11 +1,16 @@
-/* TODO: import { $runtimeCall, RuntimeCall } from "@capi/westend" */
 import * as $ from "scale-codec"
 
 export interface Submit {
   type: "submit"
-  // TODO: call: RuntimeCall
-  channel: string
+  multisigHash: string
   signedExtrinsic: string
+}
+
+export interface MultisigSetup {
+  type: "multisig_setup"
+  genesisHash: string
+  displayName: string
+  multisigHash: string
 }
 
 export interface Subscribe {
@@ -18,14 +23,21 @@ export interface Unsubscribe {
   channel: string
 }
 
-export type Input = Submit | Subscribe | Unsubscribe
+export type Input = Submit | MultisigSetup | Subscribe | Unsubscribe
 
 export const $input: $.Codec<Input> = $.taggedUnion("type", [
   $.variant(
+    "multisig_setup",
+    $.object(
+      $.field("genesisHash", $.str),
+      $.field("displayName", $.str),
+      $.field("multisigHash", $.str),
+    ),
+  ),
+  $.variant(
     "submit",
     $.object(
-      // $.field("call", $runtimeCall),
-      $.field("channel", $.str),
+      $.field("multisigHash", $.str),
       $.field("signedExtrinsic", $.str),
     ),
   ),
@@ -48,7 +60,7 @@ export interface UnsubscribeResult {
 export interface SubmitResult {
   type: "submit"
   channel: string
-  // TODO: callHash: string
+  signedExtrinsic: string
   result:
     | { status: "future" }
     | { status: "ready" }
@@ -59,8 +71,9 @@ export interface SubmitResult {
     | { status: "finalized"; hash: string }
     | { status: "usurped" }
     | { status: "dropped" }
-    | { status: "invalid" }
+    | { status: "invalid"; message?: string }
     | { status: "failed" }
+    | { status: "unauthorized" }
 }
 
 export type Result = SubmitResult | SubscribeResult | UnsubscribeResult
@@ -84,6 +97,7 @@ export const $result: $.Codec<Result> = $.taggedUnion("type", [
     "submit",
     $.object(
       $.field("channel", $.str),
+      $.field("signedExtrinsic", $.str),
       $.field(
         "result",
         $.taggedUnion(
@@ -98,8 +112,9 @@ export const $result: $.Codec<Result> = $.taggedUnion("type", [
             $.variant("finalized", $.object($.field("hash", $.str))),
             $.variant("usurped"),
             $.variant("dropped"),
-            $.variant("invalid"),
+            $.variant("invalid", $.object($.optionalField("message", $.str))),
             $.variant("failed"),
+            $.variant("unauthorized"),
           ],
         ),
       ),

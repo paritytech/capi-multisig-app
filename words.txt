@@ -6,6 +6,7 @@ bradlc
 capi
 clsx
 compat
+compressable
 csstools
 dbaeumer
 deno
