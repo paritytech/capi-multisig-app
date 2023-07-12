@@ -1,5 +1,10 @@
 import * as $ from "scale-codec"
 
+export type PartitionKey = "pk"
+export type SortKey = "sk"
+export type ItemKeys = PartitionKey | SortKey
+
+// Approvals
 export interface Approvals {
   /** The block at which the approval was finalized */
   blockHash: string
@@ -12,7 +17,10 @@ export const $approvals: $.Codec<Approvals> = $.object(
   $.field("member", $.str),
 )
 
+// Call history
 export interface HistoryItem {
+  pk: string
+  sk: string
   /** The scale-encoded call data */
   callData: string
   /** Time point of the first approval */
@@ -23,55 +31,67 @@ export interface HistoryItem {
   cancelled?: string
 }
 
-export const $historyItem: $.Codec<HistoryItem> = $.object(
+export type History = Omit<HistoryItem, ItemKeys>
+
+export const $historyItem: $.Codec<History> = $.object(
   $.field("callData", $.str),
   $.field("timePoint", $.tuple($.u32, $.u32)),
   $.field("approvals", $.array($approvals)),
   $.optionalField("cancelled", $.str),
 )
 
-export interface Setup {
-  type: "setup"
-  /** The stash accountId */
-  id: string
-  /** The genesis hash of the setup's network */
-  genesisHash: string
-  /** A human-readable name for the setup */
-  name: string
-  /** member accountIds */
-  members: [user: string, proxy: string][]
-  /** The number of signatories a proposal need in order to be executed */
-  threshold: number
-  /** The underlying multisig accountId */
-  multisig: string
-  /** The underlying pure proxy accountId */
-  stash: string
-  /** Previous actions of the setup */
-  history: HistoryItem[]
+// Calldata
+export interface CalldataItem {
+  /** partition key is callhash */
+  pk: string
+  sk?: string
+  hash: string
+  /** The scale-encoded calldata */
+  data: string
 }
 
-export const $setup: $.Codec<Setup> = $.object(
-  $.field("type", $.constant<"setup">("setup", $.str)),
-  $.field("id", $.str),
-  $.field("genesisHash", $.str),
-  $.field("name", $.str),
-  $.field("members", $.array($.tuple($.str, $.str))),
-  $.field("threshold", $.u32),
-  $.field("multisig", $.str),
-  $.field("stash", $.str),
-  $.field("history", $.array($historyItem)),
+export type Calldata = Omit<CalldataItem, ItemKeys>
+export const $calldata = $.object(
+  $.field("hash", $.str),
+  $.field("data", $.str),
 )
 
+// Multisig Setup
+export interface SetupItem {
+  pk: string
+  sk?: string
+  id: string
+  multisigHex: string
+  name: string
+  stash?: string
+}
+
+export type Setup = Omit<SetupItem, ItemKeys>
+
+export const $setup: $.Codec<Setup> = $.object(
+  $.field("id", $.str),
+  $.field("multisigHex", $.str),
+  $.field("name", $.str),
+  $.optionalField("stash", $.str),
+)
 export function isSetup(setup: unknown): setup is Setup {
   return $.is($setup, setup)
 }
 
-export interface Account {
-  type: "account"
+// Account
+export interface AccountItem {
+  pk: string
+  sk?: string
   /** hex-encoded accountId */
   id: string
   /** The setups of which the account is member */
   setups: string[]
 }
+export type Account = Omit<AccountItem, ItemKeys>
+export const $account: $.Codec<Account> = $.object(
+  $.field("id", $.str),
+  $.field("setups", $.array($.str)),
+)
 
-export type Model = Setup | Account
+// Model
+export type Model = HistoryItem | SetupItem | AccountItem | CalldataItem

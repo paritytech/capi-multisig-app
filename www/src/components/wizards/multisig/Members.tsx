@@ -4,13 +4,14 @@ import { getMultisigAddress } from "../../../api/getMultisigAddress.js"
 import { createStashCall, replaceDelegatesCall } from "../../../api/index.js"
 import { notificationsCb } from "../../../api/notificationsCb.js"
 import { accounts, defaultAccount } from "../../../signals/accounts.js"
+import { storageClient } from "../../../storage/index.js"
+import { SetupType } from "../../../types/index.js"
 import { formatBalance } from "../../../util/balance.js"
 import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
 import { handleException } from "../../../util/events.js"
-import { storeSetup } from "../../../util/local-storage.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
@@ -74,25 +75,24 @@ export function MultisigMembers() {
         threshold,
       )
 
-      await replaceDelegatesCall(
+      const replaceDelegatesTx = await replaceDelegatesCall(
         stashAddress,
         defaultAccount.value.address,
         multisigAddress,
         notificationsCb,
       )
-
-      // TODO save to database instead of localStorage
-      storeSetup(members.map((m) => m?.address) as string[], {
-        type: "setup",
-        id: multisigAddress,
+      const setup: SetupType = {
         genesisHash: "0x0",
         name: wizardData.value.name,
         members: members.map((member) => [member!.address, ""]),
         threshold: threshold,
         multisig: multisigAddress,
         stash: stashAddress,
-        history: [],
-      })
+      }
+
+      const storeSetupTx = storageClient.storeSetup(setup)
+      await Promise.all([replaceDelegatesTx, storeSetupTx])
+      console.log("set and stored")
 
       updateWizardData({
         ...formDataNew,

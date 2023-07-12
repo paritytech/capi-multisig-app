@@ -1,6 +1,7 @@
+import { SetupType } from "../types/index.js"
+
 import { RuntimeCall } from "@capi/westend"
 import { useMutation } from "@tanstack/react-query"
-import { Setup as SetupType } from "common"
 import { Link } from "react-router-dom"
 import { cancel as cancelCall } from "../api/cancel.js"
 import { notificationsCb } from "../api/notificationsCb.js"

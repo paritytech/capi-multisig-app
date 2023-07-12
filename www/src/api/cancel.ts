@@ -1,13 +1,13 @@
 import { hex, Rune, RunicArgs } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"
-import { Setup } from "common"
 import { defaultAccount } from "../signals/accounts.js"
+import { SetupType } from "../types/index.js"
 import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
 import { createSender } from "./createSender.js"
 import { Message } from "./notificationsCb.js"
 
 export async function cancel(
-  setup: Setup,
+  setup: SetupType,
   callHash: string,
   cb: (value: Message) => void,
 ) {

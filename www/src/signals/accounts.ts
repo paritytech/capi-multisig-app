@@ -1,6 +1,6 @@
 import { effect, Signal, signal } from "@preact/signals"
 import { getWalletBySource, WalletAccount } from "@talisman-connect/wallets"
-import { retrieveStored } from "../util/local-storage.js"
+import { retrieveStored } from "../storage/LocalStorageClient.js"
 import { retry } from "../util/retry.js"
 
 interface InjectedWindow extends Window {

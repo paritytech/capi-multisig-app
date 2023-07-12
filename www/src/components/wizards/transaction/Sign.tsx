@@ -4,8 +4,8 @@ import { notificationsCb } from "../../../api/notificationsCb.js"
 import { ratify } from "../../../api/ratify.js"
 import { createTransferCall } from "../../../api/transferCall.js"
 import { defaultAccount } from "../../../signals/accounts.js"
+import { storageClient } from "../../../storage/index.js"
 import { handleException } from "../../../util/events.js"
-import { storeCall } from "../../../util/local-storage.js"
 import { AccountId } from "../../AccountId.js"
 import { Button } from "../../Button.js"
 import { IconTrash } from "../../icons/IconTrash.js"
@@ -27,7 +27,7 @@ export function TransactionSign() {
 
     try {
       await ratify(setup, call, notificationsCb)
-      storeCall(call)
+      storageClient.storeCall(call)
       navigate("/")
     } catch (error) {
       handleException(error)

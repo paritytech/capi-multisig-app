@@ -1,14 +1,14 @@
 import { RuntimeCall, Westend } from "@capi/westend"
 import { ExtrinsicRune, Rune, RunicArgs } from "capi"
 import { signature } from "capi/patterns/signature/polkadot"
-import { Setup } from "common"
 import { defaultAccount } from "../signals/accounts.js"
+import { SetupType } from "../types/index.js"
 import { toMultiAddressIdRune, toMultisigRune } from "../util/capi-helpers.js"
 import { createSender } from "./createSender.js"
 import { Message } from "./notificationsCb.js"
 
 export async function ratify(
-  setup: Setup,
+  setup: SetupType,
   call: RuntimeCall | ExtrinsicRune<Westend, never>,
   cb: (value: Message) => void,
 ) {
