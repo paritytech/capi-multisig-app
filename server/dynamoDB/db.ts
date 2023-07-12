@@ -13,19 +13,22 @@ import "dotenv"
 let accessKeyId
 let secretAccessKey
 let endpoint
+let region
 
 if (process.env.NODE_ENV === "production") {
+  region = process.env.AWS_DYNAMO_REGION!
+  endpoint = process.env.AWS_DYNAMO_ENDPOINT!
   accessKeyId = process.env.AWS_ACCESS_KEY_ID!
   secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY!
-  endpoint = undefined
 } else {
+  region = "us-east-1"
+  endpoint = "http://localhost:8000"
   accessKeyId = "accessKey"
   secretAccessKey = "secretKey"
-  endpoint = "http://localhost:8000"
 }
 
 export const dbClient = new DynamoDBClient({
-  region: "us-east-1",
+  region,
   credentials: {
     accessKeyId,
     secretAccessKey,

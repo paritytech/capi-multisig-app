@@ -1,29 +1,17 @@
-import { MultiAddress, Westend, westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { useMutation } from "@tanstack/react-query"
-import { Rune, ss58 } from "capi"
-import { MultisigRune } from "capi/patterns/multisig"
-import { replaceDelegateCalls } from "capi/patterns/proxy"
-import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
-import {
-  accounts,
-  defaultAccount,
-  defaultSender,
-} from "../../../signals/accounts.js"
+import { getMultisigAddress } from "../../../api/getMultisigAddress.js"
+import { createStashCall, replaceDelegatesCall } from "../../../api/index.js"
+import { notificationsCb } from "../../../api/notificationsCb.js"
+import { accounts, defaultAccount } from "../../../signals/accounts.js"
 import { storageClient } from "../../../storage/index.js"
 import { SetupType } from "../../../types/index.js"
 import { formatBalance } from "../../../util/balance.js"
-import { toPubKey } from "../../../util/capi-helpers.js"
 import {
   PROXY_DEPOSIT_BASE,
   PROXY_DEPOSIT_FACTOR,
 } from "../../../util/chain-constants.js"
-import {
-  filterEvents,
-  filterPureCreatedEvents,
-  handleException,
-} from "../../../util/events.js"
+import { handleException } from "../../../util/events.js"
 import { AccountSelect } from "../../AccountSelect.js"
 import { Button } from "../../Button.js"
 import { IconChevronLeft } from "../../icons/IconChevronLeft.js"
@@ -57,108 +45,6 @@ export function MultisigMembers() {
     mode: "onChange",
   })
 
-  const { mutate: createMultisig } = useMutation({
-    mutationFn: async (formDataNew: MultisigMemberEntity) => {
-      const sender = defaultSender.value
-      const account = defaultAccount.value
-      if (!sender || !account) {
-        throw new Error("Missing  sender or account")
-      }
-
-      const { threshold } = wizardData.value
-      const { members } = formDataNew
-
-      const signatories = members.map((member) => toPubKey(member!.address))
-
-      const multisig: MultisigRune<Westend, never> = MultisigRune.from(
-        westend,
-        {
-          signatories,
-          threshold,
-        },
-      )
-
-      const multisigAddress = ss58.encode(
-        await westend.addressPrefix().run(),
-        await multisig.accountId.run(),
-      )
-
-      // TODO can we check if stash already created? previously?
-      const createStashCall = westend.Proxy.createPure({
-        proxyType: "Any",
-        delay: 0,
-        index: 0,
-      })
-        .signed(signature({ sender }))
-        .sent()
-        .dbgStatus("Creating Pure Proxy:")
-        .inBlockEvents()
-        .unhandleFailed()
-        .pipe(filterPureCreatedEvents)
-        // TODO typing is broken in capi
-        .map((events: { pure: unknown }[]) => events.map(({ pure }) => pure))
-        .access(0)
-
-      const stashBytes = (await createStashCall.run()) as Uint8Array
-      const stashAddress = ss58.encode(
-        await westend.addressPrefix().run(),
-        stashBytes,
-      )
-      console.info("New Stash created at:", stashAddress)
-
-      const [_, userAddressBytes] = ss58.decode(account.address)
-
-      const setup: SetupType = {
-        genesisHash: "0x0",
-        name: wizardData.value.name,
-        members: members.map((member) => [member!.address, ""]),
-        threshold: threshold,
-        multisig: multisigAddress,
-        stash: stashAddress,
-      }
-
-      // TODO can we somehow check if the delegation has already been done?
-      const replaceDelegatesTx = westend.Utility.batchAll({
-        calls: Rune.array([
-          westend.Balances.transfer({
-            dest: MultiAddress.Id(stashBytes),
-            value: PROXY_DEPOSIT_BASE + PROXY_DEPOSIT_FACTOR,
-          }),
-          ...replaceDelegateCalls(
-            westend,
-            MultiAddress.Id(stashBytes), // effected account
-            MultiAddress.Id(userAddressBytes), // from
-            multisig.address, // to
-          ),
-        ]),
-      })
-        .signed(signature({ sender }))
-        .sent()
-        .dbgStatus("Replacing Proxy Delegates:")
-        .inBlockEvents()
-        .unhandleFailed()
-        .pipe(filterEvents)
-
-      const storeSetupTx = storageClient.storeSetup(setup)
-      await Promise.all([replaceDelegatesTx, storeSetupTx])
-      console.log("set and stored")
-
-      updateWizardData({
-        ...formDataNew,
-        address: multisigAddress,
-        stash: stashAddress,
-      })
-    },
-    onSuccess: (success) => {
-      console.log({ success })
-      goNext()
-    },
-    onError: (error) => {
-      console.log({ error })
-      handleException(error)
-    },
-  })
-
   const onBack = (formDataNew: MultisigMemberEntity) => {
     updateWizardData(formDataNew)
     goPrev()
@@ -170,8 +56,58 @@ export function MultisigMembers() {
     goPrev()
   }
 
+  const onSubmit = async (formDataNew: MultisigMemberEntity) => {
+    try {
+      if (!defaultAccount.value) return
+
+      const { threshold } = wizardData.value
+      const { members } = formDataNew
+
+      const stashAddress = await createStashCall(
+        defaultAccount.value.address,
+        notificationsCb,
+      )
+
+      console.info("New Stash created at:", stashAddress)
+
+      const multisigAddress = await getMultisigAddress(
+        members.map((member) => member!.address),
+        threshold,
+      )
+
+      const replaceDelegatesTx = await replaceDelegatesCall(
+        stashAddress,
+        defaultAccount.value.address,
+        multisigAddress,
+        notificationsCb,
+      )
+      const setup: SetupType = {
+        genesisHash: "0x0",
+        name: wizardData.value.name,
+        members: members.map((member) => [member!.address, ""]),
+        threshold: threshold,
+        multisig: multisigAddress,
+        stash: stashAddress,
+      }
+
+      const storeSetupTx = storageClient.storeSetup(setup)
+      await Promise.all([replaceDelegatesTx, storeSetupTx])
+      console.log("set and stored")
+
+      updateWizardData({
+        ...formDataNew,
+        address: multisigAddress,
+        stash: stashAddress,
+      })
+
+      goNext()
+    } catch (exception) {
+      handleException(exception)
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit(createMultisig)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h1 className="text-xl leading-8">2. Members</h1>
       <hr className="border-t border-gray-300 mt-6 mb-4" />
 

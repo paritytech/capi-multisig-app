@@ -1,11 +1,8 @@
-import { westend } from "@capi/westend"
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js"
-import { signature } from "capi/patterns/signature/polkadot"
 import { Controller, useForm } from "react-hook-form"
-import { defaultSender } from "../../../signals/accounts.js"
-import { toBalance } from "../../../util/balance.js"
-import { toMultiAddressIdRune } from "../../../util/capi-helpers.js"
-import { filterEvents, handleException } from "../../../util/events.js"
+import { fundStash } from "../../../api/fundStash.js"
+import { notificationsCb } from "../../../api/notificationsCb.js"
+import { handleException } from "../../../util/events.js"
 import { BalanceInput } from "../../BalanceInput.js"
 import { Button } from "../../Button.js"
 import { goNext } from "../Wizard.js"
@@ -29,24 +26,9 @@ export function MultisigFund() {
 
   const onSubmit = async (formDataNew: MultisigFundEntity) => {
     try {
-      const sender = defaultSender.value
       const { fundingAmount } = formDataNew
-
-      if (!sender || !stash) return
-
-      const fundStashCall = westend.Balances
-        .transfer({
-          value: toBalance(fundingAmount),
-          dest: toMultiAddressIdRune(stash),
-        })
-        .signed(signature({ sender }))
-        .sent()
-        .dbgStatus("Transfer:")
-        .inBlockEvents()
-        .unhandleFailed()
-        .pipe(filterEvents)
-
-      await fundStashCall.run()
+      if (!stash) return
+      await fundStash(fundingAmount, stash, notificationsCb)
       updateWizardData({ ...formDataNew })
       goNext()
     } catch (exception: any) {

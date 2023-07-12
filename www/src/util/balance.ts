@@ -5,7 +5,7 @@ export function formatBalance(
   balance: bigint,
   { precision = 4, tokenDecimals = 12 } = {},
 ) {
-  if (balance === 0n) return balance.toString()
+  if (balance === 0n) return "0"
 
   let units = ""
   let decimals = ""
