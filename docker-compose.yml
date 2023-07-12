@@ -4,5 +4,7 @@ services:
       build:
         context: ./
       ports:
-        - "5555:5555"
+        - "80:5555"
+      env_file:
+        - ./server/.env.prod
   

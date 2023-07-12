@@ -9,7 +9,7 @@ export type RouterOutput = inferRouterOutputs<AppRouter>
 export const client = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: "http://localhost:5555",
+      url: "https://api.multisig.capi.dev",
 
       // ToDo: Add auth token
       async headers() {
