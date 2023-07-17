@@ -8,11 +8,11 @@
     "www"
   ],
   "dependencies": {
-    "@capi/westend": "https://capi.dev/a416a0563f132155/westend.tar",
+    "@capi/westend": "https://capi.dev/@v0.1.1-beta.1/a416a0563f132155/westend.tar",
     "@headlessui/react": "^1.7.15",
     "@preact/signals": "^1.1.3",
     "@talisman-connect/wallets": "^1.1.3",
-    "capi": "0.1.0-beta.42",
+    "capi": "0.1.1-beta.1",
     "dotenv": "^16.1.4",
     "preact": "^10.15.1",
     "react-hook-form": "^7.44.3",
@@ -41,6 +41,6 @@
     "start:docker": "sudo docker-compose up --build --abort-on-container-exit",
     "start:docker:db": "docker-compose up  --build --abort-on-container-exit dynamodb",
     "clean:docker": "docker-compose down --rmi all",
-    "sync": "capi sync node --runtime-config package.json --server https://capi.dev"
+    "sync": "capi sync node"
   }
 }
